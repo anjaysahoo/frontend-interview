@@ -14,4 +14,4 @@ searchInput.addEventListener("input", debounceUtil((event) => {
     else{
         handleSearchUtil(prefix);
     }
-}, 1000))
+}, 500))

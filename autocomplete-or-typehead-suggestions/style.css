@@ -63,12 +63,13 @@ section{
     overflow: auto;
 }
 
-.body__results div{
+.body__results__result{
+    cursor: pointer;
     width: 95%;
     padding: 0.5rem;
     border-radius: 5px;
 }
 
-.body__results div:hover{
+.body__results__result div:hover{
     background-color: #cac8c8;
 }
