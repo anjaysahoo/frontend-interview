@@ -14,4 +14,18 @@ searchInput.addEventListener("input", debounceUtil((event) => {
     else{
         handleSearchUtil(prefix);
     }
-}, 500))
+}, 500));
+
+
+/**
+ * Method-2 to select an element
+ * We data-value attribute in the div to
+ * know the value of the element.
+ *
+ * This way user click on padding and all are ignored
+ */
+resultContainer.addEventListener("click", (event) => {
+    const selectedDiv = event.target;
+    searchInput.value = selectedDiv.getAttribute("data-value");
+    resultContainer.innerHTML = "";
+})
