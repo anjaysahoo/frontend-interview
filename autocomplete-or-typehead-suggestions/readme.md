@@ -17,5 +17,24 @@ Vanilla Javascript, HTML & CSS
 3. It should be re-usable and customizable
 4. It should persist previously fetch data
 
+
+## Concept covered in this question
+
+#### 1. Debounce
+1. Implemented in this question
+2. Also complete details present in `important-concept` section
+
+#### 2. Throttle
+1. Also complete details present in `important-concept` section
+
+#### 3. Intersection-Observer(Infinite Scroll)
+1. Also complete details present in `important-concept` section
+
+#### 4. Abort Controller
+1. https://youtu.be/IKRbWT6LqIY?si=5g9o-jQpigblB_XE&t=3674
+2. This is used when you want to maintain consistency across multiple requests during race conditions
+3. You abort the same api call during the race condition
+4. ![img_1.png](img_1.png)
+
 ### Referred Video
 https://www.youtube.com/watch?v=IKRbWT6LqIY&t=15s
