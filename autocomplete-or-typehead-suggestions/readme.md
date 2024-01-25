@@ -25,10 +25,10 @@ Vanilla Javascript, HTML & CSS
 2. Also complete details present in `important-concept` section
 
 #### 2. Throttle
-1. Also complete details present in `important-concept` section
+1. Complete details present in `important-concept` section
 
 #### 3. Intersection-Observer(Infinite Scroll)
-1. Also complete details present in `important-concept` section
+1. Complete details present in `important-concept` section
 
 #### 4. Abort Controller
 1. https://youtu.be/IKRbWT6LqIY?si=5g9o-jQpigblB_XE&t=3674
