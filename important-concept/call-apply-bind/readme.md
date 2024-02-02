@@ -1,3 +1,5 @@
+`call()`, `apply()` & `bind()` help us to get hold of a passed object
+
 ## `call()`
 
 ![img.png](img.png)
