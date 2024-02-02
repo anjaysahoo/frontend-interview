@@ -55,7 +55,12 @@ To understand above code, please go through the
 
 # Throttle
 
+
+**Trailing Throttle:** In pistol shooting game we can use it to limit the number of bullets fired.
+So we don't allow a bullet to be fired until the difference between last fired bullet is greater than 400ms
+
 ![img_1.png](img_1.png)
+![img_3.png](img_3.png)
 
 Below is code for trialing throttle
 ```javascript
