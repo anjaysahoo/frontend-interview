@@ -1,0 +1,18 @@
+.tic-tac-toe{
+    display: flex;
+    flex-direction: column;
+}
+
+.tic-tac-toe__row{
+    display: flex;
+    flex-direction: row;
+}
+
+.tic-tac-toe__row__cell{
+    border: 1px solid black;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
