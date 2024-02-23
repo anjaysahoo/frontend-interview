@@ -42,6 +42,14 @@ Referred Article: https://www.freecodecamp.org/news/how-to-loop-through-an-array
 <details >
  <summary style="font-size: x-large; font-weight: bold">Looping through an `Object`</summary>
 
+We have three object static methods, which are:
+
+1. `Object.keys()`
+
+2. `Object.values()`
+
+3. `Object.entries()`
+
 ```javascript
 const population = {
   male: 4,
