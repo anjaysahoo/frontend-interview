@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form>
+        <div>
+            <label for="username">Username</label>
+            <div>
+                <input
+                        id="username"
+                        type="text"
+                        name="username"
+                        pattern="^[a-zA-Z0-9_]*$"
+                        minlength="4"
+                        required
+                >
+            </div>
+
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <div>
+                <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        minlength="4"
+                        required
+                >
+            </div>
+
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <div>
+                <input
+                        id="password"
+                        type="password"
+                        name="password"
+                        minlength="6"
+                        required
+                >
+            </div>
+        </div>
+        <div>
+            <label for="confirm-password">Confirm Password</label>
+            <div>
+                <input
+                        id="confirm-password"
+                        type="password"
+                        name="confirm-password"
+                        minlength="6"
+                        required
+                >
+            </div>
+            <div id="confirm-password-error" class="error hidden">Password Didn't match</div>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+    <script src="index.js"></script>
+</body>
+</html>

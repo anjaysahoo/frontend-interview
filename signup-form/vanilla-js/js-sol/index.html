@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script src="index.js" type="module"></script>
+<form>
+    <div>
+        <label for="username">Username</label>
+        <input
+                id=username
+                type="text"/>
+        <div
+                id="usernameError"
+                class="error">
+        </div>
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <input id="email" type="email" />
+        <div
+                id="emailError"
+                class="error">
+        </div>
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input id="password" type="text" />
+        <div
+                id="passwordError"
+                class="error">
+        </div>
+    </div>
+    <div>
+        <label for="confirmPassword">Confirm Password</label>
+        <input id="confirmPassword" type="text"/>
+        <div
+                id="confirmPasswordError"
+                class="error">
+        </div>
+    </div>
+    <button id="submit" disabled>Submit</button>
+</form>
+
+
+</body>
+</html>

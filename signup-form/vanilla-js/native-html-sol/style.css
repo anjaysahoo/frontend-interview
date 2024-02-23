@@ -1,0 +1,17 @@
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+form button{
+    width: fit-content;
+}
+
+.error{
+    color: red;
+}
+
+.hidden{
+    display: none;
+}
