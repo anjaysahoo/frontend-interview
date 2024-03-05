@@ -1,0 +1,12 @@
+body {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 5px;
+}
+
+.gadget{
+    padding: 20px;
+    font-size: medium;
+    background: aqua;
+}

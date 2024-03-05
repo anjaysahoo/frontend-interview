@@ -1,0 +1,30 @@
+body {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 5px;
+}
+
+.modal-container{
+    display: none;
+    position: absolute;
+    top: 0;
+    background-color: rgb(221, 221, 221, 0.5);
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-container-display{
+    display: flex;
+}
+
+.modal{
+    width: 500px;
+    height: 500px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px grey;
+}
