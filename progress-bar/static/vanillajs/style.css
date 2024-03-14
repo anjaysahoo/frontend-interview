@@ -1,0 +1,28 @@
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+#slider{
+    width: 15rem;
+}
+
+.progress{
+    height: 20px;
+    border-radius: 3px;
+    border: 1px solid black;
+    width: 100%;
+    box-shadow: #464848 0 0 5px;
+    overflow: hidden;
+}
+
+.fill{
+    background-color: #0d6efd;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+    height: 100%;
+    padding: 2px;
+
+}
