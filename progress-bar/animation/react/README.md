@@ -1,4 +1,4 @@
-## Animation Progress BBar
+## Animation Progress Bar
 
 Build an app where clicking the "Add" button adds progress bars to the page. The progress bars fill up gradually as soon as they are shown.
 
@@ -25,7 +25,7 @@ Important Points:
 * Use transform-origin: left so that the bar is "anchored" on the left and expands rightwards
 
 ```css
-.bar-contents {
+.fill {
   background-color: green;
   height: 100%;
   transform: scaleX(0);
@@ -35,7 +35,7 @@ Important Points:
   transition-timing-function: linear;
 }
 
-.bar-contents--filled {
+.filled {
   transform: scaleX(1);
 }
 ```
