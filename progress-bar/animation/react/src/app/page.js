@@ -1,7 +1,5 @@
 "use client";
 
-import styles from "./page.module.css";
-
 import { useState, useEffect} from 'react';
 
 function ProgressBar() {
@@ -18,6 +16,7 @@ function ProgressBar() {
             <div className={['fill', startTransition && 'filled'].filter(Boolean).join(" ")}></div>
         </div>
     );
+
 }
 
 export default function Home() {

@@ -1,0 +1,27 @@
+body {
+  font-family: sans-serif;
+}
+
+.list{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.bar{
+  height: 20px;
+  width: 100%;;
+  border: 1px solid black;
+  background: grey;
+}
+
+.fill{
+  height: 100%;
+  width: 100%;
+  background: green;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition-timing-function: linear;
+  transition-duration: 2000ms;
+}
