@@ -190,5 +190,8 @@ all the queued tasks are executed.
 2. `setTimeout()` falls under `Task Queue` that's why it is executed one by one in order, so
 at start since condition are met so all 3 bars start filling up, but after that `currentPos` increase
 one by one, unlike `onTransitionEnd()`where it is increased 3 times in one go.
+
 ![img_1.png](img_1.png)
+
+Referred Question: https://www.greatfrontend.com/questions/user-interface/progress-bars-iii
 </details>
