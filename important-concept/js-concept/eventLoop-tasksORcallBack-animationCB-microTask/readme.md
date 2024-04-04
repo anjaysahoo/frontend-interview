@@ -166,7 +166,7 @@ resource.
  <summary style="font-size: small; font-weight: bold">Visualizing Timing</summary>
 In below figure Green & Purple color represent Render step 
 
-Yellow part are animation task
+Yellow part are task queue
 
 ![img_32.png](img_32.png)
 ![img_34.png](img_34.png)
