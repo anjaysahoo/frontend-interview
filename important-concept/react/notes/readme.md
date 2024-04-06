@@ -44,3 +44,109 @@ Resource: https://www.udemy.com/course/react-the-complete-guide-incl-redux/learn
 
 11. Right way to update 2-D array
 ![img_14.png](img_14.png)
+
+12. `useRef`
+```jsx
+export default function Player() {
+    const [enteredPlayerName, setEnteredPlayerName] = useState(null);
+    const [submitted, setSubmitted] = useState(false);
+
+    function handleChange(event) {
+        setSubmitted(false);
+        setEnteredPlayerName(event.target.value);
+    }
+
+    function handleClick() {
+        setSubmitted(true);
+    }
+
+    return (
+        <section id="player">
+            <h2>Welcome {submitted ? enteredPlayerName : 'unknown entity'}</h2>
+            <p>
+                <input type="text" onChange={handleChange} value={enteredPlayerName} />
+                <button onClick={handleClick}>Set Name</button>
+            </p>
+        </section>
+    );
+}
+```
+We can use `useRef` instead of two-way binding like above if we just 
+want to read value
+```jsx
+export default function Player() {
+    const playerName = useRef();
+
+    const [enteredPlayerName, setEnteredPlayerName] = useState(null);
+
+    function handleClick() {
+        setEnteredPlayerName(playerName.current.value);
+    }
+
+    return (
+        <section id="player">
+            <h2>Welcome {enteredPlayerName ?? 'unknown entity'}</h2>
+            <p>
+                <input
+                    ref={playerName}
+                    type="text"
+                />
+                <button onClick={handleClick}>Set Name</button>
+            </p>
+        </section>
+    );
+}
+```
+Note: Don't try to overuse `useRef` to manipulate DOM as it is not
+a good practice and we want React to handle DOM so that it remains Declarative 
+code
+![img_17.png](img_17.png)
+1. `useRef` have good usecase when we don't want to change/handle
+the DOM, but any variable state in function
+2. `useRef` does not re render the component when they are updated
+```jsx
+/* We avoid using variable like this for controlling 
+value, since this variable shared between all components
+that are made by this component. useRef is has better usecase
+ */
+// let timer;
+
+export default function TimerChallenge({ title, targetTime }) {
+    const timer = useRef();
+
+    const [timerStarted, setTimerStarted] = useState(false);
+    const [timerExpired, setTimerExpired] = useState(false);
+
+    function handleStart() {
+        timer.current = setTimeout(() => {
+            setTimerExpired(true);
+        }, targetTime * 1000);
+
+        setTimerStarted(true);
+    }
+
+    function handleStop() {
+        clearTimeout(timer.current);
+    }
+
+    return (
+        <section className="challenge">
+            <h2>{title}</h2>
+            {timerExpired && <p>You lost!</p>}
+            <p className="challenge-time">
+                {targetTime} second{targetTime > 1 ? 's' : ''}
+            </p>
+            <p>
+                <button onClick={timerStarted ? handleStop : handleStart}>
+                    {timerStarted ? 'Stop' : 'Start'} Challenge
+                </button>
+            </p>
+            <p className={timerStarted ? 'active' : undefined}>
+                {timerStarted ? 'Time is running...' : 'Timer inactive'}
+            </p>
+        </section>
+    );
+}
+
+```
+Referred video: https://www.udemy.com/course/react-the-complete-guide-incl-redux/learn/lecture/39836346#overview
