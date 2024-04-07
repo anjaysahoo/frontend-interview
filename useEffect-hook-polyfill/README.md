@@ -1,7 +1,4 @@
 ## `useEffect` Hook Polyfill
-
-### Important Points
-
 1. 
 ```jsx
 useEffect(() => {
