@@ -36,6 +36,20 @@ Output
 ```
 
 Referred Article: https://www.freecodecamp.org/news/how-to-loop-through-an-array-in-javascript-js-iterate-tutorial/
+
+#### Looping Array fixed number of time in React
+
+```jsx
+{
+    Array(10).fill(null).map((_, index) => <p key={index}>Hello</p>)
+}
+```
+
+```jsx
+{
+    [...Array(10)].map((_, index) => <p key={index}>Hello</p>)
+}
+```
 </details >
 
 
