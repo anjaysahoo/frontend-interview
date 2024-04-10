@@ -72,6 +72,47 @@ const baz = 'baz';
 baz = 'qux';
 ```
 
-## Notes
+### Notes
 
 - Since most browsers support `let` and `const` these days, using `var` is no longer recommended. If you need to target older browsers, write your code using `let`, and use a transpiler like Babel to compile your code to older syntax.
+
+Good in-depth video: https://youtu.be/BNC6slYCj50?si=Olv9qeCAtFbArgl6
+
+## Block Scope
+![img.png](img.png)
+
+
+
+## Shadowing
+![img_1.png](img_1.png)
+
+1. In `var` case
+![img_2.png](img_2.png)
+Since both `block` and outside `a` was sharing same global execution space
+that's why value get updated 
+
+
+2. In `let` case
+![img_3.png](img_3.png)
+![img_4.png](img_4.png)
+
+3. In `const` case
+![img_5.png](img_5.png)
+
+It works same for `function`
+![img_6.png](img_6.png)
+![img_7.png](img_7.png)
+
+## Illegal Shadowing
+
+This is invalid and illegal shadowing
+![img_8.png](img_8.png)
+
+Below is valid
+![img_9.png](img_9.png)
+
+Note:
+1. `Block scope` follow same like `lexical scope`
+2. Arrow function scope is same like normal function
+
+Referred Video: https://youtu.be/lW_erSjyMeM?si=t9omkRS3sVmgXrwZ
