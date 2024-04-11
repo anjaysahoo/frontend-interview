@@ -19,9 +19,13 @@ having only `Heap` and `Call Stack` in it.
 
 But what make it look like `multi threaded` is by using 
 1. Event Loop
-2. Callback or Tasks Queue
+2. Callback or Tasks Queue: (`setTimeout()`, DOM APIs, ..)
 3. Animation Queue
-4. MicroTask Queue
+4. MicroTask Queue: (`Promise`, `fetch()`, Mutation Observer, ..)
+
+### MicroTask Queue >> Callback Queue
+
+`Microtask Queue` has **higher priority** than `Callback Queue`
 
 <details >
  <summary style="font-size: x-large; font-weight: bold">Philip Roberts' Talk</summary>
@@ -285,4 +289,22 @@ Be careful while automating anything using script
 Use above tool to better visualize above example
 </details>
 
+</details>
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Namaste JS</summary>
+
+![img_62.png](img_62.png)
+![img_63.png](img_63.png)
+
+Referred Video: https://youtu.be/8zKuNo4ay8E?si=HOCnXMoqEvLG-G8h
+
+## JS Engine
+
+![img_64.png](img_64.png)
+![img_65.png](img_65.png)
+![img_66.png](img_66.png)
+![img_67.png](img_67.png)
+Depending on the browser engine, the JS can use `Interpreter` or `Compiler`
+![img_68.png](img_68.png)
 </details>

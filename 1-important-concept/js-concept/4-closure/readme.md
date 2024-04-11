@@ -9,9 +9,19 @@ Here even though `x()` execution context is removed from removed from
 
 ### Function with its `lexical` scope bundle together is called closure
 
+Ho to create closure?
+
+Whenever we want to create Closure then just create a function wraping
+variables & functions in them
+
+
 **Few more examples**
 ![img_19.png](img_19.png)
 Here we have closure of both `x()` and `z()`
+
+![img_36.png](img_36.png)
+
+Using Closure to know the button clicked count without any global variable
 
 ### Closure Usecase
 ![img_20.png](img_20.png)
