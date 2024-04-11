@@ -106,3 +106,35 @@ Array.isArray([])
 Referred Article: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#bigint_type
 
 </details>
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">map, filter & reduce</summary>
+
+### `map()`
+
+![img_1.png](img_1.png)
+
+### `filter()`
+
+![img_2.png](img_2.png)
+
+### `reduce()`
+
+We use reduce whenever we want to reduce an array to a single value.
+This single value can be anything like string, number, array, Object,etc.
+![img_3.png](img_3.png)
+
+acc: accumulator
+curr: current
+second param: initial value of `accumulator`
+
+### Example
+
+![img_4.png](img_4.png)
+
+![img_5.png](img_5.png)
+
+![img_6.png](img_6.png)
+
+Referred Video: https://youtu.be/zdp0zrpKzIE?si=B6N_S7e4XUy7SoOd
+</details>
