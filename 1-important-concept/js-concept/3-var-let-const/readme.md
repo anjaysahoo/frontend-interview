@@ -116,3 +116,13 @@ Note:
 2. Arrow function scope is same like normal function
 
 Referred Video: https://youtu.be/lW_erSjyMeM?si=t9omkRS3sVmgXrwZ
+
+
+### `Undecalred`
+![img_10.png](img_10.png)
+
+### `undefined`
+![img_11.png](img_11.png)
+
+### `null`
+![img_12.png](img_12.png)

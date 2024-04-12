@@ -4,6 +4,7 @@ Understand whole concept in just 18 min through this video: https://www.youtube.
 
 Article for same: https://blog.webdevsimplified.com/2022-01/event-listeners/
 
+### Event Bubbling & Capture
 ```html
 <div class="parent">
   <div class="child"></div>
