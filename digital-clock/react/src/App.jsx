@@ -84,14 +84,14 @@ export default function Clock() {
 
     useEffect(() => {
         setTimeout(() => {
-            const first = Math.floor((new Date().getUTCHours()) / 10);
-            const second = (new Date().getUTCHours()) % 10;
+            const first = Math.floor((new Date().getHours()) / 10);
+            const second = (new Date().getHours()) % 10;
 
-            const third = Math.floor((new Date().getUTCMinutes()) / 10);
-            const fourth = (new Date().getUTCMinutes()) % 10;
+            const third = Math.floor((new Date().getMinutes()) / 10);
+            const fourth = (new Date().getMinutes()) % 10;
 
-            const fifth = Math.floor((new Date().getUTCSeconds()) / 10);
-            const sixth = (new Date().getUTCSeconds()) % 10;
+            const fifth = Math.floor((new Date().getSeconds()) / 10);
+            const sixth = (new Date().getSeconds()) % 10;
 
             setFirstDigit(first);
             setSecondDigit(second);
