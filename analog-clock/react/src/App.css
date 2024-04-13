@@ -1,0 +1,47 @@
+body {
+  font-family: sans-serif;
+}
+
+.clock{
+  display: flex;
+  width: 20rem;
+  height: 20rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
+.secondHand-top{
+  width: 1px;
+  height: 100px;
+  background-color: black;
+}
+
+.secondHand-bottom{
+  width: 1px;
+  height: 100px;
+
+}
+
+.minHand-top{
+  width: 2px;
+  height: 80px;
+  background-color: black;
+}
+
+.minHand-bottom{
+  width: 2px;
+  height: 80px;
+}
+
+.hourHand-top{
+  width: 3px;
+  height: 60px;
+  background-color: black;
+}
+
+.hourHand-bottom{
+  width: 3px;
+  height: 60px;
+}
