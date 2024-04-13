@@ -103,6 +103,11 @@ export default function Clock() {
             setSixthDigit(sixth);
 
             console.log("sixth : " + sixth);
+            /**
+             * Here we need to use 1000ms in timeout because anything less
+             * will not set timeout function again as `sixthDigit` change only after 1s, hence
+             * UI won't update after 1s
+             */
         }, 1000)
     }, [sixthDigit])
 
