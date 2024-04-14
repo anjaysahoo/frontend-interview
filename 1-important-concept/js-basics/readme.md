@@ -138,3 +138,29 @@ second param: initial value of `accumulator`
 
 Referred Video: https://youtu.be/zdp0zrpKzIE?si=B6N_S7e4XUy7SoOd
 </details>
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Slice, Splice & Split</summary>
+
+### `slice()`
+
+![img_8.png](img_8.png)
+
+![img_9.png](img_9.png)
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice
+
+
+### `splice()`
+
+![img_10.png](img_10.png)
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
+
+### `split()`
+
+![img_11.png](img_11.png)
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split
+
+</details>
