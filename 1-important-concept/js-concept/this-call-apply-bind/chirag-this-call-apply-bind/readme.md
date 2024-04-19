@@ -104,8 +104,8 @@ Output:
 ```js
 //Case-1
 console.log("Bind: BF Normal Function: ");
-const BfNormallGfBindFn = bfKapoorObject.gfFunction.bind(bfSinghObject);
-BfNormallGfBindFn();
+const BfNormalGfBindFn = bfKapoorObject.gfFunction.bind(bfSinghObject);
+BfNormalGfBindFn();
 
 //Case-4
 console.log("Bind: BF Arrow Function: ");
