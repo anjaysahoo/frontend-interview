@@ -3,13 +3,13 @@
 ![img_18.png](img_18.png)
 ![img_17.png](img_17.png)
 
-Here even though `x()` execution context is removed from removed from
+Here even though `x()` execution context is removed from
 `call stack` after line _8_, but when `z()` execute it remembers the value of 
 `a` because of `closure` hence print `7`
 
 ### Function with its `lexical` scope bundle together is called closure
 
-Ho to create closure?
+How to create closure?
 
 Whenever we want to create Closure then just create a function wraping
 variables & functions in them
