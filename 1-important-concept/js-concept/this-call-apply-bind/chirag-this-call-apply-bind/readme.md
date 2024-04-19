@@ -107,7 +107,7 @@ console.log("Bind: BF Normal Function: ");
 const BfNormalGfBindFn = bfKapoorObject.gfFunction.bind(bfSinghObject);
 BfNormalGfBindFn();
 
-//Case-4
+//Case-2
 console.log("Bind: BF Arrow Function: ");
 const BfArrowGfBindFn = bfKapoorObject.gfArrowFunction.bind(bfSinghObject);
 BfArrowGfBindFn();
