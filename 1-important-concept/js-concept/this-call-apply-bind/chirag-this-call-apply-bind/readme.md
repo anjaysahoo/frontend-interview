@@ -301,7 +301,7 @@ Output:
 
 All rule is followed from top to bottom meaning: 
 GF function called without BF in case of "Normal Function with Async Arrow Inner Function"
-So rule 2 will is applied and nothing else matter. Hence will output Global scope object
+So rule 2 is applied and nothing else matter. Hence will output Global scope object
 
 Arrow function execute wrt to global scope normally and wrt to defined BF object scope 
 if executed inside normal GF function
