@@ -1,8 +1,8 @@
 ## Lexical Environment
 
-![img_1.png](img_1.png)
-![img_2.png](img_2.png)
-![img.png](img.png)
+![img_1.png](images/img_1.png)
+![img_2.png](images/img_2.png)
+![img.png](images/img.png)
 
 1. Here _yellow_ part is `lexical` environment of its parent
 2. `Lexical` environment is created whenever a `execution context` is created

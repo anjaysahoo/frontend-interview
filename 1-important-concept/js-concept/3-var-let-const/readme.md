@@ -79,37 +79,37 @@ baz = 'qux';
 Good in-depth video: https://youtu.be/BNC6slYCj50?si=Olv9qeCAtFbArgl6
 
 ## Block Scope
-![img.png](img.png)
+![img.png](images/img.png)
 
 
 
 ## Shadowing
-![img_1.png](img_1.png)
+![img_1.png](images/img_1.png)
 
 1. In `var` case
-![img_2.png](img_2.png)
+![img_2.png](images/img_2.png)
 Since both `block` and outside `a` was sharing same global execution space
 that's why value get updated 
 
 
 2. In `let` case
-![img_3.png](img_3.png)
-![img_4.png](img_4.png)
+![img_3.png](images/img_3.png)
+![img_4.png](images/img_4.png)
 
 3. In `const` case
-![img_5.png](img_5.png)
+![img_5.png](images/img_5.png)
 
 It works same for `function`
-![img_6.png](img_6.png)
-![img_7.png](img_7.png)
+![img_6.png](images/img_6.png)
+![img_7.png](images/img_7.png)
 
 ## Illegal Shadowing
 
 This is invalid and illegal shadowing
-![img_8.png](img_8.png)
+![img_8.png](images/img_8.png)
 
 Below is valid
-![img_9.png](img_9.png)
+![img_9.png](images/img_9.png)
 
 Note:
 1. `Block scope` follow same like `lexical scope`
@@ -119,10 +119,10 @@ Referred Video: https://youtu.be/lW_erSjyMeM?si=t9omkRS3sVmgXrwZ
 
 
 ### `Undecalred`
-![img_10.png](img_10.png)
+![img_10.png](images/img_10.png)
 
 ### `undefined`
-![img_11.png](img_11.png)
+![img_11.png](images/img_11.png)
 
 ### `null`
-![img_12.png](img_12.png)
+![img_12.png](images/img_12.png)

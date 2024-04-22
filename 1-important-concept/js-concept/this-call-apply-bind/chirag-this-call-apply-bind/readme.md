@@ -1,5 +1,5 @@
-![img_2.png](img_2.png)
-![img_7.png](img_7.png)
+![img_2.png](images/img_2.png)
+![img_7.png](images/img_7.png)
 
 
 All `undefined` output in below cases in `Non-Strict` mode will return `window` object
@@ -70,7 +70,7 @@ withoutBfArrowGfFn();
 ```
 
 Output:
-![img_12.png](img_12.png)
+![img_12.png](images/img_12.png)
 
 
 ### Change BF Techniques using `call()`/`apply()`
@@ -96,7 +96,7 @@ withoutBfArrowGfCallFn.call(bfSinghObject);
 ```
 
 Output: 
-![img_13.png](img_13.png)
+![img_13.png](images/img_13.png)
 
 
 
@@ -116,7 +116,7 @@ BfArrowGfBindFn();
 ```
 
 Output:
-![img_14.png](img_14.png)
+![img_14.png](images/img_14.png)
 
 
 
@@ -233,7 +233,7 @@ bfAsynObject.gfArrowFnAsyncArrowInnerFn();
 ```
 
 Output:
-![img_15.png](img_15.png)
+![img_15.png](images/img_15.png)
 
 
 
@@ -286,7 +286,7 @@ withoutBfGfArrowFnAsyncArrowInnerFn();
 ```
 
 Output:
-![img_16.png](img_16.png)
+![img_16.png](images/img_16.png)
 
 
 
@@ -309,10 +309,41 @@ if executed inside normal GF function
 **Referred Video:** https://www.youtube.com/watch?v=hwoU8NCICSE
 
 
+`this` does not bind to any object it binds to function that's why arrow function
+behave differently than normal function
+
+You can think what would happen if arrow function was not there, it will behave 
+same if we have arrow function
+![img_17.png](images/img_17.png)
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Some More Example/Questions</summary>
+
+1. 
+![img_18.png](images/img_18.png)
+
+2. 
+![img_19.png](images/img_19.png)
+![img_20.png](images/img_20.png)
+
+3. 
+![img_21.png](images/img_21.png)
+
+4. 
+![img_22.png](images/img_22.png)
+
+5. ![img_23.png](images/img_23.png)
+
+6.
+![img_24.png](images/img_24.png)
+![img_25.png](images/img_25.png)
+![img_26.png](images/img_26.png)
+</details>
 
 
 Some silly mistake😅
-![img_6.png](img_6.png)
+![img_6.png](images/img_6.png)
 
 Here we are getting above error as `gfFunction()` is not return anything,
 it is just logging the value

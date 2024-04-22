@@ -88,13 +88,13 @@ Important caveat
 
 1. `Properties vs. Methods`
 
-![img.png](img.png)
+![img.png](images/img.png)
 
 Anything that is not defined as `method` will not change for child instances
 even if we change it in the parent. Like in above example property `age` is not changed even
 after changing `age` of parent `person`
 
-![img_1.png](img_1.png)
+![img_1.png](images/img_1.png)
 
 _**`Property` is what a parent have and `Method` are what they do**_
 
@@ -122,43 +122,43 @@ const me = new Object();
 const me = Object.create({});
 ```
 
-![img_3.png](img_3.png)
+![img_3.png](images/img_3.png)
 
 Every `Object` has an `__proto__` property.
-![img_4.png](img_4.png)
+![img_4.png](images/img_4.png)
 
 1. `__proto__` in `Array`
-   ![img_6.png](img_6.png)
+   ![img_6.png](images/img_6.png)
 
 2. `__proto__` in `String`
-   ![img_7.png](img_7.png)
+   ![img_7.png](images/img_7.png)
 
 3. `__proto__` in `Chain of Object`
-   ![img_8.png](img_8.png)
+   ![img_8.png](images/img_8.png)
 
 Creating instance of `ben` from `sina` object
-![img_9.png](img_9.png)
-![img_12.png](img_12.png)
+![img_9.png](images/img_9.png)
+![img_12.png](images/img_12.png)
 
-![img_13.png](img_13.png)
+![img_13.png](images/img_13.png)
 
 
 ### `prototype`
 
-![img_14.png](img_14.png)
-![img_16.png](img_16.png)
+![img_14.png](images/img_14.png)
+![img_16.png](images/img_16.png)
 
 `prototype` does not belong to any `Object` or instances but only to `Constructor functions` or
 `Classes`
 
-![img_17.png](img_17.png)
-![img_18.png](img_18.png)
-![img_19.png](img_19.png)
+![img_17.png](images/img_17.png)
+![img_18.png](images/img_18.png)
+![img_19.png](images/img_19.png)
 
-![img_20.png](img_20.png)
+![img_20.png](images/img_20.png)
 
 We are creating instances of `me` constructor function of Object
-![img_21.png](img_21.png)
+![img_21.png](images/img_21.png)
 
 
 Referred Video: https://youtu.be/1UTqFAjYx1k?si=_rYdylQi8aK3zaO6

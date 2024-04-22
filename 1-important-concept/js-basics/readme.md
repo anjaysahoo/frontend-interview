@@ -93,7 +93,7 @@ Referred Article: https://www.freecodecamp.org/news/how-to-iterate-over-objects-
 <details >
  <summary style="font-size: x-large; font-weight: bold">`typeof()`</summary>
 
-![img.png](img.png)
+![img.png](images/img.png)
 
 ```javascript
 typeof([])
@@ -112,17 +112,17 @@ Referred Article: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_s
 
 ### `map()`
 
-![img_1.png](img_1.png)
+![img_1.png](images/img_1.png)
 
 ### `filter()`
 
-![img_2.png](img_2.png)
+![img_2.png](images/img_2.png)
 
 ### `reduce()`
 
 We use reduce whenever we want to reduce an array to a single value.
 This single value can be anything like string, number, array, Object,etc.
-![img_3.png](img_3.png)
+![img_3.png](images/img_3.png)
 
 acc: accumulator
 curr: current
@@ -130,11 +130,11 @@ second param: initial value of `accumulator`
 
 ### Example
 
-![img_4.png](img_4.png)
+![img_4.png](images/img_4.png)
 
-![img_5.png](img_5.png)
+![img_5.png](images/img_5.png)
 
-![img_6.png](img_6.png)
+![img_6.png](images/img_6.png)
 
 Referred Video: https://youtu.be/zdp0zrpKzIE?si=B6N_S7e4XUy7SoOd
 </details>
@@ -145,9 +145,9 @@ Referred Video: https://youtu.be/zdp0zrpKzIE?si=B6N_S7e4XUy7SoOd
 
 ### `slice()`
 
-![img_8.png](img_8.png)
+![img_8.png](images/img_8.png)
 
-![img_9.png](img_9.png)
+![img_9.png](images/img_9.png)
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice
@@ -155,12 +155,12 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 ### `splice()`
 
-![img_10.png](img_10.png)
+![img_10.png](images/img_10.png)
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
 
 ### `split()`
 
-![img_11.png](img_11.png)
+![img_11.png](images/img_11.png)
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split
 
 </details>
