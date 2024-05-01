@@ -80,3 +80,26 @@ Sample parent component
 ```
 onRemoved in child component is calling someFunction in parent component
 </details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">ViewChild decorator</summary>
+
+In order to have access to child component/directive/element
+
+```ts
+@ViewChild(NumberComponent)
+private numberComponent: NumberComponent;
+increase() {
+this.numberComponent.increaseByOne(); //method from child component
+}
+decrease() {
+this.numberComponent.decreaseByOne();  //method from child component
+}
+```
+
+```ts
+@ViewChild(BiosVersionsComponent) biosVersionsComponent: BiosVersionsComponent;
+```
+</details>
