@@ -294,6 +294,8 @@ Ex: map(), reduce(), filter(), ...etc
 ![img_43.png](images/img_43.png)
 
 Referred Video: https://youtu.be/HkWxvB1RJq0?si=zjardBsnBI1OLe9q
+
+![img.png](img.png)
 </details>
 
 

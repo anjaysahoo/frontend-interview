@@ -163,4 +163,30 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 ![img_11.png](images/img_11.png)
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split
 
+
+### `substring()` v/s `slice()`
+
+The choice between `slice()` and `substring()` in JavaScript depends on your specific use case and requirements. Both methods are used to extract a portion of a string, but they have some differences in behavior:
+
+1. **Parameters**:
+    - `slice(startIndex, endIndex)`: Accepts two parameters. `startIndex` is the index at which to begin extraction (inclusive), and `endIndex` is the index at which to end extraction (exclusive).
+    - `substring(startIndex, endIndex)`: Also accepts two parameters. `startIndex` is the index at which to begin extraction, and `endIndex` is the index at which to end extraction. However, if `startIndex` is greater than `endIndex`, `substring()` will swap the two arguments.
+
+2. **Negative Indices**:
+    - `slice()` allows negative indices, which count from the end of the string. For example, `-1` refers to the last character of the string.
+    - `substring()` does not accept negative indices. If negative values are provided, it treats them as if they were `0`.
+
+3. **Mutability**:
+    - Both methods do not modify the original string; they return a new string.
+
+4. **Compatibility**:
+    - `slice()` is part of the ECMAScript standard and is supported in all modern browsers.
+    - `substring()` is also widely supported but may behave differently in some older browsers, particularly with negative indices.
+
+Here are some scenarios where you might choose one over the other:
+
+- If you need to extract a substring based on an index range and you want to support negative indices or if you're working with APIs that return negative indices (e.g., `slice(-3)` to get the last 3 characters), then `slice()` is a better choice.
+- If you need to ensure that the start index is less than or equal to the end index, and you don't need to handle negative indices, `substring()` could be more convenient because it automatically swaps the indices if necessary.
+
+In general, both methods are quite similar, and the choice between them often comes down to personal preference or specific requirements of the task at hand.
 </details>
