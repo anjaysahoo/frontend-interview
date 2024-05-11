@@ -35,14 +35,16 @@ body.append(div);
 
 
 ## Removing HTML from DOM
-```html
-<body>
-    <div>
-        <span id="hello">Hello</span>
-        <span id="bye">Bye</span>
-    </div>
 
-    <script src="index.js"></script>
+```html
+
+<body>
+<div>
+    <span id="hello">Hello</span>
+    <span id="bye">Bye</span>
+</div>
+
+<script src="index.js"></script>
 </body>
 ```
 
