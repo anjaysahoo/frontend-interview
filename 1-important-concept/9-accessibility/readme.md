@@ -24,7 +24,7 @@
 _WCAG (Web Content Accessibility Guidelines)_
 
 https://webaim.org/standards/wcag/checklist
-![img.png](img.png)
+![img.png](images/img_0.png)
 
 **WebAIM(WCAG Principle)**
 
@@ -42,16 +42,16 @@ https://webaim.org/standards/wcag/checklist
 
 Referred Video: https://youtu.be/g2tzEil5TL0?si=KB55mkrFR6nxuE79
 ##### Semantic
-![img_7.png](img_7.png)
+![img_7.png](images/img_7.png)
 
 ##### Accessibility tree
 
-![img_8.png](img_8.png)
+![img_8.png](images/img_8.png)
 
 
-![img_9.png](img_9.png)
+![img_9.png](images/img_9.png)
 
-![img_10.png](img_10.png)
+![img_10.png](images/img_10.png)
 
 
 ### 1. Accessible HTML
@@ -96,16 +96,16 @@ Referred Video: https://youtu.be/g2tzEil5TL0?si=KB55mkrFR6nxuE79
 
 https://youtu.be/CZGqnp06DnI?si=c0sQLuGzBrXDt9rT
 
-![img_4.png](img_4.png)
+![img_4.png](images/img_4.png)
 
 - It is not auto-focusable and we need to add `tabindex="0"` to it.
 - Screen reader does not announce it as button.
 
-![img_5.png](img_5.png)
+![img_5.png](images/img_5.png)
 
 - We lose capability to click it through keyboards
 
-![img_6.png](img_6.png)
+![img_6.png](images/img_6.png)
 
 - Disable does not work as expected
 </details>
@@ -147,7 +147,7 @@ https://web.dev/learn/accessibility/images
 You can see from the code snippet that "Navigate to the homepage" is the wrapper title, and the image alternative text is "Lovely Ladybugs for your Lawn." When you listen to the logo code with a screen reader, you hear both the visual and the action conveyed in one image.
 
 4. **Complex images**: https://web.dev/learn/accessibility/images#complex_images
-   ![img_1.png](img_1.png)
+   ![img_1.png](images/img_1.png)
 
 
 </details>
@@ -160,42 +160,42 @@ You can see from the code snippet that "Navigate to the homepage" is the wrapper
 
 https://www.youtube.com/watch?v=g9Qff0b-lHk&t=339s
 
-![img_15.png](img_15.png)
+![img_15.png](images/img_15.png)
 
 1.
-![img_19.png](img_19.png)
+![img_19.png](images/img_19.png)
 Here adding `role` and `aria-checked` attributes help `div`
 to behave like checkbox
 
 2.
-![img_20.png](img_20.png)
+![img_20.png](images/img_20.png)
 We can also modify semantics for better screen readers
 
 3.
-![img_21.png](img_21.png)
+![img_21.png](images/img_21.png)
 We can express more through ARIA, like above is a tree and which
 is not possible otherwise through any built-in methods
 
 4.
-![img_22.png](img_22.png)
+![img_22.png](images/img_22.png)
 
 5.
-![img_23.png](img_23.png)
+![img_23.png](images/img_23.png)
 
 6.
-![img_24.png](img_24.png)
+![img_24.png](images/img_24.png)
 `role="alert"` help to announce immediately when it appears
 
 <br>
 
-![img_2.png](img_2.png)
+![img_2.png](images/img_2.png)
 
 So ARIA surgically added attributes to our DOM tree to make
 things accessible where we don't have built in support
 
 **ARIA Capabilities Summary**
-![img_18.png](img_18.png)
-![img_3.png](img_3.png)
+![img_18.png](images/img_18.png)
+![img_3.png](images/img_3.png)
 
 </details>
 
@@ -208,19 +208,19 @@ things accessible where we don't have built in support
 https://youtu.be/8dCUzOiMRy4?si=oG_zgtQvypoDpvG8
 1. `aria-label` attributes
 
-![img_11.png](img_11.png)
+![img_11.png](images/img_11.png)
 
 This is very useful in places where we don't have built in support
 like checkboxes, select, radio etc
 
 2. `aria-labelledby` attributes
 
-![img_12.png](img_12.png)
+![img_12.png](images/img_12.png)
 
 Here we are able to reference another element with `aria-labelledby`
 
-![img_13.png](img_13.png)
-![img_14.png](img_14.png)
+![img_13.png](images/img_13.png)
+![img_14.png](images/img_14.png)
 
 It can also self-reference itself to give better accessibility
 
@@ -230,6 +230,10 @@ It can also self-reference itself to give better accessibility
 
 <details >
  <summary style="font-size: large; font-weight: bold">States & Properties</summary>
+
+Google a11ycast Youtube: https://youtu.be/88tfx3jLV_M?si=r_JU2za9q_M3_SsQ
+
+MDN: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes
 </details>
 
 
@@ -241,28 +245,166 @@ It can also self-reference itself to give better accessibility
 
 
 <details >
- <summary style="font-size: x-large; font-weight: bold">Assistive technologies</summary>
+ <summary style="font-size: x-large; font-weight: bold">Focus Management</summary>
 
 
+![img_25.png](images/img_25.png)
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Tab Navigation</summary>
+
+1. _**Html dictates focus order**_
+
+   https://youtu.be/Pe0Ce1WtnUM?si=ZVK3HocBBwRvlWMf
+![img_26.png](images/img_26.png)
+Here visually `I should` button is at last but in focus appears first
+
+2. By default focusable tag
+
+- `<a>`
+- `<button>`
+- `<input>`
+- `<select>`
+- `<textarea>`
+- `<iframe>`
+
+3. Manually give focus using `tabindex = "0 | 1,2,3 ... | -1"`.
+
+   https://youtu.be/Pe0Ce1WtnUM?si=zYYvSFUdhSDF3CzP
+   1. But avoid using it if tag is by default-focusable
+
+   ![img_27.png](images/img_27.png)
+
+   2. Using `tabindex = "-1"` we can skip the focus.
+   3. Also we can add focus programmatically using `focus()` like in above example
+   4. Avoid using `tabindex` value **greater than 0**.
+   `tabindex` > 0 will be on top of the tab order
+   5. Always try to _**Higher in the tab order = earlier in the DOM**_
 
 </details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Keyboard Shortcuts</summary>
+
+- We can create keyboard shortcut using JS
+- Like twitter has got many shortcut
+  ![img_28.png](images/img_28.png)
+- 
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Skip Links</summary>
+
+Short Explanation: https://www.w3schools.com/accessibility/accessibility_skip_links.php
+<br>
+Long Verbose: https://css-tricks.com/how-to-create-a-skip-to-content-link/
+
+The most common skip link is the first interactive element on a page. 
+It takes the user to the main content, past the global elements like the logo, 
+search and navigation. It is almost always hidden until it receives focus.
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Active Element</summary>
+
+Whenever we open a modal then once we close the modal focus again should go
+back to where we left. But it is not always the case.
+
+To achieve this do something like below
+
+```js
+/** A modal is about to be opened */
+/** Store the current new item */
+
+const currentItem = document.activeElement;
+
+/** Open the modal */
+/** On modal close, refocus on the new item they had opened */
+
+currentItem.focus();
+```
+</details>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Tab Trapping</summary>
+
+
+When we make any modal there is good chance if you don't handle it then
+clicking `tab` button focus may go outside the modal.
+
+To handle this, we need to do  `tab trapping`, using techniques
+like below.
+Using this focus remains withing modal itself
+
+```js
+// Trap focus within the modal
+  modal.addEventListener('keydown', function (e) {
+    const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+
+    if (isTabPressed) {
+      // Check if the last focusable element is focused
+      if (e.shiftKey) {
+        // Shift + Tab: Check if focus is on the first focusable element
+        if (document.activeElement === modal) {
+          e.preventDefault();
+          modal.focus(); // Move focus to the last focusable element
+        }
+      } else {
+        // Tab: Check if focus is on the last focusable element
+        const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        const lastFocusable = focusableElements[focusableElements.length - 1];
+
+        if (document.activeElement === lastFocusable) {
+          e.preventDefault();
+          modal.focus(); // Move focus to the first focusable element
+        }
+      }
+    }
+  });
+```
+
+
+For more details: https://youtu.be/JS68faEUduk?si=w_7xmWPDPU-o9Oe4
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Page Navigation</summary>
+
+- Skip link
+- aria-live
+- contentElement.focus()
+
+</details>
+
+</details>
+
+
+
 
 
 
 <details >
- <summary style="font-size: x-large; font-weight: bold">Assistive technologies</summary>
+ <summary style="font-size: x-large; font-weight: bold">Color Contrast</summary>
 
+https://youtu.be/LBmLspdAtxM?si=7PuaKfX9GwfU9mUn
 
+![img_29.png](images/img_29.png)
+![img_30.png](images/img_30.png)
+![img_31.png](images/img_31.png)
 
+- `em` instead of `px` for font size
+- `prefers-color-scheme` & `prefers-contrast`
 </details>
-
-
 
 <details >
- <summary style="font-size: x-large; font-weight: bold">Assistive technologies</summary>
+ <summary style="font-size: x-large; font-weight: bold">Tools</summary>
 
-
+![img_32.png](images/img_32.png)
 
 </details>
 
-
+![summary-accessibility.jpg](summary-accessibility.jpg)
