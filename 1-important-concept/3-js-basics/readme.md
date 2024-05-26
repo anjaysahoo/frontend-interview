@@ -208,3 +208,44 @@ Here are some scenarios where you might choose one over the other:
 
 In general, both methods are quite similar, and the choice between them often comes down to personal preference or specific requirements of the task at hand.
 </details>
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Sort Array</summary>
+
+![img.png](images/img_12.png)
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+
+```js
+let nums1 = [1,5,2,9,6];
+let nums2 = [1,5,2,9,6];
+
+nums1.sort((a, b) => b - a); //[9, 6, 5, 2, 1]
+nums2.sort((a, b) => a - b); //[1, 2, 5, 6, 9]
+```
+</details>
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Map</summary>
+
+![img_1.png](images/img_13.png)
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+
+```js
+const frequencyMap = new Map();
+
+// Check key is present or not
+if (frequencyMap.has(value)) {
+   frequencyMap.set(value, frequencyMap.get(value) + 1);
+} else {
+   frequencyMap.set(value, 1);
+}
+
+// Iterate over map
+for (const [key, count] of frequencyMap.entries()) {
+   
+}
+
+```
+</details>
