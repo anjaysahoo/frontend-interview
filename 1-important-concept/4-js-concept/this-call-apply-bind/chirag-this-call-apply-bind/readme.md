@@ -303,8 +303,11 @@ All rule is followed from top to bottom meaning:
 GF function called without BF in case of "Normal Function with Async Arrow Inner Function"
 So rule 2 is applied and nothing else matter. Hence will output Global scope object
 
-Arrow function execute wrt to global scope normally and wrt to defined BF object scope 
-if executed inside normal GF function
+**_Arrow function execute wrt to global scope normally and wrt to defined BF object scope 
+if executed inside normal GF function. Basically it executes to its Lexical Scope which is global all
+the time, until it is defined inside any function_**
+
+If `arrow function` execute inside another `arrow function` then 
 
 **Referred Video:** https://www.youtube.com/watch?v=hwoU8NCICSE
 
