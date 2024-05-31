@@ -16,6 +16,11 @@ Array.prototype.myMap = function(cb) {
 }
 ```
 
+Inside the loop, we call the callback function with three arguments:
+- `this[i]`: The current element of the array.
+- `i`: The index of the current element.
+- `this`: The original array (useful for methods that need context).
+
 Usage
 ```js
 const nums = [1,2,3,4];
@@ -25,6 +30,19 @@ const multiplyThree = nums.myMap((num, i, arr) => {
 })
 
 console.log(multiplyThree);
+```
+
+
+In TypeScript
+
+```ts
+Array.prototype.map<T, U>(callback: (value: T, index: number, array: T[]) => U): U[] {
+    const newArray: U[] = [];
+    for (let i = 0; i < this.length; i++) {
+      newArray.push(callback(this[i], i, this));
+    }
+    return newArray;
+  }
 ```
 </details>
 
@@ -54,6 +72,8 @@ Array.prototype.myReduce = function(cb, initialValue){
     var accumulator = initialValue;
     
     for(let i = 0; i < this.length; i++){
+        //checking accumulator first is important because
+        //if we don't have initialValue, accumulator will be undefined
         accumulator = accumulator ? cb(accumulator, this[i], i, this) : this[i];
     }
     
