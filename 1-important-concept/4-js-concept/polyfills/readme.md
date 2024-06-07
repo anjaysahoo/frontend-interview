@@ -95,6 +95,34 @@ Function.prototype.myCall = function (context = {}, ...args){
     context.fn(...args);
 }
 ```
+
+
+In the given code, `this` refers to the function on which `myCall` is being invoked. This is because `myCall` is added to the `Function.prototype`, meaning it becomes a method that can be called on any function.
+
+### Example Usage:
+
+Suppose you have a function `greet`:
+
+```javascript
+function greet(message) {
+    console.log(`${message}, ${this.name}`);
+}
+```
+
+You can use `myCall` to call `greet` with a specific context:
+
+```javascript
+const person = { name: 'Alice' };
+
+greet.myCall(person, 'Hello');  // Output: "Hello, Alice"
+```
+
+In this example:
+- `this` inside `myCall` refers to the `greet` function.
+- `context` is the `person` object `{ name: 'Alice' }`.
+- `context.fn = this` assigns the `greet` function to `context.fn`.
+- `context.fn(...args)` calls the `greet` function with `person` as the context and `'Hello'` as the argument.
+We can use same logic like GF function called by BF, hence `this` will point to BF object
 </details>
 
 <details >
