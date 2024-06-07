@@ -3,13 +3,13 @@
 <details >
  <summary style="font-size: large; font-weight: bold">Basic</summary>
 
-![img_2.png](img_2.png)
-![img_3.png](img_3.png)
-![img_4.png](img_4.png)
-![img_5.png](img_5.png)
-![img_6.png](img_6.png)
-![img_7.png](img_7.png)
-![img.png](img.png)
+![img_2.png](images/img_2.png)
+![img_3.png](images/img_3.png)
+![img_4.png](images/img_4.png)
+![img_5.png](images/img_5.png)
+![img_6.png](images/img_6.png)
+![img_7.png](images/img_7.png)
+![img.png](images/img.png)
 
 - JEST has problem using project with ES module(`import`/`export`)
 - Hence Vitest is a better choice using the same as JEST
@@ -67,7 +67,7 @@ expect(result).toBe(6);
 <details >
  <summary style="font-size: large; font-weight: bold">AAA Pattern</summary>
 
-![img_1.png](img_1.png)
+![img_1.png](images/img_1.png)
 
 
 ```js
@@ -304,10 +304,10 @@ but one level is enough
 <details >
  <summary style="font-size: large; font-weight: bold">Writing Good tests</summary>
 
-![img_8.png](img_8.png)
-![img_9.png](img_9.png)
-![img_10.png](img_10.png)
-![img_11.png](img_11.png)
+![img_8.png](images/img_8.png)
+![img_9.png](images/img_9.png)
+![img_10.png](images/img_10.png)
+![img_11.png](images/img_11.png)
 
 
 ### Code Coverage
@@ -792,7 +792,7 @@ state manipulations may interfere with each other.**
 There could be a multiple scenario where our `test code` is actually manipulating / triggering 
 `Database` or `other external` resources. In such cases we can use `Spies` & `Mock`
 
-![img_12.png](img_12.png)
+![img_12.png](images/img_12.png)
 
 
 <details >
@@ -1258,7 +1258,7 @@ it will very complex thing to do. That's why Jest & Vitest both provide
 environment based testing.
 2. By default is `Node.js`, we update this in `package.json` to `"test": "vitest --run --environment happy-dom"`
 
-![img_13.png](img_13.png)
+![img_13.png](images/img_13.png)
 
 3. 
 Here we are able to access `fs` & `path` because even though we switched to `happy-dom` 
