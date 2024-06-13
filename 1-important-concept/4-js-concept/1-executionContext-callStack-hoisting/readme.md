@@ -6,6 +6,24 @@
 
 Below is how every code run on javascript engine, we create
 `Execution Context` which is maintained by `Call Stack`
+
+First we have **Memory Creation Phase** 👇🏻
+<br>
+`square` function has exact code stored in `Memory`
+![img.png](img.png)
+
+Second we have **Code Execution Phase**
+<br>
+Here we allocate value to `n` & for `square2` function is invoked
+and again we start with `Memory Creation Phase` for `square2`
+![img_1.png](img_1.png)
+
+Once `square2` function is done executing, we assign return value to `square2`
+and `Execution context` of `square2` is removed from `call stack`
+![img_2.png](img_2.png)
+
+
+Final state when everything is done👇🏻
 ![img_1.png](images/img_1.png)
 ![img_2.png](images/img_2.png)
 Other names of `call stack`

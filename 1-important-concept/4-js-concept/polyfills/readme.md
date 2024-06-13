@@ -159,6 +159,10 @@ Function.prototype.myBind = function(context = {}, ...args){
     }
 }
 ```
+
+Check `once()` function explanation and try to execute above in browser with below
+break point to understand this better
+![img_8.png](img_8.png)
 </details>
 
 <details >
@@ -186,6 +190,117 @@ const hello = once((a,b) => console.log("hello", a, b));
 hello(1,2);
 hello(2,3);
 ```
+
+<details >
+ <summary style="font-size: small; font-weight: bold">My Explanation</summary>
+
+I have added different break-points and they will stop the code
+when we hit them.
+
+1. Memory Creation Phase👇🏻
+<br>
+We have `hello` stored with value `<value unavailable>` and `once`
+is stored with its code
+![img_1.png](img_1.png)
+
+2. Code Execution Phase, we start with line 15 straight. Push the `once` in `Call Stack`
+After line 15 execute we hit line 3 break-point and below are values we have
+![img_2.png](img_2.png)
+
+3. Next we hit line-17, before this line execution we have 
+`hello` function under the script with closure.
+Call stack have Global execution context right now
+![img_3.png](img_3.png)
+
+4. Next when line-17 start executing we first hit line-7 breakpoint, since we are trying to 
+execute returned anonymous function by `once` function.
+Call stack hold this anonymous function 
+![img_4.png](img_4.png)
+
+6. Once line-7 execute we move to next break-point line-11. Now our `closure` `func` becomes `null`
+![img_5.png](img_5.png)
+
+7. Next we hit line-11 again, as `closure` `func` was set to `null` previously hence we didn't 
+go into the if condition. We can also confirm the func value from below screenshot
+![img_6.png](img_6.png)
+
+8. finally everything clear up from Call stack and memory
+![img_7.png](img_7.png)
+</details>
+
+<details >
+ <summary style="font-size: small; font-weight: bold">Gemini's Explanation</summary>
+
+I'd be glad to explain the code line by line, including closure creation and state changes:
+
+**Line 1:**
+
+```javascript
+function once(func, context) {
+```
+
+- **Function declaration:** This line declares a function named `once`.
+- **Parameters:** The function takes two parameters:
+    - `func`: This is expected to be a function that will be executed only once.
+    - `context` (optional): This is an optional parameter that specifies the context (`this` value) in which `func` should be called. If not provided, `this` will refer to the function where `once` is called.
+
+**Line 2:**
+
+```javascript
+let ran;
+```
+
+- **Variable declaration:** A variable named `ran` is declared inside the `once` function with `let`. This variable will be used to store the return value of `func` if it has been executed. It is initially set to `undefined`.
+
+**Line 3:**
+
+```javascript
+return function() {
+```
+
+- **Function return:** The `once` function returns another function (an inner function). This creates a closure.
+
+**State after line 3:**
+
+- At this point, the `once` function has not been executed yet. The `ran` variable is still `undefined`.
+
+**Inner function (closure):**
+
+The inner function returned by `once` is where the closure magic happens. It has access to the variables declared within the `once` function's scope (including `ran` and the arguments passed to `once`). This creates a closure because the inner function "remembers" the state of its outer function even when the outer function has finished executing.
+
+**Lines 4-7 (inside the inner function):**
+
+```javascript
+if (func) {
+  ran = func.apply(context || this, arguments);
+  func = null;
+}
+return ran;
+};
+```
+
+- **Conditional check:** This checks if `func` is still a function (not null). This ensures that `func` is executed only once.
+- **Execution (if `func` is not null):**
+    - `ran = func.apply(context || this, arguments);`: If `func` is not null, it's executed using `apply`. This allows you to specify the `context` (`this` value) and arguments for the function call.
+        - `context || this`: If `context` is provided, it's used as the context for `func`. Otherwise, `this` refers to the object where the inner function is called.
+        - `arguments`: The arguments passed to the inner function are used as arguments for `func`.
+    - `func = null;`: After `func` is executed, it's set to `null` to prevent further execution.
+- **Return:** The inner function returns the value stored in `ran` (the result of `func` if it was executed, or `undefined` otherwise).
+
+**State after executing the inner function for the first time (hello(1, 2)):**
+
+- `func` is now set to `null` inside the closure.
+- `ran` holds the return value of `console.log("hello", 1, 2)`.
+
+**State after executing the inner function for the second time (hello(2, 3)):**
+
+- Since `func` is already `null`, the `if` condition fails, and `func` is not executed again.
+- The inner function simply returns the previously stored value in `ran` (which remains the result of the first call).
+
+**Output:**
+
+The code will print "hello 1 2" only once, even though `hello` is called twice. This demonstrates how the closure ensures that `func` is executed at most once.
+</details>
 </details>
 
 <details >
