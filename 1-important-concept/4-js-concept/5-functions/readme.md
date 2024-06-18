@@ -55,7 +55,7 @@ Referred Video: https://youtu.be/SHINoHxvTso?si=T8jxyj-IHrnRx2tx
 <details >
  <summary style="font-size: medium; font-weight: bold">Factory Functions</summary>
 
-It is very similar to actual factory where we raw material and get finished
+It is very similar to actual factory where we put raw material and get finished
 product.
 
 Factory function just create `Object`'s and return them

@@ -336,5 +336,275 @@ console.log(memoizedClumzyProduct(2, 3));
 </details>
 
 <details >
- <summary style="font-size: large; font-weight: bold">map()</summary>
+ <summary style="font-size: large; font-weight: bold">Promise()</summary>
+
+<details >
+ <summary style="font-size: small; font-weight: bold">Stage-1</summary>
+
+- Basic structure
+- Asynchronous `.then()` execution
+
+
+```js
+// Create a Constructor Function
+function PromisePolyFill(executor){
+    let onResolve, onReject;
+
+    function resolve(value){
+        onResolve(value);
+    }
+
+    function reject(value){
+        onReject(value);
+    }
+
+    this.then = function(callback){
+        onResolve = callback;
+        return this;
+    }
+
+    this.catch = function(callback){
+        onReject = callback;
+        return this;
+    }
+
+    executor(resolve, reject);
+}
+
+
+const examplePromise = new PromisePolyFill((res, rej) => {
+    setTimeout(() => {
+        res(2);
+    }, 1000);
+})
+
+examplePromise.then((res) => {
+    console.log("res : ", res)
+}).catch((error) => {
+    console.log("error : ", error)
+});
+
+```
+
+- Try to run this in browser with break points you will get error for synchronous execution, as 
+no `onResolve` function is defined when we try to execute the `.then()`
+
+- Synchronous execution
+![img_9.png](img_9.png)
+
+- Asynchronous execution
+![img_10.png](img_10.png)
 </details>
+
+<details >
+ <summary style="font-size: small; font-weight: bold">Stage-2</summary>
+
+- Synchronous `.then()` execution
+
+```js
+// Create a Constructor Function
+function PromisePolyFill(executor){
+    let onResolve,
+        onReject,
+        isFullfilled = false,
+        isCalled,
+        value;
+
+    function resolve(val){
+        isFullfilled = true;
+        value = val;
+
+        if(typeof onResolve === 'function'){
+            onResolve(val);
+            isCalled = true;
+        }
+    }
+
+    function reject(val){
+        onReject(val);
+    }
+
+    this.then = function(callback){
+        onResolve = callback;
+
+        if(isFullfilled && !isCalled){
+            onResolve(value);
+            isCalled = true;
+        }
+        return this;
+    }
+
+    this.catch = function(callback){
+        onReject = callback;
+        return this;
+    }
+
+    executor(resolve, reject);
+}
+
+
+const examplePromise = new PromisePolyFill((res, rej) => {
+    // setTimeout(() => {
+    res(2);
+
+    // }, 1000);
+})
+
+examplePromise.then((res) => {
+    console.log("res : ", res)
+}).catch((error) => {
+    console.log("error : ", error)
+});
+```
+</details>
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">Stage-3</summary>
+
+- Similarly do it for `reject` part
+
+```js
+// Create a Constructor Function
+function PromisePolyFill(executor){
+    let onResolve,
+        onReject,
+        isFullfilled = false,
+        isRejected = false,
+        isCalled,
+        value;
+
+    function resolve(val){
+        isFullfilled = true;
+        value = val;
+
+        if(typeof onResolve === 'function'){
+            onResolve(val);
+            isCalled = true;
+        }
+    }
+
+    function reject(val){
+        isRejected = true;
+        value = val;
+
+        if(typeof onReject === 'function'){
+            onReject(val);
+            isCalled = true;
+        }
+    }
+
+    this.then = function(callback){
+        onResolve = callback;
+
+        if(isFullfilled && !isCalled){
+            onResolve(value);
+            isCalled = true;
+        }
+        return this;
+    }
+
+    this.catch = function(callback){
+        onReject = callback;
+
+        if(isRejected && !isCalled){
+            onReject(value);
+            isCalled = true;
+        }
+        return this;
+    }
+
+    //Error Handling through `try` `catch` block for executor
+    try{
+        executor(resolve, reject);
+    }
+    catch(error){
+        reject(error);
+    }
+}
+
+
+const examplePromise = new PromisePolyFill((res, rej) => {
+    // setTimeout(() => {
+    rej(2);
+    // }, 1000);
+})
+
+examplePromise.then((res) => {
+    console.log("res : ", res)
+}).catch((error) => {
+    console.log("error : ", error)
+});
+
+```
+</details>
+
+Referred Video: https://youtu.be/Th3rZjfKKhI?si=q4-ACTNygFJqkEb7&t=1576
+<br>
+Referred Article: https://dev.to/vijayprwyd/polyfill-for-promises-1f0e
+</details>
+
+
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">⭐PromisePolyFill.resolve(), PromisePolyFill.reject() & PromisePolyFill.all()</summary>
+
+This is an important interview question, `promise` polyfill can be skipped but
+this needs to be covered. 
+
+Here we can use our own `promise` polyfill or use inbuilt `Promise` to write
+polyfill for the above functions 
+
+`Promise.allPolyfill` like this, but it will have same implementation
+
+```js
+PromisePolyFill.resolve = (val) =>
+  new PromisePolyFill(function executor(resolve, _reject) {
+    resolve(val);
+  });
+
+PromisePolyFill.reject = (reason) =>
+  new PromisePolyFill(function executor(resolve, reject) {
+    reject(reason);
+  });
+```
+
+
+```js
+PromisePolyFill.all = (promises) => {
+  let fulfilledPromises = [],
+    result = [];
+
+  function executor(resolve, reject) {
+    promises.forEach((promise, index) =>
+      promise
+        .then((val) => {
+
+          fulfilledPromises.push(true);
+          result[index] = val;
+
+          if (fulfilledPromises.length === promises.length) {
+            return resolve(result);
+          }
+        })
+        .catch((error) => {
+          return reject(error);
+        })
+    );
+  }
+  return new PromisePolyFill(executor);
+};
+
+```
+
+Here again we create our own executor function, and return back our promise object which would take in this executor.
+Our executor function would work as below :
+
+- We maintain an array named fulfilledPromises and push values to it whenever any promise is resolved.
+- If all promises are resolved ( fulfilledPromises.length === promises.length ) we invoke resolve .
+- If any promise is rejected we invoke the reject
+
+</details>
+
