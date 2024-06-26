@@ -37,7 +37,7 @@ me.talk(); // Talking
 you.talk(); // Talking
 ```
 
-3. Inheritance using `pure objects with Object.create`
+3. **Prototypal Inheritance:** Inheritance using `pure objects with Object.create`
 
 ```javascript
 const person = {

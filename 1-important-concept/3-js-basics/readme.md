@@ -52,6 +52,10 @@ Referred Article: https://www.freecodecamp.org/news/how-to-loop-through-an-array
 ```
 
 
+Right way to update 2-D array
+![img_14.png](images/img_14.png)
+
+
 <details >
  <summary style="font-size: medium; font-weight: bold">Good/Tricky Examples</summary>
 

@@ -1,0 +1,14 @@
+body {
+  font-family: sans-serif;
+}
+
+main{
+  display: grid;
+  width: max-content;
+
+}
+
+.cell{
+  height: 3rem;
+  width: 3rem;
+}

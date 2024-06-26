@@ -59,6 +59,7 @@ function App() {
     }
 
     function getStatusMessage() {
+        console.log("getStatusMessage called");
         if (winner != null) {
             return `Player ${winner} wins!`;
         }
@@ -90,7 +91,7 @@ function App() {
                                 mark={board[cellIndex]}
                                 turn={turn}
                                 onClick={() => {
-                                    const newBoard = board.slice();
+                                    const newBoard = [...board];
                                     newBoard[cellIndex] = turn;
                                     setBoard(newBoard);
                                     setIsXPlaying(!xIsPlaying);
