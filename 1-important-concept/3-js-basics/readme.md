@@ -253,3 +253,57 @@ for (const [key, count] of frequencyMap.entries()) {
 
 ```
 </details>
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Falsy value </summary>
+
+```js
+['', 'products', '1'].filter((x) => x);
+
+// Output: ['products', '1']
+```
+
+![img_1.png](img_1.png)
+
+**Best practice:**
+
+1. To avoid the pitfalls associated with boolean coercion, 
+constructions such as `if (variableName)` should only be used when `variableName` 
+is known to be a boolean value. For variables of other types, an explicit comparison
+is preferred. For example, `if (variableName > 0)` or `if (variableName != undefined)`.
+2. 
+```js
+// Example without the Boolean function
+const value = '';
+
+if (value) {
+console.log('It is a TRUTHY value');
+} else {
+console.log('It is a FALSY value');
+}
+
+// Example with the Boolean function
+const value = ''
+
+if (Boolean(value)) {
+console.log('It is a TRUTHY value');
+} else {
+console.log('It is a FALSY value');
+}
+```
+Both examples do the same thing. But in the second example, it's explicit 
+that you're checking the boolean representation of the given value.
+
+
+### Truthy
+
+![img.png](img.png)
+</details>
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Useful Functions</summary>
+
+![img_2.png](img_2.png)
+</details>

@@ -228,7 +228,7 @@ We cannot have named arrowed function
 3. 
 ![img_35.png](images/img_35.png)
 ![img_36.png](images/img_36.png)
-Refer this concept to better understand this output
+Refer `this` concept to better understand this output
 
 ![img_39.png](images/img_39.png)
 

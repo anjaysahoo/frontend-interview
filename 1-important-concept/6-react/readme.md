@@ -1,0 +1,827 @@
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Basic Concepts</summary>
+
+Quick Speed Run: https://learnweb3.io/degrees/ethereum-developer-degree/sophomore/intro-to-react-and-next-js/
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Conditional Rendering</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Conditional HTML</summary>
+
+```js
+function App() {
+	const isAuthUser = useAuth();
+
+  if (isAuthUser) {
+    // if our user is authenticated, let them use the app
+    return <AuthApp />;
+  }
+
+  // if user is not authenticated, show a different screen
+  return <UnAuthApp />;
+}
+```
+
+
+```js
+function App() {
+	const isAuthUser = useAuth();
+
+  return (
+    <>
+      <h1>My App</h1>
+      {isAuthUser ? <AuthApp /> : <UnAuthApp />}
+    </>
+  ) 
+}
+```
+</details>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Conditional Styling</summary>
+
+1. **Class**
+```js
+<div
+    className={`step ${
+        currentStep > index + 1 || isComplete ? "complete" : ""
+    } ${currentStep === index + 1 ? "active" : ""} `}
+>
+```
+
+Use `.module.css` so that class name does not have any name conflict
+```js
+import classes from './filter-modal.component.module.css';
+
+<div
+    className={classes["modal__main__list__item-val__icon"]}
+>
+```
+
+2. **Style**
+`style` takes `object`. The First curly bracket is for writing JS in JSX, and the second  
+is object of styling where all keys are camelCased, and values are in string.
+
+We can write conditional styling in below two ways
+```js
+<div
+    style={selectedSecondaryItem?.inputType === InputType.CHECKBOX ? {"borderRadius": "5px"} : {"borderRadius": "50%"}}
+>
+```
+
+```js
+<div
+    style={{transform: startTransition ? "scaleX(1)" : "scaleX(0)"}}
+>
+```
+</details>
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Hooks</summary>
+
+- Always define hooks at top of the component
+- Never define inside any other function, if...else , loops or any block of code
+- It's simply a regular JavaScript function. However, it becomes powerful 
+when used within React, as it's provided to us by React itself. 
+These pre-built functions have underlying logic developed by React developers. 
+When we install React via npm, wegain access to these superpowers
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">useEffect()</summary>
+
+1. No second argument
+```js
+import { useEffect } from 'react';
+
+function MyComponent() {
+   useEffect(() => {
+     // perform side effect here
+   });
+}
+```
+Run on every render
+
+2. Second argument with empty array
+```js
+function MyComponent() {
+   useEffect(() => {
+     // perform side effect here
+   }, []);
+}
+```
+Run only on an initial component load
+
+3. Second argument with non-empty array with single
+```js
+function MyComponent() {
+    const [count, setCount] = useState(0);
+   useEffect(() => {
+     // perform side effect here
+   }, [count]);
+}
+```
+Run whenever value of `count` changes
+
+4. Second argument with non-empty array with multiple values
+```js
+useEffect(() => {
+  // Some code
+}, [stateVar1, stateVar2, stateVar3, andSoOn]);
+```
+You can also similarly create side effects which are dependent on 
+multiple state variables, not just one. If any of the dependent variables 
+change, the side effect is run. You do this by just adding more state 
+variables to the dependency array.
+
+</details>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">useRef()</summary>
+
+1. **No Re-Rendering**
+Similar to `useState`, the `useRef` hook also allows us to store a variable in a component 
+that can be updated over time. But, unlike state variables, updating the value of a ref 
+variable does not cause the HTML view to re render.
+
+    Therefore, if you had a `useRef` variable and you were displaying 
+it's value in your HTML view, updating the variable will not update 
+the HTML view.
+
+```js
+// Define a ref variable
+const myNumber = useRef();
+```
+
+```js
+// Access a ref variable
+if (myNumber.current !== undefined) {
+   ...
+} 
+```
+
+```js
+// Update a ref variable
+myNumber.current = 1;
+```
+
+2. **Synchronous Updates**
+Setting a new value for state variables happens asynchronously in React, 
+which means if you try to use the state variable's value immediately after 
+setting it to a new value, you might not actually see the new value being 
+reflected as it happens asynchronously.
+
+![img_2.png](img_2.png)
+
+- When you run this, notice what happens on the view and what happens in the console. 
+When you first click the button, the state variable should be updated to `1` - 
+and that's what happens on the view, the web page displays `1`. But if you 
+look at the browser console, the value `0` is printed instead of `1`. 
+This pattern continues as you keep clicking the button.
+
+- This is because the `setNumber` call runs asynchronously, and by the time 
+we reach the `console.log(number)` line, the value hasn't been updated yet, 
+so it prints the old value of number. When it does in fact gets updated, 
+the HTML is re-rendered to display the new value.
+
+- `useRef` on the other hand, allows for synchronous updates. When you update the 
+value of a reference variable using `myVar.current = newValue` it is instantly updated, 
+and there is no delay. This can come in handy sometimes.
+
+3. **Referencing DOM Elements**
+
+Another cool thing that `useRef` lets us do is that it allows us to refer directly to DOM elements.
+This is something that is not possible with `useState`.
+
+For example, you can reference an input element directly using `useRef`
+![img_3.png](img_3.png)
+
+When you run this above example, you will notice that as soon as the page loads, 
+the `input` element is already in focus i.e. you can start typing without clicking on it first.
+This is because we hold a reference to the `input` element, and have a `useEffect` 
+that runs on page load due to having an empty dependency array, that focuses on 
+the `input` element.
+</details>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Custom Hooks</summary>
+
+Below custom hook checks for internet connection and update the 
+status based on connection status
+
+- Very useful when we want to clean our code and have single responsibility
+- Prefix function name with `use`
+
+```js
+import { useEffect, useState } from "react";
+
+const useOnlineStatus = () => {
+  const [onlineStatus, setOnlineStatus] = useState(true);
+
+  useEffect(() => {
+    window.addEventListener("offline", () => {
+      setOnlineStatus(false);
+    });
+
+    window.addEventListener("online", () => {
+      setOnlineStatus(true);
+    });
+  }, []);
+
+  // boolean value
+  return onlineStatus;
+};
+
+export default useOnlineStatus;
+```
+
+Usage👇🏻
+```js
+import useOnlineStatus from "../utils/useOnlineStatus";
+
+const Header = () => {
+  const onlineStatus = useOnlineStatus();
+
+  return (
+          <li className="px-4">Online Status: {onlineStatus ? "✅" : "🔴"}</li>
+  );
+};
+
+export default Header;
+```
+
+We will have same effect if we directly write same code directly in `Header` component.
+So need to confuse how `onlineStatus` value is updated dynamically when we toggle between
+`online` and `offline` status through our browser dev tools
+![img_4.png](img_4.png)
+</details>
+
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">API Calls</summary>
+
+### 1. Get call
+![img_5.png](img_5.png)
+
+### 2. Post call
+![img_6.png](img_6.png)
+
+</details>
+
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Important Concepts</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Virtual DOM</summary>
+
+1.
+- The crucial point about State variables is that whenever they update
+  React triggers a reconciliationcycle and re-renders the component.
+- This means that as soon as the data layer changes,React promptly updates the UI layer.
+  The data layer isalways kept in sync with the UI layer.
+- To achieve this rapid operation, React employs a reconciliation algorithm, also known
+  as the **_diffing algorithm_** or **_React-Fibre_** which we will delve into further below
+
+2. _But how does it all work behind the scenes?_
+   When you create elements in React, you're actually creating virtual DOM objects.
+   These virtual replicas are synced with the real DOM, a process known as "Reconciliation" or
+   the React"diffing" algorithm.Essentially, every rendering cycle compares the new UI
+   blueprint(updated VDOM) with the old one (previous VDOM) and makes precise changes
+   to the actual DOM accordingly.It's important to understand these fundamentals in order
+   to unlock a world of possibilities for front-end developers!
+
+3. _Do you want to understand and dive deep into it?_
+   Take a look at this awesome React Fiber architecturerepository
+   on the web: https://github.com/acdlite/react-fiber-architecture
+
+
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Client side Routing v/s Server Side Routing</summary>
+
+#### Client Side Routing
+![img.png](img.png)
+
+#### Server Side Routing
+![img_1.png](img_1.png)
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Lazy Loading</summary>
+
+Also called
+- Chunking
+- Code Splitting
+- Dynamic Bundling
+- On Demand loading
+
+1. Whenever we want to load a component based on our demand like clicking a button or link 
+we `Lazy` load such components.
+2. It help to reduce the bundle size, as on initial load there is nothing loaded from that component
+hence bundle size is reduced
+3. When demand for that component we that component and same can be verified in dev tools
+where we can see under `JS` section one new `js` was added
+
+```js
+const Grocery = () => {
+  return (
+    <h1>
+      {" "}
+      Our grocery online store, and we have a lot of child components inside
+      this web page!!!
+    </h1>
+  );
+};
+
+export default Grocery;
+```
+
+```js
+// App.js
+
+import React, { lazy, Suspense, useEffect, useState } from "react";
+import ReactDOM from "react-dom/client";
+import Header from "./components/Header";
+import Body from "./components/Body";
+//import About from "./components/About";
+import Contact from "./components/Contact";
+import Error from "./components/Error";
+import RestaurantMenu from "./components/RestaurantMenu";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Cart from "./components/Cart";
+
+const Grocery = lazy(() => import("./components/Grocery"));
+
+const About = lazy(() => import("./components/About"));
+
+const AppLayout = () => {
+    const [userName, setUserName] = useState();
+
+    //authentication
+    useEffect(() => {
+        // Make an API call and send username and password
+        const data = {
+            name: "Akshay Saini",
+        };
+        setUserName(data.name);
+    }, []);
+
+    return (
+        <Provider store={appStore}>
+            <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+                <div className="app">
+                    <Header />
+                    <Outlet />
+                </div>
+            </UserContext.Provider>
+        </Provider>
+    );
+};
+
+const appRouter = createBrowserRouter([
+    {
+        path: "/",
+        element: <AppLayout />,
+        children: [
+            {
+                path: "/",
+                element: <Body />,
+            },
+            {
+                path: "/about",
+                element: (
+                    <Suspense fallback={<h1>Loading....</h1>}>
+                        <About />
+                    </Suspense>
+                ),
+            },
+            {
+                path: "/contact",
+                element: <Contact />,
+            },
+            {
+                path: "/grocery",
+                element: (
+                    <Suspense fallback={<h1>Loading....</h1>}>
+                        <Grocery />
+                    </Suspense>
+                ),
+            },
+            {
+                path: "/restaurants/:resId",
+                element: <RestaurantMenu />,
+            },
+            {
+                path: "/cart",
+                element: <Cart />,
+            },
+        ],
+        errorElement: <Error />,
+    },
+]);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(<RouterProvider router={appRouter} />);
+```
+
+Here we are using `Suspense` because as soon as we try to visit `Grocery` component, 
+there is a chance that it will take some time to load, hence we are using `Suspense`
+to show loading indicator.
+
+#### Suspense
+In React, Suspense is a feature that allows us to declaratively manage asynchronous 
+data fetching and code-splitting in our applications. It is primarily used in combination
+with the lazy()function for dynamic imports and with the React.lazy()component to 
+improve the user experience when loading data or components asynchronously
+
+### Code-splitting Pattern
+
+#### Advantage
+- faster initial load time
+- Improved performance
+- Optimized resource usage
+- Enhanced Caching:  Smaller bundles can benefit from browser caching. 
+Since they are less likely to change frequently, browsers can cache
+them, resulting in faster subsequent visits for returning users.
+- Simpler maintenance
+- Better mobile performance:  On mobile devices with limited bandwidth and processing power, code splitting can significantly enhance the user experience
+
+
+#### Disadvantage
+- Complex configuration
+- Initial load time is longer
+- Tool and framework support
+- Testing complexity
+
+Refer Namaste notes for more details
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Portals</summary>
+
+Portals are very useful when we want to render a component, somewhere 
+than where it actually defined.
+
+For example here we have a `ResultModal` component which is rendered in 
+`TimerChallenge` component. But since modal are nested in final HTML
+which is not right for accessibilty because modal are present at top 
+everything so it make sense to come at top when it renders.
+
+Hence in second argument we pass `document.getElementById('modal')` where 
+we want to render this.
+
+It is same like
+```js
+ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+)
+```
+
+![img_8.png](img_8.png)
+
+```js
+//ResultModal.jsx
+import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { createPortal } from 'react-dom';
+
+const ResultModal = forwardRef(function ResultModal(
+  { targetTime, remainingTime, onReset },
+  ref
+) {
+  const dialog = useRef();
+
+  return createPortal(
+    <dialog ref={dialog} className="result-modal">
+      {userLost && <h2>You lost</h2>}
+      {!userLost && <h2>Your Score: {score}</h2>}
+      <p>
+        The target time was <strong>{targetTime} seconds.</strong>
+      </p>
+      <p>
+        You stopped the timer with{' '}
+        <strong>{formattedRemainingTime} seconds left.</strong>
+      </p>
+      <form method="dialog" onSubmit={onReset}>
+        <button>Close</button>
+      </form>
+    </dialog>,
+    document.getElementById('modal')
+  );
+});
+
+export default ResultModal;
+
+```
+
+```js
+//TimerChallenge.jsx
+
+import ResultModal from './ResultModal.jsx';
+
+export default function TimerChallenge({ title, targetTime }) {
+
+    return (
+        <>
+            <ResultModal
+                ref={dialog}
+                targetTime={targetTime}
+                remainingTime={timeRemaining}
+                onReset={handleReset}
+            />
+           ...
+        </>
+    );
+}
+
+```
+
+```html
+//index.html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Refs & Portals</title>
+  </head>
+  <body>
+    <div id="modal"></div>
+    <div id="content">
+      <header>
+        <h1>The <em>Almost</em> Final Countdown</h1>
+        <p>Stop the timer once you estimate that time is (almost) up</p>
+      </header>
+      <div id="root"></div>
+    </div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+```
+</details>
+
+</details>
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Hooks</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">useEffect() Polyfill</summary>
+
+```js
+import {useRef} from "react";
+
+const useCustomEffect = (effect, deps) => {
+    const isFirstRender = useRef(true);
+    const prevDeps = useRef([]);
+
+    // First Render
+    if (isFirstRender.current) {
+        isFirstRender.current = false;
+        const cleanup = effect();
+        return () => {
+            if (cleanup && typeof cleanup === "function") {
+                cleanup();
+            }
+        };
+    }
+
+    // Deps Changes and No Deps Array
+    const depsChanged = deps
+        ? JSON.stringify(deps) !== JSON.stringify(prevDeps.current)
+        : true;
+
+    if (depsChanged) {
+        const cleanup = effect();
+        // Cleanup
+        if (cleanup && typeof cleanup === "function" && deps) {
+            cleanup();
+        }
+    }
+
+    prevDeps.current = deps || [];
+};
+
+export default useCustomEffect;
+
+```
+</details>
+
+<details>
+ <summary style="font-size: large; font-weight: bold">useMemo/useCallback</summary>
+
+## useMemo
+
+### Usecase-1
+
+Very common problem in React since all the
+component logic is re-computed every time the
+component renders
+
+```jsx
+const result = useMemo(() => {
+    /** slowFunction take lot of time 
+     * to execute **/
+  return slowFunction(a)
+}, [a])
+```
+As long as a stays the same the slowFunction will
+not be re-run and instead the cached value will be
+used.
+
+### Usecase-2(Referential Equality)
+
+If you are unfamiliar with referential equality it essentially defines whether or not the references of two values are
+the same. For example {} === {} is false because it is checking referential equality. While both of the objects are
+empty, they reference different places in memory where the object is stored.
+
+This referential equality is important when it comes to dependency arrays, for example in `useEffect`.
+```jsx
+function Component({ param1, param2 }) {
+  const params = { param1, param2, param3: 5 }
+
+  useEffect(() => {
+    callApi(params)
+  }, [params])
+}
+```
+
+At first glance it may seem this `useEffect` works properly, but since the `params` object is created as a
+new object each render this is actually going to cause the effect to run every render since the reference of
+`params` changes each render. `useMemo` can fix this, though.
+
+```jsx
+function Component({ param1, param2 }) {
+  const params = useMemo(() => {
+    return { param1, param2, param3: 5 }
+  }, [param1, param2])
+
+  useEffect(() => {
+    callApi(params)
+  }, [params])
+}
+```
+
+Now if `param1` and `param2` do not change the `params` variable will be set to the cached version of
+`params` which means the reference for `params` will only change if `param1`, or `param2` change.
+This referential equality is really useful when comparing objects in dependency arrays,
+but if you need to use a function in a dependency array you can use the `useCallback` hook.
+
+Referred Video: https://youtu.be/_AyFP5s69N4?si=V6u1dez7i-UGfCsl
+
+
+
+## useCallback
+
+`useCallback` works nearly identically to `useMemo` since it will cache a result based on an array of dependencies,
+but `useCallback` is used **specifically for caching functions instead of caching values.**
+
+```jsx
+const handleReset = useCallback(() => {
+  return doSomething(a, b)
+}, [a, b])
+```
+
+Watch this video to understand in 8min: https://youtu.be/_AyFP5s69N4?si=GjVZrUXgoJgi_S9-
+
+Referred article for both topic: https://blog.webdevsimplified.com/2020-05/memoization-in-react/
+
+</details>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">useMemo() Polyfill</summary>
+
+```js
+import { useRef, useEffect } from "react";
+
+const areEqual = (prevDeps, nextDeps) => {
+    if (prevDeps === null) return false;
+    if (prevDeps.length !== nextDeps.length) return false;
+
+    for (let i = 0; i < prevDeps.length; i++) {
+        if (prevDeps[i] !== nextDeps[i]) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
+const useCustomMemo = (cb, deps) => {
+    // variable or state -> cached Value
+    const memoizedRef = useRef(null);
+
+    // Changes in deps
+    if (!memoizedRef.current || !areEqual(memoizedRef.current.deps, deps)) {
+        memoizedRef.current = {
+            value: cb(),
+            deps
+        };
+    }
+
+    // cleanup logic
+    useEffect(() => {
+        return () => {
+            memoizedRef.current = null;
+        };
+    }, []);
+
+    // return the memoised value (if any)
+    return memoizedRef.current.value;
+};
+
+export default useCustomMemo;
+
+```
+</details>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">useThrottle() Hook</summary>
+
+```js
+import {useEffect} from "react";
+import {useRef, useState} from "react";
+
+const useThrottle = (value, delay) => {
+    const [throttledValue, setThrottledValue] = useState(value);
+
+    const lastExecuted = useRef(Date.now());
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            const now = Date.now();
+            const timeElapsed = now - lastExecuted.current;
+
+            if (timeElapsed >= delay) {
+                setThrottledValue(value);
+                lastExecuted.current = now;
+            }
+        }, delay - (Date.now() - lastExecuted.current));
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [delay, value]);
+
+    return throttledValue;
+};
+
+export default useThrottle;
+
+```
+</details>
+
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Redux</summary>
+
+- The Redux Toolkit package is intended to be the standard way to write Redux logic.
+- Redux creates big javascript `object` that holds the state of your application
+- Object has further broken down into `Slice`. Like in below image we have `cart` & `user` slice 
+- When we click on "add to cart" it calls `Dispatch` action which calls a 
+function(`Reducer`) that updates the state of the `cart` slice store
+- `Selector` is use to read the data, which is subscribed to update the cart value dynamically
+
+![img_7.png](img_7.png)
+
+```bash
+npm i @reduxjs/toolkit react-redux
+```
+
+
+</details>
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">react-router-dom</summary>
+
+</details>
+
+
+
+

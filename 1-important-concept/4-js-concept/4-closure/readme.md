@@ -80,6 +80,7 @@ Here `z` is garbage collected once we reach line _4_, hence we get `Reference er
 
 <details >
  <summary style="font-size: x-large; font-weight: bold">From Fireship.io</summary>
+
 ### When ever, a function tries to access a variable which is not created in that function; then it is called as closure.
 
 1. ![img.png](images/img.png)

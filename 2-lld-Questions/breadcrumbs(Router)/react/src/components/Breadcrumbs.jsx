@@ -19,12 +19,13 @@ const Breadcrumbs = () => {
                 console.log(pathnames, breadcrumbPath);
 
                 return isLast ? (
-                    <span key={breadcrumbPath}> / {name}</span>
+                    <span key={breadcrumbPath}>
+                        / {name}
+                    </span>
                 ) : (
                     <span key={breadcrumbPath}>
-            {" "}
-                        / <Link to={breadcrumbPath}>{name}</Link>
-          </span>
+                        {" "}/ <Link to={breadcrumbPath}>{name}</Link>
+                    </span>
                 );
             })}
         </div>

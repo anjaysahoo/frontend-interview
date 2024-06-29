@@ -89,7 +89,8 @@ Good in-depth video: https://youtu.be/BNC6slYCj50?si=Olv9qeCAtFbArgl6
 1. In `var` case
 ![img_2.png](images/img_2.png)
 Since both `block` and outside `a` was sharing same global execution space
-that's why value get updated 
+that's why value get updated. But same thing won't happened if it was within a function
+in that case, since all function will have their own execution space so value will not be updated
 
 
 2. In `let` case

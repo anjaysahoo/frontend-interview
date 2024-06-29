@@ -7,7 +7,7 @@ first always try to solve using whatever default html is providing.
 things like % instead of unit then use `overflow: auto`. In case of long word don't use 
 `overflow` instead use things like `word-break`
 
-A very example is `product-chat` app here
+A very good example is `product-chat` app here: https://github.com/anjaysahoo/mini-apps/tree/master/product-chat
 
 ### `<img/>`
 
