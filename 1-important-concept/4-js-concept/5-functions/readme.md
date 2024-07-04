@@ -107,7 +107,8 @@ Referred Video: https://youtu.be/lE_79wkP-1U?si=Yskr4mqmfg8Nd51r
 <details >
  <summary style="font-size: medium; font-weight: bold">Constructor Function</summary>
 
-`Constructor functions` create object for us just like `Factory Function`
+- `Constructor functions` create object for us just like `Factory Function`
+- It is good practice to use `PascalCase`, but not compulsory
 ![img_8.png](images/img_8.png)
 
 Just like a waiter giving order to cook, they have blueprint of how they should
@@ -128,6 +129,73 @@ anything unlike `Factory Function`
 Referred Video: https://youtu.be/I37qHG0DxmE?si=7BGR0tQStjXih67o
 
 ![img_40.png](images/img_40.png)
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">Good Example</summary>
+
+Input->
+computeAmount().Iacs(15).
+crore(5).crore(2).lacs(20).thousand(45).crore(7).value()
+
+1. **Solution-1**
+```js
+function ComputeAmount(amount){
+    this.totalAmount = amount;
+
+    this.lac = function (multiplier){
+        this.totalAmount += multiplier*100000;
+        return this;
+    }
+
+    this.value = () => {
+        return this.totalAmount;
+    }
+}
+
+
+console.log("computeAmount : ", new ComputeAmount(0).lac(2).lac(2).value());
+```
+Here everything is stored inside local `this` which is pointing to (`Object`)instance
+of `ComputeAmount` constructor function
+![img_1.png](img_1.png)
+
+2. **Solution-2**
+
+```js
+function computeAmount(amount){
+    this.totalAmount = amount;
+
+    this.lac = (multiplier) => {
+        this.totalAmount += multiplier*100000;
+        return this;
+    }
+
+    this.value = () => {
+        return this.totalAmount;
+    }
+
+    return this;
+}
+
+
+console.log("computeAmount : ", computeAmount(0).lac(2).lac(2).value());
+```
+
+- This solution also yields the same result, which is more accurate to what question asked
+- It has a same result because here we're explicitly returning `this` alike creating new instance
+from constructor function which on using `new` keyword create empty object which is assigned 
+to `this` and returned
+- Here `this` points to `window` object because it is not instance of anything
+- Also, it does not matter whether `lac` function is normal or arrow both will return a same result
+
+![img_2.png](img_2.png)
+![img_3.png](img_3.png)
+![img_4.png](img_4.png)
+
+Referred Video: https://youtu.be/_tNErId8xlc?si=t8fEbbGmefLTogd-&t=126
+</details>
+
 </details>
 
 

@@ -24,6 +24,8 @@ function debounce(cb, delay = 1000) {
 ```
 
 Weird Caveat in order to take care of edge case
+
+- With Arrow Function
 ```javascript
 /**
  * @callback func
@@ -44,9 +46,33 @@ export default function debounce(func, wait = 0) {
   };
 }
 ```
+
+- With Normal Function, we use extra variable `context` to keep reference of `this`
+```js
+/**
+ * @param {Function} func
+ * @param {number} wait
+ * @return {Function}
+ */
+export default function debounce(func, wait = 0) {
+  let timeoutID = null;
+  return function (...args) {
+    // Keep a reference to `this` so that
+    // func.apply() can access it.
+    const context = this;
+    clearTimeout(timeoutID);
+
+    timeoutID = setTimeout(function () {
+      timeoutID = null; // Not strictly necessary but good to do this.
+      func.apply(context, args);
+    }, wait);
+  };
+}
+
+```
 To understand above code, please go through the 
 1. `call()`, `apply()` & `bind()` in important concept
-2. `this` in important concept
+2. `this` in [important concept](../this-call-apply-bind/chirag-this-call-apply-bind/readme.md)
 3. Lastly go through this for more details: https://www.greatfrontend.com/questions/javascript/debounce?list=one-week
 
 ### Use case

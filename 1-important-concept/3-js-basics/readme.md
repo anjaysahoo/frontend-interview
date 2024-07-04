@@ -307,3 +307,80 @@ that you're checking the boolean representation of the given value.
 
 ![img_2.png](img_2.png)
 </details>
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Spread & Rest Operator</summary>
+
+### Spread Operator
+
+1. Combining Array
+```js
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+const combined = [...arr1, ...arr2];
+console.log("Combined array:", combined); // [1, 2, 3, 4, 5, 6]
+```
+
+2. Passing arguments to function
+```js
+function sum(a, b, c) {
+    return a + b + c;
+}
+
+const nums = [1, 2, 3];
+const result = sum(...nums);
+console.log("Result of sum:", result); // 6
+```
+
+3. Copying Array
+```js
+const original = [1, 2, 3];
+const copy = [...original];
+console.log("Copied array:", copy); // [1, 2, 3]
+```
+
+4. Copying & Overriding in Object
+```js
+const obj1 = { foo: "bar", x: 42 };
+const obj2 = { foo: "baz", y: 13 };
+
+const mergedObj = { x: 41, ...obj1, ...obj2, y: 9 }; // { x: 42, foo: "baz", y: 9 }
+```
+
+5. Conditionally adding
+```js
+const isSummer = false;
+const fruits = {
+  apple: 10,
+  banana: 5,
+  ...(isSummer ? { watermelon: 30 } : {}),
+};
+// { apple: 10, banana: 5 }
+```
+
+
+### Rest Operator
+
+While the spread operator expands elements, the rest operator condenses them into a single entity within function parameters or array destructuring. It collects remaining elements into a designated variable, facilitating flexible function definitions and array manipulation.
+
+1. 
+```js
+const [first, ...rest] = [1, 2, 3, 4, 5];
+console.log("First element:", first); // 1
+console.log("Rest of the elements:", rest); // [2, 3, 4, 5]
+```
+
+2. Handling Variable-Length Function Arguments
+```js
+function sum(...numbers) {
+    return numbers.reduce((total, num) => total + num, 0);
+}
+
+console.log("Sum:", sum(1, 2, 3, 4, 5)); // Sum: 15
+console.log("Sum:", sum(10, 20)); // Sum: 30
+```
+
+The `...numbers` syntax collects all passed arguments into an array named 
+`numbers`, enabling flexible function definitions.
+</details>

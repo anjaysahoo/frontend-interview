@@ -1,5 +1,9 @@
 ## Curry
 
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Basic</summary>
+
 Convert f(a, b) into f(a)(b).
 
 ```javascript
@@ -66,6 +70,164 @@ function sum(operation) {
     }
 }
 ```
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Curry-1 & 2</summary>
+
+**Question: Curry-1**
+![img_2.png](img_2.png)
+
+**Question: Curry-2**
+![img_3.png](img_3.png)
+
+**Solution**
+
+We first need to understand a few terms:
+
+- **Arity:** The number of arguments or operands taken by a function.
+- **Closure**: A closure is the combination of a function bundled together with references to its lexical environment (surrounding state).
+The curried function will stop accepting arguments after the number of arguments that have been passed into the curried function equals the arity of the original function.
+
+We can keep a record of the curried function arguments so far via closures. Each time the curried function is called, we compare the number of arguments so far with the arity of the original function.
+
+If they're the same, we call the original function with the arguments.
+If more arguments are needed, we will return a function that accepts more arguments and invokes the curried function with the new arguments.
+Note that the inner function needs to be defined using arrow functions to preserve the same lexical this or manually tracked using a separate variable like in [Debounce](../debounce-throttle/readme.md).
+
+<details >
+ <summary style="font-size: small; font-weight: bold">Using `apply()`</summary>
+
+**For Curry-1**
+```js
+export default function curry(func) {
+  return function curried(...args) {
+    if (args.length >= func.length) {
+      return func.apply(this, args);
+    }
+
+    return (newArgs) =>
+      newArgs === undefined
+        ? curried.apply(this, args)
+        : curried.apply(this, [...args, newArgs]);
+  };
+}
+```
+
+**For Curry-2**
+![img_4.png](img_4.png)
+![img_6.png](img_6.png)
+Curry-1 solution won't work for curry-2 because in above you can see
+for 2nd case we are getting only `5` in `newArgs`, therefore, we never hit
+`if` condition and function is returned. This is happening because 
+in `newArgs` we're expecting only one argument, but it can be multiple
+hence using spread operator properly like below will yield a right
+result.
+[Refer spread operator notes to understand better](../../3-js-basics/readme.md)
+```js
+export default function curry(func) {
+  return function curried(...args) {
+    if (args.length === func.length) {
+      return func.apply(this, args);
+    }
+
+    return (...args2) => curried.apply(this, [...args, ...args2]);
+  };
+}
+```
+
+My preferred solution
+```js
+export default function curry(func) {
+  return function curried(...args){
+    if(args.length >= func.length){
+      return func.apply(this, [...args]);
+    }
+
+    return (...newArgs) => newArgs === undefined ? 
+    curried.apply(this, [...args]) : 
+    curried.apply(this,[...args,...newArgs]);
+  }
+}
+```
+</details>
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">Using `call()`</summary>
+
+
+```js
+/**
+ * @param {Function} func
+ * @return {Function}
+ */
+export default function curry(func) {
+  return function curried(...args) {
+    if (args.length >= func.length) {
+      return func.call(this, ...args);
+    }
+
+    return (newArgs) =>
+      newArgs === undefined
+        ? curried.call(this, ...args)
+        : curried.call(this, ...args, newArgs);
+  };
+}
+
+```
+
+**For Curry-2**
+```js
+export default function curry(func) {
+  return function curried(...args){
+    if(args.length >= func.length){
+      return func.call(this, ...args);
+    }
+
+    return (...newArgs) => newArgs === undefined ? 
+    curried.call(this, ...args) : 
+    curried.call(this,...args,...newArgs);
+  }
+}
+```
+
+</details>
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">Using `bind()`</summary>
+
+
+**Works for both curry-1 and curry-2**
+```js
+/**
+ * @param {Function} func
+ * @return {Function}
+ */
+export default function curry(func) {
+  return function curried(...args) {
+    if (args.length >= func.length) {
+      return func.apply(this, args);
+    }
+
+    return curried.bind(this, ...args);
+  };
+}
+```
+Since the innermost function is essentially meant for preserving the this scope 
+and passing arguments along, it can be achieved with `Function.prototype.bind`. 
+This solution is also more flexible because it accepts multiple arguments
+
+</details>
+
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Questions</summary>
 
 Write a function curry() that converts f(a,b,c) into a curried function f(a)(b)(c) .
 ```javascript
@@ -85,7 +247,9 @@ export default function curry(func) {
 ```
 ![img.png](img.png)
 ![img_1.png](img_1.png)
-Refer this for more explaination: https://www.greatfrontend.com/questions/javascript/curry
-
+<br>
 Referred Article: https://roadsidecoder.hashnode.dev/javascript-interview-questions-currying-output-based-questions-partial-application-and-more
+<br>
 Referred Video: https://www.youtube.com/watch?v=k5TC9i5HonI
+
+</details>

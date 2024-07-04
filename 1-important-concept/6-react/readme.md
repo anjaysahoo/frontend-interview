@@ -1018,6 +1018,9 @@ export default useThrottle;
 <details >
  <summary style="font-size: x-large; font-weight: bold">Redux</summary>
 
+<details >
+ <summary style="font-size: large; font-weight: bold">Intro</summary>
+
 - The Redux Toolkit package is intended to be the standard way to write Redux logic.
 - Redux creates big javascript `object` that holds the state of your application
 - Object has further broken down into `Slice`. Like in below image we have `cart` & `user` slice 
@@ -1027,10 +1030,159 @@ function(`Reducer`) that updates the state of the `cart` slice store
 
 ![img_7.png](img_7.png)
 
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Usage</summary>
+
+1. 
 ```bash
 npm i @reduxjs/toolkit react-redux
 ```
 
+2. Create store
+```js
+//utils/appStore.js
+
+import { configureStore } from "@reduxjs/toolkit";
+import cartReducer from "./cartSlice";
+
+const appStore = configureStore({
+  reducer: {
+    cart: cartReducer,
+  },
+});
+
+export default appStore;
+```
+
+3. Create Slice
+```js
+//utils/cartSlice.js
+
+import { createSlice, current } from "@reduxjs/toolkit";
+
+const cartSlice = createSlice({
+    name: "cart",
+    initialState: {
+        items: [],
+    },
+    reducers: {
+        addItem: (state, action) => {
+            // Redux Toolkit uses immer behind the scenes
+            state.items.push(action.payload);
+        },
+        removeItem: (state, action) => {
+            state.items.pop();
+        },
+        //originalState = {items: ["pizza"]}
+        clearCart: (state, action) => {
+            //Redux toolkit - either Mutate the existing  state or return a new State
+            
+            //❌Appraoch-0: state = {items: []}; This will not work as we are changing the local state
+            // not original state
+            
+            //Approach-1: state.items.length = 0; // originalState = { items: [] }
+            //Approach-2:👇🏻
+            return { items: [] }; // this new object will be replaced inside originalState = { items: [] }
+        },
+    },
+});
+
+export const { addItem, removeItem, clearCart } = cartSlice.actions;
+
+export default cartSlice.reducer;
+```
+
+4. Add `Provider` to `App.js`
+```js
+//App.js
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import UserContext from "./utils/UserContext";
+
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+
+
+
+const AppLayout = () => {
+  return (
+    <Provider store={appStore}>
+      <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+        <div className="app">
+          <Header />
+          <Outlet />
+        </div>
+      </UserContext.Provider>
+    </Provider>
+  );
+};
+
+const appRouter = createBrowserRouter([
+  {
+      path: "/",
+      element: <AppLayout />,
+      children: []
+  },
+]);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(<RouterProvider router={appRouter} />);
+```
+
+5. Subscribe to cart items
+```js
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+const Header = () => {
+
+  // Subscribing to the store using a Selector
+  const cartItems = useSelector((store) => store.cart.items);
+  //console.log(cartItems);
+
+  return (
+    <div>
+            <Link to="/cart">Cart - ({cartItems.length} items)</Link>
+    </div>
+  );
+};
+
+export default Header;
+```
+**Note: Only subscribe to part of the store you need to have better performance**
+
+❌ Below code will have a performance hit, don't do this. Always subscribe like above code
+```js
+const store = useSelector();
+const cartItems = store.cart.items;
+```
+
+6. Add items to cart
+```js
+//components/ItemList.js
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
+
+const ItemList = ({}) => {
+  const dispatch = useDispatch();
+
+  const handleAddItem = (item) => {
+    // Dispatch an action
+    dispatch(addItem(item));
+  };
+
+  return (
+      <button onClick={() => handleAddItem("pizza....")}>Add +</button>
+  );
+};
+
+export default ItemList;
+```
+</details>
 
 </details>
 
