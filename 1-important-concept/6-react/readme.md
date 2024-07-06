@@ -691,7 +691,7 @@ Refer Namaste notes for more details
 </details>
 
 
-<details >
+<details>
  <summary style="font-size: large; font-weight: bold">Portals</summary>
 
 Portals are very useful when we want to render a component, somewhere 
@@ -795,6 +795,436 @@ export default function TimerChallenge({ title, targetTime }) {
   </body>
 </html>
 ```
+</details>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Higher Order Functions</summary>
+
+**A higher-order component is a function that takes a component and 
+returns a new component.**
+
+
+```js
+//components/RestaurantCard.js
+import { useContext } from "react";
+import { CDN_URL } from "../utils/constants";
+import UserContext from "../utils/UserContext";
+
+const RestaurantCard = (props) => {
+  const { resData } = props;
+  const { loggedInUser } = useContext(UserContext);
+
+  const {
+    cloudinaryImageId,
+    name,
+    avgRating,
+    cuisines,
+    costForTwo,
+    deliveryTime,
+  } = resData;
+
+  return (
+    <div
+      data-testid="resCard"
+      className="m-4 p-4 w-[250px] rounded-lg bg-gray-100 hover:bg-gray-200"
+    >
+      <img
+        className="rounded-lg"
+        alt="res-logo"
+        src={CDN_URL + cloudinaryImageId}
+      />
+      <h3 className="font-bold py-4 text-lg">{name}</h3>
+      <h4>{cuisines.join(", ")}</h4>
+      <h4>{avgRating} stars</h4>
+      <h4>₹{costForTwo / 100} FOR TWO</h4>
+      <h4>{deliveryTime} minutes</h4>
+      <h4>User : {loggedInUser} </h4>
+    </div>
+  );
+};
+
+
+// Higher Order Component
+// input - RestaurantCard =>> RestaurantCardPromoted
+export const withPromtedLabel = (RestaurantCard) => {
+  return (props) => {
+    return (
+      <div>
+        <label className="absolute bg-black text-white m-2 p-2 rounded-lg">
+          Promoted
+        </label>
+        <RestaurantCard {...props} />
+      </div>
+    );
+  };
+};
+
+export default RestaurantCard;
+```
+
+
+Usage👇🏻
+```js
+//components/Body.js
+import RestaurantCard, { withPromtedLabel } from "./RestaurantCard";
+
+const Body = () => {
+
+  const RestaurantCardPromoted = withPromtedLabel(RestaurantCard);
+
+  return listOfRestaurants.length === 0 ? (
+    <Shimmer />
+  ) : (
+      ...
+      <div className="flex flex-wrap">
+        {filteredRestaurant.map((restaurant) => (
+          <Link
+            key={restaurant?.info.id}
+            to={"/restaurants/" + restaurant?.info.id}
+          >
+            {restaurant?.info.promoted ? (
+              <RestaurantCardPromoted resData={restaurant?.info} />
+            ) : (
+              <RestaurantCard resData={restaurant?.info} />
+            )}
+          </Link>
+        ))}
+      </div>
+          ...
+  );
+};
+
+export default Body;
+```
+</details>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Controlled & Uncontrolled Components</summary>
+
+- It is common to call a component with some local state “uncontrolled”. For example, the original Panel component with an isActive state variable is uncontrolled because its parent cannot influence whether the panel is active or not.
+
+- In contrast, you might say a component is “controlled” when the important information in it is driven by props rather than its own local state. This lets the parent component fully specify its behavior. The final Panel component with the isActive prop is controlled by the Accordion component.
+
+- Uncontrolled components are easier to use within their parents because they require less configuration. But they’re less flexible when you want to coordinate them together. Controlled components are maximally flexible, but they require the parent components to fully configure them with props.
+
+- In practice, “controlled” and “uncontrolled” aren’t strict technical terms—each component usually has some mix of both local state and props. However, this is a useful way to talk about how components are designed and what capabilities they offer.
+
+- When writing a component, consider which information in it should be controlled (via props), and which information should be uncontrolled (via state). But you can always change your mind and refactor later.
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Class Components</summary>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Basic</summary>
+
+- Use below component just like functional components
+```js
+//👇🏻Alternative way to extend react component
+// import {Component} from "react";
+//class UserClass extends Component{...}
+
+import React from "react";
+
+class UserClass extends React.Component {
+  constructor(props) {
+    super(props);
+
+    //Reserve Keywords "state"
+    this.state = {
+      count: 0
+    };
+  }
+
+  render() {
+    const { name, location } = this.props;
+    const { count } = this.state;
+    
+    return (
+      <div className="user-card">
+        <h1>Count: {count}</h1>
+          <button
+              onClick={
+                  () => {
+                      //Never Update the state DIRECTLY
+                      //Reserve keywords "setState"
+                      this.setState({
+                          count: this.state.count + 1
+                      })
+                  }
+              }
+          >
+              Count Increase
+          </button>
+        <h2>Name: {name}</h2>
+        <h3>Location: {location}</h3>
+        <h4>Contact: @akshaymarch7</h4>
+      </div>
+    );
+  }
+}
+
+export default UserClass;
+```
+
+Why we use `super(props)`?
+1. **Calling the Parent Constructor**: In JavaScript, when you create a subclass using the `extends` keyword, you need to call the constructor of the parent class using `super()`. This ensures that the parent class (in this case, `React.Component`) is properly initialized. Without this call, the subclass cannot access `this`, leading to an error.
+
+2. **Passing Props to the Parent**: By passing `props` to `super(props)`, you ensure that the parent class’s constructor receives the props. This is important for React components because the parent class (`React.Component`) uses these props to manage the component’s state and lifecycle methods.
+
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Mounting Life Cycle</summary>
+
+Parent Component👇🏻
+```js
+//components/About.js
+import User from "./User";
+import UserClass from "./UserClass";
+import { Component } from "react";
+
+class About extends Component {
+  constructor(props) {
+    super(props);
+
+    console.log("Parent Constructor");
+  }
+
+  componentDidMount() {
+    console.log("Parent Component Did Mount");
+  }
+
+  render() {
+    console.log("Parent Render");
+
+    return (
+      <div>
+        <h1>About Class Component</h1>
+        <UserClass name={"First"} location={"Dehradun Class"} />
+        <UserClass name={"Second"} location={"Dehradun Class"} />
+      </div>
+    );
+  }
+}
+
+export default About;
+```
+
+Child Component👇🏻
+```js
+//components/UserClass.js
+
+import React from "react";
+
+class UserClass extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      count: 0
+    };
+    
+    console.log(this.props.name + " Child Constructor");
+  }
+
+    componentDidMount() {
+        console.log(this.props.name + " Child Component Did Mount");
+    }
+
+  render() {
+      console.log(this.props.name + " Child Render");
+      
+    const { name, location } = this.props;
+    const { count } = this.state;
+    
+    return (
+      <div className="user-card">
+        <h1>Count: {count}</h1>
+          <button
+              onClick={() => {
+                      this.setState({
+                          count: this.state.count + 1
+                      })
+                }
+              }
+          >
+              Count Increase
+          </button>
+        <h2>Name: {name}</h2>
+        <h3>Location: {location}</h3>
+        <h4>Contact: @akshaymarch7</h4>
+      </div>
+    );
+  }
+}
+
+export default UserClass;
+```
+
+Console Output👇🏻
+```js
+Parent Constructor
+Parent Render
+First Child Constructor
+First Child Render
+Second Child Constructor
+Second Child Render
+First Child Component Did Mount
+Second Child Component Did Mount
+Parent Component Did Mount
+```
+
+https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+![img_9.png](img_9.png)
+
+- Above output shows sequence how a class component is created and rendered.
+- `componentDidMount()` is used for API calling because it runs when component is rendered for the first time.
+Same thing happens in functional components while `useEffect()` is used for API calling.
+We want to load whatever we have then update the values whatever we receive from asynchronous API call
+- Here both child's `componentDidMount()` console are called one after other because 
+in Render phase `constructor()` & `render()` are called which is just Virtual DOM manipulation, but
+in Commit phase `componentDidMount()` is called which is actual DOM manipulation and it is quite performance 
+intensive task. Therefore React try to optimize this by calling them one after another.
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Updating(API Call) & Unmounting Life Cycle</summary>
+
+```js
+import React from "react";
+
+class UserClass extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      userInfo: {
+        name: "Dummy",
+        location: "Default",
+      },
+    };
+    console.log("Child Constructor");
+  }
+
+  //HERE WE CAN USE ASYNC BEFORE componentDidMount BUT SAME THING
+  // CAN'T BE DONE IN useEffect()
+  async componentDidMount() {
+    console.log("Child Component Did Mount");
+    // Api call
+
+    const data = await fetch("https://api.github.com/users/akshaymarch7");
+    const json = await data.json();
+
+    this.setState({
+      userInfo: json,
+    });
+    
+    this.timer = setInterval(() => {
+        console.log("Namaste React OP")
+    }, 1000)
+  }
+
+  componentDidUpdate() {
+    console.log("Component Did Update");
+  }
+
+  componentWillUnmount() {
+    console.log("Component Will Unmount");
+    
+    // If we don't clear interval then it will run infinitely
+    // and as many time as we load this page, number of console will increase
+    clearInterval(this.timer);
+  }
+
+  render() {
+    console.log(this.props.name + "Child Render");
+
+    const { name, location, avatar_url } = this.state.userInfo;
+    return (
+      <div className="user-card">
+        <img src={avatar_url} />
+        <h2>Name: {name}</h2>
+        <h3>Location: {location}</h3>
+        <h4>Contact: @akshaymarch7</h4>
+      </div>
+    );
+  }
+}
+
+export default UserClass;
+```
+![img_9.png](img_9.png)
+Output👇🏻
+```js
+  --- MOUNTING ----
+ 
+  Constructor (dummy)
+  Render (dummy)
+       <HTML Dummy >
+  Component Did Mount
+       <API Call>
+       <this.setState> -> State variable is updated
+ 
+  ---- UPDATE -----
+ 
+       render(APi data)
+       <HTML (new API data>)
+       componentDid Update
+```
+
+- Once we switch to another component then it will be unmounted and `componentWillUnmount()` will be called.
+
+- In functional component we achieve same thing by using `useEffect()`. 
+    1. `compuntDidMount()` & `componentWillUnmount()`
+    ```js
+    import React, { useEffect } from 'react';
+    const ComponentExample => () => {
+        useEffect(() => {
+            // Anything in here is fired on component mount.
+             const timer = setInterval(() => {
+                    console.log("Namaste React OP")
+                }, 1000)
+            return () => {
+                // Anything in here is fired on component unmount.
+                  clearInterval(timer);
+            }
+        }, [])
+    }
+    ```
+  2. `componentDidUpdate()`: For this case we use `useEffect()` with `[deps]` array.
+  This is more efficient than `componentDidUpdate()` as it is called only when provided 
+  dependency variable changes
+  
+- Closely read `setInterval()` example above to understand how to do clean up work
+- The reasons why an asynchronous callback function cannot be called directly from a useEffect() hook. This is because the useEffect hook expects its effect function to return either a cleanup function or nothing at all. This is due to the useEffect() hook's callback function's asynchronous execution and lack of blocking. Therefore, we must follow a specific pattern if we want to call an asynchronous function inside the useEffect() hook.
+```js
+import React, { useEffect } from 'react';
+
+function App() {
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch('https://example.com/data');
+      const data = await response.json();
+      console.log(data);
+    }
+
+    fetchData();
+  }, []);
+
+  return <div>Hello World</div>;
+}
+```
+
+**Note: Under the hood in Functional components, we are NOT using same concept to achieve this. 
+Now it is just easier and cleaner to write** 
+</details>
+
+
 </details>
 
 </details>
@@ -1015,11 +1445,118 @@ export default useThrottle;
 
 
 
-<details >
- <summary style="font-size: x-large; font-weight: bold">Redux</summary>
 
 <details >
- <summary style="font-size: large; font-weight: bold">Intro</summary>
+ <summary style="font-size: x-large; font-weight: bold">State Management</summary>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Context</summary>
+
+1. Creating a context
+```js
+import { createContext } from 'react';
+
+//we can pass default value while creating context.
+// It can be any value or object. Here we are passing 'light'
+const ThemeContext = createContext('light');
+
+const CartContext = createContext({
+    items: [],
+    addItemToCart: () => {},
+    updateItemQuantity: () => {},
+});
+```
+
+2. 
+- Using a context: After creating context, we can access the context value anywhere in our app.
+- Using context value like below is not very useful as you can just access default value,
+you can't modify the value and get the data dynamically. It's not reactive
+```js
+import { useContext } from 'react';
+
+const theme = useContext(ThemeContext);
+const { items, updateItemQuantity } = useContext(CartContext);
+```
+
+3. Modifying context value and accessing the updated value as when they are updated
+```js
+import React, {createContext, useState, useContext, useEffect} from "react";
+
+// we may not pass default value
+const ThemeContext = createContext();
+
+export const useTheme = () => {
+    return useContext(ThemeContext);
+};
+
+export const ThemeProvider = ({children}) => {
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    const toggleTheme = () => {
+        setIsDarkMode((prevMode) => !prevMode);
+    };
+
+    const theme = isDarkMode ? "dark" : "light";
+
+    useEffect(() => {
+        document.documentElement.setAttribute("data-theme", theme);
+    }, [isDarkMode]);
+
+    return (
+        <ThemeContext.Provider value={{theme, toggleTheme}}>
+            {children}
+        </ThemeContext.Provider>
+    );
+};
+
+```
+- Use the same name as while creating the context in `ThemeContext.Provider`. That is
+connecting provider with the creation of context
+- All the value and object inside `value` can be access through `useContext`.
+- These value are accessible only to the child component who wrapped with `ThemeProvider`.
+
+```js
+import React from "react";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import "./App.css";
+
+import {ThemeProvider} from "./theme-context.jsx";
+import Home from "./pages/Home.jsx";
+import About from "./pages/About.jsx";
+import Blog from "./pages/Blog.jsx";
+import Navbar from "./components/NavBar.jsx";
+
+const App = () => {
+    return (
+        <ThemeProvider>
+            <Router>
+                <Navbar />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/blog" element={<Blog />} />
+                </Routes>
+            </Router>
+        </ThemeProvider>
+    );
+};
+
+export default App;
+```
+
+Note:
+1. We can use same context multiple place and wrap different child in them and 
+all will have there own value, independent what other context value are.
+2. Refer whole code for context in [2-lld-Questions/dark-mode(context)](../../2-lld-Questions/dark-mode(context)/react/README.md)
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Redux</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Intro</summary>
 
 - The Redux Toolkit package is intended to be the standard way to write Redux logic.
 - Redux creates big javascript `object` that holds the state of your application
@@ -1034,7 +1571,7 @@ function(`Reducer`) that updates the state of the `cart` slice store
 
 
 <details >
- <summary style="font-size: large; font-weight: bold">Usage</summary>
+ <summary style="font-size: medium; font-weight: bold">Usage</summary>
 
 1. 
 ```bash
@@ -1185,6 +1722,12 @@ export default ItemList;
 </details>
 
 </details>
+
+</details>
+
+
+
+
 
 
 <details >
