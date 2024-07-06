@@ -498,6 +498,9 @@ So need to confuse how `onlineStatus` value is updated dynamically when we toggl
 <details >
  <summary style="font-size: x-large; font-weight: bold">Important Concepts</summary>
 
+- [React Intro](./namaste-react/1-Inception⭐.pdf) 
+- [Bundler(Parcel)](./namaste-react/2-igniting-our-app⭐.pdf)
+- [JSX & Babel](./namaste-react/3-laying-the-foundation⭐.pdf)
 <details >
  <summary style="font-size: large; font-weight: bold">Virtual DOM</summary>
 
@@ -1201,7 +1204,7 @@ Output👇🏻
   dependency variable changes
   
 - Closely read `setInterval()` example above to understand how to do clean up work
-- The reasons why an asynchronous callback function cannot be called directly from a useEffect() hook. This is because the useEffect hook expects its effect function to return either a cleanup function or nothing at all. This is due to the useEffect() hook's callback function's asynchronous execution and lack of blocking. Therefore, we must follow a specific pattern if we want to call an asynchronous function inside the useEffect() hook.
+- The reasons why an asynchronous callback function cannot be called directly from a useEffect() hook. This is because the useEffect hook expects its effect function to return either a cleanup function or nothing at all. If you return a Promise, React doesn't know when or how to handle cleanup. This is due to the useEffect() hook's callback function's asynchronous execution and lack of blocking. Therefore, we must follow a specific pattern if we want to call an asynchronous function inside the useEffect() hook.
 ```js
 import React, { useEffect } from 'react';
 
