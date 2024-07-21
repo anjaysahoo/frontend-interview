@@ -366,8 +366,402 @@ In some cases, the performance improvement to the Largest Contentful Paint can g
 https://developer.chrome.com/docs/web-platform/early-hints#:~:text=The%20browser%20can%20use%20those,thereby%20speeding%20up%20page%20loads.
 </details>
 
+
+<details >
+ <summary style="font-size: large; font-weight: bold">HTTP upgrade methods</summary>
+
+
+![img_37.png](img_37.png)
+![img_36.png](img_36.png)
+
+- HTTP 1.0 was finalized and fully documented in 1996. Every
+  request to the same server requires a separate TCP connection.
+
+- HTTP 1.1 was published in 1997. A TCP connection can be left
+  open for reuse (persistent connection), but it doesn’t solve the HOL
+  (head-of-line) blocking issue.
+   - **HOL blocking** - when the number of allowed parallel requests in the
+     browser is used up, subsequent requests need to wait for the former
+     ones to complete.
+     53
+
+- HTTP 2.0 was published in 2015. It addresses HOL issue through
+  request multiplexing, which eliminates HOL blocking at the application
+  layer, but HOL still exists at the transport (TCP) layer.
+  As you can see in the diagram, HTTP 2.0 introduced the concept of
+  HTTP “streams”: an abstraction that allows multiplexing different HTTP
+  exchanges onto the same TCP connection. Each stream doesn’t need
+  to be sent in order.
+
+- HTTP 3.0 first draft was published in 2020. It is the proposed
+  successor to HTTP 2.0. It uses QUIC instead of TCP for the underlying
+  transport protocol, thus removing HOL blocking in the transport layer.
+  QUIC is based on UDP. It introduces streams as first-class citizens at
+  the transport layer. QUIC streams share the same QUIC connection,
+  so no additional handshakes and slow starts are required to create
+  new ones, but QUIC streams are delivered independently such that in
+  most cases packet loss affecting one stream doesn't affect others.
+
+Referred Video: https://www.youtube.com/watch?v=a-sBfyiXysI&t=2s
+
+
+Two main factors dictate which HTTP version will be used for a website:
+
+1. **Server Configuration:** The web server software that hosts the website plays a crucial role. The server administrator configures it to support specific HTTP versions (e.g., HTTP/1.1, HTTP/2). A website can only use a version that the server actively supports.
+
+2. **Client Capabilities:** The web browser or client application used to access the website also has its part. Modern browsers typically support the latest HTTP versions (e.g., HTTP/2). However, older browsers might be limited to earlier versions (e.g., HTTP/1.1).
+
+Here's how the negotiation happens:
+
+* When you try to access a website, your browser initiates a connection with the server.
+* The server sends a response header that includes information about the supported HTTP versions.
+* The browser checks its own capabilities and negotiates the highest mutually supported version for optimal communication.
+
+In most cases, with modern browsers and up-to-date servers, you'll automatically use the most efficient HTTP version available.
+
+![img_38.png](img_38.png)
+![img_39.png](img_39.png)
+
+#### HTTP/2 & HTTP/3 both need https connection.
+
+Therefore we need to setup our server with SSL certificate to enable `https` connection, then
+we use library `spdy` on express server to setup HTTP/2
+
+Below is small example to see this in action
+
+#### HTTP/1.1
+When using HTTP/1.1, browsers impose a per-domain limit of 6-8 connections, depending on the browser implementation. This allows at most 6-8 concurrent requests per domain.
+![img_40.png](img_40.png)
+
+#### HTTP/2
+With the HTTP/2 protocol, browsers have to open only 1 connection per domain. However, thanks to its multiplexing feature, HTTP/2 does not quite raise the limit, but simply removes the theoretical limit on the number of concurrent requests per domain.
+
+It is virtually unlimited in the sense that browsers and servers may limit the number of concurrent requests via the HTTP/2 configuration parameter called SETTINGS_MAX_CONCURRENT_STREAMS.
+
+In practice, typical limits are around 100 but could be larger (or, less commonly, smaller), depending on browser implementation and on the server you connect to
+
+![img_41.png](img_41.png)
+All request are done in parallel in HTTP/2.
+
+
+
+```js
+//index.js
+
+const express = require("express");
+const spdy = require('spdy');
+const fs = require("fs");
+
+
+const PORT = 3010;
+const app = express();
+
+app.use(express.static('public'));
+
+app.get('/', (req, res) => {
+   console.log(req.url);
+   res.sendFile(__dirname + '/index.html');
+});
+
+const CERT_DIR = `${__dirname}/cert`;
+
+const server = spdy.createServer(
+        {
+           key: fs.readFileSync(`${CERT_DIR}/server.key`),
+           cert: fs.readFileSync(`${CERT_DIR}/server.cert`),
+        },
+        app
+);
+
+server.listen(PORT, () => {
+   console.log(`Server started at https://localhost:${PORT}`);
+});
+```
+
+Complete code: https://github.com/namastedev/namaste-frontend-system-design/tree/master/Performance/Network%20Optimization/example4
+
 </details>
 
 
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Compression: brotli / gzip</summary>
+
+Brotli is a newer compression algorithm which can provide even better text compression results than gzip. According to CertSimple, Brotli performance is:
+
+- `14% smaller than gzip` for JavaScript
+- `21% smaller than gzip` for HTML
+- `17% smaller than gzip` for CSS
+
+1. To use Brotli, your server must support **HTTPS**. 
+2. Brotli is supported in the latest versions of most browsers. 
+Browsers that support Brotli will include br in Accept-Encoding headers:
+   `Accept-Encoding: gzip, deflate, br`
+
+![img_42.png](img_42.png)
+![img_43.png](img_43.png)
+![img_44.png](img_44.png)
+
+To know how to set things up: https://web.dev/articles/codelab-text-compression-brotli
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Caching</summary>
+
+- Use Cache Policy(cache-control, expire, etag, last-modified)
+- Service Worker
+To know more refer Database module
+</details>
+
+</details>
+
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Rendering Pattern</summary>
+
+
+![img_45.png](img_45.png)
+
+
+
+For more detailed description of below content go through this article: https://www.debugbear.com/blog/server-side-rendering
+<details >
+ <summary style="font-size: large; font-weight: bold">Client Side Rendering(CSR)</summary>
+
+### What is Rendering?
+
+In web development, rendering means the process of converting application code into interactive web pages. The page HTML is generated by a JavaScript engine. With client-side rendering, this is always done on the frontend. The browser then takes the generated HTML to visually render the page.
+We get the dynamic part by hitting API during a render period. This can be done server-side or user-side.
+
+
+- If you use client-side rendering, it’s the user’s browser that generates the entire app, including the `user interface (UI)`, `data`, and `functionality`. No server is involved in the process, except to store the client-side code and data and transfer it to the browser.
+
+- In CSR apps, the HTML file only contains a blank `root` (often also named `app`) element and a `script` tag. The root element is populated by the browser that downloads and processes the JavaScript bundle to render all the other elements:
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSR</title>
+  </head>
+  <body>
+    <div id="root"><!-- blank --></div>
+    <script src="/bundle.js"></script>
+  </body>
+</html>
+```
+
+- Since the browser needs to download and run the whole application code before the content appears on the screen, the first page load is usually slow with client-side rendering (server-side rendering splits this process between the client and server).
+
+- As a result, users see a blank screen or loading spinner for a relatively long time. This leads to a poorer user experience and higher bounce rates (see Google’s discussion of how page load time impacts bounce rates).
+
+
+
+![img_48.png](img_48.png)
+![img_46.png](img_46.png)
+</details>
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Server Side Rendering(SSR)</summary>
+
+- Server-side rendering, also known as universal or isomorphic rendering
+-  SSR generates the static HTML markup on the server using a backend runtime such as Node.js that can run the JavaScript code to build the UI components.
+
+
+All HTML elements inside the root element were rendered on the server:
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SSR</title>
+  </head>
+  <body>
+    <div id="root">
+      <div class="container">
+        <h2>Stay Updated</h2>
+        <form method="post">
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <script src="/bundle.js"></script>
+  </body>
+</html>
+```
+
+### Steps in the server-side rendering process
+
+**An SSR app processes the same JavaScript code on both the client and server side — this is why it’s also called universal rendering.**
+
+
+1. **Client’s HTTP request** – When the user enters the URL into the browser’s address bar, it establishes an HTTP connection with the server, then sends the server a request for the HTML document.
+2. **Data fetching** – The server fetches any required data from the database or third-party APIs.
+3. **Server-side pre-rendering** – The server compiles the JavaScript components into static HTML.
+4. **Server’s HTTP response** – The server sends this HTML document to the client.
+5. **Page load and rendering** – The client downloads the HTML file and displays the static components on the page.
+6. **Hydration** – The client downloads the JavaScript file(s) embedded into the HTML, processes the code, and attaches event listeners to the components. This process is also called hydration or rehydration.
+
+Note that the flowchart below starts with Step 4 when the browser gets the server’s response:
+![img_49.png](img_49.png)
+
+Universal JavaScript code that also runs on the server side
+- React uses the `ReactDomServer` object together with the `hydrateRoot()` method.
+- Vue has a `createSSRApp()` method and a corresponding server-side rendering API.
+- Angular has its in-house server-side rendering tool called `Angular Universal`.
+
+### Advantages
+1. **SEO:** These days, search engine bots can easily crawl static HTML, but they still tend to have problems with indexing JavaScript-generated content. Even though Google can now index synchronous JavaScript, JavaScript SEO is a complicated question with several drawbacks such as delays in JavaScript indexing.
+2. Faster initial page loads
+3. **Faster Largest Contentful Paint (LCP):**  As the largest content element (either an image or text block) is part of the static content your server pre-renders, SSR will display it faster on the screen.
+4. **Lower Cumulative Layout Shift (CLS):** With server-side rendering, the browser doesn’t have to go over the rendering process step by step, which typically results in fewer random layout shifts and, therefore, better CLS scores.
+5. **Fewer issues with social media indexing:** For example, Facebook’s Open Graph Protocol and Twitter Cards don’t support client-side rendering.
+6. **Better for accessibility:** As the server sends pre-rendered content to the browser, SSR apps are more suitable for people who use older devices with less powerful CPUs.
+
+
+### Disadvantages
+1. If you have any API which takes more time to load, then client will not recieve anything until that API call is made, slow API act like bottleneck.
+This will increase LCP(Largest Contentful Paint).
+2. Increased complexity
+3. **Potentially higher First Input Delay (FID):** With server-side rendering, the browser displays static content faster (which leads to a better LCP), but it still needs time to hydrate the application. As a result, the app looks ready for interaction while the code is still being processed in the background. If the user tries to interact with the app during this period of time, there will be a delay in the browser’s response.
+4. **Less efficient caching:** With client-side rendering, you can speed up your app by taking full advantage of browser caching. The initial page HTML is the same for all pages, so you can cache it and load it from a content delivery network (CDN) along with the JavaScript code.With server-side rendering, the page HTML is different for each page, so it’s harder to cache this on a CDN.
+5. **Higher costs:** As client-side apps don’t need a server, you can deploy them to a free or cheap static storage service such as Netlifly or Amazon S3. However, you’ll need to pay for a server or at least a “serverless” backend to deploy an SSR application, which means higher running costs.
+
+
+#### Nextjs14 code -> Use `getServerSideProps` for making route SSR
+```js
+import Image from 'next/image';
+
+const Tutorials = ({ video }) => {
+  return (
+      <li className='mb-6'>
+        <a
+          href={`https://www.youtube.com/watch?v=${video.id}`}
+          target='_blank'
+          rel='noopener noreferrer'
+          className='hover:opacity-80'
+        >
+          <Image
+            src={video.image}
+            alt={video.title}
+            width={420}
+            height={200}
+            className='mb-4 rounded-md'
+          />
+          <h4>{video.title}</h4>
+          <div>
+            {video.views} &bull; {video.published}
+          </div>
+        </a>
+      </li>
+  )
+}
+
+export default function Home({ videos }) {
+  return (
+    <>
+    <h1>Tutorials</h1>
+    <ul>
+        {videos?.map((video, index) => (
+          <Tutorials video={video} key={index} />
+        ))}
+      </ul>
+    </>
+  )
+}
+
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  // await new Promise((resolve) => setTimeout(resolve, 3000))
+  const res = await fetch('http://localhost:4000/tutorials');
+  const videos = await res.json()
+  // Pass data to the page via props
+  return { props: { videos } }
+}
+```
+</details>
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Static Site Generation(SSG)</summary>
+
+During the build time itself all the data will be fetched from API and rendered final HTML is generated
+which served whenever we access the page. Even something got changed after that like new images or any data updated,
+those thing won't be reflected on the page. It will just show the same content which there during the build time.
+![img_47.png](img_47.png)
+
+#### Nextjs14 code -> Use `getStaticProps` for making route SSG
+```js
+import Image from 'next/image';
+
+const Tutorials = ({ video }) => {
+  return (
+      <li className='mb-6'>
+        <a
+          href={`https://www.youtube.com/watch?v=${video.id}`}
+          target='_blank'
+          rel='noopener noreferrer'
+          className='hover:opacity-80'
+        >
+          <Image
+            src={video.image}
+            alt={video.title}
+            width={420}
+            height={200}
+            className='mb-4 rounded-md'
+          />
+          <h4>{video.title}</h4>
+          <div>
+            {video.views} &bull; {video.published}
+          </div>
+        </a>
+      </li>
+  )
+}
+
+export default function Home({ videos }) {
+  return (
+    <>
+    <h1>Tutorials</h1>
+    <ul>
+        {videos?.map((video, index) => (
+          <Tutorials video={video} key={index} />
+        ))}
+      </ul>
+    </>
+  )
+}
+
+// This gets called on every request
+export async function getStaticProps() {
+  // Fetch data from external API
+  await new Promise((resolve) => setTimeout(resolve, 3000))
+  const res = await fetch('http://localhost:4000/tutorials');
+  const videos = await res.json()
+  // Pass data to the page via props
+  return { props: { videos } }
+}
+```
+</details>
+
+</details>
 
 

@@ -227,54 +227,6 @@ Referred Video: https://www.youtube.com/watch?v=P6SZLcGE4us
 <details >
  <summary style="font-size: large; font-weight: bold">HTTP/1 to HTTP/2 to HTTP/3</summary>
 
-![img_39.png](img_39.png)
-![img_29.png](img_29.png)
-
-- HTTP 1.0 was finalized and fully documented in 1996. Every
-request to the same server requires a separate TCP connection.
-
-- HTTP 1.1 was published in 1997. A TCP connection can be left
-open for reuse (persistent connection), but it doesn’t solve the HOL
-(head-of-line) blocking issue.
-  - **HOL blocking** - when the number of allowed parallel requests in the
-  browser is used up, subsequent requests need to wait for the former
-  ones to complete.
-  53
-
-- HTTP 2.0 was published in 2015. It addresses HOL issue through
-request multiplexing, which eliminates HOL blocking at the application
-layer, but HOL still exists at the transport (TCP) layer.
-As you can see in the diagram, HTTP 2.0 introduced the concept of
-HTTP “streams”: an abstraction that allows multiplexing different HTTP
-exchanges onto the same TCP connection. Each stream doesn’t need
-to be sent in order.
-
-- HTTP 3.0 first draft was published in 2020. It is the proposed
-successor to HTTP 2.0. It uses QUIC instead of TCP for the underlying
-transport protocol, thus removing HOL blocking in the transport layer.
-QUIC is based on UDP. It introduces streams as first-class citizens at
-the transport layer. QUIC streams share the same QUIC connection,
-so no additional handshakes and slow starts are required to create
-new ones, but QUIC streams are delivered independently such that in
-most cases packet loss affecting one stream doesn't affect others.
-
-Referred Video: https://www.youtube.com/watch?v=a-sBfyiXysI&t=2s
-
-
-Two main factors dictate which HTTP version will be used for a website:
-
-1. **Server Configuration:** The web server software that hosts the website plays a crucial role. The server administrator configures it to support specific HTTP versions (e.g., HTTP/1.1, HTTP/2). A website can only use a version that the server actively supports.
-
-2. **Client Capabilities:** The web browser or client application used to access the website also has its part. Modern browsers typically support the latest HTTP versions (e.g., HTTP/2). However, older browsers might be limited to earlier versions (e.g., HTTP/1.1).
-
-Here's how the negotiation happens:
-
-* When you try to access a website, your browser initiates a connection with the server.
-* The server sends a response header that includes information about the supported HTTP versions.
-* The browser checks its own capabilities and negotiates the highest mutually supported version for optimal communication.
-
-In most cases, with modern browsers and up-to-date servers, you'll automatically use the most efficient HTTP version available.
-
 </details>
 
 </details>
