@@ -7,16 +7,16 @@
 you get the website you are looking for on the internet
 - Since remembering `IP address` is difficult  we use `Domain Name` such as www.google.com
 - In Google Chrome, the default value is 6 connections per domain. This means that Chrome will only make a maximum of 6 HTTP requests to a single domain at the same time.
-![img.png](img.png)
-![img_1.png](img_1.png)
+![img.png](images/img.png)
+![img_1.png](images/img_1.png)
 
 <details >
  <summary style="font-size: large; font-weight: bold">ISP(Internet Service Provider)</summary>
 
 Example Airtel, Jio, etc.
-![img_12.png](img_12.png)
-![img_14.png](img_14.png)
-![img_13.png](img_13.png)
+![img_12.png](images/img_12.png)
+![img_14.png](images/img_14.png)
+![img_13.png](images/img_13.png)
 https://www.submarinecablemap.com/
 </details>
 
@@ -27,7 +27,7 @@ https://www.submarinecablemap.com/
 names (google.com) to machine-readable IP addresses
 (142.251.46.238).
 - WHOIS Privacy Protection: Helps to prevent any domain related info in public
-![img_15.png](img_15.png)
+![img_15.png](images/img_15.png)
 - https://www.whois.com/whois/lensview.io
 
 To achieve better scalability, the DNS servers are organized in a
@@ -43,7 +43,7 @@ There are 3 basic levels of DNS servers:
    query. You can register authoritative name servers with domain name
    registrar such as GoDaddy, Namecheap, etc.
    The diagram below illustrates how DNS lookup works under the hood:
-![img_9.png](img_9.png)
+![img_9.png](images/img_9.png)
 
    1. google.com is typed into the browser, and the browser sends the
       domain name to the DNS resolver.
@@ -69,8 +69,8 @@ Referred Video: https://www.youtube.com/watch?v=27r4Bzuj5NQ
  <summary style="font-size: large; font-weight: bold">What happens when you type a URL into your browser?
 </summary>
 
-![img_11.png](img_11.png)
-![img_10.png](img_10.png)
+![img_11.png](images/img_11.png)
+![img_10.png](images/img_10.png)
 1. Bob enters a URL into the browser and hits Enter. In this example,
    the URL is composed of 4 parts:
    - scheme - 𝒉𝒕𝒕𝒑𝒔://. This tells the browser to send a connection to the
@@ -112,7 +112,7 @@ Referred Video: https://www.youtube.com/watch?v=27r4Bzuj5NQ
 Referred Video: https://www.youtube.com/watch?v=AlkDbnbv7dk&t=236s
 
 Try to keep first call page size small so that their something to show, to make it performant
-![img_16.png](img_16.png)
+![img_16.png](images/img_16.png)
 </details>
 
 
@@ -121,17 +121,17 @@ Try to keep first call page size small so that their something to show, to make 
 
 The Critical Rendering Path is the sequence of steps the browser goes through to convert the HTML, CSS, and JavaScript into pixels on the screen. Optimizing the critical render path improves render performance. The critical rendering path includes the Document Object Model (DOM), CSS Object Model (CSSOM), render tree and layout.
 
-![img_17.png](img_17.png)
-![img_19.png](img_19.png)
+![img_17.png](images/img_17.png)
+![img_19.png](images/img_19.png)
 
 JS Execution
-![img_20.png](img_20.png)
+![img_20.png](images/img_20.png)
 
 Looking code-wise the critical rendering path is as follows:
 1.
-![img_21.png](img_21.png)
+![img_21.png](images/img_21.png)
 2. 
-![img_22.png](img_22.png)
+![img_22.png](images/img_22.png)
 
 **Render-Blocking V/s Parser-Blocking**
 - When a browser encounters a render-blocking resource, it will not display the page content below that render-blocking resource.
@@ -150,16 +150,16 @@ Looking code-wise the critical rendering path is as follows:
 - Referred Article: https://www.debugbear.com/blog/visualize-render-blocking-scripts.
 
 3. 
-![img_23.png](img_23.png)
+![img_23.png](images/img_23.png)
 
 4. 
-![img_24.png](img_24.png)
+![img_24.png](images/img_24.png)
 
 5. 
-![img_25.png](img_25.png)
+![img_25.png](images/img_25.png)
 
 6. Layout and Painting are just like making home 
-![img_26.png](img_26.png)
+![img_26.png](images/img_26.png)
 
 7. Lastly, in Composting phase, we put things together, and things like modal should be at top, 
 and we need to hide other things below it, happen in Composting phase
@@ -182,7 +182,7 @@ and we need to hide other things below it, happen in Composting phase
 <details >
  <summary style="font-size: large; font-weight: bold">Network Protocols</summary>
 
-![img_28.png](img_28.png)
+![img_28.png](images/img_28.png)
 
 Network protocols are standard methods of transferring data between two computers in a
 network.
@@ -241,18 +241,18 @@ Referred Video: https://www.youtube.com/watch?v=P6SZLcGE4us
  <summary style="font-size: x-large; font-weight: bold">API Protocols</summary>
 
 Architecture in System Design
-![img_31.png](img_31.png)
-![img_32.png](img_32.png)
+![img_31.png](images/img_31.png)
+![img_32.png](images/img_32.png)
 
 https://blog.postman.com/api-protocols-in-2023/
-![img_2.png](img_2.png)
+![img_2.png](images/img_2.png)
 
 
 
 <details >
  <summary style="font-size: large; font-weight: bold">REST</summary>
 
-![img_33.png](img_33.png)
+![img_33.png](images/img_33.png)
 
 
 
@@ -287,9 +287,9 @@ https://blog.postman.com/api-protocols-in-2023/
 
 - Here anything after `#` does not go from client to server
 - path helps you get to the exact function that needs to be executed
-  ![img_35.png](img_35.png)
+  ![img_35.png](images/img_35.png)
 
-![img_4.png](img_4.png)
+![img_4.png](images/img_4.png)
 
 - URI
   URI stands for Uniform Resource Identifier. It identifies a logical or physical resource on
@@ -313,7 +313,7 @@ If you would like to learn more detail on the subject, I would recommend W3C’s
 <details >
  <summary style="font-size: medium; font-weight: bold">HTTP Request Methods</summary>
 
-![img_36.png](img_36.png)
+![img_36.png](images/img_36.png)
 
 1. HEAD: Just want to check if any header got modified or not on the server
 2. OPTIONS: Use for security purposes
@@ -477,7 +477,7 @@ GET /search?keyword=javascript&page=2
 HTTP requests are like asking for something from a server, and HTTP responses are the server's
 replies. It's like sending a message and receiving a reply.
 
-![img_34.png](img_34.png)
+![img_34.png](images/img_34.png)
 
 - An HTTP request header is an extra piece of information you include when making a request,
 such as what kind of data you are sending or who you are. 
@@ -528,20 +528,20 @@ server's responses correctly, you need to understand these headers.
 <details >
  <summary style="font-size: medium; font-weight: bold">HTTP Status Code</summary>
 
-![img_37.png](img_37.png)
-![img_38.png](img_38.png)
+![img_37.png](images/img_37.png)
+![img_38.png](images/img_38.png)
 
 Usecase for frontend developer
 1. We can retry based on status code. So retry does not make sense if we get `400 Bad requests` because user is sending wrong info, but `503 service unavailable` make sense where we should retry
 
-![img_5.png](img_5.png)
+![img_5.png](images/img_5.png)
 Refer Video for more details here: https://www.youtube.com/watch?v=qmpUfWN7hh4
 </details>
 
 <details >
  <summary style="font-size: medium; font-weight: bold">Design Effective & Safe API</summary>
 
-![img_7.png](img_7.png)
+![img_7.png](images/img_7.png)
 
 </details>
 
@@ -568,7 +568,7 @@ Refer Video for more details here: https://www.youtube.com/watch?v=qmpUfWN7hh4
 
 
 
-![img_3.png](img_3.png)
+![img_3.png](images/img_3.png)
 - GraphQL is a query language for APIs developed by Meta. It provides a complete
   description of the data in the API and gives clients the power to ask for exactly what they
   need.
@@ -584,7 +584,7 @@ Refer Video for more details here: https://www.youtube.com/watch?v=qmpUfWN7hh4
 
 
 
-![img_6.png](img_6.png)
+![img_6.png](images/img_6.png)
 
 
 

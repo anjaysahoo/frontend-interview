@@ -1,7 +1,7 @@
 # Performance
 
-![img.png](img.png)
-![img_1.png](img_1.png)
+![img.png](images/img.png)
+![img_1.png](images/img_1.png)
 
 Get lot of insights for performance from Cloudflare Radar: https://radar.cloudflare.com/quality
 
@@ -10,18 +10,18 @@ Get lot of insights for performance from Cloudflare Radar: https://radar.cloudfl
  <summary style="font-size: x-large; font-weight: bold">Performance Monitoring(Web Vitals)</summary>
 
 https://web.dev/articles/vitals
-![img_8.png](img_8.png)
+![img_8.png](images/img_8.png)
 
 `Interaction to Next Paint (INP)` was initially developed as an experimental metric to address the runtime performance issues present on the web more comprehensively than `First Input Delay (FID)`.
 
-![img_4.png](img_4.png)
+![img_4.png](images/img_4.png)
 <details >
  <summary style="font-size: large; font-weight: bold">LCP(Largest Contentful Paint)</summary>
 
 LCP reports the render time of the largest image or text block visible in the viewport, relative to when the user first navigated to the page.
 
-![img_2.png](img_2.png)
-![img_9.png](img_9.png)
+![img_2.png](images/img_2.png)
+![img_9.png](images/img_9.png)
 
 In the first example, the Instagram logo is loaded relatively early and it remains the largest element even as other content is progressively shown. In the Google Search results page example, the largest element is a paragraph of text that is displayed before any of the images or logo finish loading. Since all the individual images are smaller than this paragraph, it remains the largest element throughout the load process.
 </details>
@@ -32,7 +32,7 @@ In the first example, the Instagram logo is loaded relatively early and it remai
 
 CLS is a measure of the largest burst of layout shift scores for every unexpected layout shift that occurs during the entire lifecycle of a page.
 
-![img_6.png](img_6.png)
+![img_6.png](images/img_6.png)
 
 </details>
 
@@ -43,19 +43,19 @@ CLS is a measure of the largest burst of layout shift scores for every unexpecte
 
 INP is a metric that assesses a page's overall responsiveness to user interactions by observing the latency of all click, tap, and keyboard interactions that occur throughout the lifespan of a user's visit to a page. The final INP value is the longest interaction observed, ignoring outliers.
 
-![WSmcjiQC4lyLxGoES4dd.gif](WSmcjiQC4lyLxGoES4dd.gif)
+![WSmcjiQC4lyLxGoES4dd.gif](images/WSmcjiQC4lyLxGoES4dd.gif)
 
-![img_5.png](img_5.png)
+![img_5.png](images/img_5.png)
 
 INP is the successor metric to First Input Delay (FID). While both are responsiveness metrics, FID only measured the input delay of the first interaction on a page. INP improves on FID by observing all interactions on a page, beginning from the input delay, to the time it takes to run event handlers, and finally up until the browser has painted the next frame.
 </details>
 
 Do this in browser using LightHouse
-![img_7.png](img_7.png)
+![img_7.png](images/img_7.png)
 
-![img_10.png](img_10.png)
-![img_11.png](img_11.png)
-![img_12.png](img_12.png)
+![img_10.png](images/img_10.png)
+![img_11.png](images/img_11.png)
+![img_12.png](images/img_12.png)
 </details>
 
 
@@ -77,7 +77,7 @@ Do this in browser using LightHouse
 
 ### Simulated Data
 1. [webpagetest.org](https://www.webpagetest.org/result/240712_BiDcDP_2W9/)
-   1. ![video.gif](video.gif)
+   1. ![video.gif](images/video.gif)
 
 
 ### Developer Mode 
@@ -113,7 +113,7 @@ Do this in browser using LightHouse
  <summary style="font-size: large; font-weight: bold">Critical Rendering Path</summary>
 
 Go through the details how CRP works in [Networking section(How the web work -> CRP)](../networking/readme.md#disadvantage)
-![img_14.png](img_14.png)
+![img_14.png](images/img_14.png)
 
 ## _First packet is of 14KB_
 
@@ -146,8 +146,8 @@ Example:
 - When we are loading our style is being loaded from file
 - All the images are used as .png file
 
-![img_15.png](img_15.png)
-![img_16.png](img_16.png)
+![img_15.png](images/img_15.png)
+![img_16.png](images/img_16.png)
 
 Here you can see how there are more network calls and because of this there quite gap between FCP & LCP
 
@@ -156,8 +156,8 @@ Here you can see how there are more network calls and because of this there quit
 - When we insert the required CSS in head tag directly in `index.html`
 - Replace all the images with SVG
 
-![img_17.png](img_17.png)
-![img_18.png](img_18.png)
+![img_17.png](images/img_17.png)
+![img_18.png](images/img_18.png)
 
 Here we have only one network call and it is very fast. There is very little gap between FCP & LCP
 
@@ -170,7 +170,7 @@ We only need to add the required CSS, which is needed when the user first naviga
  <summary style="font-size: large; font-weight: bold">Async loading of JS</summary>
 
 For more details refer [HTML section](../1-html/readme.md)
-![img_19.png](img_19.png)
+![img_19.png](images/img_19.png)
 
 
 ```html
@@ -201,19 +201,19 @@ window.onload = addListner;
 **Scenario-1:**
 Script tag with no special attributes
 
-![img_20.png](img_20.png)
+![img_20.png](images/img_20.png)
 
 
 **Scenario-2:**
 Script tag with `async` attribute
 
-![img_21.png](img_21.png)
+![img_21.png](images/img_21.png)
 
 
 **Scenario-3:**
 Script tag with `defer` attribute
 
-![img_22.png](img_22.png)
+![img_22.png](images/img_22.png)
 </details>
 
 
@@ -230,9 +230,9 @@ Script tag with `defer` attribute
 <details >
  <summary style="font-size: large; font-weight: bold">Resource Hinting</summary>
 
-![img_23.png](img_23.png)
-![img_24.png](img_24.png)
-![img_25.png](img_25.png)
+![img_23.png](images/img_23.png)
+![img_24.png](images/img_24.png)
+![img_25.png](images/img_25.png)
 
 
 <details >
@@ -246,8 +246,8 @@ The `preconnect` hint is used to establish a connection to another origin from w
 </head>
 ```
 
-![img_27.png](img_27.png)
-![img_26.png](img_26.png)
+![img_27.png](images/img_27.png)
+![img_26.png](images/img_26.png)
 https://learn-performance-resource-hints.glitch.me/1
 
 A common use case for preconnect is Google Fonts.
@@ -275,7 +275,7 @@ Per its name, dns-prefetch doesn't establish a connection to a cross-origin serv
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 ```
-![img_28.png](img_28.png)
+![img_28.png](images/img_28.png)
 DNS lookups are fairly inexpensive, and because of their relatively small cost, they may be a more appropriate tool in some cases than a preconnect. In particular, it may be a desirable resource hint to use in cases of links that navigate to other websites that you think the user is likely to follow. dnstradamus is one such tool that does this automatically using JavaScript, and uses the Intersection Observer API to inject dns-prefetch hints into the current page's HTML when links to other websites are scrolled into the user's viewport.
 
 https://web.dev/learn/performance/resource-hints?continue=https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%23article-https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%2Fresource-hints#dns-prefetch
@@ -296,8 +296,8 @@ This demo uses uses CSS `background-image` to create the image grid below, as op
       as="image" />
 ```
 
-![img_29.png](img_29.png)
-![img_30.png](img_30.png)
+![img_29.png](images/img_29.png)
+![img_30.png](images/img_30.png)
 https://learn-performance-resource-hints.glitch.me/3
 
 ### Usecase👇🏻
@@ -305,7 +305,7 @@ https://learn-performance-resource-hints.glitch.me/3
 
 `preload` directives should be limited to late-discovered critical resources. The most common use cases are font files, CSS files fetched through `@import` declarations, or CSS `background-image` resources that are likely to be `Largest Contentful Paint (LCP)` candidates. In such cases, these files wouldn't be discovered by the `preload scanner` as the resource is referenced in external resources.
 
-![img_31.png](img_31.png)
+![img_31.png](images/img_31.png)
 
 https://web.dev/learn/performance/resource-hints?continue=https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%23article-https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%2Fresource-hints#preload
 </details>
@@ -336,7 +336,7 @@ You can use the `Fetch Priority API` through its fetchpriority attribute to incr
 
 This demo assigns a fetchpriority="high" to the first, larger image, while a fetchpriority="low" to the remaining images.
 
-![img_32.png](img_32.png)
+![img_32.png](images/img_32.png)
 https://learn-performance-resource-hints.glitch.me/5
 
 By default, images are fetched with a lower priority. After layout, if the image is found to be within the initial viewport, the priority is increased to **High** priority. In the preceding HTML snippet, fetchpriority immediately tells the browser to download the larger LCP image with a **High** priority, while the less important thumbnail images are downloaded with a lower priority.
@@ -353,15 +353,15 @@ https://web.dev/learn/performance/resource-hints?continue=https%3A%2F%2Fweb.dev%
 
 Websites have become more sophisticated over time. As such, it's not unusual that a server needs to perform non-trivial work (for example, access to databases, or CDNs accessing the origin server) to produce the HTML for the requested page. Unfortunately, this "server think-time" results in extra latency before the browser can start rendering the page. Indeed, the connection effectively goes idle for as long as it takes the server to prepare the response
 
-![img_33.png](img_33.png)
+![img_33.png](images/img_33.png)
 
 Early Hints is an HTTP status code (`103 Early Hints`) used to send a preliminary HTTP response ahead of a final response. This allows a server to send hints to the browser about critical subresources (for example, style sheets for the page, critical JavaScript) or origins that will be likely used by the page, while the server is busy generating the main resource. The browser can use those hints to warm up connections, and request subresources, while waiting for the main resource. In other words, Early Hints helps the browser take advantage of such "server think-time" by doing some work in advance, thereby speeding up page loads.
 
-![img_34.png](img_34.png)
+![img_34.png](images/img_34.png)
 
 In some cases, the performance improvement to the Largest Contentful Paint can go from several hundred milliseconds, as observed by Shopify and by Cloudflare, and up to a second faster, as seen in this before and after comparison:
 
-![img_35.png](img_35.png)
+![img_35.png](images/img_35.png)
 
 https://developer.chrome.com/docs/web-platform/early-hints#:~:text=The%20browser%20can%20use%20those,thereby%20speeding%20up%20page%20loads.
 </details>
@@ -371,8 +371,8 @@ https://developer.chrome.com/docs/web-platform/early-hints#:~:text=The%20browser
  <summary style="font-size: large; font-weight: bold">HTTP upgrade methods</summary>
 
 
-![img_37.png](img_37.png)
-![img_36.png](img_36.png)
+![img_37.png](images/img_37.png)
+![img_36.png](images/img_36.png)
 
 - HTTP 1.0 was finalized and fully documented in 1996. Every
   request to the same server requires a separate TCP connection.
@@ -419,8 +419,8 @@ Here's how the negotiation happens:
 
 In most cases, with modern browsers and up-to-date servers, you'll automatically use the most efficient HTTP version available.
 
-![img_38.png](img_38.png)
-![img_39.png](img_39.png)
+![img_38.png](images/img_38.png)
+![img_39.png](images/img_39.png)
 
 #### HTTP/2 & HTTP/3 both need https connection.
 
@@ -431,7 +431,7 @@ Below is small example to see this in action
 
 #### HTTP/1.1
 When using HTTP/1.1, browsers impose a per-domain limit of 6-8 connections, depending on the browser implementation. This allows at most 6-8 concurrent requests per domain.
-![img_40.png](img_40.png)
+![img_40.png](images/img_40.png)
 
 #### HTTP/2
 With the HTTP/2 protocol, browsers have to open only 1 connection per domain. However, thanks to its multiplexing feature, HTTP/2 does not quite raise the limit, but simply removes the theoretical limit on the number of concurrent requests per domain.
@@ -440,7 +440,7 @@ It is virtually unlimited in the sense that browsers and servers may limit the n
 
 In practice, typical limits are around 100 but could be larger (or, less commonly, smaller), depending on browser implementation and on the server you connect to
 
-![img_41.png](img_41.png)
+![img_41.png](images/img_41.png)
 All request are done in parallel in HTTP/2.
 
 
@@ -498,9 +498,9 @@ Brotli is a newer compression algorithm which can provide even better text compr
 Browsers that support Brotli will include br in Accept-Encoding headers:
    `Accept-Encoding: gzip, deflate, br`
 
-![img_42.png](img_42.png)
-![img_43.png](img_43.png)
-![img_44.png](img_44.png)
+![img_42.png](images/img_42.png)
+![img_43.png](images/img_43.png)
+![img_44.png](images/img_44.png)
 
 To know how to set things up: https://web.dev/articles/codelab-text-compression-brotli
 </details>
@@ -526,7 +526,11 @@ To know more refer Database module
  <summary style="font-size: x-large; font-weight: bold">Rendering Pattern</summary>
 
 
-![img_45.png](img_45.png)
+In Short all rendering pattern: https://www.youtube.com/watch?v=Dkx5ydvtpCA
+
+One of the main aims of all rendering patterns is to optimize how we ship and execute JS on the client side. More JS means less performant website.
+
+![img_45.png](images/img_45.png)
 
 
 
@@ -564,8 +568,8 @@ We get the dynamic part by hitting API during a render period. This can be done 
 
 
 
-![img_48.png](img_48.png)
-![img_46.png](img_46.png)
+![img_48.png](images/img_48.png)
+![img_46.png](images/img_46.png)
 </details>
 
 
@@ -619,7 +623,7 @@ All HTML elements inside the root element were rendered on the server:
 6. **Hydration** – The client downloads the JavaScript file(s) embedded into the HTML, processes the code, and attaches event listeners to the components. This process is also called hydration or rehydration.
 
 Note that the flowchart below starts with Step 4 when the browser gets the server’s response:
-![img_49.png](img_49.png)
+![img_49.png](images/img_49.png)
 
 Universal JavaScript code that also runs on the server side
 - React uses the `ReactDomServer` object together with the `hydrateRoot()` method.
@@ -633,6 +637,11 @@ Universal JavaScript code that also runs on the server side
 4. **Lower Cumulative Layout Shift (CLS):** With server-side rendering, the browser doesn’t have to go over the rendering process step by step, which typically results in fewer random layout shifts and, therefore, better CLS scores.
 5. **Fewer issues with social media indexing:** For example, Facebook’s Open Graph Protocol and Twitter Cards don’t support client-side rendering.
 6. **Better for accessibility:** As the server sends pre-rendered content to the browser, SSR apps are more suitable for people who use older devices with less powerful CPUs.
+7. **Data Fetching:** Server Components allow you to move data fetching to the server, closer to your data source. This can improve performance by reducing time it takes to fetch data needed for rendering, and the number of requests the client needs to make.
+8. **Security:** Server Components allow you to keep sensitive data and logic on the server, such as tokens and API keys, without the risk of exposing them to the client. 
+9. **Caching:** By rendering on the server, the result can be cached and reused on subsequent requests and across users. This can improve performance and reduce cost by reducing the amount of rendering and data fetching done on each request.
+10. **Streaming:** Server Components allow you to split the rendering work into chunks and stream them to the client as they become ready. This allows the user to see parts of the page earlier without having to wait for the entire page to be rendered on the server.
+11. **Bundle Size:** We can reduce bundle size of our app by moving part of code which uses bigger library to server and get the outcome from server.
 
 
 ### Disadvantages
@@ -706,7 +715,7 @@ export async function getServerSideProps() {
 During the build time itself all the data will be fetched from API and rendered final HTML is generated
 which served whenever we access the page. Even something got changed after that like new images or any data updated,
 those thing won't be reflected on the page. It will just show the same content which there during the build time.
-![img_47.png](img_47.png)
+![img_47.png](images/img_47.png)
 
 #### Nextjs14 code -> Use `getStaticProps` for making route SSG
 ```js
@@ -760,6 +769,44 @@ export async function getStaticProps() {
   return { props: { videos } }
 }
 ```
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">React Server Component(RSC)</summary>
+
+Read full details about RSC here: https://vercel.com/blog/understanding-react-server-components
+
+![img_50.png](images/img_50.png)
+![img_51.png](images/img_51.png)
+</details>
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Qwik(Resumability)</summary>
+
+![img_52.png](images/img_52.png)
+
+
+Short Video from Fireship: https://www.youtube.com/watch?v=x2eF3YLiNhY
+Must read article to understand `Hydration` & `Resumability`: https://www.builder.io/blog/hydration-is-pure-overhead
+
+
+The hard part of hydration is knowing `WHAT` event handlers we need and `WHERE` they need to be attached.
+
+- `WHAT`: The event handler is a closure that contains the behavior of the event handler. It is what should happen if a user triggers this event.
+- `WHERE`: The location of the DOM element where the WHAT needs to be attached to (includes the event type.)
+
+The added complication is that WHAT is a closure that closes over APP_STATE and FRAMEWORK_STATE:
+
+- `APP_STATE`: the state of the application. APP_STATE is what most people think of as the state. Without APP_STATE, your application has nothing dynamic to show to the user.
+- `FRAMEWORK_STATE`: the internal state of the framework. Without FRAMEWORK_STATE, the framework does not know which DOM nodes to update or when the framework should update them. Examples are component-tree, and references to render functions.
+
+
+Hydration is recovering event handlers by downloading and re-executing all components in the SSR/SSG-rendered HTML. The site is sent to the client twice, once as HTML, and again as JavaScript. Additionally, the framework must eagerly execute the JavaScript to recover `WHAT`, `WHERE`, `APP_STATE`, and `FRAMEWORK_STATE`. All this work just to retrieve something the server already had but discarded!
+
+![img_53.png](images/img_53.png)
 </details>
 
 </details>
