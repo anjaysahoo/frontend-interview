@@ -19,7 +19,7 @@ having only `Heap` and `Call Stack` in it.
 
 But what make it look like `multi threaded` is by using 
 1. Event Loop
-2. Callback or Tasks Queue: (`setTimeout()`, DOM APIs, ..)
+2. Callback Queue or Tasks Queue or MacroTask Queue: (`setTimeout()`, DOM APIs, ..)
 3. Animation Queue
 4. MicroTask Queue: (`Promise`, `fetch()`, Mutation Observer, ..)
 

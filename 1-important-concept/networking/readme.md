@@ -43,7 +43,7 @@ There are 3 basic levels of DNS servers:
    query. You can register authoritative name servers with domain name
    registrar such as GoDaddy, Namecheap, etc.
    The diagram below illustrates how DNS lookup works under the hood:
-![img_9.png](images/img_9.png)
+![img.png](img.png)
 
    1. google.com is typed into the browser, and the browser sends the
       domain name to the DNS resolver.
@@ -220,13 +220,6 @@ network.
    the control channel and data channel.
 
 Referred Video: https://www.youtube.com/watch?v=P6SZLcGE4us
-</details>
-
-
-
-<details >
- <summary style="font-size: large; font-weight: bold">HTTP/1 to HTTP/2 to HTTP/3</summary>
-
 </details>
 
 </details>
