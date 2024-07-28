@@ -407,7 +407,8 @@ https://youtu.be/LBmLspdAtxM?si=7PuaKfX9GwfU9mUn
 
 </details>
 
-![summary-accessibility.jpg](summary-accessibility.jpg)
+![img.png](images/img_33.png)
+![img_1.png](images/img_34.png)
 
 
 
