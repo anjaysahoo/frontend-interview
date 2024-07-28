@@ -43,7 +43,7 @@ There are 3 basic levels of DNS servers:
    query. You can register authoritative name servers with domain name
    registrar such as GoDaddy, Namecheap, etc.
    The diagram below illustrates how DNS lookup works under the hood:
-![img.png](img.png)
+![img.png](images/img_40.png)
 
    1. google.com is typed into the browser, and the browser sends the
       domain name to the DNS resolver.
@@ -540,6 +540,227 @@ Refer Video for more details here: https://www.youtube.com/watch?v=qmpUfWN7hh4
 
 </details>
 
+
+<details >
+ <summary style="font-size: large; font-weight: bold">GraphQL</summary>
+
+![img_3.png](images/img_3.png)
+- GraphQL is a query language for APIs developed by Meta. It provides a complete
+  description of the data in the API and gives clients the power to ask for exactly what they
+  need.
+-  GraphQL servers sit in between the client and the backend services.
+- GraphQL can aggregate multiple REST requests into one query. GraphQL server organizes
+  the resources in a graph.
+- GraphQL supports queries, mutations (applying data modifications to resources), and
+  subscriptions (receiving notifications on schema modifications).
+
+### Advantages
+
+1. **Avoid Over-fetching**
+2. **Avoid Under-fetching**
+3. **Better mobile performance:** Since we are able to request required data only so for mobile we don't need fetch as much data we may need for desktop
+4. Efficiency & Precision
+5. **Declarative data fetching:** We are very clear what we need. Like for a country there are multiple things I can get but we can define that we need just name & code
+6. **Structured / Hierarchical Structure:** For this we might need to do some configuration on server side
+ 
+   Getting separately `language`, `continents` & `countries`
+   ![img_1.png](images/img_41.png)
+   Getting same data in nested structure
+   ![img_2.png](images/img_42.png)
+7. **Strongly Typed:** GraphQL APIs have strongly typed schemas, which allow developers to know exactly what data and types are available to query. 
+8. **Introspection:** GraphQL’s self-documenting schema enables easier development through introspection.
+9. **Real-time updates with subscriptions:** GraphQL enables real-time syncing through subscriptions, which keep the client updated in real time.
+
+### Difference Between REST and GraphQL
+
+![img_3.png](images/img_43.png)
+![img_4.png](images/img_44.png)
+
+- **Enforced schema**
+  - GraphQL enforces the use of a schema—regardless of whether developers are taking a schema-first or code-first approach. With the code-first approach, the schema is generated from the resolvers.
+  - REST does not enforce the use of a schema. Developers can take a schema-first approach with REST by using API specifications like OpenAPI and AsyncAPI, or they can auto-generate schemas from code, but it is not an integral part of the REST architecture.
+
+- **HTTP status codes**
+  - GraphQL uses the 200 status code for all responses, including error responses. The error response is typically included in the response payload itself.
+  - REST makes use of standard HTTP status codes that indicate the status of the response. This is very useful for error handling.
+    
+- **[Versioning](https://www.postman.com/api-platform/api-versioning/)**
+  - GraphQL uses a single versioned endpoint. It handles changes and deprecations by updating and evolving the schema without explicitly versioning the API, which can promote a smoother long-term evolution.
+  - REST APIs need to be versioned in order to safely handle changes and deprecation. This is usually done in the URL of the APIs, though there are several other approaches to API versioning, as well.
+
+
+### Similarities Between REST and GraphQL
+
+- **Common architectural principles:** GraphQL and REST share common architectural principles. They are both stateless, support a client-server model, and can be consumed by any client that understands HTTP. This makes them suitable for a wide range of devices and applications.
+- **HTTP as transport layer:** GraphQL and REST typically use HTTP as their transport layer, and they both leverage the standard HTTP POST method to send and receive data.
+- **Data transfer formats:** GraphQL and REST use standard data formats for communication. JSON is the most commonly used format, but other formats, like XML, can also be used, especially in REST.
+- **Middleware and extensions:** GraphQL and REST can both be extended with middleware to add functionalities like logging, caching, and authentication.
+
+### Challenges of GraphQL
+
+- **Query complexity:** The flexibility that GraphQL gives to the client comes with drawbacks, as overly complex or nested queries can negatively impact performance.
+- **Learning curve:** GraphQL has a steeper learning curve than REST due to new concepts like mutations and subscriptions.
+- **Versioning:** The flexible nature of queries means that changes in the schema can break existing queries, complicating version management.
+- **Potential overuse of resources:** Since clients can request multiple resources in one query, there’s a risk of overloading servers by fetching more data than necessary.
+- **Security concerns:** Malicious users could exploit GraphQL’s flexibility to overload servers with complex queries.
+
+![img_5.png](images/img_45.png)
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Setting Up GraphQL Server</summary>
+
+![img_6.png](images/img_46.png)
+
+Here we will use Appolo for setting up GraphQL Server
+
+1. Step-1: 
+```js
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
+import { typeDefs } from './typeDefs.js';
+import { resolvers } from './resolvers.js';
+
+// The ApolloServer constructor requires two parameters: your schema
+// definition and your set of resolvers.
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
+  
+  // Passing an ApolloServer instance to the `startStandaloneServer` function:
+  //  1. creates an Express app
+  //  2. installs your ApolloServer instance as middleware
+  //  3. prepares your app to handle incoming requests
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: 4001 },
+  });
+  
+  console.log(`🚀  Server ready at: ${url}`);
+```
+
+2. Step-2: Create typeDefs file
+```js
+export const typeDefs = `#graphql
+
+    type Author {
+        id: ID!
+        name: String!
+        books: [Book]
+    }
+
+    type Book {
+        id: ID!
+        title: String!
+        publishedYear: Int
+        author: Author
+    }
+
+    type Query {
+        authors: [Author]
+        books: [Book]
+    }
+
+    type Mutation {
+        addBook(title: String!, publishedYear: Int, authorId: ID! ): Book!
+    }
+`
+```
+
+3. Step-3: Create resolvers file
+```js
+const data = {
+    authors: [
+      { id: "1", name: "Chirag Goel", bookIds: ["101", "102"] },
+      { id: "2", name: "Akshay Saini", bookIds: ["103"] },
+    ],
+    books: [
+      { id: "101", title: "Namaste Frontend System Design", publishedYear: 2000, authorId: "1" },
+      { id: "102", title: "Book 2", publishedYear: 2010, authorId: "1" },
+      { id: "103", title: "Book 3", publishedYear: 2020, authorId: "2" },
+    ],
+  };
+  
+
+
+export const resolvers = {
+    Book: {
+        author: (parent, args, context, info) => {
+            console.log(parent);
+            return data.authors.find(authorDetail => authorDetail.id === parent.authorId);
+
+        },
+    },
+    Author: {
+        books: (parent, args, context, info) => {
+            return data.books.filter(book => parent.bookIds.includes(book.id));
+        }
+    },
+    Query: {
+        authors: (parent, args, context, info) => {
+            return data.authors;
+        },
+        books: (parent, args, context, info) => {
+            return data.books;
+        }
+    },
+    Mutation: {
+        addBook: (parent, args, context, info) => {
+            console.log(args);
+            const newBook = {...args, id: data.books.length + 1};
+            data.books.push(newBook)
+            return newBook;
+        }
+    }
+}
+```
+
+Full Code: https://github.com/namastedev/namaste-frontend-system-design/tree/master/Networking/GraphQl
+
+4. Step-4: Run server
+![img_7.png](images/img_47.png)
+![img_8.png](images/img_48.png)
+</details>
+
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">gRPC</summary>
+
+- gRPC, which stands for “Google Remote Procedure Call,” is a modern, high-performance protocol that facilitates communication between services.
+- Open-source
+- It is built on top of HTTP/2 and leverages Protocol Buffers to define service methods and message formats.
+- In contrast to REST APIs, which rely on standard HTTP verbs like GET and POST, gRPC enables services to expose custom methods that are similar to functions in a programming language.  
+
+
+### Benefits of gRPC
+- **Performance:** HTTP/2 and Protocol Buffers enable gRPC to achieve low latency and high throughput.
+- **Strong typing:** Like SOAP and GraphQL, gRPC is strongly typed. This results in fewer bugs as types are validated at compile time.
+- **Multi-language support:** gRPC has first-class support for many programming languages, including Go, Java, C#, and Node.js.
+- **Streaming:** gRPC handles streaming requests and responses out-of-the-box, which unlocks complex use cases like long-lived connections and real-time updates.
+- **Battery included:** gRPC directly supports critical functionality like load balancing, retries, and timeouts.
+
+
+### Challenges of gRPC
+- **Browser support:** Native gRPC support in browsers is still limited, making it less suitable for direct client-to-server communication in web applications.
+- **Learning curve:** Developers need to learn how to work with Protocol Buffers, custom service definitions, and other gRPC features, which can slow initial productivity.
+- **Debugging complexity:** Protocol Buffers are not human-readable, making it harder to debug and test gRPC APIs than JSON APIs.
+
+
+![img_10.png](images/img_50.png)
+![img_11.png](images/img_51.png)
+![img_12.png](images/img_52.png)
+![img_13.png](images/img_53.png)
+
+Setup Code: https://github.com/namastedev/namaste-frontend-system-design/tree/master/Networking/gRPC
+
+![img_14.png](images/img_54.png)
+![img_15.png](images/img_55.png)
+![img_16.png](images/img_56.png)
+![img_17.png](images/img_57.png)
+
+</details>
+
 </details>
 
 
@@ -561,18 +782,7 @@ Refer Video for more details here: https://www.youtube.com/watch?v=qmpUfWN7hh4
 
 
 
-![img_3.png](images/img_3.png)
-- GraphQL is a query language for APIs developed by Meta. It provides a complete
-  description of the data in the API and gives clients the power to ask for exactly what they
-  need.
--  GraphQL servers sit in between the client and the backend services.
-- GraphQL can aggregate multiple REST requests into one query. GraphQL server organizes
-  the resources in a graph.
-- GraphQL supports queries, mutations (applying data modifications to resources), and
-  subscriptions (receiving notifications on schema modifications).
-- Over to you:
-1. Is GraphQL a database technology?
-2. Do you recommend GraphQL? Why/why not?
+
 
 
 
