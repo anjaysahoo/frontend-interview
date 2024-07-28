@@ -169,7 +169,7 @@ We only need to add the required CSS, which is needed when the user first naviga
 <details >
  <summary style="font-size: large; font-weight: bold">Async loading of JS</summary>
 
-For more details refer [HTML section](../1-html/readme.md)
+For more details refer [HTML section](../01-html/readme.md)
 ![img_19.png](images/img_19.png)
 
 

@@ -125,7 +125,7 @@ for 2nd case we are getting only `5` in `newArgs`, therefore, we never hit
 in `newArgs` we're expecting only one argument, but it can be multiple
 hence using spread operator properly like below will yield a right
 result.
-[Refer spread operator notes to understand better](../../3-js-basics/readme.md)
+[Refer spread operator notes to understand better](../../03-js-basics/readme.md)
 ```js
 export default function curry(func) {
   return function curried(...args) {
