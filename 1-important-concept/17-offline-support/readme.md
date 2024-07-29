@@ -152,7 +152,27 @@ self.addEventListener("activate", (e) => {
   );
 });
 ```
+### Here are the two primary strategies:
 
+1. **Cache-First Strategy :** Show data from the cache first, then make an API call in the background to update the cache.
+
+    **Use Case:**
+    When you want to prioritize faster load times and offline availability.
+    Ideal for content that doesn’t change frequently.
+
+2. **Network-First Strategy:** Make an API call first to fetch the latest data, then cache the response, and fall back to the cache if the network request fails.
+
+    **Use Case:**
+    When you want to ensure the user always gets the most up-to-date data.
+    Ideal for dynamic content that changes frequently.
+
+**Tips for choosing the Right Strategy:**
+
+1. **Cache-First Strategy** is generally better for applications where performance and offline access are critical, and the data doesn’t change too often, such as news articles, blogs, or static content.
+2. **Network-First Strategy** is more suitable for applications where the most recent data is important, such as social media feeds, stock prices, or real-time applications.
+
+
+We can however also use a combination of both Strategies. For example, you might use a cache-first strategy for static assets (like images and CSS) and a network-first strategy for dynamic API calls.
 </details>
 
 

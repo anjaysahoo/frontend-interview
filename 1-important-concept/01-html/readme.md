@@ -1,4 +1,36 @@
 <details >
+ <summary style="font-size: large; font-weight: bold">HTML5</summary>
+
+![img_3.png](img_3.png)
+
+1. Tag
+```html
+<title>
+```
+
+2. Element
+```html
+<title>Hello</title>
+```
+
+3. Attribute
+```html
+<title id="head">Hello</title>
+```
+
+1. New HTML Elements better for Semantic
+
+![img_4.png](img_4.png)
+
+2. Native video support
+![img_5.png](img_5.png)
+</details>
+
+
+
+
+
+<details >
  <summary style="font-size: large; font-weight: bold">Script Loading</summary>
 
 Render-blocking resources can include scripts, stylesheets, and HTML imports.
@@ -34,3 +66,8 @@ loading scripts which has no dependency like Google Analytics
 
 
 </details>
+
+
+
+
+
