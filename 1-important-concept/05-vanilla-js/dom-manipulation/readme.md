@@ -185,7 +185,31 @@ Referred Video: https://www.youtube.com/watch?v=y17RuWkWdn8&t=1s
 
 ## Good Example of DOM Manipulation
 
-### Todo List
+<details >
+ <summary style="font-size: large; font-weight: bold">How can you add a span element inside a div element using web APIs?</summary>
+
+```js
+// Get a reference to the div element
+const myDiv = document.getElementById('myDiv');
+
+// Create a new span element
+const newSpan = document.createElement('span');
+
+// Set attributes (optional)
+newSpan.id = 'mySpan';
+newSpan.className = 'mySpanClass';
+
+// Add text content (optional)
+newSpan.textContent = 'This is some text';
+
+// Append the span to the div
+myDiv.appendChild(newSpan);
+```
+</details>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Todo List</summary>
+
 ![img_2.png](img_2.png)
 
 ```html
@@ -287,3 +311,4 @@ import './styles.css';
 ```
 
 Referred from: https://www.greatfrontend.com/questions/user-interface/todo-list/vanilla
+</details>

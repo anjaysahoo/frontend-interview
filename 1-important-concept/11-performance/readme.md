@@ -112,7 +112,7 @@ Do this in browser using LightHouse
 <details >
  <summary style="font-size: large; font-weight: bold">Critical Rendering Path</summary>
 
-Go through the details how CRP works in [Networking section(How the web work -> CRP)](../networking/readme.md#disadvantage)
+Go through the details how CRP works in [Networking section(How the web work -> CRP)](../09-networking/readme.md#disadvantage)
 ![img_14.png](images/img_14.png)
 
 ## _First packet is of 14KB_

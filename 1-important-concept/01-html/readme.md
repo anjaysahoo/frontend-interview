@@ -68,6 +68,37 @@ loading scripts which has no dependency like Google Analytics
 </details>
 
 
+<details >
+ <summary style="font-size: large; font-weight: bold">Block and Inline Elements</summary>
 
+An inline element does not start on a new line.
+
+An inline element only takes up as much width as necessary.
+
+```html
+    <a>
+    <button>
+    <img>
+    <input>
+    <script>
+    <select>
+    <textarea>
+    <label>
+    <abbr>
+    <acronym>
+    <b>
+    <bdo>
+    <big>
+    <br>
+    <cite>
+    <code>
+    <dfn>
+    <em>
+    <i>
+    <kbd><map><object><output><q><samp><small><span><strong><sub><sup><time><tt><var>
+```
+
+**Note:** An `inline element` **cannot** contain a `block-level` element!
+</details>
 
 

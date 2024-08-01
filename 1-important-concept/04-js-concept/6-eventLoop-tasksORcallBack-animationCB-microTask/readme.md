@@ -66,6 +66,12 @@ Running example: https://youtu.be/8aGhZQkoFbQ?si=wqVXk6cU2grRaD8_&t=1170
 
 </details>
 
+
+
+
+
+
+
 <details >
  <summary style="font-size: x-large; font-weight: bold">Jake Archibald's Talk</summary>
 
@@ -291,6 +297,9 @@ Use above tool to better visualize above example
 
 </details>
 
+
+
+
 <details >
  <summary style="font-size: x-large; font-weight: bold">Namaste JS</summary>
 
@@ -307,4 +316,45 @@ Referred Video: https://youtu.be/8zKuNo4ay8E?si=HOCnXMoqEvLG-G8h
 ![img_67.png](images/img_67.png)
 Depending on the browser engine, the JS can use `Interpreter` or `Compiler`
 ![img_68.png](images/img_68.png)
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Reflow and Repaint</summary>
+
+![img_69.png](images/img_69.png)
+
+In CRP([Networking -> How Web Work -> CRP](../../09-networking/readme.md)) we have 
+
+**3.1 Reflow:** Keeps on happening when changes are made to the elements, that affect the layout of the partial or whole page. The Reflow of the element will cause the subsequent reflow of all the child and ancestor elements in the DOM. Reflow means re-calculating the positions and geometries of elements in the document.
+
+**4.1 Repaint:**  Keeps on happening when changes are made to the appearance of the elements that change the visibility, but doesn't affect the layout
+Eg: Visibility, background color, outline
+
+> Reflows are very expensive in terms of performance, and is one of the main causes of slow DOM scripts, especially on devices with low
+processing power, such as phones. In many cases, they are equivalent to laying out the entire page again.
+
+**What Causes the Reflows and Repaints**
+- Reflow will happen when Adding, Removing, Updating the DOM nodes
+- Hiding DOM Element with display: none will cause both reflow and repaint
+- Hiding DOM Element with visibility: hidden will cause the only repaint, because no layout or position change
+
+```js
+var bodyStyle = document.body.style; // cache
+
+bodyStyle.padding = "20px"; // reflow, repaint
+bodyStyle.border = "10px solid red"; // reflow, repaint
+
+bodyStyle.color = "blue"; // repaint only, no dimensions changed
+bstyle.backgroundColor = "#cc0000"; // repaint
+
+bodyStyle.fontSize = "2em"; // reflow, repaint
+
+// new DOM element - reflow, repaint
+document.body.appendChild(document.createTextNode('Hello!'));
+```
+
+Full article: https://dev.to/gopal1996/understanding-reflow-and-repaint-in-the-browser-1jbg
 </details>
