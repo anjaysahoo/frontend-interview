@@ -33,6 +33,25 @@ it doesn't get the latest value from React's state.
 </details>
 
 <details >
+ <summary style="font-size: large; font-weight: bold">Conditional Styling</summary>
+
+```js
+import classes from "./templateNode.module.css";
+
+return (
+    <>
+        <div className={classes["node__fields__field"]}></div>
+        <div className={`${classes["node"]} ${selectedNodeId === id ? classes["selected"] : ''}`}></div>
+        <div style={{'display': currentImageNo === 0 ? 'block' : 'none'}}></div>
+    </>
+)
+```
+
+
+
+</details>
+
+<details >
  <summary style="font-size: large; font-weight: bold">Input Fields</summary>
 
 ```js
