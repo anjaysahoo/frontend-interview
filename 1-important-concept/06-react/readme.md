@@ -3,53 +3,6 @@
 
 Quick Speed Run: https://learnweb3.io/degrees/ethereum-developer-degree/sophomore/intro-to-react-and-next-js/
 
-<details >
- <summary style="font-size: large; font-weight: bold">useState()</summary>
-
-❌Wrong way to update state variable
-```js
-const [currentImageNo, setCurrentImageNo] = useState(0);
-
-useEffect(() => {
-    setInterval(() => {
-        setCurrentImageNo((currentImageNo + 1) % totalImage);
-    },5000)
-})
-```
-
-✅Right way to update state variable
-```js
-const [currentImageNo, setCurrentImageNo] = useState(0);
-
-useEffect(() => {
-    setInterval(() => {
-        setCurrentImageNo(prevImageNo => (prevImageNo + 1) % totalImage);
-    },5000)
-})
-```
-In React, state updates inside a function use the state at the time the function was created.
-This means that the `currentImageNo` in your setInterval callback will always be `0` because
-it doesn't get the latest value from React's state.
-</details>
-
-<details >
- <summary style="font-size: large; font-weight: bold">Conditional Styling</summary>
-
-```js
-import classes from "./templateNode.module.css";
-
-return (
-    <>
-        <div className={classes["node__fields__field"]}></div>
-        <div className={`${classes["node"]} ${selectedNodeId === id ? classes["selected"] : ''}`}></div>
-        <div style={{'display': currentImageNo === 0 ? 'block' : 'none'}}></div>
-    </>
-)
-```
-
-
-
-</details>
 
 <details >
  <summary style="font-size: large; font-weight: bold">Input Fields</summary>
@@ -354,6 +307,36 @@ when used within React, as it's provided to us by React itself.
 These pre-built functions have underlying logic developed by React developers. 
 When we install React via npm, wegain access to these superpowers
 
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">useState()</summary>
+
+❌Wrong way to update state variable
+```js
+const [currentImageNo, setCurrentImageNo] = useState(0);
+
+useEffect(() => {
+    setInterval(() => {
+        setCurrentImageNo((currentImageNo + 1) % totalImage);
+    },5000)
+})
+```
+
+✅Right way to update state variable
+```js
+const [currentImageNo, setCurrentImageNo] = useState(0);
+
+useEffect(() => {
+    setInterval(() => {
+        setCurrentImageNo(prevImageNo => (prevImageNo + 1) % totalImage);
+    },5000)
+})
+```
+In React, state updates inside a function use the state at the time the function was created.
+This means that the `currentImageNo` in your setInterval callback will always be `0` because
+it doesn't get the latest value from React's state.
+</details>
+
 <details >
  <summary style="font-size: medium; font-weight: bold">useEffect()</summary>
 
@@ -400,6 +383,20 @@ You can also similarly create side effects which are dependent on
 multiple state variables, not just one. If any of the dependent variables 
 change, the side effect is run. You do this by just adding more state 
 variables to the dependency array.
+
+
+Note: **Always write `clean logic` to prevent `memory leaks` and unexpected behavior like below**
+
+```js
+useEffect(() => {
+    const timerId = setInterval(() => {}, 500)
+    
+    //Below will remove the setInterval when component unmounts
+    return () => {
+        clearInterval(timerId);
+    }
+   }, []);
+```
 
 </details>
 
