@@ -3,6 +3,34 @@
 
 Quick Speed Run: https://learnweb3.io/degrees/ethereum-developer-degree/sophomore/intro-to-react-and-next-js/
 
+<details >
+ <summary style="font-size: large; font-weight: bold">useState()</summary>
+
+❌Wrong way to update state variable
+```js
+const [currentImageNo, setCurrentImageNo] = useState(0);
+
+useEffect(() => {
+    setInterval(() => {
+        setCurrentImageNo((currentImageNo + 1) % totalImage);
+    },5000)
+})
+```
+
+✅Right way to update state variable
+```js
+const [currentImageNo, setCurrentImageNo] = useState(0);
+
+useEffect(() => {
+    setInterval(() => {
+        setCurrentImageNo(prevImageNo => (prevImageNo + 1) % totalImage);
+    },5000)
+})
+```
+In React, state updates inside a function use the state at the time the function was created.
+This means that the `currentImageNo` in your setInterval callback will always be `0` because
+it doesn't get the latest value from React's state.
+</details>
 
 <details >
  <summary style="font-size: large; font-weight: bold">Input Fields</summary>
