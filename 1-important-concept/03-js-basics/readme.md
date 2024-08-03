@@ -303,9 +303,31 @@ that you're checking the boolean representation of the given value.
 
 
 <details >
- <summary style="font-size: x-large; font-weight: bold">Useful Functions</summary>
+ <summary style="font-size: x-large; font-weight: bold">Stack, Queue, Shift, Unshift</summary>
 
+- `Push` & `Pop` happens from **END** of the array
+- While `Unshift` & `Shift` happens from **BEGINNING** of the array
 ![img_2.png](img_2.png)
+![img_3.png](img_3.png)
+
+
+### Stack
+```js
+var stack = [];
+stack.push(2);       // stack is now [2]
+stack.push(5);       // stack is now [2, 5]
+var i = stack.pop(); // stack is now [2]
+alert(i);            // displays 5 // displays 2
+```
+
+### Queue
+```js
+var queue = [];
+queue.push(2);         // queue is now [2]
+queue.push(5);         // queue is now [2, 5]
+var i = queue.shift(); // queue is now [5]
+alert(i);              // displays 2
+```
 </details>
 
 
@@ -383,4 +405,11 @@ console.log("Sum:", sum(10, 20)); // Sum: 30
 
 The `...numbers` syntax collects all passed arguments into an array named 
 `numbers`, enabling flexible function definitions.
+</details>
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">UseFul Fn: Concat</summary>
+
+![img_4.png](img_4.png)
 </details>
