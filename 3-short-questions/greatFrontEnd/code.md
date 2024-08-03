@@ -163,3 +163,132 @@ export default function flatten(value) {
 
 
 </details>
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">02. Deep Equal</summary>
+
+###### 02
+
+<details >
+ <summary style="font-size: small; font-weight: bold">Question</summary>
+
+Implement a function `deepEqual` that performs a deep comparison between two values. It returns `true` if two input values are deemed equal, and returns `false` if not.
+
+- You can assume there are only JSON-serializable values (numbers, strings, boolean, `null`, objects, arrays).
+- There wouldn't be cyclic objects, i.e. objects with circular references.
+```js
+deepEqual('foo', 'foo'); // true
+deepEqual({ id: 1 }, { id: 1 }); // true
+deepEqual([1, 2, 3], [1, 2, 3]); // true
+deepEqual([{ id: '1' }], [{ id: '2' }]); // false
+```
+</details>
+
+<details >
+ <summary style="font-size: small; font-weight: bold">Solution</summary>
+
+<details >
+ <summary style="font-size: small; font-weight: bold">`typeof()`</summary>
+
+![img.png](img_4.png)
+
+```javascript
+typeof([])
+// "object"
+
+//Check if an object is an array
+Array.isArray([])
+```
+
+Referred Article: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#bigint_type
+
+</details>
+
+My Solution:
+
+**Note:** Read all comments very carefully, this problem looks simple, but because
+so many edge case it might become tricky to understand.
+```js
+export default function deepEqual(valueA, valueB) {
+
+  /**
+   * This will cover all value comparison of below data type
+   * 1. Undefined
+   * 2. Boolean
+   * 3. String
+   * 4. Number
+   * 
+   * Also, this is the only condition that can return "true",
+   * rest everything is trying to see for "false" case
+   */
+  if(valueA === valueB) 
+      return true;
+
+  if(typeof valueA !== typeof valueB)
+    return false;
+
+  /** 
+   * In Object type check for below things because all of them
+   * return "object" as their type 
+   * 1. null
+   * 2. Array
+   * 3. Object
+   */
+  if(typeof valueA === 'object' && typeof valueB === 'object'){
+
+    /**
+     * One super important thing to note is that, since every
+     * if statement is returning some value in every situation
+     * hence we don't need else statement
+     */
+
+    if(valueA === null || valueB === null)
+      return false;
+
+    if(Array.isArray(valueA) && Array.isArray(valueB)){
+      const lenA = valueA.length;
+      const lenB = valueB.length
+
+      if(lenA !== lenB)
+        return false;
+
+      for(let i = 0; i < lenA; i++){
+        if(!deepEqual(valueA[i], valueB[i]))
+          return false;
+      }
+
+      return true;
+    }
+
+    if(Array.isArray(valueA) || Array.isArray(valueB)){
+      return false
+    }
+
+    const keysArrA = Object.keys(valueA);
+    const keysArrB = Object.keys(valueB);
+
+    const lenA = keysArrA.length;
+    const lenB = keysArrB.length;
+
+    if(lenA !== lenB)
+      return false;
+
+    for(let i = 0; i < lenA; i++){
+      if(keysArrA[i] !== keysArrB[i])
+        return false;
+
+      if(!deepEqual(valueA[keysArrA[i]], valueB[keysArrB[i]]))
+        return false;
+    }
+
+    return true;   
+  }
+}
+```
+
+For more solution and explaination on edge case refer:
+https://www.greatfrontend.com/questions/javascript/deep-equal?list=one-week
+</details>
+</details>
