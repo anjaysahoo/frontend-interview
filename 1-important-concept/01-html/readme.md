@@ -42,7 +42,7 @@ Render-blocking resources can include scripts, stylesheets, and HTML imports.
 
 **Case-2:**
 - As soon as scripts are encountered, HTML parsing is stopped and
-we load the script then starts executing
+we load the script then starts executing. JS file are Parser blocking
 
 **Case-3(End Of Body):**
 - Once all HTML is parsed, scripts load and execute

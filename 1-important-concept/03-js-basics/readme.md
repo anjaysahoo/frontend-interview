@@ -75,9 +75,94 @@ let score = Array(4).fill().map(() => Array(4).fill(0));
 </details >
 
 
-<details >
- <summary style="font-size: x-large; font-weight: bold">Looping through an `Object`</summary>
 
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Sort Array (`sort()`) & Convert to Array (`Array.from()`)</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Sort Array (`sort()`)</summary>
+
+![img.png](images/img_12.png)
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+
+```js
+let nums1 = [1,5,2,9,6];
+let nums2 = [1,5,2,9,6];
+
+nums1.sort((a, b) => b - a); //[9, 6, 5, 2, 1]
+nums2.sort((a, b) => a - b); //[1, 2, 5, 6, 9]
+```
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Convert to Array (`Array.from()`)</summary>
+
+The Array.from() static method creates a new, shallow-copied Array instance from an iterable or array-like object.
+
+```js
+console.log(Array.from('foo'));
+// Expected output: Array ["f", "o", "o"]
+
+console.log(Array.from([1, 2, 3], (x) => x + x));
+// Expected output: Array [2, 4, 6]
+```
+
+### Map
+```js
+const map = new Map([
+  [1, 2],
+  [2, 4],
+  [4, 8],
+]);
+Array.from(map);
+// [[1, 2], [2, 4], [4, 8]]
+
+const mapper = new Map([
+  ["1", "a"],
+  ["2", "b"],
+]);
+Array.from(mapper.values());
+// ['a', 'b'];
+
+Array.from(mapper.keys());
+// ['1', '2'];
+
+```
+
+### Set
+```js
+const set = new Set(["foo", "bar", "baz", "foo"]);
+Array.from(set);
+// [ "foo", "bar", "baz" ]
+
+```
+
+Note: Spreading a Set has issues when compiled with TypeScript (See issue #8856). It's safer to use `Array.from` above instead.
+
+`const array = [...mySet];`
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
+</details>
+
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Object, Map & Set</summary>
+
+1. **Set: The Set object lets you store `unique` values of any type, whether primitive values or object references.**
+
+2. **Map:** The Map object holds key-value pairs and remembers the original insertion order of the keys. Any value (both objects and primitive values) may be used as either a key or a value.
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Iterate</summary>
+
+### `Object`
 We have three object static methods, which are:
 
 1. `Object.keys()`
@@ -110,7 +195,140 @@ for ([key, value] of populationArr){
 
 Referred Article: https://www.freecodecamp.org/news/how-to-iterate-over-objects-in-javascript/
 
+### `Map`
+
+```js
+const frequencyMap = new Map();
+
+// Iterate over map
+for (const [key, count] of frequencyMap.entries()) {
+   
+}
+```
+
+### `Set`
+For Set objects there is no key like in Map objects. However, to keep the API similar to the Map object, each entry has the same value for its key and value here, so that an array [value, value] is returned.
+```js
+const set1 = new Set();
+set1.add(42);
+set1.add('forty two');
+
+const iterator1 = set1.entries();
+
+for (const entry of iterator1) {
+  console.log(entry);
+  // Expected output: Array [42, 42]
+  // Expected output: Array ["forty two", "forty two"]
+}
+```
 </details>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">`has()`</summary>
+
+### Map
+```js
+const map1 = new Map();
+map1.set('bar', 'foo');
+
+console.log(map1.has('bar'));
+// Expected output: true
+
+console.log(map1.has('baz'));
+// Expected output: false
+```
+
+### Set
+```js
+const set1 = new Set([1, 2, 3, 4, 5]);
+
+console.log(set1.has(1));
+// Expected output: true
+
+console.log(set1.has(6));
+// Expected output: false
+```
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">`delete()`</summary>
+
+### Map
+```js
+const map1 = new Map();
+map1.set('bar', 'foo');
+
+console.log(map1.delete('bar'));
+// Expected result: true
+// True indicates successful removal
+
+console.log(map1.has('bar'));
+// Expected result: false
+```
+
+### Set
+```js
+const set1 = new Set();
+set1.add({ x: 10, y: 20 }).add({ x: 20, y: 30 });
+
+// Delete any point with `x > 10`.
+set1.forEach((point) => {
+  if (point.x > 10) {
+    set1.delete(point);
+  }
+});
+
+console.log(set1.size);
+// Expected output: 1
+```
+</details>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">`set()`, `get()` & `add()`</summary>
+
+### Map
+```js
+const map1 = new Map();
+
+map1.set('a', 1);
+map1.set('b', 2);
+map1.set('c', 3);
+
+console.log(map1.get('a'));
+// Expected output: 1
+
+map1.set('a', 97);
+
+console.log(map1.get('a'));
+// Expected output: 97
+```
+
+### Set
+```js
+const set1 = new Set();
+
+set1.add(42);
+set1.add(42);
+set1.add(13);
+
+for (const item of set1) {
+  console.log(item);
+  // Expected output: 42
+  // Expected output: 13
+}
+```
+</details>
+
+Map: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+<br>
+Set: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/add
+
+</details>
+
+
+
+
 
 <details >
  <summary style="font-size: x-large; font-weight: bold">`typeof()`</summary>
@@ -128,6 +346,12 @@ Array.isArray([])
 Referred Article: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#bigint_type
 
 </details>
+
+
+
+
+
+
 
 <details >
  <summary style="font-size: x-large; font-weight: bold">map, filter & reduce</summary>
@@ -160,6 +384,11 @@ second param: initial value of `accumulator`
 
 Referred Video: https://youtu.be/zdp0zrpKzIE?si=B6N_S7e4XUy7SoOd
 </details>
+
+
+
+
+
 
 
 <details >
@@ -214,45 +443,10 @@ In general, both methods are quite similar, and the choice between them often co
 </details>
 
 
-<details >
- <summary style="font-size: x-large; font-weight: bold">Sort Array</summary>
-
-![img.png](images/img_12.png)
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-
-```js
-let nums1 = [1,5,2,9,6];
-let nums2 = [1,5,2,9,6];
-
-nums1.sort((a, b) => b - a); //[9, 6, 5, 2, 1]
-nums2.sort((a, b) => a - b); //[1, 2, 5, 6, 9]
-```
-</details>
 
 
-<details >
- <summary style="font-size: x-large; font-weight: bold">Map</summary>
 
-![img_1.png](images/img_13.png)
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
 
-```js
-const frequencyMap = new Map();
-
-// Check key is present or not
-if (frequencyMap.has(value)) {
-   frequencyMap.set(value, frequencyMap.get(value) + 1);
-} else {
-   frequencyMap.set(value, 1);
-}
-
-// Iterate over map
-for (const [key, count] of frequencyMap.entries()) {
-   
-}
-
-```
-</details>
 
 <details >
  <summary style="font-size: x-large; font-weight: bold">Falsy value </summary>
@@ -302,6 +496,10 @@ that you're checking the boolean representation of the given value.
 
 
 
+
+
+
+
 <details >
  <summary style="font-size: x-large; font-weight: bold">Stack, Queue, Shift, Unshift</summary>
 
@@ -329,6 +527,10 @@ var i = queue.shift(); // queue is now [5]
 alert(i);              // displays 2
 ```
 </details>
+
+
+
+
 
 
 <details >
@@ -406,6 +608,9 @@ console.log("Sum:", sum(10, 20)); // Sum: 30
 The `...numbers` syntax collects all passed arguments into an array named 
 `numbers`, enabling flexible function definitions.
 </details>
+
+
+
 
 
 <details >

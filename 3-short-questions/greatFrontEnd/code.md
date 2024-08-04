@@ -292,3 +292,127 @@ For more solution and explaination on edge case refer:
 https://www.greatfrontend.com/questions/javascript/deep-equal?list=one-week
 </details>
 </details>
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">03. List Format</summary>
+
+###### 03
+
+https://www.greatfrontend.com/questions/javascript/list-format?list=one-week
+<details >
+ <summary style="font-size: small; font-weight: bold">Question</summary>
+
+![img_5.png](img_5.png)
+
+```js
+listFormat([]); // ''
+
+listFormat(['Bob']); // 'Bob'
+listFormat(['Bob', 'Alice']); // 'Bob and Alice'
+
+listFormat(['Bob', 'Ben', 'Tim', 'Jane', 'John']);
+// 'Bob, Ben, Tim, Jane and John'
+
+listFormat(['Bob', 'Ben', 'Tim', 'Jane', 'John'], {
+  length: 3,
+}); // 'Bob, Ben, Tim and 2 others'
+
+listFormat(['Bob', 'Ben', 'Tim', 'Jane', 'John'], {
+  length: 4,
+}); // 'Bob, Ben, Tim, Jane and 1 other'
+
+listFormat(['Bob', 'Ben', 'Tim', 'Jane', 'John'], {
+  length: 3,
+  sorted: true,
+}); // 'Ben, Bob, Jane and 2 others'
+
+listFormat(['Bob', 'Ben', 'Tim', 'Jane', 'John', 'Bob'], {
+  length: 3,
+  unique: true,
+}); // 'Bob, Ben, Tim and 2 others'
+
+listFormat(['Bob', 'Ben', 'Tim', 'Jane', 'John'], {
+  length: 3,
+  unique: true,
+}); // 'Bob, Ben, Tim and 2 others'
+
+listFormat(['Bob', 'Ben', '', '', 'John']); // 'Bob, Ben and John'
+
+```
+</details>
+
+<details >
+ <summary style="font-size: small; font-weight: bold">Solution</summary>
+
+```js
+export default function listFormat(items, options) {
+  let res = " and ";
+  let remainCount = 0;
+
+  // for(let i = 0; i < modifiedItems.length; i++){
+  //   if(modifiedItems[i].length === 0){
+  //     modifiedItems.splice(i,1);
+  //     i--;
+  //   }
+  // }
+
+  /* Remove falsey value such as '' */
+  let modifiedItems = items.filter((item) => item);
+
+
+  if(options?.unique){
+    modifiedItems = Array.from(new Set(modifiedItems));
+  }
+
+  if(modifiedItems.length === 0)
+    return '';
+
+  if(modifiedItems.length === 1)
+    return modifiedItems[0];
+
+  if(options?.sorted){
+    modifiedItems = [...modifiedItems.sort()];
+  }
+
+  
+
+  if(options?.length && options?.length > 0  && modifiedItems.length > options?.length){
+    remainCount = modifiedItems.length - options?.length;
+  
+    modifiedItems = [...modifiedItems.slice(0, options?.length)]
+  }
+
+  
+
+  if(remainCount > 0){
+    res += remainCount;
+    res += remainCount > 1 ? " others" : " other"
+
+    let initialPortion = "";
+    const len = modifiedItems.length;
+    for(let i = 0; i < len; i++){
+      initialPortion += modifiedItems[i];
+      initialPortion += i < len - 1 ? ', ' : '';
+    }
+
+    return initialPortion + res;
+  }
+  else{
+    const lastItem = modifiedItems.pop();
+
+    let initialPortion = "";
+    const len = modifiedItems.length;
+    for(let i = 0; i < len; i++){
+      initialPortion += modifiedItems[i];
+      initialPortion += i < len - 1 ? ', ' : '';
+    }
+
+    return initialPortion + res + lastItem;
+  }
+}
+```
+</details>
+</details>
