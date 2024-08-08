@@ -384,8 +384,9 @@ multiple state variables, not just one. If any of the dependent variables
 change, the side effect is run. You do this by just adding more state 
 variables to the dependency array.
 
+### Returns
 
-Note: **Always write `clean logic` to prevent `memory leaks` and unexpected behavior like below**
+1. **Always write `clean logic` to prevent `memory leaks` and unexpected behavior like below**
 
 ```js
 useEffect(() => {
@@ -398,6 +399,40 @@ useEffect(() => {
    }, []);
 ```
 
+2.
+```js
+function ChatRoom({ roomId }) {
+  console.log("Chat Room called");
+  const [serverUrl, setServerUrl] = useState('https://localhost:1234');
+
+  useEffect(() => {
+    console.log("UseEffect called");
+    const connection = createConnection(serverUrl, roomId);
+    connection.connect();
+    return () => {
+        console.log("Return called");
+        connection.disconnect();
+    };
+  }, [serverUrl, roomId]);
+  // ...
+}
+```
+Output when it loads for first time
+```js
+Chat Room called
+UseEffect called
+Return called
+```
+Output when there is change in `serverUrl`
+```js
+Chat Room called
+Return called
+UseEffect called
+```
+- `setup`: The function with your Effect’s logic. Your setup function may also optionally return a cleanup function.
+- When your component is added to the DOM, React will run your setup function.
+- After every re-render with changed dependencies, React will first run the cleanup function (if you provided it) with the old values, and then run your setup function with the new values.
+- After your component is removed from the DOM, React will run your cleanup function.
 </details>
 
 <details >
@@ -467,58 +502,6 @@ that runs on page load due to having an empty dependency array, that focuses on
 the `input` element.
 </details>
 
-<details >
- <summary style="font-size: medium; font-weight: bold">Custom Hooks</summary>
-
-Below custom hook checks for internet connection and update the 
-status based on connection status
-
-- Very useful when we want to clean our code and have single responsibility
-- Prefix function name with `use`
-
-```js
-import { useEffect, useState } from "react";
-
-const useOnlineStatus = () => {
-  const [onlineStatus, setOnlineStatus] = useState(true);
-
-  useEffect(() => {
-    window.addEventListener("offline", () => {
-      setOnlineStatus(false);
-    });
-
-    window.addEventListener("online", () => {
-      setOnlineStatus(true);
-    });
-  }, []);
-
-  // boolean value
-  return onlineStatus;
-};
-
-export default useOnlineStatus;
-```
-
-Usage👇🏻
-```js
-import useOnlineStatus from "../utils/useOnlineStatus";
-
-const Header = () => {
-  const onlineStatus = useOnlineStatus();
-
-  return (
-          <li className="px-4">Online Status: {onlineStatus ? "✅" : "🔴"}</li>
-  );
-};
-
-export default Header;
-```
-
-We will have same effect if we directly write same code directly in `Header` component.
-So need to confuse how `onlineStatus` value is updated dynamically when we toggle between
-`online` and `offline` status through our browser dev tools
-![img_4.png](img_4.png)
-</details>
 
 </details>
 
@@ -1282,6 +1265,321 @@ Now it is just easier and cleaner to write**
  <summary style="font-size: x-large; font-weight: bold">Hooks</summary>
 
 <details >
+ <summary style="font-size: large; font-weight: bold">Simple Custom Hooks</summary>
+
+Below custom hook checks for internet connection and update the
+status based on connection status
+
+- Very useful when we want to clean our code and have single responsibility
+- Prefix function name with `use`
+
+```js
+import { useEffect, useState } from "react";
+
+const useOnlineStatus = () => {
+  const [onlineStatus, setOnlineStatus] = useState(true);
+
+  useEffect(() => {
+    window.addEventListener("offline", () => {
+      setOnlineStatus(false);
+    });
+
+    window.addEventListener("online", () => {
+      setOnlineStatus(true);
+    });
+  }, []);
+
+  // boolean value
+  return onlineStatus;
+};
+
+export default useOnlineStatus;
+```
+
+Usage👇🏻
+```js
+import useOnlineStatus from "../utils/useOnlineStatus";
+
+const Header = () => {
+  const onlineStatus = useOnlineStatus();
+
+  return (
+          <li className="px-4">Online Status: {onlineStatus ? "✅" : "🔴"}</li>
+  );
+};
+
+export default Header;
+```
+
+We will have same effect if we directly write same code directly in `Header` component.
+So need to confuse how `onlineStatus` value is updated dynamically when we toggle between
+`online` and `offline` status through our browser dev tools
+![img_4.png](img_4.png)
+
+</details>
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Debounce/Throttle Hooks</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Debounce/Throttle Value Hooks</summary>
+
+```js
+import React, { useState } from "react";
+import useDebounce from "./useDebounce"; // Import the debouncing custom hook
+import useThrottle from "./useThrottle"; // Import the throttling custom hook
+
+const MyComponent = () => {
+  const [inputText, setInputText] = useState(""); // State to store the input text
+  const debounceDelay = 500; // Delay for debouncing
+  const throttleDelay = 500; // Delay for throttling
+  const debouncedText = useDebounce(inputText, debounceDelay); // Apply debounce custom hook
+  const throttledText = useThrottle(inputText, throttleDelay); // Apply throttle custom hook
+  // Event handler to update the input text
+  const handleChange = (e) => {
+    setInputText(e.target.value);
+  };
+  return (
+    <>
+      <input
+        type="text"
+        placeholder="Type something..."
+        value={inputText} // Use 'value' to display the input text
+        onChange={handleChange} // Call handleChange on input change
+      />
+      <p>Default: {inputText}</p>
+      <p>Debounced: {debouncedText}</p>
+      <p>Throttled: {throttledText}</p>
+    </>
+  );
+};
+export default MyComponent;
+```
+
+```js
+// Custom hook for debouncing text input
+import React, { useState, useEffect } from "react";
+
+const useDebounce = (text, delay) => {
+  // State to store the debounced text
+  const [debouncedText, setDebouncedText] = useState(text);
+
+  useEffect(() => {
+    // Create a timer that will execute the callback after the specified delay
+    const debounceTimer = setTimeout(() => {
+      setDebouncedText(text); // Update the debounced text with the latest input
+    }, delay);
+
+    // Cleanup function: Clear the timer if the component unmounts or the input changes
+    return () => {
+      clearTimeout(debounceTimer);
+    };
+  }, [text, delay]);
+
+  return debouncedText; // Return the debounced text
+};
+
+export default useDebounce;
+```
+
+
+```js
+// Custom hook for throttling text input
+import React, { useState, useEffect, useRef } from "react";
+
+const useThrottle = (text, delay) => {
+  // State to store the throttled text
+  const [throttledText, setThrottledText] = useState(text);
+  const lastExecuted = useRef(Date.now()); // A ref to track the last execution time
+
+  useEffect(() => {
+    if (Date.now() - lastExecuted.current >= delay) {
+      // If enough time has passed since the last execution, update the throttled text immediately
+      lastExecuted.current = Date.now();
+      setThrottledText(text);
+    } else {
+      // Otherwise, create a timer to update the throttled text after the delay
+      const throttleTimer = setTimeout(() => {
+        lastExecuted.current = Date.now();
+        setThrottledText(text);
+      }, delay);
+
+      // Cleanup function: Clear the timer if the component unmounts or the input changes
+      return () => clearTimeout(throttleTimer);
+    }
+  }, [text, delay]);
+
+  return throttledText; // Return the throttled text
+};
+
+export default useThrottle;
+```
+
+https://medium.com/@itsanuragjoshi/debouncing-and-throttling-in-react-enhancing-user-experience-with-custom-hooks-bcaa897162ef
+</details>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Debounce Function Hooks</summary>
+
+Normal JS Debounce:
+```js
+/**
+ * @callback func
+ * @param {number} wait
+ * @return {Function}
+ */
+export default function debounce(func, wait = 0) {
+  let timeoutID = null;
+  return function (...args) {
+    clearTimeout(timeoutID);
+
+    timeoutID = setTimeout(() => {
+      timeoutID = null; // Not strictly necessary but good to include.
+      // Has the same `this` as the outer function's
+      // as it's within an arrow function.
+      func.apply(this, args);
+    }, wait);
+  };
+}
+```
+
+Below example for Autocomplete where we are trying to debounce function call
+which is use to fetch result from API, to reduce calls
+
+```js
+import {useState} from 'react'
+import classes from './App.module.css'
+import getGadgetService from "./services/get-gadget.service.js";
+import useDebounce from "./hooks/use-debounce.js";
+
+function App() {
+  const [searchVal, setSearchVal] = useState('');
+  const [results, setResults] = useState(['speaker']);
+
+/**
+ *Below function is getting the values for `results` from API
+ * and updating. We don't want this to be called frequently
+ */
+  const updateResult = async (searchInput="") => {
+      console.log("searchInput : ", searchInput);
+      //Getting results from API
+      const newResult = await getGadgetService(searchInput);
+      setResults(newResult);
+  }
+
+/**
+ * Here we used debouncing to restrict the number of time `updateResult`
+ * should be called when used
+ */
+  const debouncedUpdatedResult = useDebounce(updateResult, 3000);
+
+  const handleSearch = (val) => {
+      setSearchVal(val);
+      console.log("val : ", val);
+      //here we are using a debounced version of `updatedResult`
+      debouncedUpdatedResult(val);
+  }
+
+
+  return (
+    <>
+      <section className={classes['container']}>
+          <input
+              type="text"
+              onChange={(evt) => handleSearch(evt.target.value)}
+              value={searchVal}
+              className={classes['container__search']}
+          />
+          <div className={classes['container__results']}>
+              {
+                  results.map((result) => (
+                      <p
+                          key={result}
+                          onClick={(evt) => setSearchVal(evt.target.innerText)}
+                          className={classes['container__results__result']}
+                      >{result}</p>
+                  ))
+              }
+          </div>
+      </section>
+    </>
+  )
+}
+
+export default App
+```
+
+My `UseDebounce` made using normal debounce logic
+```js
+import {useRef} from "react";
+
+function useDebounce(func, wait = 100){
+    const timeoutId = useRef(null);
+
+    function debounce(func, wait){
+        return function(...args){
+            clearTimeout(timeoutId.current);
+
+            timeoutId.current = setTimeout(() => {
+                return func.apply(this, args)
+            }, wait);
+        }
+    }
+
+    return debounce(func, wait);
+}
+
+export default useDebounce;
+```
+
+Improved `useDebounce`
+```js
+import { useCallback, useEffect, useRef } from "react";
+
+function useDebounce(func, wait = 100) {
+    const timeoutId = useRef(null);
+
+    const debouncedFunc = useCallback(
+        (...args) => {
+
+            if (timeoutId.current) {
+                clearTimeout(timeoutId.current);
+            }
+            timeoutId.current = setTimeout(() => {
+                console.log("debounce called")
+                func.apply(this, args);
+            }, wait);
+        },
+        [func, wait],
+    );
+
+
+    //Clean timer to prevent memory leak
+    useEffect(() => {
+        return () => {
+            if (timeoutId.current) {
+                clearTimeout(timeoutId.current);
+            }
+        };
+    }, []);
+
+    return debouncedFunc;
+}
+
+export default useDebounce;
+```
+
+- **With useCallback:** Ensures that the debounced function (debouncedFetchResults) maintains a stable reference, leading to consistent behavior and avoiding unnecessary re-renders or resets.
+- **Without useCallback:** The debounced function may be re-created on every render, leading to potential bugs or inefficiencies, especially in cases where the parent component frequently re-renders.
+</details>
+</details>
+
+
+
+
+<details >
  <summary style="font-size: large; font-weight: bold">useEffect() Polyfill</summary>
 
 ```js
@@ -1322,6 +1620,9 @@ export default useCustomEffect;
 
 ```
 </details>
+
+
+
 
 <details>
  <summary style="font-size: large; font-weight: bold">useMemo/useCallback</summary>
@@ -1386,7 +1687,6 @@ but if you need to use a function in a dependency array you can use the `useCall
 Referred Video: https://youtu.be/_AyFP5s69N4?si=V6u1dez7i-UGfCsl
 
 
-
 ## useCallback
 
 `useCallback` works nearly identically to `useMemo` since it will cache a result based on an array of dependencies,
@@ -1402,10 +1702,9 @@ Watch this video to understand in 8min: https://youtu.be/_AyFP5s69N4?si=GjVZrUXg
 
 Referred article for both topic: https://blog.webdevsimplified.com/2020-05/memoization-in-react/
 
-</details>
 
-<details >
- <summary style="font-size: large; font-weight: bold">useMemo() Polyfill</summary>
+<details>
+ <summary style="font-size: medium; font-weight: bold">useMemo Polyfill</summary>
 
 ```js
 import { useRef, useEffect } from "react";
@@ -1447,45 +1746,72 @@ const useCustomMemo = (cb, deps) => {
 };
 
 export default useCustomMemo;
-
 ```
 </details>
-
-<details >
- <summary style="font-size: large; font-weight: bold">useThrottle() Hook</summary>
-
-```js
-import {useEffect} from "react";
-import {useRef, useState} from "react";
-
-const useThrottle = (value, delay) => {
-    const [throttledValue, setThrottledValue] = useState(value);
-
-    const lastExecuted = useRef(Date.now());
-
-    useEffect(() => {
-        const handler = setTimeout(() => {
-            const now = Date.now();
-            const timeElapsed = now - lastExecuted.current;
-
-            if (timeElapsed >= delay) {
-                setThrottledValue(value);
-                lastExecuted.current = now;
-            }
-        }, delay - (Date.now() - lastExecuted.current));
-
-        return () => {
-            clearTimeout(handler);
-        };
-    }, [delay, value]);
-
-    return throttledValue;
-};
-
-export default useThrottle;
-
-```
 </details>
+
+
+
+[//]: # (<details >)
+
+[//]: # ( <summary style="font-size: large; font-weight: bold">useThrottle&#40;&#41; Hook</summary>)
+
+[//]: # ()
+[//]: # (```js)
+
+[//]: # (import {useEffect} from "react";)
+
+[//]: # (import {useRef, useState} from "react";)
+
+[//]: # ()
+[//]: # (const useThrottle = &#40;value, delay&#41; => {)
+
+[//]: # (    const [throttledValue, setThrottledValue] = useState&#40;value&#41;;)
+
+[//]: # ()
+[//]: # (    const lastExecuted = useRef&#40;Date.now&#40;&#41;&#41;;)
+
+[//]: # ()
+[//]: # (    useEffect&#40;&#40;&#41; => {)
+
+[//]: # (        const handler = setTimeout&#40;&#40;&#41; => {)
+
+[//]: # (            const now = Date.now&#40;&#41;;)
+
+[//]: # (            const timeElapsed = now - lastExecuted.current;)
+
+[//]: # ()
+[//]: # (            if &#40;timeElapsed >= delay&#41; {)
+
+[//]: # (                setThrottledValue&#40;value&#41;;)
+
+[//]: # (                lastExecuted.current = now;)
+
+[//]: # (            })
+
+[//]: # (        }, delay - &#40;Date.now&#40;&#41; - lastExecuted.current&#41;&#41;;)
+
+[//]: # ()
+[//]: # (        return &#40;&#41; => {)
+
+[//]: # (            clearTimeout&#40;handler&#41;;)
+
+[//]: # (        };)
+
+[//]: # (    }, [delay, value]&#41;;)
+
+[//]: # ()
+[//]: # (    return throttledValue;)
+
+[//]: # (};)
+
+[//]: # ()
+[//]: # (export default useThrottle;)
+
+[//]: # ()
+[//]: # (```)
+
+[//]: # (</details>)
 
 </details>
 
@@ -1596,6 +1922,44 @@ Note:
 1. We can use same context multiple place and wrap different child in them and 
 all will have there own value, independent what other context value are.
 2. Refer whole code for context in [2-lld-Questions/dark-mode(context)](../../2-lld-Questions/dark-mode(context)/react/README.md)
+
+
+```js
+import React from "react";
+import {Link} from "react-router-dom";
+import {useTheme} from "../theme-context.jsx";
+
+const Navbar = () => {
+    const {theme, toggleTheme} = useTheme();
+
+    const toggleMode = () => {
+        toggleTheme();
+    };
+
+    return (
+        <nav className={`navbar ${theme}`}>
+            <div>
+                <Link to="/">Home</Link>
+                <Link to="/about">About</Link>
+                <Link to="/blog">Blog</Link>
+            </div>
+            <div className="mode-switch">
+                <label>
+                    <input
+                        type="checkbox"
+                        onChange={toggleMode}
+                        checked={theme === "dark"}
+                    />
+                    <span className="slider round"></span>
+                </label>
+            </div>
+        </nav>
+    );
+};
+
+export default Navbar;
+
+```
 </details>
 
 

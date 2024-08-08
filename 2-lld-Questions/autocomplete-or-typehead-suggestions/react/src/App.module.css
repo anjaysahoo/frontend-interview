@@ -1,0 +1,27 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
+
+.container input{
+    width: 50%;
+}
+
+
+.container__results{
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border: 1px solid black;
+    width: 50%;
+}
+
+
+.container__results__result:hover{
+    background: grey;
+}
