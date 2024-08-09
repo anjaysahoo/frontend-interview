@@ -428,3 +428,99 @@ export default function listFormat(items, options) {
 
 [1-important-concept -> 04-js-concept -> polyfills -> promise.all](../../1-important-concept/04-js-concept/polyfills/readme.md)
 </details>
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">05. Classnames</summary>
+
+###### 05
+
+https://www.greatfrontend.com/questions/javascript/classnames?list=one-week
+![img_6.png](img_6.png)
+
+
+Solution: 1(Using forEach)
+![img_7.png](img_7.png)
+```js
+/**
+ * @param {...(any|Object|Array<any|Object|Array>)} args
+ * @return {string}
+ */
+export default function classNames(...args) {
+  let res = '';
+
+  args.forEach((arg) => {
+    if(!arg)
+      return;
+
+    if(Array.isArray(arg)){
+      arg.forEach((element) => {
+        res += res.length > 0 ? ` ${classNames(element)}`: classNames(element);
+      })
+
+      return;
+    }
+
+    if(typeof arg === 'object'){
+      const arr = Object.entries(arg);
+
+      for(let [key, value] of arr){
+        if(value && key)
+          res += res.length > 0 ? ` ${classNames(key)}`: classNames(key);
+      }
+      
+      return;
+    }
+
+    res += res.length > 0 ? ` ${arg}`: arg;
+  })
+
+  return res;
+}
+```
+
+Solution-2: (Using For of)
+```js
+/**
+ * @param {...(any|Object|Array<any|Object|Array>)} args
+ * @return {string}
+ */
+export default function classNames(...args) {
+  let res = '';
+
+  for(let arg of args){
+    // It will cover all falsey value: null, undefined, 0, "", false
+    if(!arg)
+      continue;
+
+    if(Array.isArray(arg)){
+      arg.forEach((element) => {
+        res += res.length > 0 ? ` ${classNames(element)}`: classNames(element);
+      })
+
+      continue;
+    }
+
+    if(typeof arg === 'object'){
+      const arr = Object.entries(arg);
+
+      for(let [key, value] of arr){
+        if(value && key)
+          res += res.length > 0 ? ` ${classNames(key)}`: classNames(key);
+      }
+
+      continue;
+    }
+
+    res += res.length > 0 ? ` ${arg}`: arg;
+  }
+
+
+  return res;
+}
+```
+
+Here we can use an array to store our result and return by using `return res.join(' ');`
+</details>
