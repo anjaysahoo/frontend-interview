@@ -331,8 +331,9 @@ Set: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Ob
 
 
 <details >
- <summary style="font-size: x-large; font-weight: bold">`typeof()`</summary>
+ <summary style="font-size: x-large; font-weight: bold">`typeof()`, `instanceof`</summary>
 
+### `typeof()`
 ![img.png](images/img.png)
 
 ```javascript
@@ -345,6 +346,22 @@ Array.isArray([])
 
 Referred Article: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#bigint_type
 
+
+### `instanceof`
+![img_5.png](img_5.png)
+
+You can also use to check whether a variable is `Promise` or not
+```js
+function isPromise(value) {
+  return value instanceof Promise;
+}
+
+const myPromise = new Promise(() => {});
+console.log(isPromise(myPromise)); // true
+console.log(isPromise("hello")); // false
+```
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
 </details>
 
 

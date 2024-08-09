@@ -416,3 +416,15 @@ export default function listFormat(items, options) {
 ```
 </details>
 </details>
+
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">04. Promise.all [Amazon, ByteDance, Lyft]</summary>
+
+###### 04
+
+[1-important-concept -> 04-js-concept -> polyfills -> promise.all](../../1-important-concept/04-js-concept/polyfills/readme.md)
+</details>

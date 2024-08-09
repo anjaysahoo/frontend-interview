@@ -608,3 +608,144 @@ Our executor function would work as below :
 
 </details>
 
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">⭐Promise.all() [GreatFrontend Edge Cases]</summary>
+
+Same like above, only using inbuilt `Promise` and covering some edge cases which above 
+solution fails to resolve
+
+https://www.greatfrontend.com/questions/javascript/promise-all?list=one-week
+
+![img_11.png](img_11.png)
+
+Solution:1 
+```js
+/**
+ * @param {Array} iterable
+ * @return {Promise<Array>}
+ */
+export default function promiseAll(iterable) {
+    let unresolvedCount = iterable.length;
+    let res = [];
+
+    if(unresolvedCount === 0){
+        return Promise.resolve([]);
+    }
+
+    const promise = new Promise((resolve, reject) => {
+
+        iterable.forEach((p, index) => {
+            
+            p.then((data) => {
+                res[index] = data;
+                unresolvedCount--;
+
+                if(unresolvedCount === 0){
+                    resolve(res);
+                    return;
+                }
+            })
+            .catch((error) => {
+                reject(error);
+                return;
+            })
+            
+        })
+
+    })
+
+    return promise;
+
+}
+```
+This will fail if `iterable` array don't have `Promise`, but some are just plain value like 4, "dd" etc
+
+Solution-2
+```js
+/**
+ * @param {Array} iterable
+ * @return {Promise<Array>}
+ */
+export default function promiseAll(iterable) {
+  let unresolvedCount = iterable.length;
+  let res = [];
+
+  if(unresolvedCount === 0){
+    return Promise.resolve([]);
+  }
+
+  const promise = new Promise((resolve, reject) => {
+
+      iterable.forEach((p, index) => {
+        if(!(p instanceof Promise)){
+          unresolvedCount--;
+          res[index] = p;
+
+          if(unresolvedCount === 0){
+            resolve(res);
+            return;
+          }
+        }
+        else{
+          p.then((data) => {
+          res[index] = data;
+          unresolvedCount--;
+
+          if(unresolvedCount === 0){
+            resolve(res);
+            return;
+          }
+        })
+        .catch((error) => {
+          reject(error);
+          return;
+        })
+        }
+      })
+      
+  })
+
+  return promise;
+
+}
+```
+
+Here we check whether given element in an array is `Promise` or not
+
+Solution-3:(Much Better and Clean Solution)
+
+```js
+/**
+ * @param {Array} iterable
+ * @return {Promise<Array>}
+ */
+export default function promiseAll(iterable) {
+  return new Promise((resolve, reject) => {
+    let result = new Array(iterable.length);
+    let unresolvedCount = iterable.length;
+
+    if(unresolvedCount === 0){
+      resolve(result);
+      return;
+    }
+
+    iterable.forEach((p, index) => {
+      Promise.resolve(p).then((data) => {
+        result[index] = data;
+        unresolvedCount--;
+
+        if(unresolvedCount === 0){
+          resolve(result);
+          return;
+        }
+      }, (error) => {
+        reject(error);
+        return;
+      })
+    })
+  })
+}
+```
+</details>

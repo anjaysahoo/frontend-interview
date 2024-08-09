@@ -62,4 +62,5 @@ console.log(solution(["abcd","acbd", "aacd"]));
 console.log(solution(["ab","cd","yz"]));
 console.log(solution(["abcd","cccc","abyd","abab"]));
 ```
+https://leetcode.ca/2020-03-02-1554-Strings-Differ-by-One-Character/
 </details>
