@@ -70,8 +70,9 @@ https://www.udemy.com/course/javascript-the-complete-guide-2020-beginner-advance
 
 </details>
 
-Great follow-up question:
-https://www.greatfrontend.com/questions/javascript/promise-all
+**MUST do `Promise.all` polyfill question:**
+[1-important-concept -> 04-js-concept -> polyfills -> promise.all](../polyfills/readme.md)
+
 
 Nice article by Builder.io:
 https://www.builder.io/blog/promises
