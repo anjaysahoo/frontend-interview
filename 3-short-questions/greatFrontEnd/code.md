@@ -580,7 +580,7 @@ export default function getElementsByTagName(el, tagNameParam) {
 
 Solution:
 
-❌Below Solution don't work
+❌❌❌**Below Solution don't work**
 
 ```js
 /**
@@ -674,4 +674,7 @@ const element = document.querySelector(selector);
   } 
 }
 ```
+
+Only when things are defined we are getting inside and doing operation
+of returning property value or setting value of property
 </details>
