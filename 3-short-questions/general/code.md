@@ -3,11 +3,10 @@
  <summary style="font-size: small; font-weight: bold">
 01. Input->
 computeAmount().Iacs(15).
-crore(5).crore(2).lacs(20).thousand(45).crore(7).value()
-
+crore(5).crore(2).lacs(20).thousand(45).crore(7).value()[Chirag Goel]
 </summary>
 
-###### 01. 
+###### 01
 
 Solution: [1-important-concept / 04-js-concept / 5-functions / constructor](.././1-important-concept/04-js-concept/5-functions/readme.md)
 </details>
@@ -16,7 +15,7 @@ Solution: [1-important-concept / 04-js-concept / 5-functions / constructor](../.
 <details >
  <summary style="font-size: small; font-weight: bold">02. find all the prime numbers up to n?</summary>
 
-###### 02.
+###### 02
 
 ```js
 function isPrime(num) { 
@@ -43,9 +42,9 @@ printPrimeNumbers(100);
 
 
 <details >
- <summary style="font-size: small; font-weight: bold">03. Parent Child Relationship Tree Formation (Amazon FE 2020)</summary>
+ <summary style="font-size: small; font-weight: bold">03. Parent Child Relationship Tree Formation [Amazon FE 2020]</summary>
 
-###### 03.
+###### 03
 
 1. https://leetcode.com/discuss/interview-question/847073/amazon-phone-front-end-engineer
 2. Similar like above: https://leetcode.com/discuss/interview-experience/508233/amazon-sde1-front-end-feb-2020-rejected
@@ -207,9 +206,9 @@ hierarchy.printHierarchy();
 
 
 <details >
- <summary style="font-size: small; font-weight: bold">04. Data Transformation (Chirag Goel's Interview Question)</summary>
+ <summary style="font-size: small; font-weight: bold">04. Data Transformation [Chirag Goel]</summary>
 
-###### 04.
+###### 04
 https://youtu.be/uhtmTe26rqo?si=wAEuFy8zBopNpB8E&t=284
 <details >
  <summary style="font-size: small; font-weight: bold">Question</summary>

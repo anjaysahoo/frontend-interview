@@ -524,3 +524,154 @@ export default function classNames(...args) {
 
 Here we can use an array to store our result and return by using `return res.join(' ');`
 </details>
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">06. getElementsByTagName</summary>
+
+###### 06
+
+Question:
+![img_8.png](img_8.png)
+https://www.greatfrontend.com/questions/javascript/get-elements-by-tag-name?list=one-week
+
+Solution:
+```js
+/**
+ * @param {Element} el
+ * @param {string} tagName
+ * @return {Array<Element>}
+ */
+export default function getElementsByTagName(el, tagNameParam) {
+  const elements = [];
+  const tagName = tagNameParam.toUpperCase();
+
+  const fillElement = (element) => {
+
+    if(element.tagName === tagName)
+      elements.push(element);
+    
+    for(let child of element.children)
+      fillElement(child);
+  }
+
+  for(let child of el.children){
+    fillElement(child);
+  }
+
+  return elements;
+}
+```
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">07. jQuery.css</summary>
+
+###### 07
+
+**Question:**
+![img_9.png](img_9.png)
+
+
+Solution:
+
+❌Below Solution don't work
+
+```js
+/**
+ * @param {string} selector
+ * @return {{css: Function}}
+ */
+export default function $(selector) {
+
+const element = document.querySelector(selector);
+
+  return {
+    css: function (property, value) {
+
+    if(!element)
+          return undefined;
+
+    if(!value){
+      if(property === undefined)
+        return undefined;
+
+      const val = element.style[property];
+      return val === '' ? undefined : val;
+    }
+
+    if(property)
+      element.style[property] = value;
+    
+      return this;
+    }
+  } 
+}
+```
+This solution might look like working for most testcase but it throw error:
+```html
+Error name:    "TypeError"
+Error message: "Cannot read properties of undefined (reading 'css')"
+```
+Test Case:
+```js
+import $ from './jquery-css';
+
+describe('jQuery.css', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<button style="color: blue">Click me</button>';
+  });
+
+ test('no elements match the selector', () => {
+      expect(() => {
+        // @ts-ignore
+        $('no-such-thing').css('color', 'red').css('fontSize', '12px');
+      }).not.toThrow();
+    });
+});
+```
+
+**IMPORTANT:** Since here there is no element with `no-such-thing` selector in given html, so above code
+will return `undefined` which will cause error because next chained function will 
+try to call `css` function on `undefined` element. Therefore it is important to always 
+return this in **`CHAINED Function`** calls
+
+
+✅Below is correct solution
+```js
+/**
+ * @param {string} selector
+ * @return {{css: Function}}
+ */
+export default function $(selector) {
+
+const element = document.querySelector(selector);
+
+  return {
+    css: function (property, value) {
+    
+    if(!value){
+      if(property === undefined)
+        return undefined;
+
+      if(!element)
+          return undefined;
+
+      const val = element.style[property];
+      return val === '' ? undefined : val;
+    }
+
+    if(element && property)
+      element.style[property] = value;
+    
+      return this;
+    }
+  } 
+}
+```
+</details>

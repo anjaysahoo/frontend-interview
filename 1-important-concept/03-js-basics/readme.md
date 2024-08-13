@@ -636,3 +636,13 @@ The `...numbers` syntax collects all passed arguments into an array named
 
 ![img_4.png](img_4.png)
 </details>
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Things to Pay Attention while Solving Questions</summary>
+
+1. Always return `this` in any function **CHAIN** type of question
+   1. Good Example 1: [3-short-questions/greatFrontEnd/07-jQuery.css](../../3-short-questions/greatFrontEnd/code.md#07)
+   2. Good Example 2: [3-short-questions/general/01](../../3-short-questions/general/code.md#01)
+</details>
