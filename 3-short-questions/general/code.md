@@ -297,3 +297,168 @@ transform(input);
 ```
 </details>
 </details>
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">05. Map Async [Uber, Lyft, Google]</summary>
+
+###### 05
+
+Question:
+https://www.greatfrontend.com/questions/javascript/map-async
+![img.png](img.png)
+
+My Solution:
+
+```js
+export default function mapAsync(iterable, callbackFn) {
+  let res = [];
+
+  return new Promise((resolve, reject) => {
+    let yetToResolve = iterable.length;
+
+    if(yetToResolve === 0)
+      resolve(res);
+
+    for(let i = 0; i < iterable.length; i++){
+      const value = iterable[i];
+      Promise.resolve(callbackFn(value)).then((response) => {
+        yetToResolve--;
+        res[i] = response;
+
+        if(yetToResolve === 0)
+          resolve(res);
+      }, (error) => {
+        reject(error);
+      })
+    }
+  })
+}
+```
+
+Refer Concept [04-js-concept/polyfills/readme.md -> Promise.all() [GreatFrontend Edge Cases]](../../1-important-concept/04-js-concept/polyfills/readme.md)
+
+
+Small Clean Solution:
+
+```ts
+export default function mapAsync<T, U>(
+  iterable: Array<T>,
+  callbackFn: (value: T) => Promise<U>,
+): Promise<Array<U>> {
+  return Promise.all(iterable.map(callbackFn));
+}
+```
+</details>
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">06. Map Async Limit [Uber, Lyft, Google]</summary>
+
+###### 06
+https://www.greatfrontend.com/questions/javascript/map-async-limit
+![img_1.png](img_1.png)
+
+![img_2.png](img_2.png)
+- **Sequential:** A sequential (one at a time) approach will certainly stay within the concurrency limit, but is extremely slow and not utilizing the fact that we can have concurrent async tasks.
+- **Chunks:** The chunks approach improves the concurrency but it waits for all items in the current chunk to be completed before moving on to the next. If there's a task that is much slower than the rest, there will be idle cycles and the available limit is not fully-utilized.
+- **Chunkless:** The most efficient approach is to immediately start processing the next item when an item is completed. This ensures that there are always size ongoing async tasks (when there are unprocessed items) and the available limit is fully-utilized.
+
+❌Solution(Sequential):
+
+```ts
+export default function mapAsyncLimit<T, U>(
+  iterable: Array<T>,
+  callbackFn: (value: T) => Promise<U>,
+  size: number = Infinity,
+): Promise<Array<U>> {
+  return new Promise((resolve, reject) => {
+    const results: Array<U> = [];
+
+    function processItem(index: number) {
+      if (index === iterable.length) {
+        resolve(results);
+      }
+
+      return callbackFn(iterable[index])
+        .then((result) => {
+          results.push(result);
+          processItem(index + 1);
+        })
+        .catch(reject);
+    }
+
+    return processItem(0);
+  });
+}
+
+```
+
+✅Solution(Chunks):
+```js
+export default async function mapAsyncLimit(iterable, callbackFn, size = Infinity) {
+  const res = [];
+  const len = iterable.length;
+
+  if(len === 0)
+    return res;
+
+  for(let i = 0; i < len; i += size){
+    const response = await Promise.all(iterable.slice(i, i + size).map(callbackFn));
+
+    res.push(...response);
+  }
+
+  return res;
+}
+```
+
+✅Solution(Chunkless):
+
+Don't need to go through this while revising the code
+```js
+export default function mapAsyncLimit<T, U>(
+  iterable: Array<T>,
+  callbackFn: (value: T) => Promise<U>,
+  size: number = Infinity,
+): Promise<Array<U>> {
+  return new Promise((resolve, reject) => {
+    const results: Array<U> = [];
+    let nextIndex = 0;
+    let resolved = 0;
+
+    if (iterable.length === 0) {
+      resolve(results);
+      return;
+    }
+
+    async function processItem(index: number) {
+      nextIndex++;
+      try {
+        const result = await callbackFn(iterable[index]);
+        results[index] = result;
+        resolved++;
+
+        if (resolved === iterable.length) {
+          resolve(results);
+          return;
+        }
+
+        if (nextIndex < iterable.length) {
+          processItem(nextIndex);
+        }
+      } catch (err) {
+        reject(err);
+      }
+    }
+
+    for (let i = 0; i < Math.min(iterable.length, size); i++) {
+      processItem(i);
+    }
+  });
+}
+```
+
+For other solution using `then` instead of `await` check GreatFrontend solutions
+</details>
