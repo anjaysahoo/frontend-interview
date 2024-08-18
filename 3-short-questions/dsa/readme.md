@@ -64,3 +64,223 @@ console.log(solution(["abcd","cccc","abyd","abab"]));
 ```
 https://leetcode.ca/2020-03-02-1554-Strings-Differ-by-One-Character/
 </details>
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">02. Subtract the Product and Sum of Digits of an Integer (Uber SDE 2 FE 2022)</summary>
+
+###### 02
+
+https://leetcode.com/problems/subtract-the-product-and-sum-of-digits-of-an-integer/description/
+https://leetcode.com/discuss/interview-question/1834439/Uber-India-online-Assignment-for-SDE-II-(frontend)
+
+Question:
+![img_1.png](img_1.png)
+
+Solution:
+
+```js
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var subtractProductAndSum = function(n) {
+    let sum = 0;
+    let product = 1;
+
+    while(n > 0){
+        const num = n % 10;
+        sum += num;
+        product *= num;
+
+        n = Math.floor(n/10);
+    }
+    
+    return product - sum;
+};
+```
+</details>
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">03. Construct K Palindrome Strings (Uber SDE 2 FE 2022)</summary>
+
+###### 03
+
+https://leetcode.com/problems/construct-k-palindrome-strings/description/
+https://leetcode.com/discuss/interview-question/1834439/Uber-India-online-Assignment-for-SDE-II-(frontend)
+
+Question:
+![img_2.png](img_2.png)
+
+Solution:
+```js
+/**
+ * @param {string} s
+ * @param {number} k
+ * @return {boolean}
+ */
+var canConstruct = function(s, k) {
+    const len = s.length;
+    let odd = 0;
+
+    if(len < k)
+        return false;
+
+    const alphaCount = {};
+
+    for(let i = 0; i < len; i++){
+        if(!alphaCount[s[i]])
+            alphaCount[s[i]] = 1;
+        else
+            alphaCount[s[i]]++;
+    }
+
+    for(let value of Object.values(alphaCount)){
+        if(value % 2 !== 0)
+            odd++;
+    }
+
+    if(odd > k)
+        return false;
+
+    return true;
+};
+```
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">04. Longest Substring Without Repeating Characters (Uber SDE 2 FE 2022)</summary>
+
+###### 04
+
+https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+https://medium.com/@iamjaasi/uber-sde-2-frontend-interview-experience-40c1a7437cc0
+
+Question:
+![img_3.png](img_3.png)
+
+Solution-1:
+
+Time Complexity: More than O(n)
+```js
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function(s) {
+    let i = 0;
+    let j = 0;
+    let res = 0;
+
+    const queue = [];
+
+    while(j < s.length){
+        const element = s[j];
+        let pos = queue.indexOf(element);
+        if(pos === -1){
+            queue.push(element);
+            j++;
+            res = Math.max(res, j - i);
+        }
+        else{
+            while(pos >= 0){
+                i++;
+                queue.shift();
+                pos--;
+            }
+        }
+    }
+
+    return res;
+};
+```
+
+Solution-2:
+
+Time Complexity: O(n)
+```js
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function(s) {
+    let i = 0;
+    let j = 0;
+    let res = 0;
+
+    const map = new Map();
+
+    while(j < s.length){
+        const element = s[j];
+        let pos = -1;
+        if(map.has(element)){
+            pos = map.get(element);
+        }
+
+
+        if(pos === -1){
+            map.set(element, j);
+            j++;
+            res = Math.max(res, j - i);
+        }
+        else{
+            while(i <= pos){
+                map.delete(s[i]);
+                i++;
+            }
+        }
+    }
+
+    return res;
+};
+```
+
+Java Reference Solution:
+```bash
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int res = 0;
+        
+        Map<Character, Integer> charCountMap = new HashMap<>();
+        
+        int i = 0, j = 0;
+        
+        while(j < s.length()){
+            char charAtj = s.charAt(j);
+            if(charCountMap.containsKey(charAtj)){
+                charCountMap.put(charAtj, charCountMap.get(charAtj) + 1);
+            }
+            else{
+                charCountMap.put(charAtj, 1);
+            }
+            
+            int mapSize = charCountMap.size();
+            if(mapSize == j - i + 1){
+                res = Math.max(res, mapSize);
+            }
+            else{
+                while(charCountMap.size() < j - i + 1 ){
+                    char charAti = s.charAt(i);
+                    if(charCountMap.get(charAti) == 1){
+                        charCountMap.remove(new Character(charAti));
+                    }
+                    else{
+                        charCountMap.put(charAti, charCountMap.get(charAti) - 1);
+                    }
+                    i++;
+                }
+            }
+            
+            j++;
+        }
+        
+        return res;
+    }
+}
+```
+</details>

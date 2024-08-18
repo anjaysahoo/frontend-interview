@@ -576,7 +576,7 @@ export default function getElementsByTagName(el, tagNameParam) {
 
 **Question:**
 ![img_9.png](img_9.png)
-
+https://www.greatfrontend.com/questions/javascript/jquery-css?list=one-week
 
 Solution:
 

@@ -1,8 +1,67 @@
 ## Polyfills
 
 <details >
+ <summary style="font-size: large; font-weight: bold">filter()</summary>
+
+https://www.greatfrontend.com/questions/javascript/array-filter?list=one-week
+
+Basic Solution:
+```js
+Array.prototype.myFilter = function(cb) {
+    let temp = [];
+    for(let i = 0; i < this.length; i++){
+        if(cb(this[i], i, this)){
+            temp.push(this[i]);
+        }
+    }
+    
+    return temp;
+}
+```
+
+Solution Covering Edge Cases:
+```js
+Array.prototype.myFilter = function (callbackFn, thisArg) {
+  let res = [];
+
+  for(let i = 0; i < this.length; i++){
+    if(
+       // Ignore index if value is not defined for index (e.g. in sparse arrays [1, 2, , 4]).
+      Object.hasOwn(this, i) && 
+        // Some callback functions may require  element, index, array, and this. 
+      callbackFn.call(thisArg, this[i], i, this)
+      ){
+        res.push(this[i]);
+      }
+  }
+
+  return res;
+};
+```
+Edge Case:
+1. Passing the `index` and `array` to the filter callback.
+   TestCase:
+```js
+const isSquareEven = (_: any, index: number, array: Array<any>) =>
+  (array[index] * array[index]) % 2 === 0;
+
+test('reducer uses array argument when provided', () => {
+    expect([1, 2, 3, 4].myFilter(isSquareEven)).toStrictEqual([2, 4]);
+});
+```
+
+2. Invoking the filter callback with the correct `this` if `thisArg` is specified.
+3. Sparse arrays, e.g. `[1, 2, , 4]`. The empty values should be ignored while traversing the array.
+</details>
+
+
+
+<details >
  <summary style="font-size: large; font-weight: bold">map()</summary>
 
+https://www.greatfrontend.com/questions/javascript/array-map
+
+**Basic Solution:**
 ```js
 // arr.map((num, i, arr) => {})
 Array.prototype.myMap = function(cb) {
@@ -32,7 +91,6 @@ const multiplyThree = nums.myMap((num, i, arr) => {
 console.log(multiplyThree);
 ```
 
-
 In TypeScript
 
 ```ts
@@ -44,28 +102,39 @@ Array.prototype.map<T, U>(callback: (value: T, index: number, array: T[]) => U):
     return newArray;
   }
 ```
-</details>
 
-<details >
- <summary style="font-size: large; font-weight: bold">filter()</summary>
 
+**Solution Covering Edge Cases:**
 ```js
-Array.prototype.myFilter = function(cb) {
-    let temp = [];
+Array.prototype.myMap = function (callbackFn, thisArg) {
+    let res = [];
+
     for(let i = 0; i < this.length; i++){
-        if(cb(this[i], i, this)){
-            temp.push(this[i]);
-        }
+        if(Object.hasOwn(this, i))
+            res[i] = callbackFn.call(thisArg, this[i], i, this);
     }
-    
-    return temp;
-}
+
+    return res;
+};
 ```
+
+Edges Cases:
+- Passing the `index` and `array` to the map callback.
+- Calling the map callback with the correct this if `thisArg` is specified.
+- Sparse arrays (e.g. `[1, 2, , 4]`). The empty values should be ignored while traversing the array.
 </details>
+
+
+
+
+
 
 <details >
  <summary style="font-size: large; font-weight: bold">reduce()</summary>
 
+https://www.greatfrontend.com/questions/javascript/array-reduce
+
+Basic Solution:
 ```js
 // arr.reduce((accumulator, curr, i, arr) => {}, initialValue)
 Array.prototype.myReduce = function(cb, initialValue){
@@ -80,20 +149,61 @@ Array.prototype.myReduce = function(cb, initialValue){
     return accumulator;
 }
 ```
+
+Covering Edge Cases:
+```js
+Array.prototype.myReduce = function (callbackFn, initialValue) {
+  let acc = initialValue;
+  let i = 0;
+
+  if((initialValue === undefined || initialValue === null)){
+    if(this.length > 0){
+      acc = this[0];
+      i++;
+    }
+    else
+      throw new Error("Invalid call")
+  }
+    
+
+  for(; i < this.length; i++){
+    //for handling sparse array value
+    if(Object.hasOwn(this, i))
+      acc = callbackFn(acc,this[i], i, this);
+  }
+
+  return acc;
+};
+```
+
+**Edge Cases:**
+- Empty array, with and without the `initialValue` argument.
+- Single-value array, with and without the `initialValue` argument.
+- Passing the `index` and `array` to the reducer callback.
+- Sparse arrays, e.g. `[1, 2, , 4]`. The empty values should be ignored while traversing the array.
 </details>
 
 <details >
  <summary style="font-size: large; font-weight: bold">call()</summary>
 
+https://www.greatfrontend.com/questions/javascript/function-call
 ```js
-Function.prototype.myCall = function (context = {}, ...args){
-    if(typeof this !== 'function'){
-        throw new TypeError('Its not callable');
-    }
-    
+Function.prototype.myCall = function (context = {}, ...args) {
+    if(typeof this !== 'function' || !this)
+        throw new Error('Invalid call');
+
+    /** If nothing is provided for context then
+     * above empty param will fill the context
+     * variable with {}.
+     * But if explicitly null or undefined is given
+     * then below code will fill {}
+     */
+    if(!context)
+        context = {};
+
     context.fn = this;
-    context.fn(...args);
-}
+    return context.fn(...args);
+};
 ```
 
 
@@ -123,30 +233,113 @@ In this example:
 - `context.fn = this` assigns the `greet` function to `context.fn`.
 - `context.fn(...args)` calls the `greet` function with `person` as the context and `'Hello'` as the argument.
 We can use same logic like GF function called by BF, hence `this` will point to BF object
+
+**Note:** _With `call()` function, we are trying to make sure our provided function
+is called in the **context of a provided object**. Therefore, we defined our 
+provided function inside a given context object then try to execute it._
+
+**Other Solutions:**
+1. 
+```js
+Function.prototype.myCall = function (context ={}, ...arg) {
+return this.bind(context)(...arg);
+};
+```
+```js
+Function.prototype.myCall = function (context ={}, ...arg) {
+return this.bind(context, ...arg)();
+};
+```
+```js
+Function.prototype.myCall = function (context ={}, ...arg) {
+return this.apply(context, [...arg]);
+};
+```
 </details>
 
 <details >
  <summary style="font-size: large; font-weight: bold">apply()</summary>
 
+https://www.greatfrontend.com/questions/javascript/function-apply
 ```js
-Function.prototype.myApply = function (context = {}, args=[]){
-    if(typeof this !== 'function'){
-        throw new TypeError('Its not callable');
-    }
-    
-    if(!Array.isArray(args)){
-        throw new TypeError('Its not an array');
-    }
-    
+Function.prototype.myApply = function (context = {}, args = []) {
+    if(typeof this !== 'function')
+        throw new Error('Invalid Call');
+
+    if(!Array.isArray(args))
+        throw new Error("args must be array");
+
+    if(!context)
+        context = {};
+
     context.fn = this;
-    context.fn(...args);
-}
+    return context.fn(...args);
+};
+```
+
+Here last return line is very important if you don't spread arguments
+then you get below error
+![img_1.png](img_1.png)
+Testcase Used:
+```js
+import './function-apply';
+
+describe('Function.prototype.myApply', () => {
+  function sum(...args: Array<number>) {
+    return args.reduce((acc, num) => acc + num, 0);
+  }
+
+  test('with a parameter', () => {
+    expect(sum.myApply(null, [1])).toBe(1);
+  });
+});
+```
+
+**Reason:** When you use `context.fn(args)`, you're passing the `args` array as a single argument, rather than spreading it out as individual arguments
+
+**Other Solution:**
+1. 
+```js
+Function.prototype.myApply = function (context = {}, argArray = []) {
+  return this.bind(context)(...argArray);
+};
+```
+2. Or you can also pass the argArray into bind() before executing it.
+```js
+Function.prototype.myApply = function (context = {}, argArray = []) {
+  return this.bind(context, ...argArray)();
+};
+```
+3.
+```js
+Function.prototype.myApply = function (context = {}, argArray = []) {
+  return this.call(context, ...argArray);
+};
 ```
 </details>
 
 <details >
  <summary style="font-size: large; font-weight: bold">bind()</summary>
 
+https://www.greatfrontend.com/questions/javascript/function-bind
+More Accurate Solution:
+```js
+Function.prototype.myBind = function (context = {}, ...initialArgs) {
+  if(typeof this !== 'function')
+    throw new Error("Invalid Call");
+
+  if(!context)
+    context = {};
+
+  context.fn = this;
+
+  return function(...newArgs){
+    return context.fn(...initialArgs,...newArgs);
+  }
+};
+```
+
+Basic Solution:
 ```js
 Function.prototype.myBind = function(context = {}, ...args){
     if(typeof this !== 'function'){
@@ -162,12 +355,19 @@ Function.prototype.myBind = function(context = {}, ...args){
 
 Check `once()` function explanation and try to execute above in browser with below
 break point to understand this better
-![img_8.png](img_8.png)
+![img_8.png](images/img_8.png)
+
+
+**Other Solutions:**
+Look in greatfrontend solutions
 </details>
 
 <details >
  <summary style="font-size: large; font-weight: bold">once()</summary>
 
+https://www.greatfrontend.com/questions/javascript/once
+
+Solution-1:
 ```js
 function once(func, context){
     let ran;
@@ -183,6 +383,21 @@ function once(func, context){
 }
 ```
 
+My Solution:
+```js
+export default function once(func, context) {
+  let ran;
+
+   return function(...args) {
+    if(!ran){
+      ran = func.apply(context || this, args);
+    }
+
+    return ran;
+   }
+}
+```
+
 Usage
 ```js
 const hello = once((a,b) => console.log("hello", a, b));
@@ -190,6 +405,7 @@ const hello = once((a,b) => console.log("hello", a, b));
 hello(1,2);
 hello(2,3);
 ```
+![img.png](img.png)
 
 <details >
  <summary style="font-size: small; font-weight: bold">My Explanation</summary>
@@ -201,31 +417,31 @@ when we hit them.
 <br>
 We have `hello` stored with value `<value unavailable>` and `once`
 is stored with its code
-![img_1.png](img_1.png)
+![img_1.png](images/img_1.png)
 
 2. Code Execution Phase, we start with line 15 straight. Push the `once` in `Call Stack`
 After line 15 execute we hit line 3 break-point and below are values we have
-![img_2.png](img_2.png)
+![img_2.png](images/img_2.png)
 
 3. Next we hit line-17, before this line execution we have 
 `hello` function under the script with closure.
 Call stack have Global execution context right now
-![img_3.png](img_3.png)
+![img_3.png](images/img_3.png)
 
 4. Next when line-17 start executing we first hit line-7 breakpoint, since we are trying to 
 execute returned anonymous function by `once` function.
 Call stack hold this anonymous function 
-![img_4.png](img_4.png)
+![img_4.png](images/img_4.png)
 
 6. Once line-7 execute we move to next break-point line-11. Now our `closure` `func` becomes `null`
-![img_5.png](img_5.png)
+![img_5.png](images/img_5.png)
 
 7. Next we hit line-11 again, as `closure` `func` was set to `null` previously hence we didn't 
 go into the if condition. We can also confirm the func value from below screenshot
-![img_6.png](img_6.png)
+![img_6.png](images/img_6.png)
 
 8. finally everything clear up from Call stack and memory
-![img_7.png](img_7.png)
+![img_7.png](images/img_7.png)
 </details>
 
 <details >
@@ -305,6 +521,8 @@ The code will print "hello 1 2" only once, even though `hello` is called twice. 
 
 <details >
  <summary style="font-size: large; font-weight: bold">memoize()</summary>
+
+https://www.greatfrontend.com/questions/javascript/memoize-ii
 
 ```js
 function myMemoize(fn, context){
@@ -390,10 +608,10 @@ examplePromise.then((res) => {
 no `onResolve` function is defined when we try to execute the `.then()`
 
 - Synchronous execution
-![img_9.png](img_9.png)
+![img_9.png](images/img_9.png)
 
 - Asynchronous execution
-![img_10.png](img_10.png)
+![img_10.png](images/img_10.png)
 </details>
 
 <details >
@@ -618,7 +836,7 @@ solution fails to resolve
 
 https://www.greatfrontend.com/questions/javascript/promise-all?list=one-week
 
-![img_11.png](img_11.png)
+![img_11.png](images/img_11.png)
 
 Solution:1 
 ```js
@@ -749,3 +967,5 @@ export default function promiseAll(iterable) {
 }
 ```
 </details>
+
+https://jsvault.com/iife-example
