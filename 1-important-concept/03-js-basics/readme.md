@@ -202,8 +202,9 @@ console.log(array3);
 
 
 <details >
- <summary style="font-size: large; font-weight: bold">`fill()`</summary>
+ <summary style="font-size: large; font-weight: bold">`fill()`, `flat()`</summary>
 
+1. `Array.prototype.fill()`
 The fill() method of Array instances changes all elements within a range of indices in an array to a static value. It returns the modified array.
 ```js
 const array1 = [1, 2, 3, 4];
@@ -218,6 +219,26 @@ console.log(array1.fill(5, 1));
 
 console.log(array1.fill(6));
 // Expected output: Array [6, 6, 6, 6]
+```
+
+2. `Array.prototype.flat()`
+```js
+const arr1 = [0, 1, 2, [3, 4]];
+
+console.log(arr1.flat());
+// expected output: Array [0, 1, 2, 3, 4]
+
+const arr2 = [0, 1, [2, [3, [4, 5]]]];
+
+console.log(arr2.flat());
+// expected output: Array [0, 1, 2, Array [3, Array [4, 5]]]
+
+console.log(arr2.flat(2));
+// expected output: Array [0, 1, 2, 3, Array [4, 5]]
+
+console.log(arr2.flat(Infinity));
+// expected output: Array [0, 1, 2, 3, 4, 5]
+
 ```
 </details>
 

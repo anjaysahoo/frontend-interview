@@ -284,3 +284,59 @@ class Solution {
 }
 ```
 </details>
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">05. Rotate a number by 180 degrees - Strobogrammatic number (Uber FE 2024)</summary>
+
+###### 05
+https://leetcode.com/discuss/interview-question/5103489/Uber-Frontend-Screening
+
+**Question:**
+Rotate a number by 180 degrees and check if it gives the same number.
+
+Follow up:
+Give the count of all such numbers for n, where n is the number of digits.
+
+**Solution:**
+![img_4.png](img_4.png)
+
+```js
+// JavaScript program to print all
+// Strobogrammatic number of length n
+  
+// strobogrammatic function 
+function strobogrammatic_num(n) {
+    let result = numdef(n, n);
+    return result;
+}
+
+// definition function
+function numdef(n, length) {      
+    if (n == 0) return [""];
+    if (n == 1) return ["1", "0", "8"];
+      
+    let middles = numdef(n - 2, length);
+    let result = [];
+      
+    for (var middle of middles) {
+        if (n != length)           
+            result.push("0" + middle + "0");
+
+        result.push("8" + middle + "8");
+        result.push("1" + middle + "1");
+        result.push("9" + middle + "6");
+        result.push("6" + middle + "9");
+    }
+    
+    return result;
+}
+
+// Driver Code
+// Print all Strobogrammatic 
+// numbers for n = 2
+console.log(strobogrammatic_num(2));
+
+// Output: 88 11 96 69
+```
+</details>
