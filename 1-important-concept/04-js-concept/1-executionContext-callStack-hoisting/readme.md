@@ -33,6 +33,8 @@ Referred Video: https://youtu.be/iLWTnMzWtj4?si=p4HnXVWvBMZVNnf-
 
 ## Hoisting
 
+![img_3.png](img_3.png)
+![img_4.png](img_4.png)
 Hoisting can be easily explained once we understand 
 `Execution Context` and `Call Stack`
 
