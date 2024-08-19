@@ -99,7 +99,7 @@ nums2.sort((a, b) => a - b); //[1, 2, 5, 6, 9]
 <details >
  <summary style="font-size: large; font-weight: bold">`includes()`, `some()`, `indexOf()`, `findIndex()` & `find()`</summary>
 
-1. `Array.prototype.includes()`
+1. `.includes()` `Array` `String`
 ```js
 const array1 = [1, 2, 3];
 
@@ -129,7 +129,7 @@ console.log(array.some(even));
 // Expected output: true
 ```
 
-2. `Array.prototype.indexOf()`
+2. `.indexOf()` `Array` `String`
 ```js
 const beasts = ['ant', 'bison', 'camel', 'duck', 'bison'];
 
@@ -143,6 +143,13 @@ console.log(beasts.indexOf('bison', 2));
 console.log(beasts.indexOf('giraffe'));
 // Expected output: -1
 
+const paragraph = "I think Ruth's dog is cuter than your dog!";
+
+const searchTerm = 'dog';
+const indexOfFirst = paragraph.indexOf(searchTerm);
+
+console.log(`The index of the first "${searchTerm}" is ${indexOfFirst}`);
+// Expected output: "The index of the first "dog" is 15"
 ```
 
 3. `Array.prototype.findIndex()` `Function`
@@ -294,6 +301,98 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 </details>
 
 </details>
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">String</summary>
+
+1. `String.prototype.charAt()` & `String.prototype.charCodeAt()`
+```js
+const sentence = 'The quick brown fox jumps over the lazy dog.';
+
+const index = 4;
+
+console.log(
+        `Character code ${sentence.charCodeAt(index)} is equal to ${sentence.charAt(
+                index,
+        )}`,
+);
+// Expected output: "Character code 113 is equal to q"
+```
+
+2. `String.prototype.replace()` & `String.prototype.replaceAll()`
+
+The original string is left unchanged.
+
+```js
+const paragraph = "I think Ruth's dog is cuter than your dog!";
+
+console.log(paragraph.replace("Ruth's", 'my'));
+// Expected output: "I think my dog is cuter than your dog!"
+
+const regex = /Dog/i;
+console.log(paragraph.replace(regex, 'ferret'));
+// Expected output: "I think Ruth's ferret is cuter than your dog!"
+```
+
+```js
+const paragraph = "I think Ruth's dog is cuter than your dog!";
+
+console.log(paragraph.replaceAll('dog', 'monkey'));
+// Expected output: "I think Ruth's monkey is cuter than your monkey!"
+
+// Global flag required when calling replaceAll with regex
+const regex = /Dog/gi;
+console.log(paragraph.replaceAll(regex, 'ferret'));
+// Expected output: "I think Ruth's ferret is cuter than your ferret!"
+```
+
+3. `String.prototype.trim()`, `String.prototype.trimEnd()`, `String.prototype.trimStart()`
+```js
+const greeting = '   Hello world!   ';
+
+console.log(greeting);
+// Expected output: "   Hello world!   ";
+
+console.log(greeting.trim());
+// Expected output: "Hello world!";
+
+const greeting = '   Hello world!   ';
+
+console.log(greeting);
+// Expected output: "   Hello world!   ";
+
+console.log(greeting.trimEnd());
+// Expected output: "   Hello world!";
+
+```
+
+4. `String.prototype.toString()` & `String.prototype.valueOf()`
+```js
+const stringObj = new String('foo');
+
+console.log(stringObj);
+// Expected output: String { "foo" }
+
+console.log(stringObj.toString());
+// Expected output: "foo"
+```
+````js
+const stringObj = new String('foo');
+
+console.log(stringObj);
+// Expected output: String { "foo" }
+
+console.log(stringObj.valueOf());
+// Expected output: "foo"
+````
+</details>
+
+
 
 
 
@@ -464,6 +563,14 @@ for (const item of set1) {
   // Expected output: 13
 }
 ```
+</details>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Initialize</summary>
+
+![img_7.png](img_7.png)
+
+![img_8.png](img_8.png)
 </details>
 
 Map: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
@@ -969,9 +1076,13 @@ console.log(calcHypotenuse(0, 0));
 
 
 <details >
- <summary style="font-size: x-large; font-weight: bold">UseFul Fn: Concat</summary>
+ <summary style="font-size: x-large; font-weight: bold">UseFul Info</summary>
 
-![img_4.png](img_4.png)
+Create MAX & MIN number
+```js
+let n = Infinity;
+let m = -Infinity;
+```
 </details>
 
 
