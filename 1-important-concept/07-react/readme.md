@@ -399,7 +399,11 @@ useEffect(() => {
    }, []);
 ```
 
-2.
+
+2. 
+
+### `useEffect(setup, dependencies?)`
+Call useEffect at the top level of your component to declare an Effect:
 ```js
 function ChatRoom({ roomId }) {
   console.log("Chat Room called");
@@ -433,6 +437,8 @@ UseEffect called
 - When your component is added to the DOM, React will run your setup function.
 - After every re-render with changed dependencies, React will first run the cleanup function (if you provided it) with the old values, and then run your setup function with the new values.
 - After your component is removed from the DOM, React will run your cleanup function.
+
+https://react.dev/reference/react/useEffect#useeffect
 </details>
 
 <details >
@@ -532,10 +538,10 @@ the `input` element.
  <summary style="font-size: large; font-weight: bold">Virtual DOM</summary>
 
 1.
-- The crucial point about State variables is that whenever they update
-  React triggers a reconciliationcycle and re-renders the component.
-- This means that as soon as the data layer changes,React promptly updates the UI layer.
-  The data layer isalways kept in sync with the UI layer.
+- The crucial point about `State variables` is that whenever they update
+  React triggers a `reconciliation cycle` and re-renders the component.
+- This means that as soon as the `data layer` changes,React promptly updates the `UI layer`.
+  The `data layer` is always kept **in sync** with the `UI layer`.
 - To achieve this rapid operation, React employs a reconciliation algorithm, also known
   as the **_diffing algorithm_** or **_React-Fibre_** which we will delve into further below
 
@@ -548,10 +554,59 @@ the `input` element.
    to unlock a world of possibilities for front-end developers!
 
 3. _Do you want to understand and dive deep into it?_
-   Take a look at this awesome React Fiber architecturerepository
+   Take a look at this awesome React Fiber architecture repository
    on the web: https://github.com/acdlite/react-fiber-architecture
 
 
+<details >
+ <summary style="font-size: medium; font-weight: bold">Why not to use index as key in React Lists</summary>
+
+Suppose we've a list of elements, with key attribute as index.
+
+```html
+<ul>
+  <li key=1>Milk</li>
+  <li key=2>Eggs</li>
+  <li key=3>Bread</li>
+</ul>
+```
+
+Now, in case of any state change in the list, React just iterates over each list item in both the lists (React compares the Virtual DOM snapshot before the update and after the update), looks for changes and finally updates the RealDOM with only those changes.
+
+If we add an item to the end of the list, React no longer needs to re-render the first 3 list items which are same. It will just add a new list item at the end.
+
+```html
+<ul>
+  <li key=1>Milk</li>
+  <li key=2>Eggs</li>
+  <li key=3>Bread</li>
+  <li key=4>Butter</li>
+</ul>
+```
+But suppose we add the new item at the beginning of the list.
+
+```html
+<ul>
+  <li key="1">Butter</li>
+  <li key="2">Milk</li>
+  <li key="3">Eggs</li>
+  <li key="4">Bread</li>
+</ul>
+```
+
+Now, the key of remaining list items also changes, which makes React re-render all the elements again, instead of just adding a new item at the end.
+
+This can be avoided if we use some unique id as a key rather than index.
+Let's again consider the same previous example but this time by using a unique id as key.
+```html
+<ul>
+  <li key="12abc">Milk</li>
+  <li key="23bcd">Eggs</li>
+  <li key="34cde">Bread</li>
+</ul>
+```
+Now even if we add element to the beginning or the end, we won't face an issue since keys are different.
+</details>
 </details>
 
 
@@ -722,8 +777,10 @@ Refer Namaste notes for more details
 
 
 <details>
- <summary style="font-size: large; font-weight: bold">Portals</summary>
+ <summary style="font-size: large; font-weight: bold">Portals & `forwardRef`</summary>
 
+
+### 1. Portals
 Portals are very useful when we want to render a component, somewhere 
 than where it actually defined.
 
@@ -825,6 +882,21 @@ export default function TimerChallenge({ title, targetTime }) {
   </body>
 </html>
 ```
+
+### 2. `forwardRef`
+
+`forwardRef` lets your component expose a DOM node to parent component with a ref.
+
+```js
+const SomeComponent = forwardRef(render)
+```
+
+**Usage**
+- Exposing a DOM node to the parent component
+- Forwarding a ref through multiple components
+- Exposing an imperative handle instead of a DOM node
+
+For More Details: https://react.dev/reference/react/forwardRef
 </details>
 
 <details >
@@ -926,6 +998,8 @@ const Body = () => {
 
 export default Body;
 ```
+
+
 </details>
 
 <details >
@@ -1257,6 +1331,67 @@ Now it is just easier and cleaner to write**
 
 </details>
 
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Error Boundary</summary>
+
+By default, if your application throws an error during rendering, React will remove its UI from the screen. To prevent this, you can wrap a part of your UI into an error boundary. An error boundary is a special component that lets you display some fallback UI instead of the part that crashed—for example, an error message.
+
+
+To implement an error boundary component, you need to provide `static getDerivedStateFromError` which lets you update state in response to an error and display an error message to the user. You can also optionally implement `componentDidCatch` to add some extra logic, for example, to log the error to an analytics service.
+
+```jsx
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, info) {
+    // Example "componentStack":
+    //   in ComponentThatThrows (created by App)
+    //   in ErrorBoundary (created by App)
+    //   in div (created by App)
+    //   in App
+    logErrorToMyService(error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return this.props.fallback;
+    }
+
+    return this.props.children;
+  }
+}
+```
+
+Then you can wrap a part of your component tree with it:
+```jsx
+<ErrorBoundary fallback={<p>Something went wrong</p>}>
+  <Profile />
+</ErrorBoundary>
+```
+
+If Profile or its child component throws an error, ErrorBoundary will “catch” that error, display a fallback UI with the error message you’ve provided, and send a production error report to your error reporting service.
+
+
+You don’t need to wrap every component into a separate error boundary. When you think about the granularity of error boundaries, consider where it makes sense to display an error message. For example, in a messaging app, it makes sense to place an error boundary around the list of conversations. It also makes sense to place one around every individual message. However, it wouldn’t make sense to place a boundary around every avatar.
+
+>There is currently no way to write an error boundary as a function component. However, you don’t have to write the error boundary class yourself. For example, you can use [react-error-boundary](https://github.com/bvaughn/react-error-boundary) instead.
+
+- Referred Article: https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary
+- Referred Video(7 min): https://www.youtube.com/watch?v=_FuDMEgIy7I
+</details>
+
 </details>
 
 
@@ -1312,7 +1447,7 @@ export default Header;
 ```
 
 We will have same effect if we directly write same code directly in `Header` component.
-So need to confuse how `onlineStatus` value is updated dynamically when we toggle between
+So need not to confuse how `onlineStatus` value is updated dynamically when we toggle between
 `online` and `offline` status through our browser dev tools
 ![img_4.png](img_4.png)
 
@@ -1625,9 +1760,9 @@ export default useCustomEffect;
 
 
 <details>
- <summary style="font-size: large; font-weight: bold">useMemo/useCallback</summary>
+ <summary style="font-size: large; font-weight: bold">`useMemo`, `useCallback` & `React.memo / memo` [Increase React Performance]</summary>
 
-## useMemo
+## 1. `useMemo`
 
 ### Usecase-1
 
@@ -1687,7 +1822,8 @@ but if you need to use a function in a dependency array you can use the `useCall
 Referred Video: https://youtu.be/_AyFP5s69N4?si=V6u1dez7i-UGfCsl
 
 
-## useCallback
+## 2. `useCallback`
+
 
 `useCallback` works nearly identically to `useMemo` since it will cache a result based on an array of dependencies,
 but `useCallback` is used **specifically for caching functions instead of caching values.**
@@ -1698,7 +1834,100 @@ const handleReset = useCallback(() => {
 }, [a, b])
 ```
 
+This syntax may look exactly the same as useMemo, but the main difference is that useMemo will call the function passed to it whenever its dependencies change and will return the value of that function call. useCallback on the other hand will not call the function passed to it and instead will return a new version of the function passed to it whenever the dependencies change. This means that as long as the dependencies do not change then useCallback will return the same function as before which maintains referential equality.
+
+In order to further understand the differences between useCallback and useMemo here is a quick example where both will return the same value.
+
+```js
+useCallback(() => {
+  return a + b
+}, [a, b])
+
+useMemo(() => {
+  return () => a + b
+}, [a, b])
+```
+
+As you can see `useCallback` will return the **`function passed to it`**, while `useMemo` is returning the result of the function passed to it.
+Therefore, with `useMemo` we won't be able to pass parameters directly
+
+### Referential Equality
+
+Just like with `useMemo`, `useCallback` is used to maintain referential equality.
+
+```js
+function Parent() {
+  const [items, setItems] = useState([])
+  const handleLoad = res => setItems(res)
+
+  return <Child onLoad={handleLoad} />
+}
+
+function Child({ onLoad }) {
+  useEffect(() => {
+    callApi(onLoad)
+  }, [onLoad])
+}
+```
+
+In the above example the `handleLoad` function is re-created every time the `Parent` component is rendered. This means that the `Child` component’s `useEffect` will re-run ever render since the `onLoad` function has a different referential equality each render. To fix this we need to wrap the `handleLoad` in a `useCallback`.
+
+```js
+function Parent() {
+  const [items, setItems] = useState([])
+  const handleLoad = useCallback(res => setItems(res), [])
+
+  return <Child onLoad={handleLoad} />
+}
+
+function Child({ onLoad }) {
+  useEffect(() => {
+    callApi(onLoad)
+  }, [onLoad])
+}
+```
+
+Now the `handleLoad` function will never change, thus the `useEffect` in the `Child` component will not be called on each re-render.
+
 Watch this video to understand in 8min: https://youtu.be/_AyFP5s69N4?si=GjVZrUXgoJgi_S9-
+
+
+## 3. `React.memo` or `memo`
+
+**`memo` lets you skip re-rendering a component when its props are unchanged.**
+
+```js
+import React from 'react';
+
+React.memo(function Component(props) {
+  // Do something
+})
+```
+
+Same Thing only syntax changes
+
+```js
+import { memo } from 'react';
+
+const SomeComponent = memo(function SomeComponent(props) {
+  // ...
+});
+```
+`memo(Component, arePropsEqual?)`
+
+
+The component above will only re-render when the props of the component change now. This will not stop a component from re-rendering when the state or context inside of it change, though. This means that even if you wrap a component in `React.memo` it will still re-render when the internal state or context of the component changes.
+**But React may still re-render it: memoization is a performance optimization, not a guarantee.**
+
+**Usage**
+1. Skipping re-rendering when props are unchanged
+2. Updating a memoized component using state
+3. Updating a memoized component using a context
+4. Minimizing props changes
+5. Specifying a custom comparison function
+
+To know more about `arePropsEqual` and usage details refer to: https://react.dev/reference/react/memo#memo
+
 
 Referred article for both topic: https://blog.webdevsimplified.com/2020-05/memoization-in-react/
 
@@ -2145,6 +2374,20 @@ export default ItemList;
  <summary style="font-size: x-large; font-weight: bold">react-router-dom</summary>
 
 </details>
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">React Optimization</summary>
+
+1.  **Virtualize Long Lists**
+    1.  List virtualization, or windowing, is a technique to improve performance when rendering a long list of data. This technique only renders a small subset of rows at any given time and can dramatically reduce the time it takes to re-render the components, as well as the number of DOM nodes created. 
+    2. There are some popular React libraries out there, like react-windowand [react-virtualized](https://github.com/bvaughn/react-virtualized?tab=readme-ov-file), which provides several reusable components for displaying lists, grids, and tabular data.
+</details>
+
 
 
 
