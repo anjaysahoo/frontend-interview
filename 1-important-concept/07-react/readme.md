@@ -2386,6 +2386,8 @@ export default ItemList;
 1.  **Virtualize Long Lists**
     1.  List virtualization, or windowing, is a technique to improve performance when rendering a long list of data. This technique only renders a small subset of rows at any given time and can dramatically reduce the time it takes to re-render the components, as well as the number of DOM nodes created. 
     2. There are some popular React libraries out there, like react-windowand [react-virtualized](https://github.com/bvaughn/react-virtualized?tab=readme-ov-file), which provides several reusable components for displaying lists, grids, and tabular data.
+
+2. Million Lint is a VSCode extension that speeds up your website! Your React app is slow. Million Lint surfaces problematic code and automatically suggests ways to improve it.https://million.dev/docs
 </details>
 
 
@@ -2398,63 +2400,539 @@ export default ItemList;
  <summary style="font-size: x-large; font-weight: bold">Questions</summary>
 
 
-1. How does the virtual DOM work in React, and why is it important?
+### 1. How does the virtual DOM work in React, and why is it important?
 
-2. What are React Hooks, and how do they differ from class lifecycle methods?
+Keyword: Virtual / Actual DOM, Diffing Algorithm, Reconciliation Cycle, React Fiber, UI / Data Layer
 
-3. Explain the concept of Higher-Order Components (HOCs) and provide use cases.
+### 2. What are React Hooks, and how do they differ from class lifecycle methods?
 
-4. What is Context API, and how does it help in managing global state?
 
-5. How does React's reconciliation algorithm work?
+**React Hooks** are functions that let you use state and other React features inside functional components. They were introduced in React 16.8 as a way to simplify component logic and make it easier to manage state and side effects.
 
-6. Describe the concept of "lifting state up" in React and provide an example.
+#### Key Differences from Class Lifecycle Methods
 
-7. What is the purpose of the useReducer hook, and how does it compare to useState?
+1. **Functional Components:**
+    * Hooks are primarily used with functional components, which are simpler and easier to understand than class components.
+    * Functional components don't have lifecycle methods like `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount`.
 
-8. How can you optimize the performance of a React application?
+2. **State Management:**
+    * In class components, state is managed within the component's instance.
+    * In functional components, state is managed using the `useState` hook. This hook returns an array with two values: the current state and a function to update it.
 
-9. Explain the role of keys in React lists and why they are important.
+3. **Side Effects:**
+    * Class components use lifecycle methods like `componentDidMount` and `componentDidUpdate` to handle side effects (e.g., data fetching, subscriptions).
+    * In functional components, side effects are managed using hooks like `useEffect`, `useLayoutEffect`, and `useCallback`. These hooks allow you to perform actions after a render or conditionally based on certain conditions.
 
-10. What are React Portals, and when should they be used?
+4. **Context API:**
+    * In class components, context is often managed using a class component that provides context to its children.
+    * In functional components, the `useContext` hook is used to access context values.
 
-11. Describe the benefits and limitations of server-side rendering (SSR) with Next.js.
+#### Example:
+```javascript
+// Class component
+class Counter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 };
+  }
 
-12. How do you implement code splitting in a React application?
+  componentDidMount() {
+    // Side effect: fetch data
+    fetch('https://api.example.com/data')
+      .then(response => response.json())
+      .then(data => this.setState({ data }));
+  }
 
-13. What are custom hooks, and how can they help in reusing logic across components?
+  render() {
+    return <div>{this.state.count}</div>;
+  }
+}
 
-14. Explain the concept of controlled and uncontrolled components in form handling.
+// Functional component with hooks
+function Counter() {
+  const [count, setCount] = useState(0);
+  const [data, setData] = useState(null);
 
-15. How can you manage side effects in a React application?
+  useEffect(() => {
+    // Side effect: fetch data
+    fetch('https://api.example.com/data')
+      .then(response => response.json())
+      .then(setData);
+  }, []);
 
-16. Discuss the trade-offs between using Redux and the Context API for state management.
+  return <div>{count}</div>;
+}
+```
 
-17. What are fragments in React, and when should they be used?
+As you can see, the functional component using hooks is often more concise and easier to read compared to the class component.
 
-18. How does React handle events differently from vanilla JavaScript?
+### 3. Explain the concept of Higher-Order Components (HOCs) and provide use cases.
 
-19. Describe the use case and implementation of suspense and lazy loading in React.
+### 4. What is Context API, and how does it help in managing global state?
 
-20. How can you use React.memo to optimize component rendering?
+### 5. How does React's reconciliation algorithm work?
 
-21. What are the common pitfalls of using useEffect, and how can they be avoided?
+### 6. Describe the concept of "lifting state up" in React and provide an example.
 
-22. How do you handle errors in React components, and what are error boundaries?
+Sometimes, you want the state of two components to always change together. To do it, remove state from both of them, move it to their closest common parent, and then pass it down to them via props. This is known as lifting state up, and it’s one of the most common things you will do writing React code.
+```jsx
+import { useState } from 'react';
 
-23. Explain the difference between optimistic and pessimistic updates in React.
+export default function Accordion() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  return (
+    <>
+      <h2>Almaty, Kazakhstan</h2>
+      <Panel
+        title="About"
+        isActive={activeIndex === 0}
+        onShow={() => setActiveIndex(0)}
+      >
+        With a population of about 2 million, Almaty is Kazakhstan's largest city. From 1929 to 1997, it was its capital city.
+      </Panel>
+      <Panel
+        title="Etymology"
+        isActive={activeIndex === 1}
+        onShow={() => setActiveIndex(1)}
+      >
+        The name comes from <span lang="kk-KZ">алма</span>, the Kazakh word for "apple" and is often translated as "full of apples". In fact, the region surrounding Almaty is thought to be the ancestral home of the apple, and the wild <i lang="la">Malus sieversii</i> is considered a likely candidate for the ancestor of the modern domestic apple.
+      </Panel>
+    </>
+  );
+}
 
-24. What is PropTypes, and how does it contribute to type checking in React?
+function Panel({
+  title,
+  children,
+  isActive,
+  onShow
+}) {
+  return (
+    <section className="panel">
+      <h3>{title}</h3>
+      {isActive ? (
+        <p>{children}</p>
+      ) : (
+        <button onClick={onShow}>
+          Show
+        </button>
+      )}
+    </section>
+  );
+}
 
-25. How can you implement dark mode in a React application?
+```
+![img_10.png](img_10.png)
+https://react.dev/learn/sharing-state-between-components#lifting-state-up-by-example
 
-26. Describe the role and benefits of using a CSS-in-JS library with React.
+### 7. What is the purpose of the useReducer hook, and how does it compare to useState?
 
-27. What are the differences between useRef and createRef?
 
-28. How can you handle data fetching in a React component?
+**useReducer** is another React hook that provides a way to manage state in functional components. While it might seem similar to `useState`, it offers a more powerful and flexible approach for complex state management scenarios.
 
-29. What are the best practices for structuring a React project?
+### Purpose of useReducer
 
-30. How do you manage complex animations in React, and which libraries can be used?
+* **Complex State Updates:** When state updates are derived from previous state or involve complex logic, `useReducer` can be more efficient and easier to reason about.
+* **State Sharing Across Components:** If multiple components need to share and update the same state, `useReducer` can be used to create a global state provider and consumer.
+* **Centralized State Management:** For larger applications with complex state management requirements, `useReducer` can help maintain a more organized and predictable state flow.
+
+### Key Differences Between useReducer and useState
+
+1. **Reducer Function:**
+    * `useReducer` takes a reducer function as an argument. This reducer function takes the current state and an action as input and returns the new state.
+    * `useState` doesn't require a reducer function. It directly updates the state based on the value passed to the setter function.
+
+2. **Action Object:**
+    * `useReducer` uses an action object to describe the state update. The action object typically contains a type property that identifies the action and potentially other data.
+    * `useState` doesn't require an action object. The new state value is directly passed to the setter function.
+
+3. **State Updates:**
+    * `useReducer` allows for more complex state updates by providing a reducer function that can perform calculations or logic based on the current state and action.
+    * `useState` is simpler to use for basic state updates.
+
+### Example:
+```javascript
+// Using useState
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+// Using useReducer
+function Counter() {
+  const [count, dispatch] = useReducer((state, action) => {
+    switch (action.type) {
+      case 'INCREMENT':
+        return state + 1;
+      default:
+        return state;
+    }
+  }, 0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => dispatch({ type: 'INCREMENT' })}>Increment</button>
+    </div>
+  );
+}
+```
+
+In this example, the `useReducer` approach provides a more structured way to handle state updates, especially if more complex actions were involved. It also sets the stage for potentially sharing this state across multiple components using a global state provider.
+
+### 8. How can you optimize the performance of a React application?
+
+
+
+#### 1. **Code Splitting:**
+* **Dynamic Imports:** Use dynamic imports to load code on demand, reducing initial bundle size and improving perceived performance.
+* **Code Splitting Libraries:** Consider using libraries like Webpack's Code Splitting or React Router's `codeSplitting` to automate the process.
+
+#### 2. **Memoization:**
+* **`useMemo` Hook:** Use `useMemo` to memoize expensive calculations or derived values, preventing unnecessary re-renders.
+* **`useCallback` Hook:** Use `useCallback` to memoize functions passed as dependencies to other hooks, preventing unnecessary re-renders.
+
+#### 3. **Component Optimization:**
+* **Pure Components:** Use `PureComponent` for components that render the same output given the same props. This avoids unnecessary re-renders.
+* **Conditional Rendering:** Use conditional rendering techniques like `if` statements or the ternary operator to avoid rendering unnecessary components.
+* **List Rendering:** Optimize list rendering using techniques like keys and virtualized lists (e.g., `react-window`, `react-virtualized`) for large datasets.
+
+#### 4. **Profiling and Optimization:**
+* **Browser Developer Tools:** Use browser developer tools to profile your application and identify performance bottlenecks.
+* **Performance Libraries:** Consider using performance libraries like React DevTools Profiler or the Chrome Performance tab to gain insights into rendering times, component updates, and memory usage.
+
+#### 5. **Server-Side Rendering (SSR):**
+* **Improved Time to Interactive:** SSR can improve perceived performance by rendering the initial HTML on the server, reducing the amount of JavaScript that needs to be downloaded and executed on the client.
+
+#### 6. **Caching:**
+* **Component Caching:** Use libraries like `react-query` or `swr` to cache data fetched from APIs, reducing the need for repeated network requests.
+* **Browser Caching:** Leverage browser caching mechanisms to store static assets and reduce network traffic.
+* **API Caching:** Use libraries like `react-query` or `swr` to cache data fetched from APIs, reducing the need for repeated network requests.
+
+#### 7. **Lazy Loading:**
+* **Images and Media:** Use `lazy` attribute for images and other media to defer loading until they are visible in the viewport.
+
+
+#### 8. **Minification and Compression:**
+* **Reduce File Size:** Minify JavaScript and CSS files to reduce their size and improve load times.
+* **Compression:** Use compression techniques like Gzip to further reduce file size.
+* **Tree Shaking:** Use tree shaking techniques to remove unused code and reduce bundle size. Mostly taken care by bundler like Webpack, Parcel, and Vite.
+
+By implementing these strategies, you can significantly improve the performance of your React application, resulting in a better user experience.
+
+
+### 9. Explain the role of keys in React lists and why they are important.
+
+### 10. What are React Portals, and when should they be used?
+
+### 11. Describe the benefits and limitations of server-side rendering (SSR) with Next.js.
+
+### 12. How do you implement code splitting in a React application?
+
+### 13. What are custom hooks, and how can they help in reusing logic across components?
+
+### 14. Explain the concept of controlled and uncontrolled components in form handling.
+
+### 15. How can you manage side effects in a React application?
+
+
+**Side effects** in React refer to actions that have an external impact, such as:
+
+* **Fetching data** from an API
+* **Setting up subscriptions**
+* **Modifying the DOM** directly
+
+To effectively manage side effects in React, you can use the following strategies:
+
+#### 1. **useEffect Hook:**
+* **Essential for Side Effects:** The `useEffect` hook is the primary mechanism for handling side effects in functional components.
+* **Cleanup Functions:** It allows you to specify a cleanup function that will be executed when the component is unmounted or re-rendered due to changes in dependencies.
+* **Conditional Effects:** You can conditionally execute side effects based on dependencies. If dependencies change, the effect will be re-run.
+
+```javascript
+import { useEffect, useState } from 'react';
+
+function MyComponent() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('https://api.example.com/data');
+      const data = await response.json();
+      setData(data);
+    };
+
+    fetchData();
+
+    // Cleanup function (optional)
+    return () => {
+      // Cancel any ongoing requests or clean up subscriptions
+    };
+  }, []); // Empty dependency array: effect runs only once on mount
+
+  return <div>{data}</div>;
+}
+```
+
+#### 2. **useLayoutEffect Hook:**
+* **DOM Mutations:** `useLayoutEffect` is similar to `useEffect` but runs after DOM mutations. Use it for side effects that need to be executed synchronously, such as reading layout information or setting up DOM event listeners.
+
+#### 3. **Custom Hooks(Debouncing and Throttling):**
+If your side effects involve actions that could be triggered frequently, such as input events, you might want to debounce or throttle them. This can be done using libraries like lodash.
+* **Encapsulate Side Effects:** Create custom hooks to encapsulate common side effects, making your code more reusable and easier to manage.
+
+```javascript
+import { useEffect, useState } from 'react';
+
+function useFetchData(url) {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(url);
+      const data = await response.json();
+      setData(data);
+    };
+
+    fetchData();
+  }, [url]);
+
+  return data;
+}
+
+function MyComponent() {
+  const data = useFetchData('https://api.example.com/data');
+
+  return <div>{data}</div>;
+}
+```
+
+#### 4. **Memoization:**
+* **Prevent Re-renders:** Use `useMemo` and `useCallback` to memoize expensive calculations or functions passed as dependencies to other hooks, preventing unnecessary re-renders and side effects.
+
+#### 5. **Context API:**
+* **Shared State:** For complex state management and sharing data across components, consider using the Context API.
+
+
+### 16. Discuss the trade-offs between using Redux and the Context API for state management.
+
+### 17. What are fragments in React, and when should they be used?
+
+### 18. How does React handle events differently from vanilla JavaScript?
+**React's Event Handling vs. Vanilla JavaScript**
+
+While both React and vanilla JavaScript handle events, there are some key differences in their approaches:
+
+#### 1. **Synthetic Events:**
+* **Abstraction Layer:** React introduces a layer of abstraction over native browser events. It creates synthetic events that are cross-browser compatible and provide additional features.
+* **Event Pooling:** Synthetic events are pooled to optimize memory usage. This means the same event object can be reused for multiple events, reducing the overhead of creating new event objects.
+
+#### 2. **Event Bubbling:**
+* **Default Behavior:** React follows the default event bubbling behavior, where events propagate up the component hierarchy.
+* **Event Propagation:** You can prevent event propagation using the `stopPropagation()` method on the synthetic event.
+
+#### 3. **JSX Syntax:**
+* **Simplified Syntax:** React uses JSX, a syntax extension for JavaScript, to handle events in a more concise and declarative way.
+* **Event Handlers:** Event handlers are defined as attributes on JSX elements, using the `onClick`, `onMouseOver`, `onSubmit`, etc., conventions.
+
+#### 4. **Automatic Binding:**
+* **No Need for `bind`:** In React, event handlers are automatically bound to the component's instance, eliminating the need for manual binding.
+
+### Example:
+```javascript
+// Vanilla JavaScript
+const button = document.getElementById('myButton');
+button.addEventListener('click', () => {
+  console.log('Button clicked');
+});
+
+// React
+function MyComponent() {
+  const handleClick = () => {
+    console.log('Button clicked');
+  };
+
+  return <button onClick={handleClick}>Click me</button>;
+}
+```
+
+In the React example, the `handleClick` function is automatically bound to the component's instance, and the `onClick` attribute is used to attach the handler to the button element.
+
+**Key Points to Remember:**
+* React's event handling is designed to be more consistent and efficient than vanilla JavaScript.
+* Synthetic events provide a cross-browser compatible abstraction.
+* JSX simplifies event handling syntax.
+* Automatic binding eliminates the need for manual binding.
+
+
+### 19. Describe the use case and implementation of suspense and lazy loading in React.
+
+### 20. How can you use React.memo to optimize component rendering?
+
+### 21. What are the common pitfalls of using useEffect, and how can they be avoided?
+
+### 22. How do you handle errors in React components, and what are error boundaries?
+
+### 23. Explain the difference between optimistic and pessimistic updates in React.
+
+
+When dealing with asynchronous operations like fetching data from an API or performing mutations, React applications can handle updates in two primary ways: optimistic and pessimistic.
+
+#### Optimistic Updates
+* **Immediate Update:** Optimistic updates immediately update the UI based on the expected outcome of the asynchronous operation.
+* **Placeholder Data:** This can involve using placeholder data or loading indicators to provide a more responsive user experience.
+* **Rollback:** If the asynchronous operation fails, the UI is rolled back to its previous state.
+
+**Benefits:**
+* Improved perceived performance
+* Better user experience
+
+**Challenges:**
+* Potential for inconsistencies if the asynchronous operation fails
+
+#### Pessimistic Updates
+* **Wait for Response:** Pessimistic updates wait for the asynchronous operation to complete before updating the UI.
+* **No Rollback:** This approach is more conservative and avoids potential inconsistencies but can lead to a slower perceived performance.
+
+**Benefits:**
+* Ensures data consistency
+* Reduces the risk of errors
+
+**Challenges:**
+* Can lead to a slower perceived performance
+
+#### Choosing the Right Approach
+The choice between optimistic and pessimistic updates depends on several factors:
+
+* **User Experience:** If a fast perceived performance is crucial, optimistic updates might be preferable.
+* **Data Consistency:** If data consistency is paramount, pessimistic updates might be a better choice.
+* **Error Handling:** Consider how errors will be handled and whether optimistic updates can be rolled back effectively.
+
+**Example:**
+```javascript
+// Optimistic update
+const fetchData = async () => {
+  setIsLoading(true);
+  try {
+    const data = await fetch('https://api.example.com/data').json();
+    setData(data);
+  } catch (error) {
+    // Handle error, possibly roll back to previous state
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+// Pessimistic update
+const fetchData = async () => {
+  setIsLoading(true);
+  try {
+    const data = await fetch('https://api.example.com/data').json();
+    setData(data);
+  } catch (error) {
+    // Handle error
+  } finally {
+    setIsLoading(false);
+  }
+};
+```
+
+In the optimistic approach, the `setIsLoading` state is updated immediately to show a loading indicator, providing a faster perceived experience. In the pessimistic approach, the UI is updated only after the data is successfully fetched.
+
+By carefully considering the trade-offs, you can choose the approach that best suits your application's requirements and provides the desired user experience.
+
+### 24. What is PropTypes, and how does it contribute to type checking in React?
+
+**PropTypes** is a utility library that provides type checking for React components. It helps ensure that components receive the correct types of props, preventing potential runtime errors and making your code more maintainable.
+
+#### Key Features of PropTypes:
+
+* **Type Definitions:** You can specify the expected types for each prop, such as `string`, `number`, `bool`, `array`, `object`, `func`, and more.
+* **Custom Types:** Create custom type definitions to represent more complex data structures.
+* **Required vs. Optional:** Indicate whether a prop is required or optional.
+* **Default Values:** Define default values for optional props.
+* **Validation:** PropTypes checks that the props passed to a component match the defined types. If a mismatch is found, a warning or error is logged to the console.
+
+#### Example:
+```javascript
+import PropTypes from 'prop-types';
+
+function MyComponent({ name, age }) {
+  return (
+    <div>
+      <p>Name: {name}</p>
+      <p>Age: {age}</p>
+    </div>
+  );
+}
+
+MyComponent.propTypes = {
+  name: PropTypes.string.isRequired,
+  age: PropTypes.number.isRequired
+};
+```
+
+In this example, the `MyComponent` component defines `name` and `age` props as required strings and numbers, respectively. If a component tries to pass an invalid type for these props, a warning will be logged.
+
+#### Benefits of Using PropTypes:
+
+* **Improved Code Quality:** Ensures that components receive the correct data types, reducing the likelihood of runtime errors.
+* **Better Documentation:** Provides clear documentation of expected prop types, making it easier for other developers to understand and use your components.
+* **Enhanced Maintainability:** Makes it easier to refactor and modify components without introducing unintended side effects.
+
+**Note:** While PropTypes is a valuable tool, it's important to consider its limitations. It doesn't guarantee type safety at runtime, and it can add some overhead to your code. In some cases, TypeScript or Flow may provide more robust type checking capabilities.
+
+### 25. How can you implement dark mode in a React application?
+
+### 26. Describe the role and benefits of using a CSS-in-JS library with React.
+
+**CSS-in-JS Libraries with React**
+
+CSS-in-JS libraries provide a different approach to styling React components compared to traditional CSS files. They allow you to define styles directly within JavaScript code, offering several advantages:
+
+#### Benefits of CSS-in-JS:
+
+1. **Component-Level Styling:** Styles can be scoped to specific components, reducing the risk of style conflicts and making it easier to manage styles for complex applications.
+2. **Dynamic Styling:** Styles can be dynamically generated based on component state or props, enabling more complex and interactive UI elements.
+3. **Theming:** CSS-in-JS libraries often provide built-in theming capabilities, making it easy to create multiple themes for your application.
+4. **JSX Integration:** Styles can be defined directly within JSX, making the code more concise and readable.
+5. **CSS-in-JS Specific Features:** Many libraries offer additional features like CSS variables, atomic design principles, and utility-first methodologies.
+
+#### Popular CSS-in-JS Libraries:
+
+* **Styled Components:** One of the most popular options, Styled Components provides a declarative API for creating styled components.
+* **Emotion:** Another popular choice, Emotion offers a flexible and performant way to style React components.
+* **Linaria:** Linaria is a zero-runtime CSS-in-JS library that extracts styles at build time, improving performance.
+* **JSS:** JSS provides a powerful API for creating styles using JavaScript objects.
+
+#### Example (Styled Components):
+```javascript
+import styled from 'styled-components';
+
+const Button = styled.button`
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+`;
+```
+
+In this example, a `Button` component is created using Styled Components. The styles for the button are defined directly within the JavaScript code, making it easier to manage and reuse.
+
+**By using a CSS-in-JS library, you can create more maintainable, scalable, and visually appealing React applications.**
+
+### 27. What are the differences between useRef and createRef?
+![img_11.png](img_11.png)
+### 28. How can you handle data fetching in a React component?
+
+### 29. What are the best practices for structuring a React project?
+
+### 30. How do you manage complex animations in React, and which libraries can be used?
 </details>
