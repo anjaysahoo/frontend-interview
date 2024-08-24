@@ -812,3 +812,336 @@ Hydration is recovering event handlers by downloading and re-executing all compo
 </details>
 
 
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Assets Optimization</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Image Optimization</summary>
+
+```html
+<picture>
+  <source 
+    type="image/avif"
+    srcset="/image.avif?width=100 100w, /image.avif?width=200 200w, /image.avif?width=400 400w, /image.avif?width=800 800w" />
+  <source 
+    type="image/webp"
+    srcset="/image.webp?width=100 100w, /image.webp?width=200 200w, /image.webp?width=400 400w, /image.webp?width=800 800w" />
+  <img 
+    src="/image.png"
+    srcset="/image.png?width=100 100w, /image.png?width=200 200w, /image.png?width=400 400w, /image.png?width=800 800w"
+    sizes="(max-width: 800px) 100vw, 50vw"
+    style="width: 100%; aspect-ratio: 16/9"
+    loading="lazy"
+    decoding="async"
+    alt="Builder.io drag and drop interface"
+  />
+</picture>
+```
+
+1. **For high priority images:**
+The above image is a good default, and best for images that may be below the fold ((that is, images that will be in the browser’s viewport immediately on first load)).
+
+For your highest priority images, you should remove loading="lazy" and decoding="async" and consider adding fetchpriority="high" if this is your absolute highest priority image, like your LCP image:
+
+2. **For vectors (like SVGs):**
+
+Also, for vector formats such as SVG, we don't need to provide multiple sizes and formats, and can just include the below:
+```html
+<!-- for SVG -->
+<img 
+  src="/image.svg"
+  style="width: 100%; aspect-ratio: 16/9"
+  loading="lazy"
+  decoding="async"
+  alt="Builder.io drag and drop interface"
+/>
+```
+
+Note that we completely removed the <picture> and <source> tags, as well as removed the srcset and sizes attributes, as they are no longer needed.
+
+For high priority SVGs, the same rules mentioned above apply (remove loading and decoding, and optionally add fetchpriority="high" for your LCP image)
+
+3. **An easier way**
+These days, you almost never need write all of that stuff by hand. Frameworks like NextJS and Qwik, as well as platforms like Cloudinary and Builder.io, provide image components that make this straightforward, and look instead like the below:
+
+```html
+<!-- 😍 -->
+<Image 
+  src="/image.png" 
+  alt="Builder.io drag and drop interface" />
+```
+
+Referred article: https://www.builder.io/blog/fast-images
+<br/>
+Referred Video: https://youtu.be/9JDlZxR8gVw?si=qHDyy-zadGpeBGCs&t=336
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. Why you should (generally) avoid `background-image` in CSS</summary>
+
+```css
+/* 🚩 */
+.hero {
+  background-image: image-set(url("/image-1x.png") 1x, url("/image-2x.png") 2x);
+}
+```
+
+1. Outside of using SVGs, there's virtually no case where every visitor to your site should receive the exact same image file, given the vast amount of screen sizes and resolutions individuals have these days.
+2. We could write some bloated CSS that combined media queries and image-set
+3. With an image tag, you have the link to the src right in the HTML. So the browser can fetch the initial HTML, scan for images, and begin fetching high-priority images immediately.
+4. you can work around some things, like inlining CSS, preloading images, and pre-connecting to origins. But, as you read on, you will see additional advantages you get with the HTML `img` tag that you sadly don’t get with `background-image` in CSS.
+![img_23.png](img_23.png)
+5. When to consider a background image
+   1.  For instance, if you have a very small image you want to tile with `background-repeat` , there isn’t an easy way to accomplish repeating (that I know of) with img tags.
+   2.  But for any image that is larger than, say, 50px, I would highly suggest avoiding setting it in CSS and instead using an img tag for virtually everything.
+
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold"> 2. Browser-native lazy loading</summary>
+
+![img_22.png](img_22.png)
+
+1. As now your visitors won’t automatically download images that are not even in the viewport for `loading='lazy'`.
+2. `loading='eager'` will fetch the images on high priority
+3.  Ideally, do not lazy load images “above the fold” (that is, images that will be in the browser’s viewport immediately on first load). That will help ensure your most critical images load as soon as possible, and all others will load only as needed.
+
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">3. Optimal sizing for all screen sizes and resolutions</summary>
+
+
+![img_4.png](img_4.png)
+![img_5.png](img_5.png)
+![img_6.png](img_6.png)
+![img_7.png](img_7.png)
+![img_8.png](img_8.png)
+![img_9.png](img_9.png)
+
+```html
+<img 
+  srcset="
+    /image.png?width=100 100w,
+    /image.png?width=200 200w,
+    /image.png?width=400 400w,
+    /image.png?width=800 800w
+  "
+  ...
+>
+```
+
+1. One important thing to note is that this is a more powerful version than you get with `image-set` in CSS, because you can use the `w unit` in an `img` `srcset`.
+2. What is useful about it is that it takes both size and resolution into account. So, if the image is currently displaying `200px` wide, on a `2x pixel density` device, with the above `srcset` the browser will know to grab the `400w` image (that is, the image that is `400px` wide, so it displays perfectly at `2x pixel density`). Similarly, the same image on a `1x pixel density` image will grab the `200w` image.
+
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">4. Modern formats with the `picture` tag</summary>
+
+![img_3.png](img_3.png)
+- **Most Optimized Image Formates: AVIF > WebP > PNG**
+  So it is always good to check if browser support these than use most optimized one.
+
+- Inside the `<picture>` tag we can define these format and based on browser support first most
+  optimized one will be used, otherwise fallback to the next one.
+
+```html
+<picture>
+  <source 
+    type="image/avif"
+    srcset="/image.avif?width=100 100w, /image.avif?width=200 200w, /image.avif?width=400 400w, /image.avif?width=800 800w, ...">
+  <source 
+    type="image/webp"
+    srcset="/image.webp?width=100 100w, /image.webp?width=200 200w, /image.webp?width=400 400w, /image.webp?width=800 800w, ...">
+  <img ...>
+</picture>
+```
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">5. Don’t forget the `aspect-ratio`</summary>
+
+1. It’s important to keep in mind that we also want to avoid layout shifts. This happens when an image loads if you don’t specify a precise size for the image ahead of the image downloading. There are two ways you can accomplish this.
+   1. The first is to specify a `width` and `height` attribute for your image. And optionally, but often a good idea, set the images `height` to `auto` in CSS so that the image is properly responsive as the screen size changes:
+   ```html
+        <img 
+        width="500"
+        height="300"
+        style="height: auto"
+        ...
+       >
+   ```
+   2. Alternatively, you can also just use the newer `aspect-ratio` property in CSS to always have the right aspect ratio automatically. With this option, you don’t need to know the exact width and height of your image, just its aspect ratio:
+   ```html
+    <img style="aspect-ratio: 5 / 3; width: 100%" ...>
+   ```
+2. `aspect-ratio` also pairs great with `object-fit` and `object-position`, which are quite similar to `background-size` and `background-position` for background images, respectively.
+
+```css
+.my-image {
+    aspect-ratio: 5 / 3;
+    width: 100%;
+    /* Fill the available space, even if the 
+       image has a different intrinsic aspect ratio */
+    object-fit: cover;
+}
+```
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">6. Async image decoding</summary>
+
+Additionally, you can specify decoding="async" to images to allow the browser to move the image decoding off of the main thread. MDN recommends to [use this for off-screen images.](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decoding#usage_notes)
+```html
+<img decoding="async" ... >
+```
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">7. Resource hints</summary>
+
+1. One last, and more advanced option, is `fetchpriority`. This can be helpful to hint to the browser if an image is extra high priority, such as your LCP image.
+2. Or, to lower the priority of images, such as if you have images that are above the fold but not of high importance, such as on other pages of a carousel:
+````html
+<div class="carousel">
+  <img class="slide-1" fetchpriority="high">
+  <img class="slide-2" fetchpriority="low">
+  <img class="slide-3" fetchpriority="low">
+</div>
+````
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">8. Add your `alt` text, kids</summary>
+
+1. Yes, alt text is critical for accessibility and SEO, and is not to be overlooked:
+```html
+<img
+  alt="Builder.io drag and drop interface"
+  ...
+>
+```
+
+2. Or, for images that are purely presentational (like abstract shapes, colors, or gradients), you can explicitly mark them as presentation only with the `role` attribute:
+```html
+<img role="presentation" ... >
+```
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">9. Understanding the sizes attribute</summary>
+
+![img_10.png](img_10.png)
+![img_11.png](img_11.png)
+
+1. One important caveat to srcset attribute mentioned above is that browsers need to know the size an image will render at in order to pick the best sized image to fetch.
+
+2. Meaning, once the image has rendered, the browser knows its actual display size, multiples that by the pixel density, and fetches the closest possible image in size in the srcset.
+
+3. But for your initial page load, browsers like chrome have a preload scanner that looks for img tags in the HTML to begin prefetching them immediately.
+
+4. The thing is - this happens even before the page has rendered. For instance, our CSS hasn't even been fetched yet, so we have no indication as to how the image will display and at what size. As a result, the browser has to make some assumptions.
+
+5. By default the browser will assume all images are 100vw - aka the full page width. That's anywhere from a little to a whole lot larger than they actually are. So that is far from optimal.
+
+This is where the sizes attribute comes in handy:
+
+```html
+<img 
+  srcset="..."
+  sizes="(max-width: 400px) 200px, (max-width: 800px) 100vw, 50vw"
+  ...
+>
+```
+
+6. With this attribute, we can tell the browser at various window sizes, how large to expect our image to be (either exactly, with an exact pixel value like 500px, or relative to the window, such as 50vw to say it should display around 50% of the window width).
+
+7. So in the example above, a 900px wide screen will not match either of the first two caluses, and instead match the fallback clause that specifies for larger screens assume the image will display at 50vw.
+
+8. So since 50vw * 900px = 450px the browser will aim for a 450px wide image for a 1x pixel density display, a 900px wide image for 2x pixel density, etc. It will then look for the closest match in the srcset and use that as the image to prefetch.
+
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">10. Image Compression</summary>
+
+![img.png](img.png)
+![img_1.png](img_1.png)
+![img_2.png](img_2.png)
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">11. Adaptive Media Loading</summary>
+
+![img_12.png](img_12.png)
+![img_13.png](img_13.png)
+![img_15.png](img_15.png)
+![img_14.png](img_14.png)
+![img_16.png](img_16.png)
+
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">12. Small Image with Blur Effect</summary>
+
+![img_17.png](img_17.png)
+![img_18.png](img_18.png)
+While loading we can get extremely low quality images and blur to smooth out the image,
+which give good user experience.
+
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">13. Solid Primary Color as Background</summary>
+
+![img_19.png](img_19.png)
+
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">14. CSS Sprites</summary>
+
+![img_20.png](img_20.png)
+![img_21.png](img_21.png)
+Here instead of getting each logo separately we can club all logo together 
+and based on our need we just show targeted logo through CSS trick
+</details>
+
+
+</details>
+
+
+</details>
