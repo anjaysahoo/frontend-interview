@@ -35,6 +35,7 @@
 
 Render-blocking resources can include scripts, stylesheets, and HTML imports.
 
+![img_6.png](img_6.png)
 ![img.png](img.png)
 
 **Case-1 & 6:** 

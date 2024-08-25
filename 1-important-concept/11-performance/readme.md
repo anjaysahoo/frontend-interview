@@ -1144,4 +1144,150 @@ and based on our need we just show targeted logo through CSS trick
 </details>
 
 
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Video Optimization</summary>
+
+1.
+![img_24.png](img_24.png)
+Since all modern browsers support the H.264 codec, MP4 can be used as the fallback for legacy browsers. The WebM version can use the newer AV1 codec, which is not yet as widely supported, or the earlier VP9 codec, which is better supported than AV1, but typically doesn't compress as well as AV1.
+
+2. 
+![img_25.png](img_25.png)
+GIF usually takes more time than normal video
+
+3. Thumbnail
+![img_26.png](img_26.png)
+
+4.
+![img_27.png](img_27.png)
+Check Netflix system design video: https://youtu.be/-Sn48geZruk?si=CU3mKk4MZPaEZwyY
+
+5.
+![img_28.png](img_28.png)
+Check Netflix system design video: https://youtu.be/-Sn48geZruk?si=CU3mKk4MZPaEZwyY
+
+6.
+![img_29.png](img_29.png)
+
+7.
+![img_30.png](img_30.png)
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Font Optimization</summary>
+
+![img_31.png](img_31.png)
+
+1.
+![img_32.png](img_32.png)
+
+Use FOUT by defining `font-display: swap;` like in the example above. This will swap the
+font when actual font is available. While FOIT just show empty screen if `font-display` is not defined
+https://web.dev/articles/avoid-invisible-text
+
+
+2.
+![img_33.png](img_33.png)
+WOFF2 enjoys wide browser support and the best compression—up to 30% better than WOFF. The reduced file size leads to quicker download times. The WOFF2 format is often the only one needed for full compatibility across modern browsers.
+
+3.
+![img_34.png](img_34.png)
+
+4.
+![img_35.png](img_35.png)
+For small font-family use Data URI. It can hold the font data in base64 format.
+
+5.
+![img_36.png](img_36.png)
+
+6.
+![img_37.png](img_37.png)
+
+We can split font into subset and don't download all, but only what is required
+
+7.
+![img_38.png](img_38.png)
+
+If font is not required on fold then just download it asynchronously 
+
+8. Different approach to load font
+![img_39.png](img_39.png)
+
+9.
+![img_40.png](img_40.png)
+![img_41.png](img_41.png)
+
+We can download font programmatically using library like `fontfaceobserver`, initially we can
+have default `sans-serif` font then per our need to use class `fonts-loaded` which hold our custom fonts
+
+
+For more font performance check: 
+1. https://learn-performance-fonts.glitch.me/1
+2. https://web.dev/learn/performance/optimize-web-fonts?continue=https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%23article-https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%2Foptimize-web-fonts#block
+</details>
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">CSS Optimization</summary>
+
+1.
+![img_42.png](img_42.png)
+![img_43.png](img_43.png)
+Try to load only required css at start because loading all CSS at a time will reduce performance.
+From above CPR(Critical Path Rendering) after loading all CSS we need to also parse the CSS 
+then build CSSOM which JS need to merge with DOM to make render tree
+
+2.
+![img_44.png](img_44.png)
+We may be writing CSS for different devices and screen. So it is good idea to split such css,
+then use above `media` attribute to define different type and broswer will use these to load 
+only that css file is screen user is using
+
+
+![img_45.png](img_45.png)
+
+![img_46.png](img_46.png)
+</details>
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">JS Optimization</summary>
+
+1. For Async JS loading details refer [HTML section](../01-html/readme.md)
+
+2.
+![img_47.png](img_47.png)
+
+After loading JS, computation also have performance impact. So we can use `Web Worker` 
+to off load some task from `Main Thread` to `Web Worker`. This is quite useful in case of 
+whiteboard, document editor etc.
+
+We communicate with Web Worker using `postMessage`
+
+![img_48.png](img_48.png)
+</details>
+
+</details>
+
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Build Optimization</summary>
+
+![img_49.png](img_49.png)
+![img_50.png](img_50.png)
+![img_51.png](img_51.png)
+![img_52.png](img_52.png)
 </details>
