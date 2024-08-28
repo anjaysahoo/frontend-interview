@@ -921,12 +921,12 @@ Referred Video: https://youtu.be/9JDlZxR8gVw?si=qHDyy-zadGpeBGCs&t=336
  <summary style="font-size: medium; font-weight: bold">3. Optimal sizing for all screen sizes and resolutions</summary>
 
 
-![img_4.png](img_4.png)
-![img_5.png](img_5.png)
-![img_6.png](img_6.png)
-![img_7.png](img_7.png)
-![img_8.png](img_8.png)
-![img_9.png](img_9.png)
+![img_4.png](img_114.png)
+![img_5.png](img_115.png)
+![img_6.png](img_116.png)
+![img_7.png](img_117.png)
+![img_8.png](img_118.png)
+![img_9.png](img_119.png)
 
 ```html
 <img 
@@ -950,7 +950,7 @@ Referred Video: https://youtu.be/9JDlZxR8gVw?si=qHDyy-zadGpeBGCs&t=336
 <details >
  <summary style="font-size: medium; font-weight: bold">4. Modern formats with the `picture` tag</summary>
 
-![img_3.png](img_3.png)
+![img_3.png](img_113.png)
 - **Most Optimized Image Formates: AVIF > WebP > PNG**
   So it is always good to check if browser support these than use most optimized one.
 
@@ -1056,8 +1056,8 @@ Additionally, you can specify decoding="async" to images to allow the browser to
 <details >
  <summary style="font-size: medium; font-weight: bold">9. Understanding the sizes attribute</summary>
 
-![img_10.png](img_10.png)
-![img_11.png](img_11.png)
+![img_10.png](img_1110.png)
+![img_11.png](img_1111.png)
 
 1. One important caveat to srcset attribute mentioned above is that browsers need to know the size an image will render at in order to pick the best sized image to fetch.
 
@@ -1091,9 +1091,9 @@ This is where the sizes attribute comes in handy:
 <details >
  <summary style="font-size: medium; font-weight: bold">10. Image Compression</summary>
 
-![img.png](img.png)
-![img_1.png](img_1.png)
-![img_2.png](img_2.png)
+![img.png](img_110.png)
+![img_1.png](img_111.png)
+![img_2.png](img_112.png)
 </details>
 
 
@@ -1101,8 +1101,8 @@ This is where the sizes attribute comes in handy:
 <details >
  <summary style="font-size: medium; font-weight: bold">11. Adaptive Media Loading</summary>
 
-![img_12.png](img_12.png)
-![img_13.png](img_13.png)
+![img_12.png](img_1112.png)
+![img_13.png](img_1113.png)
 ![img_15.png](img_15.png)
 ![img_14.png](img_14.png)
 ![img_16.png](img_16.png)
@@ -1289,5 +1289,5 @@ We communicate with Web Worker using `postMessage`
 ![img_49.png](img_49.png)
 ![img_50.png](img_50.png)
 ![img_51.png](img_51.png)
-![img_52.png](img_52.png)
+![img_52.png](img_1152.png)
 </details>
