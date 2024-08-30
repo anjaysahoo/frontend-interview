@@ -678,3 +678,129 @@ const element = document.querySelector(selector);
 Only when things are defined we are getting inside and doing operation
 of returning property value or setting value of property
 </details>
+
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">08. Identical DOM Trees</summary>
+
+###### 08
+
+**Question:**
+https://www.greatfrontend.com/questions/javascript/identical-dom-trees
+![img_10.png](img_10.png)
+
+
+**1. My Solution:**
+
+**Below are solution pass all testcases but there are scenarios where it might fail.
+So check for second solution from GreatFrontend**
+
+```js
+export default function identicalDOMTrees(nodeAParam, nodeBParam) {
+
+  const isIdentical = (nodeA, nodeB) => {
+    
+    if(nodeA.tagName !== nodeB.tagName)
+      return false;
+    
+    if(nodeA.classList.value !== nodeB.classList.value)
+      return false;
+    
+    if(nodeA.children.length !== nodeB.children.length)
+      return false;
+    
+    /**
+     * `innerText` also clear all testcase but
+     * scenario where display is none, innerText will skip
+     * that part and might yield wrong result if anything
+     * different is there in both node
+     */
+    if(nodeA.textContent !== nodeB.textContent)
+      return false;
+    
+    if(JSON.stringify(nodeA.style) !== JSON.stringify(nodeB.style))
+      return false;
+      
+    if(JSON.stringify(nodeA.dataset) !== JSON.stringify(nodeB.dataset))
+       return false;
+     
+
+    for(let i = 0; i < nodeA.children.length; i++){
+      if(!isIdentical(nodeA.children[i], nodeB.children[i]))
+        return false;
+    }
+
+    return true;
+  }
+
+  return isIdentical(nodeAParam, nodeBParam)
+}
+```
+
+**2. GreatFrontend Solution:**
+
+```js
+/**
+ * @param {Node} nodeA
+ * @param {Node} nodeB
+ * @return {boolean}
+ */
+export default function identicalDOMTrees(nodeA, nodeB) {
+  if (nodeA.nodeType !== nodeB.nodeType) {
+    return false;
+  }
+
+  if (nodeA.nodeType === Node.TEXT_NODE) {
+    return nodeA.textContent === nodeB.textContent;
+  }
+
+  // We can assume it's an element node from here on.
+  if (nodeA.tagName !== nodeB.tagName) {
+    return false;
+  }
+
+  if (nodeA.childNodes.length !== nodeB.childNodes.length) {
+    return false;
+  }
+
+  if (nodeA.attributes.length !== nodeB.attributes.length) {
+    return false;
+  }
+
+  const hasSameAttributes = nodeA
+    .getAttributeNames()
+    .every(
+      (attrName) =>
+        nodeA.getAttribute(attrName) === nodeB.getAttribute(attrName),
+    );
+
+  if (!hasSameAttributes) {
+    return false;
+  }
+
+  return Array.prototype.every.call(nodeA.childNodes, (childA, index) =>
+    identicalDOMTrees(childA, nodeB.childNodes[index]),
+  );
+}
+```
+
+There are quite a bit of DOM-specific APIs you will have to use to implement such a function. And it is ok if you are not familiar with them. In practice, you usually do not need to write low-level DOM manipulation code anymore.
+
+Here are the DOM APIs we have covered in this solution:
+
+1. We use `nodeType` when checking the types of nodes. There is a similar API called `tagName` that only works for HTML elements, not for text nodes and comment nodes. Check out this tutorial if you want to learn more about their differences.
+2. We use the `childNodes` property - as opposed to the `children` property - to get the list of children nodes. The reason is, again, `children` only returns elements while `childNodes` returns all nodes, including text nodes and comment nodes. Check out this MDN page if you want to learn more about their differences.
+3. We "borrowed" the `every` method from `Array.prototype` via `Array.prototype.every.call(treeA.childNodes)` as opposed to just calling every on `childNodes`. This is because what `childNodes` returns is not a JavaScript array, rather an array-like data structure called `NodeList`, which doesn't come with all the array methods right out of box. Calling array methods such as every on it would throw an error. The other way to use array methods on a `NodeList` is to convert it to an array first via `Array.from.` i.e. `Array.from(treeA.childNodes).every(...)`.
+
+
+**3. One-liner Solution**
+
+```js
+function identicalDOMTrees(treeA, treeB) {
+  return treeA.isEqualNode(treeB);
+}
+```
+</details>
