@@ -8,6 +8,18 @@
 ![lld5.png](images/lld5.png)
 
 Referred Video: https://www.youtube.com/watch?v=m9OSBJaQTlM
+
+**Things to keep in mind while approaching LLD question:**
+
+1. Don't bother yourself thinking best solution, first just try to solve the things in the simplest way, mostly think about a success scenario
+2. Once you are done with that, talk and update code with the below points
+   1. Solve any potential bug you see in code
+   2. Add `try catch` block for error handling
+   3. Input validation
+   4. Empty check
+   5. Accessibility
+      1. Use `<form>` for keyboard accessibility, `<label>`, semantic HTML
+   6. CSS
 </details>
 
 
