@@ -20,6 +20,10 @@ Referred Video: https://www.youtube.com/watch?v=m9OSBJaQTlM
    5. Accessibility
       1. Use `<form>` for keyboard accessibility, `<label>`, semantic HTML
    6. CSS
+
+
+Go through the [Todo List](../../2-lld-Questions/todo-list) question to appreciate this well.
+https://www.greatfrontend.com/questions/user-interface/todo-list/react/solution/improved
 </details>
 
 
