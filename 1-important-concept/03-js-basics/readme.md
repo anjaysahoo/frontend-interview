@@ -1078,11 +1078,20 @@ console.log(calcHypotenuse(0, 0));
 <details >
  <summary style="font-size: x-large; font-weight: bold">UseFul Info</summary>
 
-Create MAX & MIN number
+1. Create MAX & MIN number
 ```js
 let n = Infinity;
 let m = -Infinity;
 ```
+
+2. Number formatting is tricky:
+   1. `Number()` constructor: converts a value into a number or NaN if not possible. note that this returns `Number(anyFalseyValue)` gives `0`, so we need to differentiate the empty string case from a real `0`.
+   2. `Number.IsNaN()`: determine if a value is a number.
+
+
+3. `toFixed()` &  `parseFloat()`
+![img_9.png](img_9.png)
+4. 
 </details>
 
 

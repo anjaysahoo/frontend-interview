@@ -100,11 +100,12 @@ const TemplateNode = ({ label,icon, id, config, inputHandles=[], outputHandles=[
             case 'text':
                 return (
                     <div key={field.name} className={classes["node__fields__field"]}>
-                        <label>{field.label}</label>
+                        <label htmlFor={field.label}>{field.label}</label>
                         <input
                             type="text"
                             value={formValues[field.name]}
                             onChange={(e) => handleTextChange(e, field.name, rules)}
+                            id={field.label}
                         />
                         {errors[field.name] && <span style={{ color: 'red' }}>{errors[field.name]}</span>}
                     </div>
@@ -112,10 +113,11 @@ const TemplateNode = ({ label,icon, id, config, inputHandles=[], outputHandles=[
             case 'textArea':
                 return (
                     <div key={field.name} className={classes["node__fields__field"]}>
-                        <label>{field.label}</label>
+                        <label htmlFor={field.label}>{field.label}</label>
                         <textarea
                             value={formValues[field.name]}
                             onChange={(e) => handleTextareaChange(e, field.name)}
+                            id={field.label}
                             style={{ width: '90%', overflow: 'auto', resize: 'none', maxHeight: '300px' }}
                         />
                         {Object.keys(handles).map((variable, index) => (
@@ -132,10 +134,11 @@ const TemplateNode = ({ label,icon, id, config, inputHandles=[], outputHandles=[
             case 'select':
                 return (
                     <div key={field.name} className={classes["node__fields__field"]}>
-                        <label>{field.label}</label>
+                        <label htmlFor={field.label}>{field.label}</label>
                         <select
                             value={formValues[field.name]}
                             onChange={(e) => handleChange(e, field.name)}
+                            id={field.label}
                         >
                             {field.options.map((option) => (
                                 <option key={option.value} value={option.value}>
@@ -162,6 +165,7 @@ const TemplateNode = ({ label,icon, id, config, inputHandles=[], outputHandles=[
                                 <label
                                     key={option.value}
                                     form={field.name}
+                                    htmlFor={field.name}
                                 >{option.label}
                                 </label>
                             </div>
