@@ -8,7 +8,7 @@ crore(5).crore(2).lacs(20).thousand(45).crore(7).value()[Chirag Goel]
 
 ###### 01
 
-Solution: [1-important-concept / 04-js-concept / 5-functions / constructor](.././1-important-concept/04-js-concept/5-functions/readme.md)
+Solution: [1-important-concept / 04-js-concept / 5-functions / constructor](../../1-important-concept/04-js-concept/5-functions/readme.md)
 </details>
 
 

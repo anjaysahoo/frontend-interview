@@ -804,3 +804,411 @@ function identicalDOMTrees(treeA, treeB) {
 }
 ```
 </details>
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">09. Squash Object</summary>
+
+###### 09
+
+![img_11.png](img_11.png)
+Question: https://www.greatfrontend.com/questions/javascript/squash-object
+
+**1. My Solution** 
+```js
+/**
+ * @param {Object} obj
+ * @return {Object}
+ */
+export default function squashObject(obj) {
+    const res = {};
+
+    solve(null, obj, res);
+
+    return res;
+}
+
+function solve(parent, obj, res){
+
+    const arr = Object.entries(obj);
+
+    for(let [key, val] of arr){
+        const newKey = parent ? (parent + (key ? '.' + key : '')) : key;
+
+        if(typeof val === 'object'){
+            if(val === null){
+                res[newKey] = val;
+            }
+            /**
+             * Below 'else if' not required because `Object.entries`
+             * for Object.entries([1,2,3]) will return
+             * [['0', 1], ['1', 2], ['2', 3]]
+             */
+            // else if(Array.isArray(val)){ 
+            //   solve(newKey, {...val}, res)
+            // }
+            else{
+                solve(newKey, val, res);
+            }
+        }
+        else{
+            res[newKey] = val;
+        }
+    }
+
+    return res;
+}
+```
+
+**2. Clean Solution Syntactically:**
+
+```js
+/**
+ * @param {Object} obj
+ * @return {Object}
+ */
+export default function squashObject(obj) {
+  function squashImpl(obj_, path, output) {
+    for (const [key, value] of Object.entries(obj_)) {
+      if (typeof value !== 'object' || value === null) {
+        output[path.concat(key).filter(Boolean).join('.')] = value;
+      } else {
+        squashImpl(value, path.concat(key), output);
+      }
+    }
+  }
+
+  const out = {};
+  squashImpl(obj, [], out);
+  return out;
+}
+```
+</details>
+
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">10. Camel Case Keys</summary>
+
+###### 10
+
+![img_12.png](img_12.png)
+
+Question: https://www.greatfrontend.com/questions/javascript/camel-case-keys?list=three-months
+
+
+**1. My Solution:**
+```js
+/**
+ * @param Object
+ * @return Object
+ */
+export default function camelCaseKeys(object) {
+  /**
+   * If its not object then it will be plain value,
+   * therefore just return 
+  */
+  if(typeof object !== 'object' || object === null)
+    return object;
+
+  if(Array.isArray(object)){
+    const newArr = [];
+
+    for(let el of object){
+      newArr.push(camelCaseKeys(el));
+    }
+
+    return newArr;
+  }
+
+  
+  const res = {};
+  const arr = Object.entries(object);
+
+  for(let [key, val] of arr){
+    const newKey = convertKeyToCamelCase(key);
+    const newValue = camelCaseKeys(val);
+    res[newKey] = newValue;
+  }
+
+  return res;
+}
+
+function convertKeyToCamelCase(key){
+  const arr = key.split('_');
+
+  let res = arr[0].slice(0,1).toLowerCase() + arr[0].slice(1);
+
+  for(let i = 1; i < arr.length; i++){
+    let temp = arr[i].slice(0,1).toUpperCase() + arr[i].slice(1);
+    res += temp;
+  }
+
+  return res;
+}
+```
+
+**2. Clean Solution Syntactically:**
+```js
+/**
+ * @param {string} str
+ * @return {string}
+ */
+function camelCase(str) {
+  return str
+    .toLowerCase()
+    .replace(/([_])([a-z])/g, (_match, _p1, p2) => p2.toUpperCase());
+}
+
+/**
+ * @param Object
+ * @return Object
+ */
+export default function camelCaseKeys(object) {
+  if (Array.isArray(object)) {
+    return object.map((item) => camelCaseKeys(item));
+  }
+
+  if (typeof object !== 'object' || object === null) {
+    return object;
+  }
+
+  return Object.fromEntries(
+    Object.entries(object).map(([key, value]) => [
+      camelCase(key),
+      camelCaseKeys(value),
+    ]),
+  );
+}
+
+```
+</details>
+
+
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">11. Camel Case Keys</summary>
+
+###### 11
+
+![img_13.png](img_13.png)
+Question: https://www.greatfrontend.com/questions/javascript/deep-clone?list=three-months
+
+
+**1. My Solution:**
+```js
+/**
+ * @template T
+ * @param {T} value
+ * @return {T}
+ */
+export default function deepClone(value) {
+  if(typeof value !== 'object' || value === null)
+    return value;
+
+  if(Array.isArray(value)){
+    const newArr = [];
+
+    for(let val of value){
+      newArr.push(deepClone(val));
+    }
+
+    return newArr;
+  }
+
+  const clonedObj = {};
+
+  const arr = Object.entries(value);
+
+  for(let [key, val] of arr){
+    clonedObj[key] = deepClone(val);
+  }
+
+  return clonedObj;
+}
+```
+Here are I am just trying to focus on value which are not a `Primitive type`,
+any other value will have `reference` which we need to remove like `Object`, `Array` etc
+
+
+**2. Clean Solution Syntactically:**
+```js
+/**
+ * @template T
+ * @param {T} value
+ * @return {T}
+ */
+export default function deepClone(value) {
+  if (typeof value !== 'object' || value === null) {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item) => deepClone(item));
+  }
+
+  return Object.fromEntries(
+    Object.entries(value).map(([key, value]) => [key, deepClone(value)]),
+  );
+}
+
+```
+
+**3. Not Allowed Solution:**
+
+The easiest (but flawed) way to deep copy an object in JavaScript is to first serialize it and then deserialize it back via `JSON.stringify` and `JSON.parse`.
+
+```js
+export default function deepClone(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+```
+
+Although this approach is acceptable given the input object only contains `null`, `boolean`, `number`, `string`, you should be aware of the downsides of this approach:
+
+1. We can only copy non-symbol-keyed properties whose values are supported by JSON. Unsupported data types are simply ignored.
+2. `JSON.stringify` also has other a few surprising behaviors such as converting Date objects to ISO timestamp strings, NaN and Infinity becoming null etc.
+
+
+**4. One-Liner Solution:**
+
+```js
+const clonedObj = structuredClone(obj);
+```
+all major browsers have native support for performing deep clone via the `structuredClone` API.
+https://web.dev/articles/structured-clone
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">12. Text Search 1 & 2</summary>
+
+###### 12
+
+### Text Search 1
+![img_14.png](img_14.png)
+Question: https://www.greatfrontend.com/questions/javascript/text-search?list=three-months
+
+**1. My Solution:**
+
+```js
+/**
+ * @param {string} text
+ * @param {string} query
+ * @return {string}
+ */
+export default function textSearch(text, query) {
+  const len = query.length;
+  if(len === 0)
+    return text;
+
+  let res = "";
+  let start = 0;
+  const queryLow = query.toLowerCase();
+
+  for(let i = len; i < text.length; i++){
+    const word = text.substring(i - len, i);
+    if(word.toLowerCase() === queryLow){
+      res += text.substring(start, i - len) + `<b>${word}</b>`;
+      start = i;
+      i = i + len - 1;
+    }
+    console.log("res : ", res);
+  }
+  res += text.substring(start, text.length);
+  
+  return res.replaceAll('</b><b>', '');
+}
+```
+
+
+### Text Search 2
+![img_15.png](img_15.png)
+https://www.greatfrontend.com/questions/javascript/text-search-ii?list=three-months
+
+**Solution:**
+
+Above solution won't work here since we have overlapping and multiple queries
+
+```js
+// #1: Basic case.
+// text: "aaabcaa", queries: ['abc']
+// boldChars: [false, false, true, true, true, false, false]
+// result: "aa<b>abc</b>aa"
+
+// #2: Non-overlapping case.
+// text: "aaabcaabc", queries: ['abc']
+// boldChars: [false, false, true, true, true, false, true, true, true]
+// result: "aa<b>abc</b>a<b>abc</b>"
+
+// #3: Overlapping case.
+// text: "baabcaa", queries: ['abc', 'aa']
+// boldChars: [false, true, true, true, true, true true]
+// result: "a<b>aabcaa</b>"
+
+```
+
+```js
+/**
+ * @param {string} text
+ * @param {Array<string>} queries
+ * @return {string}
+ */
+export default function textSearch(text, queries) {
+  if (text.trim() === '') {
+    return text;
+  }
+
+  const boldChars = Array.from({ length: text.length }, () => 0);
+
+  for (const query of queries) {
+    if (query.trim() === '') continue;
+    for (let i = 0; i < text.length; ) {
+      const substr = text.slice(i, i + query.length);
+      if (substr.toLowerCase() === query.toLowerCase()) {
+        boldChars.fill(1, i, i + query.length);
+        // Start from next character if there's a match since one
+        // character cannot match the same query more than once.
+        i = i + query.length;
+      } else {
+        i++;
+      }
+    }
+  }
+
+  let highlightedString = '';
+  for (let i = 0; i < text.length; i++) {
+    // When the current character should be bolded
+    // and the previous character should not be bolded,
+    // append an opening tag to the final string.
+    const shouldAddOpeningTag = boldChars[i] === 1 && boldChars[i - 1] !== 1;
+    // When the current character should be bolded
+    // and the next character should not be bolded,
+    // append a closing tag to the final string.
+    const shouldAddClosingTag = boldChars[i] === 1 && boldChars[i + 1] !== 1;
+    let char = text[i];
+
+    if (shouldAddOpeningTag) {
+      char = '<b>' + char;
+    }
+
+    if (shouldAddClosingTag) {
+      char = char + '</b>';
+    }
+    highlightedString += char;
+  }
+
+  return highlightedString;
+}
+
+```
+</details>

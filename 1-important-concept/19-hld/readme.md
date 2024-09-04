@@ -29,3 +29,5 @@ Referred Video: https://youtu.be/QemIfzcEeMM?si=q8f2_Qy3aLAB5mgv
 
 Referred Video: https://youtu.be/44mOnnt5pic?si=4Kujw-bc-teDK2dP
 </details>
+
+Design Patterns: https://www.patterns.dev/vanilla

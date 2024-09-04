@@ -97,7 +97,7 @@ nums2.sort((a, b) => a - b); //[1, 2, 5, 6, 9]
 
 
 <details >
- <summary style="font-size: large; font-weight: bold">`includes()`, `some()`, `indexOf()`, `findIndex()` & `find()`</summary>
+ <summary style="font-size: large; font-weight: bold">`includes()`, `some()`, `every()`, `indexOf()`, `findIndex()` & `find()`</summary>
 
 1. `.includes()` `Array` `String`
 ```js
@@ -129,7 +129,21 @@ console.log(array.some(even));
 // Expected output: true
 ```
 
-2. `.indexOf()` `Array` `String`
+
+3. `Array.prototype.every()` `Function`
+
+The every() method of Array instances tests whether all elements in the array pass the test implemented by the provided function. It returns a Boolean value.
+
+```js
+const isBelowThreshold = (currentValue) => currentValue < 40;
+
+const array1 = [1, 30, 39, 29, 10, 13];
+
+console.log(array1.every(isBelowThreshold));
+// Expected output: true
+```
+
+4. `.indexOf()` `Array` `String`
 ```js
 const beasts = ['ant', 'bison', 'camel', 'duck', 'bison'];
 
@@ -152,7 +166,7 @@ console.log(`The index of the first "${searchTerm}" is ${indexOfFirst}`);
 // Expected output: "The index of the first "dog" is 15"
 ```
 
-3. `Array.prototype.findIndex()` `Function`
+5. `Array.prototype.findIndex()` `Function`
 
 The findIndex() method of Array instances returns the index of the first element in an array that satisfies the provided testing function. If no elements satisfy the testing function, -1 is returned.
 ```js
@@ -164,7 +178,7 @@ console.log(array1.findIndex(isLargeNumber));
 // Expected output: 3
 ```
 
-4. `Array.prototype.find()` `Function`
+6. `Array.prototype.find()` `Function`
 
 The `find()` method of Array instances returns the **first element** in the provided array that satisfies the provided **testing function**. If **no values satisfy** the testing function, **undefined** is returned.
 ```js
