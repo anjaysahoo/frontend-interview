@@ -375,7 +375,7 @@ function MyComponent() {
    }, [count]);
 }
 ```
-Run whenever value of `count` changes
+Run on an initial component load and whenever value of `count` changes
 
 4. Second argument with non-empty array with multiple values
 ```js
@@ -384,7 +384,7 @@ useEffect(() => {
 }, [stateVar1, stateVar2, stateVar3, andSoOn]);
 ```
 You can also similarly create side effects which are dependent on 
-multiple state variables, not just one. If any of the dependent variables 
+multiple state variables, not just one. Run on an initial component load and if any of the dependent variables 
 change, the side effect is run. You do this by just adding more state 
 variables to the dependency array.
 
@@ -425,11 +425,11 @@ function ChatRoom({ roomId }) {
   // ...
 }
 ```
+
 Output when it loads for first time
 ```js
 Chat Room called
 UseEffect called
-Return called
 ```
 Output when there is change in `serverUrl`
 ```js
