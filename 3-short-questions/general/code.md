@@ -90,11 +90,6 @@ https://bigfrontend.dev/problem/retry-promise-on-rejection
 
 ```js
 
-/**
- * @param {() => Promise<any>} fetcher
- * @param {number} maximumRetryCount
- * @return {Promise<any>}
- */
 function fetchWithAutoRetry(fetcher, maximumRetryCount) {
 
     return new Promise((resolve, reject) => {
@@ -119,6 +114,7 @@ function fetchWithAutoRetry(fetcher, maximumRetryCount) {
                     else
                         callFetcher();
 
+                    console.log("Tried " + count + " times");
                     count++;
                 });
         };
@@ -127,6 +123,31 @@ function fetchWithAutoRetry(fetcher, maximumRetryCount) {
     });
 
 }
+
+
+const fetcher = () => {
+    return new Promise((resolve, reject) => {
+        const random = Math.random()
+        console.log("random: " + random);
+
+        if(random > 0.5){
+            resolve(1);
+        }
+        else{
+            reject(new Error("Error executing P2"))
+        }
+    })
+}
+
+(async function a() {
+    try{
+        await fetchWithAutoRetry(fetcher, 3)
+    }
+    catch (e) {
+        console.log(e)
+    }
+})()
+
 ```
 
 **Solution-2:**
