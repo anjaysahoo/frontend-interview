@@ -30,6 +30,10 @@ https://bigfrontend.dev/problem/two-way-binding
 function model(state, input){
     input.value = state.value;
 
+    /**
+     * Here whenever we set or get the value of object `state` and key `value`
+     * then below function will be called which can then be used to update the `input` value
+     */
     Object.defineProperty(state, 'value', {
         get(){
             console.log("get called: ");
@@ -41,7 +45,10 @@ function model(state, input){
         }
     })
 
-
+    /**
+     * Below eventlistner just listen to `change` event of `input`
+     * and update the value of object `state` and key `value`
+     */
     input.addEventListener('change',(event) => {
         state.value = event.target.value;
     })
