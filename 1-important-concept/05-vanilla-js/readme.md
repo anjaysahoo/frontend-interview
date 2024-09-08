@@ -582,6 +582,266 @@ Referred from: https://www.greatfrontend.com/questions/user-interface/signup-for
 
 
 
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Important Questions</summary>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">1. getElementsByTagName</summary>
+
+**Question:**
+![img_2.png](img_2.png)
+https://www.greatfrontend.com/questions/javascript/get-elements-by-tag-name?list=three-months
+
+![img_3.png](img_3.png)
+
+**Solution:**
+```js
+/**
+ * @param {Element} element
+ * @param {string} tagName
+ * @return {Array<Element>}
+ */
+export default function getElementsByTagName(element, tagNameParam) {
+  const elements = [];
+  const tagName = tagNameParam.toUpperCase();
+
+  function traverse(el) {
+    if (el == null) {
+      return;
+    }
+
+    if (el.tagName === tagName) {
+      elements.push(el);
+    }
+
+    for (const child of el.children) {
+      traverse(child);
+    }
+  }
+
+  for (const child of element.children) {
+    traverse(child);
+  }
+
+  return elements;
+}
+
+```
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">2. Identical DOM Trees</summary>
+
+**Question:**
+![img_1.png](img_1.png)
+https://www.greatfrontend.com/questions/javascript/identical-dom-trees?list=three-months
+
+**My Solution:** 
+```js
+/**
+ * @param {Node} nodeA
+ * @param {Node} nodeB
+ * @return {boolean}
+ */
+export default function identicalDOMTrees(nodeAParam, nodeBParam) {
+
+  const isIdentical = (nodeA, nodeB) => {
+    
+    if(nodeA.tagName !== nodeB.tagName)
+      return false;
+    
+    if(nodeA.classList.value !== nodeB.classList.value)
+      return false;
+    
+    if(nodeA.children.length !== nodeB.children.length)
+      return false;
+    
+    /**
+     * `innerText` also clear all testcase but
+     * scenario where display is none, innerText will skip
+     * that part and might yield wrong result if anything
+     * different is there in both node
+     */
+    if(nodeA.textContent !== nodeB.textContent)
+      return false;
+    
+    if(JSON.stringify(nodeA.style) !== JSON.stringify(nodeB.style))
+      return false;
+      
+    if(JSON.stringify(nodeA.dataset) !== JSON.stringify(nodeB.dataset))
+       return false;
+     
+
+    for(let i = 0; i < nodeA.children.length; i++){
+      if(!isIdentical(nodeA.children[i], nodeB.children[i]))
+        return false;
+    }
+
+    return true;
+  }
+
+  return isIdentical(nodeAParam, nodeBParam)
+}
+```
+
+
+**GFE Solution:**
+```js
+/**
+ * @param {Node} nodeA
+ * @param {Node} nodeB
+ * @return {boolean}
+ */
+export default function identicalDOMTrees(nodeA, nodeB) {
+  if (nodeA.nodeType !== nodeB.nodeType) {
+    return false;
+  }
+
+  if (nodeA.nodeType === Node.TEXT_NODE) {
+    return nodeA.textContent === nodeB.textContent;
+  }
+
+  // We can assume it's an element node from here on.
+  if (nodeA.tagName !== nodeB.tagName) {
+    return false;
+  }
+
+  if (nodeA.childNodes.length !== nodeB.childNodes.length) {
+    return false;
+  }
+
+  if (nodeA.attributes.length !== nodeB.attributes.length) {
+    return false;
+  }
+
+  const hasSameAttributes = nodeA
+    .getAttributeNames()
+    .every(
+      (attrName) =>
+        nodeA.getAttribute(attrName) === nodeB.getAttribute(attrName),
+    );
+
+  if (!hasSameAttributes) {
+    return false;
+  }
+
+  return Array.prototype.every.call(nodeA.childNodes, (childA, index) =>
+    identicalDOMTrees(childA, nodeB.childNodes[index]),
+  );
+}
+```
+
+**Notes on native DOM APIs**
+
+1. We use `nodeType` when checking the types of nodes. There is a similar API called `tagName` that only works for HTML elements, not for text nodes and comment nodes.
+2. We use the `childNodes` property - as opposed to the `children` property - to get the list of children nodes. The reason is, again, children only returns elements while childNodes returns all nodes, including text nodes and comment nodes.
+3. We "borrowed" the `every` method from `Array.prototype` via `Array.prototype.every.call(treeA.childNodes)` as opposed to just calling every on `childNodes`. This is because what childNodes returns is not a JavaScript array, rather an array-like data structure called `NodeList`, which doesn't come with all the array methods right out of box. Calling array methods such as every on it would throw an error. The other way to use array methods on a NodeList is to convert it to an array first via `Array.from`. i.e. `Array.from(treeA.childNodes).every(...)`.
+
+
+
+One Liner Solution:
+
+```js
+function identicalDOMTrees(treeA, treeB) {
+  return treeA.isEqualNode(treeB);
+}
+```
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">3. jQuery.css</summary>
+
+**Question:**
+![img_4.png](img_4.png)
+https://www.greatfrontend.com/questions/javascript/jquery-css?list=three-months
+
+**My Solution:**
+```js
+export default function $(selector) {
+
+const element = document.querySelector(selector);
+
+  return {
+    css: function (property, value) {
+
+    if(!value){
+       if(!element)
+          return undefined;
+
+      if(property === undefined)
+        return undefined;
+
+      const val = element.style[property];
+      return val === '' ? undefined : val;
+    }
+
+    if(element && property)
+      element.style[property] = value;
+    
+      return this;
+    }
+  } 
+}
+```
+
+GFE Solution:
+```js
+class jQuery {
+  constructor(selector) {
+    this.element = document.querySelector(selector);
+  }
+
+  css(prop, value) {
+    // Getter case.
+    if (value === undefined) {
+      // No matching elements.
+      if (this.element == null) {
+        return undefined;
+      }
+
+      const value = this.element.style[prop];
+      return value === '' ? undefined : value;
+    }
+
+    // Setter case.
+    if (this.element != null) {
+      this.element.style[prop] = value;
+    }
+
+    return this;
+  }
+}
+
+export default function $(element) {
+  return new jQuery(element);
+}
+
+```
+An alternative solution here is to use classes to retain a reference to the selected element. The implementation of the css() method is largely similar.
+
+</details>
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
 <details >
  <summary style="font-size: x-large; font-weight: bold">Intersection Observer</summary>
 

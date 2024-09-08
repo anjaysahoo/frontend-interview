@@ -1,4 +1,58 @@
+## Revision Questions:
+<details >
+ <summary style="font-size: small; font-weight: bold">01. Two-way binding [BFE]</summary>
 
+###### 01
+
+**Question:**
+
+Let's do some simple two-way binding.
+
+Please create a function `model(state, element)`, to bind `state.value` to the HTMLInputElement `element`.
+
+```js
+const input = document.createElement('input')
+const state = { value: 'BFE' }
+model(state, input)
+
+console.log(input.value) // 'BFE'
+state.value = 'dev'
+console.log(input.value) // 'dev'
+input.value = 'BFE.dev'
+input.dispatchEvent(new Event('change'))
+console.log(state.value) // 'BFE.dev'
+```
+https://bigfrontend.dev/problem/two-way-binding
+
+**Solution:**
+
+```js
+function model(state, input){
+    input.value = state.value;
+
+    Object.defineProperty(state, 'value', {
+        get(){
+            console.log("get called: ");
+            return input.value;
+        },
+        set(new_value) {
+            console.log("set called: ");
+            input.value = new_value;
+        }
+    })
+
+
+    input.addEventListener('change',(event) => {
+        state.value = event.target.value;
+    })
+}
+```
+</details>
+
+
+
+
+## Questions:
 <details >
  <summary style="font-size: small; font-weight: bold">
 01. Input->
@@ -213,7 +267,7 @@ https://youtu.be/uhtmTe26rqo?si=wAEuFy8zBopNpB8E&t=284
 <details >
  <summary style="font-size: small; font-weight: bold">Question</summary>
 
-Write a function which below input, give below output
+Write a function given input, give below output
 
 ```js
 const input = [

@@ -69,8 +69,25 @@ export default function flatten(value) {
 }
 ```
 
+My Solution-2:
 
-Solution-2:
+```js
+export default function flatten(value) {
+  let res = [];
+
+  for(let val of value){
+    if(Array.isArray(val))
+      res = [...res, ...flatten(val)];
+    else
+      res.push(val);
+  }
+
+  return res;
+}
+```
+
+
+Solution-3:
 ```js
 /**
  * @param {Array<*|Array>} value
@@ -84,6 +101,8 @@ export default function flatten(value) {
 }
 
 ```
+
+
 </details>
 
 

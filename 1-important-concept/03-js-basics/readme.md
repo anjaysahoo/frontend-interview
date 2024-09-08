@@ -223,7 +223,7 @@ console.log(array3);
 
 
 <details >
- <summary style="font-size: large; font-weight: bold">`fill()`, `flat()`</summary>
+ <summary style="font-size: large; font-weight: bold">`fill()`, `flat()`, `reverse()`</summary>
 
 1. `Array.prototype.fill()`
 The fill() method of Array instances changes all elements within a range of indices in an array to a static value. It returns the modified array.
@@ -260,6 +260,21 @@ console.log(arr2.flat(2));
 console.log(arr2.flat(Infinity));
 // expected output: Array [0, 1, 2, 3, 4, 5]
 
+```
+
+3. `Array.prototype.reverse()`
+```js
+const array1 = ['one', 'two', 'three'];
+console.log('array1:', array1);
+// Expected output: "array1:" Array ["one", "two", "three"]
+
+const reversed = array1.reverse();
+console.log('reversed:', reversed);
+// Expected output: "reversed:" Array ["three", "two", "one"]
+
+// Careful: reverse is destructive -- it changes the original array.
+console.log('array1:', array1);
+// Expected output: "array1:" Array ["three", "two", "one"]
 ```
 </details>
 
@@ -416,7 +431,18 @@ console.log(stringObj.valueOf());
 
 1. **Set: The Set object lets you store `unique` values of any type, whether primitive values or object references.**
 
-2. **Map:** The Map object holds key-value pairs and remembers the original insertion order of the keys. Any value (both objects and primitive values) may be used as either a key or a value.
+2. **Map: Any value (both objects and primitive values) may be used as either a key or a value.**
+
+The main common difference between `Map` or `Set` vs `Object` is that **in `Object` insertion order is not maintained**
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Length</summary>
+
+```js
+var size = Object.keys(myObj).length;
+```
+</details>
+
 
 <details >
  <summary style="font-size: large; font-weight: bold">Iterate</summary>
@@ -451,19 +477,48 @@ for ([key, value] of populationArr){
   console.log(key);
 }
 ```
+![img_10.png](img_10.png)
 
 Referred Article: https://www.freecodecamp.org/news/how-to-iterate-over-objects-in-javascript/
 
-### `Map`
-
+**Always use below strategy to iterate over `Map` & `Set`**
+1. `Map`
 ```js
-const frequencyMap = new Map();
+const map = new Map();
 
-// Iterate over map
-for (const [key, count] of frequencyMap.entries()) {
-   
+map.set('a', 1);
+map.set('b', ['football', 'basketball']);
+map.set('c', {
+    1: "Apple",
+    2: "Orange"
+});
+
+for(let [potato, tomato] of Array.from(map.entries())){
+   console.log(potato, tomato)
 }
 ```
+2. `Set
+
+```js
+const set = new Set();
+
+set.add('a');
+set.add({
+    1: "Apple",
+    2: "Orange"
+});
+
+for(let [potato, tomato] of Array.from(set.entries())){
+   console.log(potato, tomato)
+}
+```
+
+Here is good example where any other method might fail:
+https://www.greatfrontend.com/questions/javascript/data-selection?list=three-months
+
+### `Map`
+
+![img_11.png](img_11.png)
 
 ### `Set`
 For Set objects there is no key like in Map objects. However, to keep the API similar to the Map object, each entry has the same value for its key and value here, so that an array [value, value] is returned.
@@ -480,6 +535,7 @@ for (const entry of iterator1) {
   // Expected output: Array ["forty two", "forty two"]
 }
 ```
+![img_12.png](img_12.png)
 </details>
 
 <details >
