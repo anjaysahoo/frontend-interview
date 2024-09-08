@@ -37,6 +37,13 @@ function model(state, input){
     Object.defineProperty(state, 'value', {
         get(){
             console.log("get called: ");
+            /**
+             * Below return will send you in infinite loop because each time
+             * you do state.value it will call this get method and it will
+             * keep calling itself
+             *
+             * return state.value
+             */
             return input.value;
         },
         set(new_value) {
@@ -52,6 +59,91 @@ function model(state, input){
     input.addEventListener('change',(event) => {
         state.value = event.target.value;
     })
+}
+```
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">02. auto-retry Promise on rejection [BFE]</summary>
+
+###### r02
+
+**Question:**
+
+For a web application, fetching API data is a common task.
+
+But the API calls might fail because of Network problems. Usually we could show a screen for Network Error and ask users to retry.
+
+One approach to handle this is auto retry when network error occurs.
+
+You are asked to create a `fetchWithAutoRetry(fetcher, count)`, which automatically fetch again when error happens, until the maximum count is met.
+
+For the problem here, there is no need to detect network error, you can just retry on all promise rejections.
+
+https://bigfrontend.dev/problem/retry-promise-on-rejection
+
+
+**Solution-1:**
+
+```js
+
+/**
+ * @param {() => Promise<any>} fetcher
+ * @param {number} maximumRetryCount
+ * @return {Promise<any>}
+ */
+function fetchWithAutoRetry(fetcher, maximumRetryCount) {
+
+    return new Promise((resolve, reject) => {
+        let count = 0;
+
+        const callFetcher = () => {
+            /**
+             * 1. Note that fetcher return Promise hence executing is important
+             * 2. Here we could have did just `fetcher().then((data) => { ... })`
+             * but we have to check whether `fetcher()` is `Promise` or not
+             * Hence using `Promise.resolve(fetcher())`
+             */
+            return Promise.resolve(fetcher()).then((resp) => {
+                    resolve(resp);
+                    return;
+                },
+                (error) => {
+                    if(count === maximumRetryCount){
+                        reject(error);
+                        return;
+                    }
+                    else
+                        callFetcher();
+
+                    count++;
+                });
+        };
+
+        callFetcher();
+    });
+
+}
+```
+
+**Solution-2:**
+
+```js
+/**
+ * @param {() => Promise<any>} fetcher
+ * @param {number} maximumRetryCount
+ * @return {Promise<any>}
+ */
+function fetchWithAutoRetry(fetcher, maximumRetryCount) {
+  return fetcher().catch((error) => {
+    if(maximumRetryCount === 0)
+      throw error;
+    else
+      return fetchWithAutoRetry(fetcher, maximumRetryCount - 1);
+  })
 }
 ```
 </details>

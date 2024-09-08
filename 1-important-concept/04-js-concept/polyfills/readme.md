@@ -950,6 +950,11 @@ export default function promiseAll(iterable) {
     }
 
     iterable.forEach((p, index) => {
+        /**
+         * Here we could have did just `p.then((data) => { ... })`
+         * but we have to check whether `p` is `Promise` or not
+         * Hence using `Promise.resolve(p)`
+         */
       Promise.resolve(p).then((data) => {
         result[index] = data;
         unresolvedCount--;
