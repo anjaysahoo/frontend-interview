@@ -1,10 +1,11 @@
 ## Debounce & Throttle explained like a 5 year Old
 
+Imagine you are holding a magic button that makes a bell ring.
+
 To summarize:
 
 - **Debounce** waits for you to stop pressing (leading rings first, trailing rings last).
 - **Throttle** rings at regular intervals (leading rings immediately, trailing rings at the end of the wait).
-
 
 
 #### 1. **Trailing Debounce**
