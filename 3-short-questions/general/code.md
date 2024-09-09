@@ -172,19 +172,192 @@ function fetchWithAutoRetry(fetcher, maximumRetryCount) {
 
 
 
-## Questions:
 <details >
  <summary style="font-size: small; font-weight: bold">
-01. Input->
+03. Input->
 computeAmount().Iacs(15).
 crore(5).crore(2).lacs(20).thousand(45).crore(7).value()[Chirag Goel]
 </summary>
 
-###### 01
+###### r03.
 
-Solution: [1-important-concept / 04-js-concept / 5-functions / constructor](../../1-important-concept/04-js-concept/5-functions/readme.md)
+### Always prefer using Normal function over Arrow function as it might get sometime tricky since it will run in Global Execution Context if not created correctly
+
+**1. Solution-1**
+
+**i. Using Class**
+
+```js
+class ComputeAmount {
+    constructor(amount) {
+        this.totalAmount = amount;
+    }
+
+    lac(multiplier) {
+        this.totalAmount += multiplier * 100000;
+        return this;
+    }
+
+    value() {
+        return this.totalAmount;
+    }
+}
+
+console.log("computeAmount : ", new ComputeAmount(0).lac(2).lac(2).value());
+
+```
+
+**ii. Using Constructor Function**
+```js
+function ComputeAmount(amount){
+    this.totalAmount = amount;
+
+    this.lac = function (multiplier){
+        this.totalAmount += multiplier*100000;
+        return this;
+    }
+
+    this.value = () => {
+        return this.totalAmount;
+    }
+}
+
+console.log("computeAmount : ", new ComputeAmount(0).lac(2).lac(2).value());
+```
+
+
+Here everything is stored inside local `this` which is pointing to (`Object`)instance
+of `ComputeAmount` constructor function
+![img_101.png](img_101.png)
+
+When instance of `ComputeAmount` is created, any function inside that instance 
+be it Normal or Arrow function will run inside same execution context of `ComputeAmount` instance.
+Hence `this` points to `ComputeAmount` instance irrespective of type of function used.
+![img_7.png](img_7.png)
+
+**2. Solution-2**
+
+```js
+function computeAmount(amount){
+    this.totalAmount = amount;
+
+    this.lac = (multiplier) => {
+        this.totalAmount += multiplier*100000;
+        return this;
+    }
+
+    this.value = () => {
+        return this.totalAmount;
+    }
+
+    return this;
+}
+
+
+console.log("computeAmount : ", computeAmount(0).lac(2).lac(2).value());
+```
+
+- This solution also yields the same result, which is more accurate to what question asked
+- It has a same result because here we're explicitly returning `this` alike creating new instance
+  from constructor function which on using `new` keyword create empty object which is assigned
+  to `this` and returned
+- Here `this` points to `window` object because it is not instance of anything
+- Also, it does not matter whether `lac` function is normal or arrow both will return a same result
+
+![img_102.png](img_102.png)
+![img_103.png](img_103.png)
+![img_104.png](img_104.png)
+
+Referred Video: https://youtu.be/_tNErId8xlc?si=t8fEbbGmefLTogd-&t=126
+
+
+**3. Solution-3(Using Factor Function):** 
+
+**i. Normal Function:**
+```js
+function createComputeAmount(amount) {
+    let totalAmount = amount;
+
+    return {
+        lac: (multiplier) => {
+            totalAmount += multiplier * 100000;
+            return this;  // Return the object itself for chaining
+        },
+        value() {
+            return totalAmount;
+        }
+    };
+}
+
+const computeAmount = createComputeAmount(0).lac(2).lac(2).value();
+console.log("computeAmount:", computeAmount);
+```
+
+**ii. Arrow Function**
+
+❌❌ Below Arrow function do not works
+```js
+function createComputeAmount(amount) {
+    let totalAmount = amount;
+
+    return {
+        lac: (multiplier) => {
+            totalAmount += multiplier * 100000;
+            return this;  // Return the object itself for chaining
+        },
+        value() {
+            return totalAmount;
+        }
+    };
+}
+
+const computeAmount = createComputeAmount(0).lac(2).lac(2).value();
+console.log("computeAmount:", computeAmount);
+```
+![img_3.png](img_3.png)
+![img_4.png](img_4.png)
+
+This gives error because first `lac()` function return `this` which is pointing to 
+`Global Execution Context` i.e window. Therefore after running first `lac()` function
+whole returned object by `createComputeAmount` will be removed from Global Execution Context
+and hence we get error `TypeError: createComputeAmount(...).lac(...).lac is not a function`
+on accessing second `lac()` function.
+
+✅ Below will work
+```js
+function createComputeAmount(amount) {
+    let totalAmount = amount;
+
+    const obj = {
+        lac: (multiplier) => {
+            totalAmount += multiplier * 100000;
+            return obj;  // Return the object itself for chaining
+        },
+        value() {
+            return totalAmount;
+        }
+    };
+
+    return obj;
+}
+
+const computeAmount = createComputeAmount(0).lac(2).lac(2).value();
+console.log("computeAmount:", computeAmount);
+```
+
+Here we are explicitly returning newly created `obj` object therefore all next call
+of `lac()` function will return newly created object with value of `totalAmount` stored in
+closure of `obj` object.
+
+First Step
+![img_5.png](img_5.png)
+Final Step
+![img_6.png](img_6.png)
 </details>
 
+
+
+## Questions:
 
 <details >
  <summary style="font-size: small; font-weight: bold">02. find all the prime numbers up to n?</summary>

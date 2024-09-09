@@ -1,21 +1,15 @@
-function curry(func) {
-    return function curried(...args){
-        if(args.length >= func.length){
-            return func.apply(this, args);
-        }
+function ComputeAmount(amount){
+    this.totalAmount = amount;
 
-        return (newArgs) => newArgs === undefined ?
-            curried.apply(this,args) :
-            curried.apply(this,[...args, newArgs]);
+    this.lac = function (multiplier){
+        this.totalAmount += multiplier*100000;
+        return this;
+    }
 
+    this.value = () => {
+        return this.totalAmount;
     }
 }
 
-function multiplyThree(a, b, c) {
-    return a * b * c;
-}
-const curriedMultiplyThree = curry(multiplyThree);
-console.log(curriedMultiplyThree(4)(5)(6)); // 120
-console.log(curriedMultiplyThree(4)(5, 6)); // 120
-console.log(curriedMultiplyThree(4, 5)(6)); // 120
-console.log(curriedMultiplyThree(4, 5, 6)); // 120
+const computeAmount = new ComputeAmount(0).lac(2).lac(2).value();
+console.log("computeAmount:", computeAmount);
