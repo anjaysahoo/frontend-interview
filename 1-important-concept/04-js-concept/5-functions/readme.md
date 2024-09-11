@@ -369,16 +369,3 @@ Referred Video: https://youtu.be/HkWxvB1RJq0?si=zjardBsnBI1OLe9q
 
 
 
-
-
-<details >
- <summary style="font-size: medium; font-weight: bold">Closure Questions</summary>
-</details>
-
-
-
-
-
-<details >
- <summary style="font-size: medium; font-weight: bold">Closure Questions</summary>
-</details>

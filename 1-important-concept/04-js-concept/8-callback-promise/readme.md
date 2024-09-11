@@ -57,6 +57,93 @@ Referred Video: https://youtu.be/ap-6PPAuK1Y?si=XgXdtziWUV-JRDId
 
 ![img_12.png](images/img_12.png)
 
+### What is Callback Hell?
+
+**Callback hell** refers to the situation where multiple asynchronous functions are nested within each other, leading to code that is difficult to read, maintain, and debug. This usually happens when callbacks are used in a sequential manner, and each subsequent operation depends on the result of the previous one.
+
+#### Example of Callback Hell
+
+```javascript
+function getUser(userId, callback) {
+    setTimeout(() => {
+        console.log("Fetched user");
+        callback({ userId, name: "John" });
+    }, 1000);
+}
+
+function getPosts(userId, callback) {
+    setTimeout(() => {
+        console.log("Fetched posts");
+        callback([{ postId: 1, content: "Post 1" }, { postId: 2, content: "Post 2" }]);
+    }, 1000);
+}
+
+function getComments(postId, callback) {
+    setTimeout(() => {
+        console.log("Fetched comments");
+        callback([{ commentId: 1, content: "Nice post!" }, { commentId: 2, content: "Thanks!" }]);
+    }, 1000);
+}
+
+// Callback hell with nested functions
+getUser(1, (user) => {
+    getPosts(user.userId, (posts) => {
+        getComments(posts[0].postId, (comments) => {
+            console.log(comments);
+        });
+    });
+});
+```
+
+In the above example, the code becomes increasingly nested as we fetch user data, posts, and comments in sequence, which makes it harder to follow and maintain.
+
+### How Promises Solve Callback Hell
+
+Promises are used to handle asynchronous operations in a more readable and maintainable way by chaining them, rather than nesting. Promises help flatten the structure of asynchronous calls, allowing better readability.
+
+#### Example Using Promises
+
+```javascript
+function getUser(userId) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Fetched user");
+            resolve({ userId, name: "John" });
+        }, 1000);
+    });
+}
+
+function getPosts(userId) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Fetched posts");
+            resolve([{ postId: 1, content: "Post 1" }, { postId: 2, content: "Post 2" }]);
+        }, 1000);
+    });
+}
+
+function getComments(postId) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Fetched comments");
+            resolve([{ commentId: 1, content: "Nice post!" }, { commentId: 2, content: "Thanks!" }]);
+        }, 1000);
+    });
+}
+
+// Promise chaining to avoid callback hell
+getUser(1)
+    .then(user => getPosts(user.userId))
+    .then(posts => getComments(posts[0].postId))
+    .then(comments => console.log(comments))
+    .catch(error => console.error(error));
+```
+
+### Key Differences:
+- **Readability**: Promises allow us to chain operations in a flat structure, making the code easier to read.
+- **Error Handling**: Promises provide a built-in way to handle errors using `.catch()`, whereas error handling in callbacks can become cumbersome.
+
+
 </details>
 
 <details >
