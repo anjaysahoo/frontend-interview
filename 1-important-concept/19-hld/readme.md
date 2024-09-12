@@ -31,3 +31,20 @@ Referred Video: https://youtu.be/44mOnnt5pic?si=4Kujw-bc-teDK2dP
 </details>
 
 Design Patterns: https://www.patterns.dev/vanilla
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">SEO</summary>
+
+![img_14.png](img_14.png)
+
+1. Canonical tags: Helps ignore any other version which leads to same URL like https://flipkart.com/ and https://www.flipkart.com/ will lead to same URL
+![img_15.png](img_15.png)
+
+2. If you don't want SEO to index few things then use robots.txt to avoid indexing such routes
+![img_16.png](img_16.png)
+
+3. Site map help you list all the pages in your website, which can be used by search engines
+![img_17.png](img_17.png)
+
+</details>
