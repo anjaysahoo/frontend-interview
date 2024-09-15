@@ -5,6 +5,8 @@ Controller:
 <details >
  <summary style="font-size: large; font-weight: bold">1. Photo Sharing App (Instagram)</summary>
 
+GreatFrontend: https://www.greatfrontend.com/questions/system-design/photo-sharing-instagram
+
 ### Step-1: Requirements(Functional / Non-Functional) & Scoping
 ![img.png](img.png)
 
@@ -46,6 +48,8 @@ https://codepen.io/stoumann/pen/MWeNmyb
 <details >
  <summary style="font-size: large; font-weight: bold">2. E-Commerce App (Amazon, Flipkart)</summary>
 
+GreatFrontend: https://www.greatfrontend.com/questions/system-design/e-commerce-amazon
+
 ### Step-1: Requirements(Functional / Non-Functional) & Scoping
 ![img_10.png](img_10.png)
 
@@ -73,4 +77,93 @@ When you have lot of filter or parameter like in e-commerce then it is preferred
 ### 3. Internationalization / Localization
 ![img_16.png](img_16.png)
 
+</details>
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">3. News Feed (e.g. Facebook, Twitter)</summary>
+
+GreatFrontend: https://www.greatfrontend.com/questions/system-design/news-feed-facebook
+
+### Step-1: Requirements(Functional / Non-Functional) & Scoping
+![img_17.png](img_17.png)
+
+### Step-2: Architecture Design
+
+![img_18.png](img_18.png)
+
+### Step-3: Data Model
+![img_19.png](img_19.png)
+
+### Implementation Details
+
+![img_20.png](img_20.png)
+![img_22.png](img_22.png)
+![img_21.png](img_21.png)
+![img_23.png](img_23.png)
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">4. Chat App (e.g. Messenger, Whatsapp, Slack)</summary>
+
+- GreatFrontend: https://www.greatfrontend.com/questions/system-design/chat-application-messenger
+- Chirag Goel: https://www.youtube.com/watch?v=3mi-Cah2PtM
+
+### Step-1: Requirements(Functional / Non-Functional) & Scoping
+![img_24.png](img_24.png)
+
+### Step-2: Architecture Design
+![img_26.png](img_26.png)
+
+### Step-3: Data Model
+![img_27.png](img_27.png)
+
+### Step-4: API
+
+- **Send Message**:
+    - Adds a new message to the Message table with a "sending" status.
+    - Adds a row to the SendMessageRequest table with a "pending" status.
+    - Deletes any draft messages for the current conversation.
+    - Message Scheduler handles syncing the pending messages with the server.
+
+- **Sync Outgoing Messages**:
+    - Message Scheduler syncs outgoing messages, maintaining its task queue.
+    - Monitors the SendMessageRequest table to process messages based on their status:
+        - **pending**: Queue the message to be sent via the real-time channel, mark as "in_flight."
+        - **in_flight**: If a timeout occurs, mark the message as "fail."
+        - **fail**: Retry sending with exponential backoff based on fail_count.
+
+- **Server Events**:
+    - Receives real-time updates via events (e.g., message_sent, message_delivered).
+
+    - **message_sent event**:
+        - Updates the Message status to "sent."
+        - Cleans up related tasks in the Message Scheduler.
+        - Notifies the Conversation UI to update if the message's conversation is shown.
+
+    - **message_delivered event**:
+        - Updates the Message status to "delivered."
+        - Notifies the Conversation UI to update.
+
+    - **message_failed event**:
+        - Updates the SendMessageRequest row to "fail" and increments fail_count.
+        - Notifies the Conversation UI to update.
+
+    - **incoming_message event**:
+        - Adds the new message to the Message table.
+        - Creates a new row in the Conversation and User tables if necessary.
+        - Updates the Conversations List UI and Conversation UI.
+
+    - **sync event**:
+        - Triggered when a client connects to the server, ensuring the client is up-to-date with server data.
+        - Syncs data based on the client's last update timestamp or conversation's cursor.
+
+
+### Step-5: Non-Functional Discussion
+
+![img_25.png](img_25.png)
 </details>
