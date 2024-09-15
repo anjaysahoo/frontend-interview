@@ -114,6 +114,9 @@ Extremely well written notes(MUST READ IF TIME PERMIT): https://javascript.info/
 - `path=/`, by default current path, makes the cookie visible only under that path.
 - `domain=site.com`, by default a cookie is visible on the current domain only. If the domain is set explicitly, the cookie becomes visible on subdomains.
 - `expires` or `max-age` sets the cookie expiration time. Without them, the cookie dies when the browser is closed.
+  - ```js
+    document.cookie = "user=John; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT"
+    ```
 - `secure` makes the cookie HTTPS-only.
   - This attribute forbids any JavaScript access to the cookie. 
   - We can’t see such a cookie or manipulate it using document.cookie.
