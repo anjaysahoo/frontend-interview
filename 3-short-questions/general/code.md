@@ -279,7 +279,7 @@ function createComputeAmount(amount) {
     let totalAmount = amount;
 
     return {
-        lac: (multiplier) => {
+        lac(multiplier){
             totalAmount += multiplier * 100000;
             return this;  // Return the object itself for chaining
         },
