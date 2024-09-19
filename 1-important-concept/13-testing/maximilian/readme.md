@@ -1379,3 +1379,346 @@ it('should output the provided message in the error paragraph', () => {
 });
 ```
 </details>
+
+
+<details>
+ <summary style="font-size: large; font-weight: bold">Testing Setup</summary>
+
+1. Remove Karma & Jasmine
+```bash
+npm uninstall @types/jasmine jasmine-core karma karma-chrome-launcher karma-coverage karma-coverage-istanbul-reporter karma-jasmine karma-jasmine-html-reporter
+```
+
+2. Remove below from `angular.json`
+```js
+ "test": { 
+  "builder": "@angular-devkit/build-angular:karma", 
+  "options": { 
+    "main": "src/test.ts", 
+    "polyfills": "src/polyfills.ts", 
+    "tsConfig": "tsconfig.spec.json", 
+    "[get-default-user.service.mock.ts](..%2Fcxp-sv-windows-configurations%2Fsrc%2Fapp%2Fservices%2Fget-default-user%2Fget-default-user.service.mock.ts)karmaConfig": "karma.conf.js", 
+    "assets": [ 
+      "src/favicon.ico", 
+      "src/assets" 
+    ], 
+    "styles": [ 
+      "src/styles.scss", 
+      "node_modules/bootstrap/dist/css/bootstrap.css", 
+      "node_modules/@cxd/nui/dist/css/nui.min.css" 
+    ], 
+    "scripts": [  
+     "node_modules/@cxd/nui/dist/js/nui.js" 
+    ] 
+  } 
+},
+```
+
+3. Remove `karma.conf.js` & `src/test.ts`
+4. Delete `package-lock.json` file
+5. Install Jest: `npm i –-save-dev @types/jest jest-preset-angular`
+6. In src folder create file `src/setup-jest.ts` and paste below content
+   <br>
+   `import 'jest-preset-angular/setup-jest';`
+7. Update below code in `tsconfig.spec.json`
+```js
+"types": [ 
+  "jest", 
+  "node" 
+]
+```
+
+```js
+"files": [ 
+  "src/setup.jest.ts", 
+  "src/polyfills.ts" 
+],
+```
+8. Create `jest.config.js` in root
+```js
+module.exports = {
+   moduleNameMapper: {
+      '^src/(.*)$': '<rootDir>/src/$1',
+   },
+  preset: "jest-preset-angular", 
+  setupFilesAfterEnv: ["<rootDir>/src/setup.jest.ts"] 
+};
+```
+9. In `package.json` add the below scripts
+```json
+"test": "jest", 
+"test:watch": "jest --watch", 
+"test:coverage": "jest --coverage", 
+```
+</details>
+
+
+<details>
+ <summary style="font-size: large; font-weight: bold">Key Points To Remember</summary>
+
+1. **Keep things simple**
+
+   So for example `const numbers = [1, 2, 3];` & `const numbers = [1, 2];`
+   has same implication on test so writing, so we should avoid
+   writing test which are redundant.
+
+
+2. **Keep tests small and focused**
+
+   Write small, focused tests that test one specific piece of functionality.
+   Avoid writing monolithic tests that try to cover too much ground.
+
+  ```js
+
+it('should yield NaN for non-transformable values', () => {
+  const input = 'invalid';
+  const input2 = {};
+
+  const result = transformToNumber(input);
+  const result2 = transformToNumber(input2);
+
+  expect(result).toBeNaN();
+  expect(result2).toBeNaN();
+});
+```
+
+We could write multiple expectations in scenarios like above where
+expectations are similar, but mostly writing separately is better.
+
+
+3. **Test in isolation**
+
+   Most of the time your functions, components, services etc have dependencies to get something.
+   Use mocks and stubs to isolate from its dependencies in unit tests.
+   This ensures that your tests focus on _Unit Testing_.
+
+   **_Testing in isolation will also force you to keep your components small.
+   Avoid large, monolith components at all costs._**
+
+
+4. **Don’t rely on code coverage**
+
+   Use code coverage to measure quality but **_don’t stress over 100% coverage._**
+
+   It can be misleading to only rely on lines covered, **make sure to write a
+   test for critical scenarios.**
+
+
+5. **Follow AAA pattern**
+
+   Organise your tests into three sections.
+
+- Arrange (setup)
+- Act (perform the action or call the method)
+- Assert (verify the expected outcome)
+
+```js
+it('should add two numbers', () => {
+    // Arrange
+    const a = 5;
+    const b = 3;
+
+    // Act
+    const result = service.add(a, b);
+
+    // Assert
+    expect(result).toBe(8);
+  });
+```
+
+
+6. **Unit Testing v/s Integration Testing**
+
+    - While writing unit test, we may start writing some _Integration Test,_
+      and we may not even realize it. There should be clear separation between both.
+      Follow **_Testing isolation_** principle to be able to achieve this
+
+    - In NSP we have End-to-End test done by the testing team. Hence, our first
+      priority should be writing unit test then integration testing
+
+    - Therefore, we don't need to use `TestBed` for _Unit Test_ as they help us
+      simulate DOM interaction also which is not _Pure Unit Testing_.
+      A nice article to understand this: https://dev.to/angular/unit-testing-in-angular-to-testbed-or-not-to-testbed-3g3b
+
+
+
+7. **Organising Code & Files**
+
+    1. Try to extract out function from component class in `utils` folder such that
+       we can write unit test separately.
+    2. Below are folder structure on how to organize files, same can be extrapolated for others
+   ```
+   .
+   └── src/
+   └── app/
+   ├── components/
+   │   └── default-user/
+   │       ├── default-user.component.html
+   │       ├── default-user.component.scss
+   │       ├── default-user.component.spec.ts
+   │       └── default-user.component.ts
+   ├── services/
+   │   └── get-default-user/
+   │       ├── get-default-user.service.mock.ts
+   │       ├── get-default-user.service.spec.ts
+   │       └── get-default-user.service.ts
+   ├── utils/
+   │   └── formatted-time/
+   │       ├── formatted-time.util.mock.ts
+   │       ├── formatted-time.util.spec.ts
+   │       └── formatted-time.util.ts
+   ```
+
+   <details>
+    <summary style="font-size: small; font-weight: bold">Class</summary>
+
+    1. Focus on naming and how it is organized
+   ```js
+   // default-user.component.ts
+   export class DefaultUserComponent {
+    
+      getUserData() {
+      ...
+      }
+   
+      enableSubmit() {
+      ....
+      }
+      
+   }
+   ```
+
+   ```js
+   // Don't use TestBed here for unit testing
+   describe('DefaultUserComponent-UnitTest', () => {
+
+      beforeEach(() => {
+          ...
+      })
+
+      it('should create', () => {
+         expect(component).toBeTruthy();
+      });
+
+      
+      
+      describe('getUserData()', () => {
+          
+         it('get user data when called', () => {
+            ....
+         });
+      })
+
+
+      describe('enableSubmit()', () => {
+   
+         it('enable submit button', () => {
+         ....
+         });
+      })
+    })
+   
+   describe('DefaultUserComponent-UnitTest', () => {
+
+      beforeEach(() => {
+          ...
+      })
+
+      it('should create', () => {
+         expect(component).toBeTruthy();
+      });
+
+      
+      
+      describe('getUserData()', () => {
+          
+         it('get user data when called', () => {
+            ....
+         });
+      })
+
+
+      describe('enableSubmit()', () => {
+   
+         it('enable submit button', () => {
+         ....
+         });
+      })
+    })
+   
+   
+   // Use TestBed here for DOM & other integration testing
+   describe('DefaultUserComponent-IntegrationTest', () => {
+   ....
+   })
+   ```
+   </details>
+
+   <details>
+    <summary style="font-size: small; font-weight: bold">Mocks</summary>
+
+   Write mocks for each service or function in same folder such that they can be
+   directly used in other test file where they have dependency. Write proper return value
+   for a success scenario if any. Put an error scenario in 0th case
+
+   ```js
+   import {of, throwError} from "rxjs";
+
+   class LicenseServiceMock {
+   
+   result;
+   
+   licenseService = {
+   getDetails: jest.fn().mockImplementation(() => {
+   
+         switch (this.result) {
+           case 0:
+             return throwError(() => 'error')
+           case 1:
+             return of({
+               customerCode: 'HDFC',
+               institutionName: 'NCR',
+               terminalUsed: 10,
+               terminalLimit: 10,
+               remoteBIOSManagement: false,
+               windowsPasswordManagement: true
+             })
+           case 2:
+             return of({
+               customerCode: 'HDFC',
+               institutionName: 'NCR',
+               terminalUsed: 10,
+               terminalLimit: 10,
+               remoteBIOSManagement: false,
+               windowsPasswordManagement: false
+             })
+           default:
+             return of({});
+         }
+       })
+   } as any;
+   
+   setResult = (value) => {
+   this.result = value;
+   }
+   
+   }
+   
+   export default LicenseServiceMock;
+
+   ```
+   </details>
+
+Referred Articles:
+1. https://onthecode.co.uk/blog/angular-unit-testing-best-practices
+2. https://dev.to/this-is-angular/unit-testing-in-angular-170l
+3. https://infinum.com/handbook/frontend/angular/angular-guidelines-and-best-practices/testing
+4. https://blog.pragmatists.com/test-doubles-fakes-mocks-and-stubs-1a7491dfa3da
+5. https://jestjs.io/docs/manual-mocks#mocking-user-modules
+6. https://jestjs.io/docs/es6-class-mocks
+6. https://github.com/testing-library/angular-testing-library/blob/main/apps/example-app/src/app/examples/00-single-component.spec.ts
+7. https://timdeschryver.dev/blog/good-testing-practices-with-angular-testing-library#working-with-containers-and-components
+8. https://timdeschryver.dev/blog/getting-the-most-value-out-of-your-angular-component-tests
+9. https://www.youtube.com/watch?v=bv9z_UfSqgM
+10. https://blog.stackademic.com/testing-http-based-services-within-angular-16-with-jest-c9e867e22632
+</details>

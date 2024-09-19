@@ -777,6 +777,67 @@ them, resulting in faster subsequent visits for returning users.
 - Testing complexity
 
 Refer Namaste notes for more details
+
+
+
+### Code Splitting in Non-Route based
+
+In React, code-splitting is typically associated with route-based splits using libraries like `react-router`. However, you can also achieve code-splitting when specific UI components are needed, like when a button is clicked, by using React's `lazy()` and `Suspense`.
+
+Here's an example of how to implement code-splitting on a button click:
+
+### 1. Main component (e.g. `App.js`)
+```jsx
+import React, { useState, Suspense } from 'react';
+
+// Use React.lazy to dynamically import the component
+const LazyComponent = React.lazy(() => import('./LazyComponent'));
+
+function App() {
+  const [showComponent, setShowComponent] = useState(false);
+
+  const handleClick = () => {
+    setShowComponent(true);
+  };
+
+  return (
+    <div>
+      <h1>Code Splitting Example</h1>
+      <button onClick={handleClick}>Load Component</button>
+
+      {showComponent && (
+        <Suspense fallback={<div>Loading...</div>}>
+          <LazyComponent />
+        </Suspense>
+      )}
+    </div>
+  );
+}
+
+export default App;
+```
+
+### 2. Lazy-loaded component (e.g. `LazyComponent.js`)
+```jsx
+import React from 'react';
+
+function LazyComponent() {
+  return (
+    <div>
+      <h2>This is a lazily loaded component!</h2>
+    </div>
+  );
+}
+
+export default LazyComponent;
+```
+
+### How it works:
+1. `React.lazy()` is used to dynamically import `LazyComponent`.
+2. `Suspense` handles the rendering of a fallback UI (like a loading spinner) while the lazy component is being loaded.
+3. When the button is clicked, the `showComponent` state is set to `true`, and the lazy-loaded component is displayed.
+
+This method ensures that the `LazyComponent` is only loaded when needed, reducing the initial bundle size.
 </details>
 
 
