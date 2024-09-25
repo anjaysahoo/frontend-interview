@@ -567,7 +567,23 @@ console.log(set1.has(6));
 
 
 <details >
- <summary style="font-size: large; font-weight: bold">`delete()`</summary>
+ <summary style="font-size: large; font-weight: bold">`delete` & `delete()`</summary>
+
+### Object
+```js
+const Employee = {
+  firstname: 'Maria',
+  lastname: 'Sanchez',
+};
+
+console.log(Employee.firstname);
+// Expected output: "Maria"
+
+delete Employee.firstname;
+
+console.log(Employee.firstname);
+// Expected output: undefined
+```
 
 ### Map
 ```js
@@ -641,6 +657,17 @@ for (const item of set1) {
 ![img_7.png](img_7.png)
 
 ![img_8.png](img_8.png)
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Sort</summary>
+
+### Alphabetical sort based on one key value
+Sorting done here based on `name` key value
+![img_13.png](img_13.png)
+
+Other helpful methods: https://dev.to/sanchithasr/how-to-add-modify-and-delete-javascript-object-literal-properties-49cd
 </details>
 
 Map: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map

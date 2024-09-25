@@ -1457,6 +1457,113 @@ You don’t need to wrap every component into a separate error boundary. When yo
 - Referred Video(7 min): https://www.youtube.com/watch?v=_FuDMEgIy7I
 </details>
 
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Strict Mode</summary>
+
+Question: https://www.greatfrontend.com/questions/user-interface/job-board
+
+```js
+import { useState, useEffect } from 'react';
+
+
+function Jobs({jobInfo}){
+
+  return (
+    <article className={"job"}>
+    {
+      jobInfo.url ? (
+        <a href={jobInfo.url} target='blank'>
+        <h2 className={"job__head"}>{jobInfo.title}</h2>
+        </a>
+      ) : 
+      (<h2 className={"job__head"}>{jobInfo.title}</h2>)
+    }
+      <div className={"job__body"}>
+        <div>By {jobInfo.by} </div> &#x2022;
+        <div>{new Date(jobInfo.time).toLocaleString()}</div>
+      </div>
+    </article>
+  )
+
+}
+
+
+
+const PAGE_SIZE = 6;
+const API_URL = 'https://hacker-news.firebaseio.com/v0';
+
+export default function App() {
+  console.log("App rerender");
+const [jobs, setJobs] = useState([]);
+const [isFetching, setIsFetching] = useState(false);
+const [jobIds, setJobIds] = useState();
+const [currPageNo, setCurrPageNo] = useState(0);
+
+useEffect(() => {
+  console.log("UseEffect called");
+  fetchJobs();
+}, [currPageNo]);
+
+
+const getJobIds = async () => {
+  let ids = jobIds;
+  if(!jobIds){
+    const resp = await fetch(API_URL + '/jobstories.json');
+    ids = await resp.json();
+    console.log("ids : ", ids);
+    setJobIds(ids);
+  }
+
+  return ids?.slice(currPageNo*PAGE_SIZE, currPageNo*PAGE_SIZE + PAGE_SIZE);
+}
+
+const fetchJobs = async () => {
+  setIsFetching(true);
+  const newJobIds = await getJobIds();
+
+  console.log("newJobIds : ", newJobIds);
+
+  const newUpdatedJobs = await Promise.all(newJobIds.map((id) => {
+    return fetch(API_URL + `/item/${id}.json`).then((res) => res.json());
+  }));
+
+  setIsFetching(false);
+  /**
+   * setJobs((prevJobs) => [...prevJobs, ...newUpdatedJobs]);
+   * Instead of doing like above which will actual add jobs twice 
+   * in strict mode which is during development because App will render twice hence
+   * useEffect will run twice to check for any side effect because of any API calls, async code etc.
+   * 
+   * We can use below code because even though App render twice but when `fetchJobs`
+   * is called `jobs` state was empty, hence remain empty in both calls because of closure.
+   * Therefore Jobs is updated twice with same Jobs if API return same Jobs both the time
+   */
+  setJobs([...jobs, ...newUpdatedJobs]);
+}
+
+  return (
+    <div>
+    {
+      jobs.map((job) => (
+        <Jobs key={job.id} jobInfo={job}/>
+      ))
+    }
+    {
+      jobIds && jobIds.length > jobs.length ? (
+        <button
+          onClick={() => setCurrPageNo(currPageNo + 1)}>
+        {isFetching ? 'Loading...' : 'Load more Jobs'}
+        </button>) : ''
+    }
+    {jobs.length}/{jobIds && jobIds.length}
+    </div>
+  );
+}
+```
+</details>
+
 </details>
 
 
@@ -3115,4 +3222,327 @@ In this example, a `Button` component is created using Styled Components. The st
 ### 29. What are the best practices for structuring a React project?
 
 ### 30. How do you manage complex animations in React, and which libraries can be used?
+</details>
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Useful Things</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Most Common React Events</summary>
+
+In React, event handlers like `onClick`, `onBlur`, and others are used to handle events triggered by the user, such as clicks, focus changes, key presses, etc. These event handlers are camelCase versions of standard HTML events and are passed to elements as props.
+
+Here's a list of the most common React events with examples for each:
+
+### 1. **onClick**
+Triggered when the user clicks on an element.
+
+```jsx
+function ClickExample() {
+  const handleClick = () => {
+    alert('Button clicked!');
+  };
+
+  return <button onClick={handleClick}>Click Me</button>;
+}
+```
+
+### 2. **onChange**
+Triggered when the value of an input, textarea, or select element changes.
+
+```jsx
+function ChangeExample() {
+  const handleChange = (event) => {
+    console.log('Input changed to:', event.target.value);
+  };
+
+  return <input type="text" onChange={handleChange} />;
+}
+```
+
+### 3. **onBlur**
+Triggered when an element loses focus.
+
+```jsx
+function BlurExample() {
+  const handleBlur = () => {
+    alert('Input lost focus');
+  };
+
+  return <input type="text" onBlur={handleBlur} />;
+}
+```
+
+### 4. **onFocus**
+Triggered when an element receives focus.
+
+```jsx
+function FocusExample() {
+  const handleFocus = () => {
+    alert('Input is focused');
+  };
+
+  return <input type="text" onFocus={handleFocus} />;
+}
+```
+
+### 5. **onSubmit**
+Triggered when a form is submitted.
+
+```jsx
+function SubmitExample() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert('Form submitted');
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" placeholder="Enter text" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+### 6. **onKeyPress**
+Triggered when a key is pressed.
+
+```jsx
+function KeyPressExample() {
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      alert('Enter key pressed');
+    }
+  };
+
+  return <input type="text" onKeyPress={handleKeyPress} />;
+}
+```
+
+### 7. **onMouseEnter**
+Triggered when the mouse enters an element.
+
+```jsx
+function MouseEnterExample() {
+  const handleMouseEnter = () => {
+    alert('Mouse entered the area');
+  };
+
+  return <div onMouseEnter={handleMouseEnter} style={{ width: '200px', height: '200px', background: 'lightblue' }}>Hover over me</div>;
+}
+```
+
+### 8. **onMouseLeave**
+Triggered when the mouse leaves an element.
+
+```jsx
+function MouseLeaveExample() {
+  const handleMouseLeave = () => {
+    alert('Mouse left the area');
+  };
+
+  return <div onMouseLeave={handleMouseLeave} style={{ width: '200px', height: '200px', background: 'lightcoral' }}>Hover over me</div>;
+}
+```
+
+### 9. **onDoubleClick**
+Triggered when an element is double-clicked.
+
+```jsx
+function DoubleClickExample() {
+  const handleDoubleClick = () => {
+    alert('Button double clicked!');
+  };
+
+  return <button onDoubleClick={handleDoubleClick}>Double Click Me</button>;
+}
+```
+
+### 10. **onContextMenu**
+Triggered when the context menu is opened (usually by right-clicking).
+
+```jsx
+function ContextMenuExample() {
+  const handleContextMenu = (event) => {
+    event.preventDefault();
+    alert('Context menu opened');
+  };
+
+  return <div onContextMenu={handleContextMenu} style={{ width: '200px', height: '200px', background: 'lightgreen' }}>Right-click me</div>;
+}
+```
+
+### 11. **onDragStart**
+Triggered when a drag action is initiated on an element.
+
+```jsx
+function DragStartExample() {
+  const handleDragStart = () => {
+    alert('Drag started');
+  };
+
+  return <div draggable onDragStart={handleDragStart} style={{ width: '100px', height: '100px', background: 'lightcoral' }}>Drag me</div>;
+}
+```
+
+### 12. **onDrop**
+Triggered when an element is dropped.
+
+```jsx
+function DropExample() {
+  const handleDrop = (event) => {
+    event.preventDefault();
+    alert('Dropped!');
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault(); // Necessary to allow drop
+  };
+
+  return (
+    <div onDrop={handleDrop} onDragOver={handleDragOver} style={{ width: '200px', height: '200px', background: 'lightyellow' }}>
+      Drop something here
+    </div>
+  );
+}
+```
+
+### 13. **onInput**
+Triggered when the value of an input element is received.
+
+```jsx
+function InputExample() {
+  const handleInput = (event) => {
+    console.log('Current input value:', event.target.value);
+  };
+
+  return <input type="text" onInput={handleInput} />;
+}
+```
+
+### 14. **onScroll**
+Triggered when an element is scrolled.
+
+```jsx
+function ScrollExample() {
+  const handleScroll = () => {
+    console.log('Scrolled!');
+  };
+
+  return (
+    <div onScroll={handleScroll} style={{ width: '300px', height: '150px', overflowY: 'scroll', border: '1px solid black' }}>
+      <div style={{ height: '500px' }}>Scroll me</div>
+    </div>
+  );
+}
+```
+
+### 15. **onWheel**
+Triggered when the mouse wheel is used.
+
+```jsx
+function WheelExample() {
+  const handleWheel = (event) => {
+    if (event.deltaY > 0) {
+      alert('Scrolled down');
+    } else {
+      alert('Scrolled up');
+    }
+  };
+
+  return <div onWheel={handleWheel} style={{ width: '200px', height: '200px', background: 'lightblue' }}>Scroll with mouse wheel</div>;
+}
+```
+
+### 16. **onResize** (used with `window` object)
+Triggered when the browser window is resized (usually attached via `window`).
+
+```jsx
+import { useEffect } from 'react';
+
+function ResizeExample() {
+  useEffect(() => {
+    const handleResize = () => {
+      alert('Window resized');
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return <div>Resize the window to see the effect</div>;
+}
+```
+
+### 17. **onKeyDown**
+Triggered when a key is pressed down.
+
+```jsx
+function KeyDownExample() {
+  const handleKeyDown = (event) => {
+    console.log('Key pressed down:', event.key);
+  };
+
+  return <input type="text" onKeyDown={handleKeyDown} />;
+}
+```
+
+### 18. **onKeyUp**
+Triggered when a key is released.
+
+```jsx
+function KeyUpExample() {
+  const handleKeyUp = (event) => {
+    console.log('Key released:', event.key);
+  };
+
+  return <input type="text" onKeyUp={handleKeyUp} />;
+}
+```
+
+### 19. **onInput**
+Triggered when the value of an input is received.
+
+```jsx
+function InputExample() {
+  const handleInput = (event) => {
+    console.log('Input value:', event.target.value);
+  };
+
+  return <input type="text" onInput={handleInput} />;
+}
+```
+
+### 20. **onTouchStart, onTouchMove, onTouchEnd**
+Triggered by touch events in mobile devices.
+
+```jsx
+function TouchExample() {
+  const handleTouchStart = () => {
+    console.log('Touch started');
+  };
+
+  const handleTouchEnd = () => {
+    console.log('Touch ended');
+  };
+
+  return (
+    <div onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} style={{ width: '200px', height: '200px', background: 'lightblue' }}>
+      Touch here
+    </div>
+  );
+}
+```
+
+These event handlers enable React to respond to a wide range of user interactions, making it easier to build interactive UIs.
+</details>
+
 </details>

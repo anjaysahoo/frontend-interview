@@ -18,9 +18,8 @@ function Folder({ handleInsertNode = () => {}, explorer }) {
 
     const onAddFolder = (e) => {
         if (e.keyCode === 13 && e.target.value) {
-            handleInsertNode(explorer.id, e.target.value, showInput.isFolder);
-
             setShowInput({ ...showInput, visible: false });
+            handleInsertNode(explorer.id, e.target.value, showInput.isFolder);
         }
     };
 
