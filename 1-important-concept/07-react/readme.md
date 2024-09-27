@@ -849,12 +849,188 @@ This method ensures that the `LazyComponent` is only loaded when needed, reducin
 Portals are very useful when we want to render a component, somewhere 
 than where it actually defined.
 
-For example here we have a `ResultModal` component which is rendered in 
+Here is example of modal where we want to render it at `body` rather than in its parent
+we use Portal to render it in `body` by defining second argument as `document.body
+
+```jsx
+//App.jsx
+
+import { useState } from 'react';
+import ModalDialog from './ModalDialog';
+
+export default function App() {
+    const [open, setOpen] = useState(false);
+
+    return (
+        <div>
+            <button onClick={() => setOpen(true)}>
+                Show modal
+            </button>
+            <ModalDialog
+                open={open}
+                title="Modal Title"
+                onClose={() => {
+                    setOpen(false);
+                }}>
+                One morning, when Gregor Samsa woke from troubled
+                dreams, he found himself transformed in his bed into
+                a horrible vermin. He lay on his armour-like back,
+                and if he lifted his head a little he could see his
+                brown belly, slightly domed and divided by arches
+                into stiff sections.
+            </ModalDialog>
+        </div>
+    );
+}
+```
+
+```jsx
+//ModalDialog.jsx
+
+import { createPortal } from 'react-dom';
+
+export default function ModalDialog({
+                                        children,
+                                        open = false,
+                                        title,
+                                        onClose,
+                                    }) {
+    if (!open) {
+        return null;
+    }
+
+    return createPortal(
+        <div className="modal-overlay">
+            <div className="modal">
+                <h1 className="modal-title">{title}</h1>
+                <div>{children}</div>
+                <button onClick={onClose}>Close</button>
+            </div>
+        </div>,
+        //render wrt `body`, we can also define 
+        //id and render there like `document.getElementById('modal')`
+        document.body,
+    );
+}
+
+```
+
+```css
+/*style.css*/
+
+body {
+    font-family: sans-serif;
+}
+
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+
+    /* The inset CSS property is a shorthand that corresponds to 
+    the top, right, bottom, and/or left properties. It has the same 
+    multi-value syntax of the margin shorthand. */
+    inset: 0;
+
+    /**Absolute - the element is positioned absolutely to its first positioned parent. 
+    Fixed - the element is positioned related to the browser window.**/
+    position: fixed;
+
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    background-color: white;
+    padding: 24px;
+}
+
+.modal-title {
+    margin: 0;
+}
+
+```
+
+### 2. `forwardRef`
+
+`forwardRef` lets your component expose a DOM node to parent component with a ref.
+
+```js
+const SomeComponent = forwardRef(render)
+```
+
+**Usage**
+- Exposing a DOM node to the parent component
+- Forwarding a ref through multiple components
+- Exposing an imperative handle instead of a DOM node
+
+#### Example: Focusing a text input
+
+Clicking the button will focus the input. The Form component defines a ref and passes it to the MyInput component. The MyInput component forwards that ref to the browser `<input>`. This lets the Form component focus the `<input>`.
+
+```jsx
+//App.jsx
+import { useRef } from 'react';
+import MyInput from './MyInput.js';
+
+export default function Form() {
+    const ref = useRef(null);
+
+    function handleClick() {
+        ref.current.focus();
+    }
+
+    return (
+        <form>
+            <MyInput label="Enter your name:" ref={ref} />
+            <button type="button" onClick={handleClick}>
+                Edit
+            </button>
+        </form>
+    );
+}
+
+```
+
+```jsx
+//MyInput.jsx
+
+import { forwardRef } from 'react';
+
+const MyInput = forwardRef(function MyInput(props, ref) {
+  const { label, ...otherProps } = props;
+  return (
+    <label>
+      {label}
+      <input {...otherProps} ref={ref} />
+    </label>
+  );
+});
+
+export default MyInput;
+
+```
+Refer for live demo: https://react.dev/reference/react/forwardRef#examples
+
+For More Details: https://react.dev/reference/react/forwardRef
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Portal & `forwardRef` example</summary>
+
+For example here we have a `ResultModal` component which is rendered in
 `TimerChallenge` component. But since modal are nested in final HTML
-which is not right for accessibilty because modal are present at top 
+which is not right for accessibilty because modal are present at top
 everything so it make sense to come at top when it renders.
 
-Hence in second argument we pass `document.getElementById('modal')` where 
+Hence in second argument we pass `document.getElementById('modal')` where
 we want to render this.
 
 It is same like
@@ -905,10 +1081,40 @@ export default ResultModal;
 ```js
 //TimerChallenge.jsx
 
+import { useState, useRef } from 'react';
+
 import ResultModal from './ResultModal.jsx';
 
-export default function TimerChallenge({ title, targetTime }) {
+// let timer;
 
+export default function TimerChallenge({ title, targetTime }) {
+    const timer = useRef();
+    const dialog = useRef();
+
+    const [timeRemaining, setTimeRemaining] = useState(targetTime * 1000);
+
+    const timerIsActive = timeRemaining > 0 && timeRemaining < targetTime * 1000;
+
+    if (timeRemaining <= 0) {
+        clearInterval(timer.current);
+        dialog.current.open();
+    }
+
+    function handleReset() {
+        setTimeRemaining(targetTime * 1000);
+    }
+
+    function handleStart() {
+        timer.current = setInterval(() => {
+            setTimeRemaining((prevTimeRemaining) => prevTimeRemaining - 10);
+        }, 10);
+    }
+
+    function handleStop() {
+        dialog.current.open();
+        clearInterval(timer.current);
+    }
+    
     return (
         <>
             <ResultModal
@@ -947,21 +1153,9 @@ export default function TimerChallenge({ title, targetTime }) {
   </body>
 </html>
 ```
+</details>
 
-### 2. `forwardRef`
 
-`forwardRef` lets your component expose a DOM node to parent component with a ref.
-
-```js
-const SomeComponent = forwardRef(render)
-```
-
-**Usage**
-- Exposing a DOM node to the parent component
-- Forwarding a ref through multiple components
-- Exposing an imperative handle instead of a DOM node
-
-For More Details: https://react.dev/reference/react/forwardRef
 </details>
 
 <details >
