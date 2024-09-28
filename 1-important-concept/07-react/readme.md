@@ -2346,6 +2346,136 @@ export default useCustomMemo;
 </details>
 
 
+<details >
+ <summary style="font-size: large; font-weight: bold">Click Outside & Keydown Hooks Used for Modal</summary>
+
+Click Outside add two event listeners ```mousedown``` and ```touchstart``` which checks
+if user has clicked outside of a provided element in first parameter if yes then it calls
+`fn` function provided as second parameter
+
+```jsx
+import { createPortal } from 'react-dom';
+import { useEffect, useRef, useId } from 'react';
+
+
+
+export default function ModalDialog({
+    children,
+    open = false,
+    title,
+    onClose,
+}) {
+
+    /**
+     * We can use below hook also to close modal when click outside
+     * or use event bubbling concept like there in current solution
+     */
+    // const dialogRef = useRef(null);
+    // useOnClickOutside(dialogRef, onClose);
+
+
+    useOnKeyDown('Escape', onClose);
+
+    const titleId = useId();
+    const contentId = useId();
+
+    if (!open) {
+        return null;
+    }
+
+    return createPortal(
+        <div
+            onClick={onClose}
+            className="modal-overlay"
+        >
+            <div
+                aria-describedby={contentId}
+                aria-labelledby={titleId}
+                onClick={(event) => {
+                    event.stopPropagation();
+                }}
+                // ref={dialogRef}
+                className="modal"
+            >
+                <h1 className="modal-title" id={titleId}>{title}</h1>
+                <div id={contentId}>{children}</div>
+                <button onClick={onClose}>Close</button>
+            </div>
+        </div>,
+        //render wrt `body`, we can also define 
+        //id and render there like `document.getElementById('modal')`
+        document.body,
+    );
+}
+
+
+
+
+/**
+ * Invokes a function when a key is pressed hook.
+ */
+function useOnKeyDown(key, fn) {
+    useEffect(() => {
+        function onKeyDown(event) {
+            if (event.key === key) {
+                fn();
+            }
+        }
+
+        document.addEventListener('keydown', onKeyDown);
+
+        return () => {
+            console.log("cleanup called");
+            document.removeEventListener('keydown', onKeyDown);
+        };
+    }, [fn]);
+}
+
+
+
+/**
+ * Invokes a function when clicking outside an element.
+ */
+function useOnClickOutside(
+    elRef,
+    fn,
+) {
+    // Add event handling for close when clicking outside.
+    useEffect(() => {
+        function onClickOutside(
+            event,
+        ) {
+            // No-op if clicked element is a descendant of element's contents.
+            if (
+                event.target instanceof Node &&
+                elRef.current != null &&
+                !elRef.current?.contains(event.target)
+            ) {
+                fn();
+            }
+        }
+
+        document.addEventListener('mousedown', onClickOutside);
+        document.addEventListener('touchstart', onClickOutside);
+
+        return () => {
+            document.removeEventListener(
+                'mousedown',
+                onClickOutside,
+            );
+            document.removeEventListener(
+                'touchstart',
+                onClickOutside,
+            );
+        };
+    }, [fn]);
+}
+```
+
+This from Modal 3 example: https://www.greatfrontend.com/questions/user-interface/modal-dialog-iii/solution
+</details>
+
+
 
 [//]: # (<details >)
 

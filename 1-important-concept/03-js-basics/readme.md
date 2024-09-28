@@ -1172,6 +1172,189 @@ console.log(calcHypotenuse(0, 0));
 </details>
 
 
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Date & Time</summary>
+
+### 1. Create a Date Object
+
+```js
+const today = new Date();
+const birthday = new Date("December 17, 1995 03:24:00"); // DISCOURAGED: may not work in all runtimes
+const birthday2 = new Date("1995-12-17T03:24:00"); // This is standardized and will work reliably
+const birthday3 = new Date(1995, 11, 17); // the month is 0-indexed
+const birthday4 = new Date(1995, 11, 17, 3, 24, 0);
+const birthday5 = new Date(628021800000); // passing epoch timestamp
+```
+
+### 2. Formats of toString method return values
+
+```js
+const date = new Date("2020-05-12T23:50:21.817Z");
+date.toString(); // Tue May 12 2020 18:50:21 GMT-0500 (Central Daylight Time)
+date.toDateString(); // Tue May 12 2020
+date.toTimeString(); // 18:50:21 GMT-0500 (Central Daylight Time)
+date[Symbol.toPrimitive]("string"); // Tue May 12 2020 18:50:21 GMT-0500 (Central Daylight Time)
+
+date.toISOString(); // 2020-05-12T23:50:21.817Z
+date.toJSON(); // 2020-05-12T23:50:21.817Z
+
+date.toUTCString(); // Tue, 12 May 2020 23:50:21 GMT
+
+date.toLocaleString(); // 5/12/2020, 6:50:21 PM
+date.toLocaleDateString(); // 5/12/2020
+date.toLocaleTimeString(); // 6:50:21 PM
+
+```
+
+
+### 3. To get Date, Month and Year or Time
+```js
+const date = new Date("2000-01-17T16:45:30");
+const [month, day, year] = [
+  date.getMonth(),
+  date.getDate(),
+  date.getFullYear(),
+];
+// [0, 17, 2000] as month are 0-indexed
+const [hour, minutes, seconds] = [
+  date.getHours(),
+  date.getMinutes(),
+  date.getSeconds(),
+];
+// [16, 45, 30]
+
+```
+![img_14.png](img_14.png)
+
+
+### 4. Calculating elapsed time
+```js
+// Using Date objects
+const start = Date.now();
+
+// The event to time goes here:
+doSomethingForALongTime();
+const end = Date.now();
+const elapsed = end - start; // elapsed time in milliseconds
+```
+
+```js
+// Using built-in methods
+const start = new Date();
+
+// The event to time goes here:
+doSomethingForALongTime();
+const end = new Date();
+const elapsed = end.getTime() - start.getTime(); // elapsed time in milliseconds
+```
+
+```js
+// To test a function and get back its return
+function printElapsedTime(testFn) {
+  const startTime = Date.now();
+  const result = testFn();
+  const endTime = Date.now();
+
+  console.log(`Elapsed time: ${String(endTime - startTime)} milliseconds`);
+  return result;
+}
+
+const yourFunctionReturn = printElapsedTime(yourFunction);
+```
+
+Referred from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+
+![img_15.png](img_15.png)
+![img_16.png](img_16.png)
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Flight Booker Example</summary>
+
+![img_17.png](img_17.png)
+```jsx
+import { useState } from 'react';
+
+const TODAY = formatDate(new Date());
+const DAY_IN_SECONDS = 24 * 60 * 60 * 1000;
+
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1)
+    .toString()
+    .padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+
+  return [year, month, day].join('-');
+}
+
+export default function App() {
+  const [flightOption, setFlightOption] =
+    useState('one-way');
+  const [departureDate, setDepartureDate] = useState(
+    formatDate(new Date(Date.now() + DAY_IN_SECONDS)), // Tomorrow.
+  );
+  const [returnDate, setReturnDate] =
+    useState(departureDate);
+
+  function submitForm(event) {
+    event.preventDefault();
+    if (flightOption === 'one-way') {
+      alert(
+        `You have booked a one-way flight on ${departureDate}`,
+      );
+      return;
+    }
+
+    alert(
+      `You have booked a return flight, departing on ${departureDate} and returning on ${returnDate}`,
+    );
+  }
+
+  return (
+    <div>
+      <form className="flight-booker" onSubmit={submitForm}>
+        <select
+          value={flightOption}
+          onChange={(event) => {
+            setFlightOption(event.target.value);
+          }}>
+          <option value="one-way">One-way flight</option>
+          <option value="return">Return flight</option>
+        </select>
+        <input
+          aria-label="Departure date"
+          type="date"
+          value={departureDate}
+          onChange={(event) => {
+            setDepartureDate(event.target.value);
+          }}
+          min={TODAY}
+        />
+        {flightOption === 'return' && (
+          <input
+            aria-label="Return date"
+            type="date"
+            value={returnDate}
+            min={departureDate}
+            onChange={(event) => {
+              setReturnDate(event.target.value);
+            }}
+          />
+        )}
+        <button>Book</button>
+      </form>
+    </div>
+  );
+}
+```
+</details>
+</details>
+
+
 <details >
  <summary style="font-size: x-large; font-weight: bold">UseFul Info</summary>
 
