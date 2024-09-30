@@ -838,6 +838,8 @@ export default LazyComponent;
 3. When the button is clicked, the `showComponent` state is set to `true`, and the lazy-loaded component is displayed.
 
 This method ensures that the `LazyComponent` is only loaded when needed, reducing the initial bundle size.
+
+GFE Blog: https://www.greatfrontend.com/blog/code-splitting-and-lazy-loading-in-react
 </details>
 
 
@@ -890,11 +892,11 @@ export default function App() {
 import { createPortal } from 'react-dom';
 
 export default function ModalDialog({
-                                        children,
-                                        open = false,
-                                        title,
-                                        onClose,
-                                    }) {
+    children,
+    open = false,
+    title,
+    onClose,
+}) {
     if (!open) {
         return null;
     }

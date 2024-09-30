@@ -809,3 +809,45 @@ export default function mapAsyncLimit<T, U>(
 
 For other solution using `then` instead of `await` check GreatFrontend solutions
 </details>
+
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">07. Object With Values of `text` inputs[Amazon FE 2020 ]</summary>
+
+###### 07
+
+https://leetcode.com/discuss/interview-question/573751/Amazon-FEE-Phone-Screen
+![img_8.png](img_8.png)
+
+**Solution:** 
+
+```js
+function getValues(id) {
+	let element = document.querySelector(`#${id}`);
+  let inputs = element.querySelectorAll('input[type="text"]');
+  let obj = {};
+
+  for(let input of inputs) {
+  	let inputValue = input.value;
+  	let names = input.name.split('.');
+		let tmpObject = obj;
+    
+    for (let i = 0; i < names.length; i++) {
+    	 tmpObject[names[i]] = {...tmpObject[names[i]]};
+       if (i === names.length - 1) {
+         tmpObject[names[i]] = inputValue;
+       } else {
+         tmpObject = tmpObject[names[i]];
+       }
+     }
+  }
+
+  return obj;
+}
+
+getValues('parent');
+```
+</details>
