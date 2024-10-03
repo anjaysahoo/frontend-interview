@@ -142,13 +142,13 @@ Referred Video: https://youtube.com/playlist?list=PL_z_8CaSLPWeT1ffjiImo0sYTcnLz
  <summary style="font-size: large; font-weight: bold">Concept</summary>
 
 The **diameter of a binary tree** is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root.
-![DP On Tree_1.jpg](images/DP On Tree_1.jpg)
+![DP On Tree_1.jpg](images/DPOnTree_1.jpg)
 
 **Identification:** To solve this question we need to traverse through each node and on each node we need to check its
 left and right tree height to find the longest path. Hence, we need to apply DP on tree here
 
 **General Syntax:**
-![DP On Tree_2.jpg](images/DP On Tree_2.jpg)
+![DP On Tree_2.jpg](images/DPOnTree_2.jpg)
 
 Referred Video: https://youtube.com/playlist?list=PL_z_8CaSLPWfxJPz2-YKqL9gXWdgrhvdn&si=qpaVRPrWeRK9IA2I
 </details>
@@ -160,8 +160,8 @@ Referred Video: https://youtube.com/playlist?list=PL_z_8CaSLPWfxJPz2-YKqL9gXWdgr
 <details >
  <summary style="font-size: medium; font-weight: bold">1. Diameter of a Binary Tree</summary>
 
-![DP On Tree_3.jpg](images/DP On Tree_3.jpg)
-![DP On Tree_4.jpg](images/DP On Tree_4.jpg)
+![DP On Tree_3.jpg](images/DPOnTree_3.jpg)
+![DP On Tree_4.jpg](images/DPOnTree_4.jpg)
 
 ```js
 /**
@@ -222,7 +222,7 @@ Leetcode: https://leetcode.com/problems/diameter-of-binary-tree/
 <details >
  <summary style="font-size: medium; font-weight: bold">2. Maximum Path Sum</summary>
 
-![DP On Tree_5.jpg](images/DP On Tree_5.jpg)
+![DP On Tree_5.jpg](images/DPOnTree_5.jpg)
 </details>
 </details>
 
