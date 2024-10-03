@@ -158,7 +158,9 @@ Referred Video: https://youtube.com/playlist?list=PL_z_8CaSLPWfxJPz2-YKqL9gXWdgr
 
 
 <details >
- <summary style="font-size: medium; font-weight: bold">#01. Diameter of a Binary Tree</summary>
+ <summary style="font-size: medium; font-weight: bold">01. Diameter of a Binary Tree</summary>
+
+###### 01. Diameter of a Binary Tree
 
 ![DP On Tree_3.jpg](images/DPOnTree_3.jpg)
 ![DP On Tree_4.jpg](images/DPOnTree_4.jpg)
