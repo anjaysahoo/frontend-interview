@@ -22,6 +22,54 @@ Referred Video: https://youtube.com/playlist?list=PL_z_8CaSLPWeT1ffjiImo0sYTcnLz
  <summary style="font-size: medium; font-weight: bold">1. Height of Binary Tree</summary>
 
 ![Recursion_3.jpg](images/Recursion_3.jpg)
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+
+ let res = 0;
+var maxDepth = function(root) {
+    if(!root)
+        return 0;
+
+    solve(root);
+
+    const ans = res;
+    res = 0;
+
+
+    return ans;
+};
+
+function solve(root) {
+    //Base Condition
+    if(!root)
+        return 0;
+
+    //Hypothesis
+    const lh = solve(root.left);
+    const rh = solve(root.right);
+
+    //Induction
+    const temp = Math.max(lh, rh) + 1;
+    res = Math.max(temp, res);
+
+    return temp;
+}
+```
+
+Leetcode: https://leetcode.com/problems/maximum-depth-of-binary-tree/
+Referred Video: https://www.youtube.com/watch?v=aqLTbtWh40E&list=PL_z_8CaSLPWeT1ffjiImo0sYTcnLzo-wY&index=5
 </details>
 
 <details >
