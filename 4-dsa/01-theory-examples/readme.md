@@ -150,6 +150,14 @@ left and right tree height to find the longest path. Hence, we need to apply DP 
 **General Syntax:**
 ![DP On Tree_2.jpg](images/DPOnTree_2.jpg)
 
+Points to understand:
+1. **Hypothesis**: We don't have to care how we are getting answer from these steps, we just know that 
+we will get answer for `left` and `right` **subtree,** and we will use them in an induction step
+2. **Induction:** Here we need to check whether the `final result` passes through the `current node` or not
+   1. We will first calculate `temp` result 
+   2. Then we will compare whether it is better than the result we can get from the `current node` if the `final result` pass through it
+   3. Then we will compare with the `final result` and update it accordingly
+
 Referred Video: https://youtube.com/playlist?list=PL_z_8CaSLPWfxJPz2-YKqL9gXWdgrhvdn&si=qpaVRPrWeRK9IA2I
 </details>
 
@@ -159,8 +167,6 @@ Referred Video: https://youtube.com/playlist?list=PL_z_8CaSLPWfxJPz2-YKqL9gXWdgr
 
 <details >
  <summary style="font-size: medium; font-weight: bold">01. Diameter of a Binary Tree</summary>
-
-###### 01. Diameter of a Binary Tree
 
 ![DP On Tree_3.jpg](images/DPOnTree_3.jpg)
 ![DP On Tree_4.jpg](images/DPOnTree_4.jpg)
@@ -217,14 +223,135 @@ function solve(root) {
     return temp;
 }
 ```
+
+Points to understand:
+1. **Hypothesis**: We don't have to care how we are getting answer from these steps, we just know that
+   we will get answer for `left` and `right` **subtree,** and we will use them in an induction step
+2. **Induction:** Here we need to check whether the `final result` passes through the `current node` or not
+   1. We will first calculate `temp` result
+   2. Then we will compare whether it is better than the result we can get from the `current node` if the `final result` pass through it
+   3. Then we will compare with the `final result` and update it accordingly
+
 Leetcode: https://leetcode.com/problems/diameter-of-binary-tree/
 </details>
 
 
 <details >
- <summary style="font-size: medium; font-weight: bold">2. Maximum Path Sum</summary>
+ <summary style="font-size: medium; font-weight: bold">02. Maximum Path Sum</summary>
 
+### 1. From any node to any node
 ![DP On Tree_5.jpg](images/DPOnTree_5.jpg)
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+ let res = -Infinity;
+var maxPathSum = function(root) {
+    if(!root)
+        return 0;
+
+    solve(root);
+
+    const finalResult = res;
+    res = -Infinity;
+
+    return finalResult;
+};
+
+
+function solve(root){
+    //Base Condition
+    if(!root)
+        return 0;
+
+    //Hypothesis
+    const l = solve(root.left);
+    const r = solve(root.right);
+
+    //Induction
+    const temp = Math.max(l, r) + root.val;
+    const ans = Math.max(temp, l + r + root.val);
+    res = Math.max(res, ans);
+
+    /*Since we need maximum path sum from any node to any node, therefore
+    child node can skip sending its value to parent if it is negative*/
+    return temp < 0 ? 0 : temp;
+}
+```
+
+Points to understand:
+1. **Hypothesis**: We don't have to care how we are getting answer from these steps, we just know that
+   we will get answer for `left` and `right` **subtree,** and we will use them in an induction step
+2. **Induction:** Here we need to check whether the `final result` passes through the `current node` or not
+   1. We will first calculate `temp` result
+   2. Then we will compare whether it is better than the result we can get from the `current node` if the `final result` pass through it
+   3. Then we will compare with the `final result` and update it accordingly
+
+Leetcode: https://leetcode.com/problems/binary-tree-maximum-path-sum/description/
+<br>
+Referred Video: https://www.youtube.com/watch?v=Osz-Vwer6rw&list=PL_z_8CaSLPWfxJPz2-YKqL9gXWdgrhvdn&index=4
+
+### 2. From leaf node to leaf node
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+let res = -Infinity;
+var maxPathSum = function(root) {
+   if(!root)
+      return 0;
+
+   solve(root);
+
+   const finalResult = res;
+   res = -Infinity;
+
+   return finalResult;
+};
+
+
+function solve(root){
+   //Base Condition
+   if(!root)
+      return 0;
+
+   //Hypothesis
+   const l = solve(root.left);
+   const r = solve(root.right);
+
+   //Induction
+   const temp = Math.max(l, r) + root.val;
+   const ans = Math.max(temp, l + r + root.val);
+   res = Math.max(res, ans);
+
+   /*Since we need maximum path sum from leaf node to leaf node, therefore
+   child node can't skip sending its value to parent if it is negative*/
+   return temp;
+}
+```
+**Since we need maximum path sum from leaf node to leaf node, therefore
+child node can't skip sending its value to parent if it is negative**
+
+Referred Video: https://www.youtube.com/watch?v=ArNyupe-XH0&list=PL_z_8CaSLPWfxJPz2-YKqL9gXWdgrhvdn&index=5
 </details>
 </details>
 
