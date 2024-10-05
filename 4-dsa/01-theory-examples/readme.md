@@ -1,4 +1,225 @@
 <details >
+ <summary style="font-size: x-large; font-weight: bold">Binary Search</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Concept</summary>
+
+![BinarySearch_1.jpg](images/BinarySearch_1.jpg)
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Important Examples</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. First & Last Occurrence of a Element / Count of an Element</summary>
+
+![BinarySearch_2.jpg](images/BinarySearch_2.jpg)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">2. Number of times a Sorted Array is Rotated</summary>
+
+![img_3.png](img_3.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">3. Find element in Rotated Sorted Array</summary>
+
+![img_4.png](img_4.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">4. Searching in a Nearly Sorted Array</summary>
+
+![img_5.png](img_5.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">5. Find position of an element in a Infinite Sorted Array</summary>
+
+![img_6.png](img_6.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">6. Index of First 1 in a Binary Sorted Infinite Array</summary>
+
+![img_7.png](img_7.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">8. Peak Element</summary>
+
+![img_8.png](img_8.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">9. Find Maximum element in Bitonic Array</summary>
+
+![img_9.png](img_9.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">10. Search an element in Bitonic Array</summary>
+
+![img_10.png](img_10.png)
+</details>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">11. Search in Row-wise & Column-wise Sorted Array</summary>
+
+![img_11.png](img_11.png)
+</details>
+
+</details>
+
+</details>
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Sliding Window</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Concept</summary>
+
+![img_12.png](img_12.png)
+
+### Fixed Size Window Template
+![img_13.png](img_13.png)
+
+### Variable Size Window Template
+![img_14.png](img_14.png)
+
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Important Examples</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. Maximum Sum Subarray of Size K</summary>
+
+![img_15.png](img_15.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">2. First -ve number in every window of size K</summary>
+
+![img_16.png](img_16.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">3. Minimum Window Substring</summary>
+
+- Using variable sliding window
+- Time - O(|s|)
+- Space - O(|t|)
+- Very good question
+
+**Identification :**
+1. Involves string & substring
+2. Condition given
+3. Minimize window size K
+
+
+
+</details>
+
+</details>
+
+</details>
+
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Stack</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Concept</summary>
+
+![Stack_1.jpg](images/Stack_1.jpg)
+
+**Identification:**
+1. There is high probability that stack questions are on `ARRAY`.
+2. Reducing time complexity from `O(n ^ 2) to O(n)`
+3. Two FOR loop where `j is dependent on i`.
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Important Examples</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. Nearest Greater to Right / Next Largest Element</summary>
+
+![Stack_2.jpg](images/Stack_2.jpg)
+![Stack_3.jpg](images/Stack_3.jpg)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">3. Stock Span Problem</summary>
+
+![Stack_4.jpg](images/Stack_4.jpg)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">4. Maximum Area Histogram</summary>
+
+![Stack_5.jpg](images/Stack_5.jpg)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">5. Max Area Rectangle in Binary Matrix</summary>
+
+![Stack_6.jpg](images/Stack_6.jpg)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">6. Rain Water Trapping</summary>
+
+![Stack_7.jpg](images/Stack_7.jpg)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">7. Minimum Element in Stack</summary>
+
+![Stack_8.jpg](images/Stack_8.jpg)
+![Stack_9.jpg](images/Stack_9.jpg)
+![Stack_10.jpg](images/Stack_10.jpg)
+</details>
+
+</details>
+</details>
+
+
+
+
+
+
+
+<details >
  <summary style="font-size: x-large; font-weight: bold">Recursion</summary>
 
 <details >
@@ -76,6 +297,106 @@ Referred Video: https://www.youtube.com/watch?v=aqLTbtWh40E&list=PL_z_8CaSLPWeT1
  <summary style="font-size: medium; font-weight: bold">2. Sort An Array </summary>
 
 ![Recursion_4.jpg](images/Recursion_4.jpg)
+
+#### Recursion
+```js
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var sortArray = function(nums) {
+    //Base Condition
+    if(nums.length === 1)
+        return nums;
+    
+    //Hypothesis(reducing input & calling again)
+    const temp = nums.pop();
+    sortArray(nums);
+
+    //Induction
+    insert(nums, temp);
+    
+    return nums;
+};
+
+function insert(arr, val) {
+    //Base Condition
+    const len = arr.length;
+    if(len === 0 || val >= arr[len - 1]){
+        arr.push(val);
+        return;
+    }
+
+    //Hypothesis(reducing input & calling again)
+    const temp = arr.pop();
+    insert(arr, val);
+
+    //Induction
+    arr.push(temp);
+}
+```
+
+#### Merge Sort
+
+````js
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+function sortArray(nums) {
+    const len = nums.length;
+    mergeSort(0, len - 1, nums);
+    
+    return nums;
+};
+
+function mergeSort(p, r, nums) {
+    if(p < r){
+        const q = Math.floor((p + r) / 2);
+        mergeSort(p, q, nums);
+        mergeSort(q + 1, r, nums);
+        merge(p, q, r, nums);
+    }
+}
+
+function merge(p, q, r, nums) {
+    const len1 = (q - p) + 2;
+    const len2 = (r - q) + 1;
+
+    const arr1 = new Array(len1);
+    const arr2 = new Array(len2);
+
+    for(let i = 0; i < len1 - 1; i++){
+        arr1[i] = nums[p + i];
+    }
+    arr1[len1 - 1] = Infinity;
+
+
+    for(let i = 0; i < len2 - 1; i++){
+        arr2[i] = nums[q + i + 1];
+    }
+    arr2[len2 - 1] = Infinity;
+
+    let i = 0;
+    let j = 0;
+    let k = p;
+
+    while(k <= r){
+        if(arr1[i] <= arr2[j]){
+            nums[k] = arr1[i];
+            i++;
+        }
+        else{
+            nums[k] = arr2[j];
+            j++;
+        }
+        k++;
+    }
+}
+````
+Leetcode: https://leetcode.com/problems/sort-an-array/
+<br>
+Referred Video: https://www.youtube.com/watch?v=AZ4jEY_JAVc&list=PL_z_8CaSLPWeT1ffjiImo0sYTcnLzo-wY&index=6
 </details>
 
 
