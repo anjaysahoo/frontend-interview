@@ -725,3 +725,199 @@ Referred Video: https://www.youtube.com/watch?v=ArNyupe-XH0&list=PL_z_8CaSLPWfxJ
 </details>
 
 </details>
+
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Knapsack</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Concept</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Hand Written Notes</summary>
+
+![Knapsack_1.jpg](images/Knapsack_1.jpg)
+![Knapsack_2.jpg](images/Knapsack_2.jpg)
+![Knapsack_3.jpg](images/Knapsack_3.jpg)
+![Knapsack_4.jpg](images/Knapsack_4.jpg)
+![Knapsack_5.jpg](images/Knapsack_5.jpg)
+![Knapsack_6.jpg](images/Knapsack_6.jpg)
+![Knapsack_7.jpg](images/Knapsack_7.jpg)
+![Knapsack_8.jpg](images/Knapsack_8.jpg)
+![Knapsack_9.jpg](images/Knapsack_9.jpg)
+![Knapsack_10.jpg](images/Knapsack_10.jpg)
+</details>
+
+### Dynamic Programming Introduction
+![img_17.png](img_17.png)
+
+### Knapsack Introduction
+![img_18.png](img_18.png)
+
+**BASE CONDITION :**
+1. Base condition will be near valid/invalid input.
+2. Base condition will always be formed in conjuction with both changing variable in problem like
+-  ```js
+   if(n == 0 || w == 0){ ........ }
+   ```
+
+-  ```js
+   if(n - 1 == - 1){
+        if(sum == 0){ ....... } else { ...... }
+   }
+   ```
+![img_19.png](img_19.png)
+
+**Note : We may need to maintain separate table to know whether DP is filled or not.**
+
+![img_20.png](img_20.png)
+![img_21.png](img_21.png)
+
+![Knapsack_16.jpg](images/Knapsack_16.jpg)
+
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Important Examples</summary>
+
+### 1. 0 / 1 Knapsack
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. Subset Sum</summary>
+
+![img_22.png](img_22.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">2. Equal Sum Partition</summary>
+
+![img_23.png](img_23.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">3. Count of Subsets Sum with a given Sum</summary>
+
+![img_24.png](img_24.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">4. Minimum Subset Sum Difference</summary>
+
+![img_25.png](img_25.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">5. Target Sum</summary>
+
+![img_26.png](img_26.png)
+</details>
+
+
+### 2. Unbounded Knapsack
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. Rod Cutting Problem</summary>
+
+![Knapsack_17.jpg](images/Knapsack_17.jpg)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">2. Coin Change Maximum Number of Ways</summary>
+
+![Knapsack_18.jpg](images/Knapsack_18.jpg)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">3. Coin Change Minimum Number of Ways</summary>
+
+![Knapsack_19.jpg](images/Knapsack_19.jpg)
+</details>
+
+</details>
+</details>
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Longest Common Subsequence</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Concept</summary>
+
+![LongestCommonSubsequence_1.jpg](images/LongestCommonSubsequence_1.jpg)
+![LongestCommonSubsequence_2.jpg](images/LongestCommonSubsequence_2.jpg)
+![LongestCommonSubsequence_3.jpg](images/LongestCommonSubsequence_3.jpg)
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Important Examples</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. Longest Common Substring</summary>
+
+![LongestCommonSubsequence_4.jpg](images/LongestCommonSubsequence_4.jpg)
+</details>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">2. Printing Longest Common Subsequence</summary>
+
+![LongestCommonSubsequence_5.jpg](images/LongestCommonSubsequence_5.jpg)
+</details>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">3. Shortest Common Super Sequence</summary>
+
+![img_27.png](img_27.png)
+</details>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">4. Long Palindromic Subsequence</summary>
+
+![img_28.png](img_28.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">5. Print Shortest Common Super Sequence</summary>
+
+![LongestCommonSubsequence_7.jpg](images/LongestCommonSubsequence_7.jpg)
+![img_29.png](img_29.png)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">7. Longest Repeating Subsequence</summary>
+
+![LongestCommonSubsequence_9.jpg](images/LongestCommonSubsequence_9.jpg)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">8. Sequence Pattern Matching</summary>
+
+![img_30.png](img_30.png)
+</details>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">9. Minimum Number of Insertion in a String to make it a Palindrome</summary>
+
+![LongestCommonSubsequence_11.jpg](images/LongestCommonSubsequence_11.jpg)
+</details>
+
+</details>
+
+</details>
