@@ -413,21 +413,171 @@ Referred Video: https://www.youtube.com/watch?v=AZ4jEY_JAVc&list=PL_z_8CaSLPWeT1
 
 ![Recursion_7.jpg](images/Recursion_7.jpg)
 ![Recursion_8.jpg](images/Recursion_8.jpg)
+
+- Using recursion
+- Time -` O(n / 2)`
+- Space - `O(n / 2)`
+
+1. **Identification :** Deleting without extra space possible only through recursion.
+2. **Approach :** Able to reduce the input size to solve the problem, so **IBH**
 </details>
 
 
 <details >
  <summary style="font-size: medium; font-weight: bold">5. Reverse a Stack</summary>
 
+Question: https://www.geeksforgeeks.org/problems/reverse-a-stack/1
+
 ![Recursion_9.jpg](images/Recursion_9.jpg)
 ![Recursion_10.jpg](images/Recursion_10.jpg)
+
+- Time - `O(n)`
+- Space - `O(1)` or Auxiliary space - `O(n)`
+
+1. **Identification :** Reversing without extra space only possible with stack.
+2. **Approach :** Able to reduce input sixe to solve the problem, so **IBH**.
+
+```js
+class Solution {
+    //Function to reverse a string.
+    reverse(s) {
+        //Base Condition
+        if(s.length === 0)
+            return;
+            
+        //Hypothesis
+        const temp = s.pop();
+        this.reverse(s);
+        
+        //Induction
+        this.insert(s, temp);
+    }
+    
+    insert(s, val) {
+        //Base Condition
+        if(s.length === 0){
+            s.push(val);
+            return;
+        }
+        
+        //Hypothesis
+        const temp = s.pop();
+        this.insert(s, val);
+
+        //Induction
+        s.push(temp);
+    }
+}
+```
+
+
+My Java solution(Different from above notes because of question return type, but same time & space complexity)
+```js
+class Solution
+{ 
+    
+    static ArrayList<Integer> reverse(Stack<Integer> s)
+    {
+        ArrayList<Integer> res = new ArrayList<>();
+        
+        return reverseStack(s, res);
+    }
+    
+    static ArrayList<Integer> reverseStack(Stack<Integer> s,
+    ArrayList<Integer> res){
+        /** Base Condition **/
+        if(s.isEmpty())
+            return new ArrayList<>();
+            
+        /** Induction **/
+        int temp = s.pop();
+        res.add(temp);
+            
+        /** Hypothesis **/  
+        reverseStack(s, res);
+        
+        return res;
+    }
+}
+```
 </details>
 
 
 <details >
  <summary style="font-size: medium; font-weight: bold">6. Kth Symbol in Grammar</summary>
 
+
+1. My TLE Solution:
+```js
+/**
+ * @param {number} n
+ * @param {number} k
+ * @return {number}
+ */
+ let s = '0';
+var kthGrammar = function(n, k) {
+    getFullString(1, n);
+
+    const res = Number(s[k - 1]);
+    s = '0';
+
+    return res;
+};
+
+function getFullString(input, n){
+    if(input === n)
+        return;
+
+    getFullString(input + 1, n);
+
+    const arr = s.split('');
+
+    s = '';
+    for(let a of arr){
+        if(a === '0')
+            s += '01';
+        else
+            s += '10';
+    }
+
+    return;
+}
+```
+
+2.
+
 ![Recursion_11.jpg](images/Recursion_11.jpg)
+
+- Recursion
+- Time - `O(n / 2)`
+- Space - Auxiliary space `O( n / 2)`
+1. **Identification :** Problem itself is defined **recursively**.
+2. **Approach :** Reducing input size we are able to solve the problem, so **IBH**
+```js
+/**
+ * @param {number} n
+ * @param {number} k
+ * @return {number}
+ */
+var kthGrammar = function(n, k) {
+    //Base Condition
+    if(n === 1 && k === 1)
+        return 0;
+
+    const mid = Math.floor(Math.pow(2, n - 1) / 2);
+
+    //Induction (Here If else statement is induction)
+    if(k <= mid){
+        //Hypothesis 
+        return kthGrammar(n - 1, k);
+    } 
+    else{
+        //Hypothesis
+        /*In case k bigger than mid we need to return Complementary value*/
+        return kthGrammar(n - 1, k - mid) === 0 ? 1 : 0;
+    }
+};
+```
 </details>
 
 
