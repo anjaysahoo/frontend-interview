@@ -951,12 +951,50 @@ function solve(open, close, output, res){
 <details >
  <summary style="font-size: medium; font-weight: bold">14. Print N-bit Binary Numbers having more 1's than 0's for any Prefix</summary>
 
+
+Question: https://www.geeksforgeeks.org/problems/print-n-bit-binary-numbers-having-more-1s-than-0s0252/1
+![img_37.png](img_37.png)
+
 ![Recursion_22.jpg](images/Recursion_22.jpg)
 ![Recursion_23.jpg](images/Recursion_23.jpg)
+
+- Time - `O(2 ^ N)`
+- Space - `O(2 ^ N)`
+1. Identification : In this we need to make **choices & decision** to whether add 1 or 0 in result string.
+2. Approach : Through decision we able to make recusrion tree, so **Input-Output** Method
+
+```js
+/**
+ * @param {number} N
+ * @return {string[]}
+*/
+
+class Solution {
+    NBitBinary(n){
+       let res = [];
+       
+       this.solve(n, n, n, '', res);
+       
+       return res;
+    }
+    
+    solve(oneCount, zeroCount, n, output, res){
+        if(output.length === n){
+            res.push(output);
+            return;
+        }
+        
+        this.solve(oneCount - 1, zeroCount, n, `${output}1`, res);
+        
+        if(zeroCount > oneCount)
+            this.solve(oneCount, zeroCount - 1, n, `${output}0`, res);
+    }
+}
+```
 </details>
 
 <details >
- <summary style="font-size: medium; font-weight: bold">13. Generate All Balanced Parenthesis</summary>
+ <summary style="font-size: medium; font-weight: bold">15. Josephus Problem</summary>
 
 ![Recursion_24.jpg](images/Recursion_24.jpg)
 </details>
