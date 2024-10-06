@@ -854,11 +854,20 @@ class Solution {
 <details >
  <summary style="font-size: medium; font-weight: bold">11. Permutation with Case Change</summary>
 
+![Recursion_17.jpg](images/Recursion_17.jpg)
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">12. Letter Case Permutation</summary>
+
 Question: https://leetcode.com/problems/letter-case-permutation/description/
 ![img_35.png](img_35.png)
 
 
-![Recursion_17.jpg](images/Recursion_17.jpg)
+![Recursion_18.jpg](images/Recursion_18.jpg)
+![Recursion_19.jpg](images/Recursion_19.jpg)
+
 - Time - `O(2 ^ N)`
 - Space -
 1. Identification : In each step we need to make choices & decision, so **recursion**.
@@ -898,19 +907,44 @@ function solve(input, output, res){
 
 
 <details >
- <summary style="font-size: medium; font-weight: bold">12. Letter Case Permutation</summary>
-
-![Recursion_18.jpg](images/Recursion_18.jpg)
-![Recursion_19.jpg](images/Recursion_19.jpg)
-</details>
-
-
-<details >
  <summary style="font-size: medium; font-weight: bold">13. Generate All Balanced Parenthesis</summary>
+
+Question: https://leetcode.com/problems/generate-parentheses/description/
+![img_36.png](img_36.png)
 
 ![Recursion_20.jpg](images/Recursion_20.jpg)
 ![Recursion_21.jpg](images/Recursion_21.jpg)
 
+- Time -
+- Space -
+1. Identification : In each step we need to make choice & decision, so recusrion.
+2. Approach : Since each step involves decsion making, so **Input-Output** method.
+```js
+/**
+ * @param {number} n
+ * @return {string[]}
+ */
+var generateParenthesis = function(n) {
+    const res = [];
+
+    solve(n, n, '', res);
+
+    return res;
+};
+
+function solve(open, close, output, res){
+    if(open === 0 && close === 0){
+        res.push(output);
+        return;
+    }
+
+    if(open > 0)
+        solve(open - 1, close, `${output}(`, res);
+    
+    if(close > 0 && close > open)
+        solve(open, close - 1, `${output})`, res);
+}
+```
 </details>
 
 
