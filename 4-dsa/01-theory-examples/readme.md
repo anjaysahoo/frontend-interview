@@ -650,6 +650,8 @@ Move plate from 2 to 1
 Move plate from 2 to 3
 Move plate from 1 to 3
 ```
+
+Visual: https://www.mathsisfun.com/games/towerofhanoi.html
 </details>
 
 
@@ -808,8 +810,44 @@ var subsetsWithDup = function(nums) {
 <details >
  <summary style="font-size: medium; font-weight: bold">10. Permutation with Spaces</summary>
 
+Question: https://www.geeksforgeeks.org/problems/permutation-with-spaces3627/1
+![img_34.png](img_34.png)
+
 ![Recursion_15.jpg](images/Recursion_15.jpg)
 ![Recursion_16.jpg](images/Recursion_16.jpg)
+
+- Time - `O(2 ^ N)`
+- Space -
+1. Identification : In each step we need to make choice & decision, so recursion
+2. Approach : Since each step involves decision, **Input-Output** method
+
+```js
+/**
+ * @param {string} s
+ * @return {string[]}
+ */
+class Solution {
+  permutation(s) {
+    const result = [];
+    
+    this.solve(s.slice(1), s[0], result);
+    
+    return result;
+  }
+  
+  solve(input, output, result){
+      if(input.length === 0){
+          result.push(output);
+          return;
+      }
+       
+      const c = input[0];
+      
+      this.solve(input.slice(1), `${output} ${c}`, result);
+      this.solve(input.slice(1), `${output}${c}`, result);
+  }
+}
+```
 </details>
 
 
