@@ -584,7 +584,72 @@ var kthGrammar = function(n, k) {
 <details >
  <summary style="font-size: medium; font-weight: bold">7. Tower of Hanoi</summary>
 
+![img_31.png](img_31.png)
+
 ![Recursion_12.jpg](images/Recursion_12.jpg)
+
+```js
+function towerOfHanoi(N){
+    solve(1, 2, 3, N);
+}
+
+function solve(s, h, d, N){
+    //Base Condition
+    if(N === 1){
+        console.log("Move plate from " + s + " to " + d);
+        return;
+    }
+    
+    //Hypothesis
+    /* Here we are first moving N - 1 plate from source
+    to helper box*/
+    solve(s, d, h, N - 1);
+    
+    //Induction
+    console.log("Move plate from " + s + " to " + d);
+    /* After we move last plate to right place we will move remaining 
+    N - 1 plate from helper to destination*/
+    solve(h, s, d, N - 1);
+    
+    return;
+}
+```
+
+Input:
+```js
+console.log("Number of plate = 1");
+towerOfHanoi(1);
+
+console.log("");
+
+console.log("Number of plate = 2");
+towerOfHanoi(2);
+
+console.log("");
+
+console.log("Number of plate = 3");
+towerOfHanoi(3);
+```
+
+Output:
+```bash
+Number of plate = 1
+Move plate from 1 to 3
+
+Number of plate = 2
+Move plate from 1 to 2
+Move plate from 1 to 3
+Move plate from 2 to 3
+
+Number of plate = 3
+Move plate from 1 to 3
+Move plate from 1 to 2
+Move plate from 3 to 2
+Move plate from 1 to 3
+Move plate from 2 to 1
+Move plate from 2 to 3
+Move plate from 1 to 3
+```
 </details>
 
 
