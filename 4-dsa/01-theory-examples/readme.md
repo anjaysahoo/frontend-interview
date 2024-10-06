@@ -656,14 +656,152 @@ Move plate from 1 to 3
 <details >
  <summary style="font-size: medium; font-weight: bold">8. Print Subsets / Print Powersets</summary>
 
+Question: https://leetcode.com/problems/subsets/description/
+![img_32.png](img_32.png)
+
+**Recursive Solution:**
+
 ![Recursion_13.jpg](images/Recursion_13.jpg)
+
+- Time - `O(2 ^ N)`
+- Space - Auxiliary Space `O(2 ^ N)`
+1. Identification - It involves choice & decision whether to add a value to result list or not, so **recursion**.
+2. Approach - It involves decision in each step, so **Input-Output** method.
+```js
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var subsets = function(nums) {
+    let res = [];
+
+    solve(nums, [], res);
+
+    return Array.from(res);
+};
+
+function solve(input, output, res){
+    if(input.length === 0){
+        res.push(output);
+        return;
+    }
+        
+    const temp = input.shift();
+    
+    /* using spread operator is important because if same input is
+    * passed then second `solve` function won't even run because 
+    * input will be empty by the it reaches second `solve`*/
+    solve([...input], [...output], res);
+    solve([...input], [...output, temp], res);
+}
+```
+
+**Iterative Solution:**
+```js
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var subsets = function(nums) {
+    const res = [];
+
+    res.push([]);
+
+    for(let num of nums){
+        const len = res.length;
+
+        for(let i = 0; i < len; i++){
+            const subset = [...res[i]];
+            subset.push(num);
+            res.push(subset);
+        }
+    }
+
+    return res;
+};
+```
 </details>
 
 
 <details >
  <summary style="font-size: medium; font-weight: bold">9. Print Unique Subsets & Variations</summary>
 
+Question: https://leetcode.com/problems/subsets-ii/description/
+![img_33.png](img_33.png)
+
+**Recursive Solution:**
 ![Recursion_14.jpg](images/Recursion_14.jpg)
+
+- Time - `O(2 ^ N)`
+- Space - Auxiliary space `O(2N * X)`, X = Length of each subset.
+1. Identification : In here each step we need to make choice & decision, so recursion
+2. Approach : Since in each step we are making decision, so **Input-Output** method
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var subsetsWithDup = function(nums) {
+    const set = new Set();
+
+    solve(nums, [], set);
+
+    const res = [];
+    for(let [s] of set.entries())
+        res.push(JSON.parse(s));
+
+    return res;
+};
+
+
+function solve(input, output, set){
+    if(input.length === 0){
+        /* Here two thing to note:-
+        1. Since Array are not primitive type hence using Stringifying
+        is important to remove duplicate ones.
+        2. Also `sorting` is important to get same value when numbers in
+        array are shuffled */
+        set.add(JSON.stringify(output.sort()));
+        return;
+    }
+
+    const temp = input.shift();
+
+    solve([...input], [...output], set);
+    solve([...input], [...output, temp], set);
+}
+```
+
+**Iterative Solution:**
+```js
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var subsetsWithDup = function(nums) {
+    const set = new Set();
+    set.add(JSON.stringify([]))
+
+    for(let num of nums){
+        const newSet = new Set(set)
+
+        for(let s of newSet){
+            const subset = [...JSON.parse(s)];
+            subset.push(num);
+            set.add(JSON.stringify(subset.sort()));
+        }
+    }
+
+    const res = [];
+
+    for(let s of set.keys()){
+        res.push(JSON.parse(s));
+    }
+
+    return res;
+};
+```
 </details>
 
 

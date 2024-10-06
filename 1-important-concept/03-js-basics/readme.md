@@ -438,8 +438,35 @@ The main common difference between `Map` or `Set` vs `Object` is that **in `Obje
 <details >
  <summary style="font-size: large; font-weight: bold">Length</summary>
 
+### 1. Object
 ```js
 var size = Object.keys(myObj).length;
+```
+
+### 2. Set
+```js
+const set1 = new Set();
+const object1 = {};
+
+set1.add(42);
+set1.add('forty two');
+set1.add('forty two');
+set1.add(object1);
+
+console.log(set1.size);
+// Expected output: 3
+```
+
+### 3. Map
+```js
+const map1 = new Map();
+
+map1.set('a', 'alpha');
+map1.set('b', 'beta');
+map1.set('g', 'gamma');
+
+console.log(map1.size);
+// Expected output: 3
 ```
 </details>
 
@@ -481,7 +508,8 @@ for ([key, value] of populationArr){
 
 Referred Article: https://www.freecodecamp.org/news/how-to-iterate-over-objects-in-javascript/
 
-**Always use below strategy to iterate over `Map` & `Set`**
+### **Always use below strategy to iterate over `Map` & `Set`**
+
 1. `Map`
 ```js
 const map = new Map();
