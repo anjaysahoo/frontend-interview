@@ -854,7 +854,46 @@ class Solution {
 <details >
  <summary style="font-size: medium; font-weight: bold">11. Permutation with Case Change</summary>
 
+Question: https://leetcode.com/problems/letter-case-permutation/description/
+![img_35.png](img_35.png)
+
+
 ![Recursion_17.jpg](images/Recursion_17.jpg)
+- Time - `O(2 ^ N)`
+- Space -
+1. Identification : In each step we need to make choices & decision, so **recursion**.
+2. Approach : Since evry step involves descision making, so **Input-Output** method.
+
+```js
+/**
+ * @param {string} s
+ * @return {string[]}
+ */
+var letterCasePermutation = function(s) {
+    const set = new Set();
+
+    solve(s, '', set);
+
+    return Array.from(set);
+};
+
+function solve(input, output, res){
+    if(input.length === 0){
+        res.add(output);
+        return;
+    }
+
+    const c = input[0];
+
+    if(c.charAt(0) >= '0' && c.charAt(0) <= '1'){
+        solve(input.slice(1), `${output}${c}`, res);
+    }
+    else{
+        solve(input.slice(1), `${output}${c.toLowerCase()}`, res);
+        solve(input.slice(1), `${output}${c.toUpperCase()}`, res);
+    }
+}
+```
 </details>
 
 

@@ -419,6 +419,14 @@ console.log(stringObj);
 console.log(stringObj.valueOf());
 // Expected output: "foo"
 ````
+
+5. `String.prototype.toLowerCase()` & `String.prototype.toUpperCase()`
+```js
+const sentence = 'The quick brown fox jumps over the lazy dog.';
+
+console.log(sentence.toLowerCase());
+// Expected output: "the quick brown fox jumps over the lazy dog."
+```
 </details>
 
 
