@@ -1680,6 +1680,8 @@ class Solution {
 
 ### 3. Tabulation
 
+- Time - `O(N * sum)`
+- Space - `O(N * sum)`
 ```js
 /**
  * @param {number[]} arr
