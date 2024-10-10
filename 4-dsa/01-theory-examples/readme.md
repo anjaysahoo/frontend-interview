@@ -996,11 +996,314 @@ class Solution {
 <details >
  <summary style="font-size: medium; font-weight: bold">15. Josephus Problem</summary>
 
+
+Question: https://www.geeksforgeeks.org/problems/game-of-death-in-a-circle1840/1
+![img_38.png](img_38.png)
+
 ![Recursion_24.jpg](images/Recursion_24.jpg)
+
+1. Identification : Problem defined recursively, so recursion.
+2. Approach : **Recursively defined problem** are mostly solved through **IBH**, also reducing input in each step solves the problem
+3. **Note** : Simply reducing input here won't work we need to **modify input** in order apply IBH.
+
+```js
+class Solution {
+    safePos(n, k) {
+        const arr = [];
+        
+        for(let i = 1; i <= n; i++)
+            arr.push(i);
+            
+        return this.solve(arr, k - 1, 0);
+    }
+    
+    solve(arr, k, start) {
+        //Base Condition
+        if(arr.length === 1){
+            return arr[0];
+        }
+        
+        //Hypothesis
+        const pos = (start + k) % arr.length;
+        arr.splice(pos, 1);
+        
+        return this.solve(arr, k, pos);
+    }
+}
+```
 </details>
 
 </details>
 </details>
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Tree</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Concept</summary>
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Important Examples</summary>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">01. Vertical Order Traversal & Top/Bottom View Of Binary Tree</summary>
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">1. Vertical Order Traversal</summary>
+
+Question: https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/description/
+![img_39.png](img_39.png)
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var verticalTraversal = function(root) {
+    const res = [];
+    const map = new Map();
+    
+    populate(root, 0, 0, map);
+
+    /* 1. Since Map retain the sequence it added value, therefore sorting required
+       2. We need to write arrow func in sort func because it will sort in alphabetical order*/
+    const sortedByOrderMap = new Map([...map.entries()].sort((a, b) => a[0] - b[0]));
+
+    for(let [key, val] of Array.from(sortedByOrderMap.entries())){
+        const valLevelArr = val;
+
+        /******* First sorting array value-wise, then in second step level-wise
+            (Very important it should be done in this way only) ********/
+        /*Below logic will take care same value at same level*/
+        valLevelArr.sort((a, b) => a[0] - b[0]);
+        valLevelArr.sort((a, b) => a[1] - b[1]);
+
+        const temp = [];
+        for(let valLevel of valLevelArr){
+            temp.push(valLevel[0]);
+        }
+
+        res.push(temp);
+    }
+    
+    return res;
+};
+
+function populate(root, order, level, map){
+    if(!root)
+        return;
+
+    if(!map.has(order))
+        map.set(order, []);
+    
+    map.get(order).push([root.val, level]);
+
+    populate(root.left, order - 1, level + 1, map);
+    populate(root.right, order + 1, level + 1, map);
+}
+```
+</details>
+
+<details >
+ <summary style="font-size: small; font-weight: bold">2. Bottom View of Binary Tree</summary>
+
+Question: https://www.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1
+![img_40.png](img_40.png)
+
+```js
+class Solution
+{
+    //Function to return a list containing the bottom view of the given tree.
+    bottomView(root)
+    {
+        const res = [];
+        const map = new Map();
+        
+        this.populate(root, 0, 0, map);
+        
+        const mapSortedByOrder = new Map([...map.entries()].sort((a, b) => a[0] - b[0]));
+        
+        for(let [key, val] of Array.from(mapSortedByOrder.entries())){
+            const valLevelArr = val;
+            
+            // valLevelArr.sort((a, b) => a[0] - b[0]);
+            valLevelArr.sort((a, b) => a[1] - b[1]);
+            
+            res.push(valLevelArr[valLevelArr.length - 1][0]);
+        }
+        
+        return res;
+    }
+    
+    populate(root, order, level, map){
+        if(!root)
+            return;
+            
+        if(!map.has(order))
+            map.set(order, []);
+        
+        map.get(order).push([root.data, level]);
+        
+        this.populate(root.left, order - 1, level + 1, map);
+        this.populate(root.right, order + 1, level + 1, map);
+    }
+}
+```
+</details>
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">3. Top View of Binary Tree</summary>
+
+Question: https://www.geeksforgeeks.org/problems/top-view-of-binary-tree/1
+![img_41.png](img_41.png)
+
+```js
+class Solution
+{
+    topView(root)
+    {
+        const res = [];
+        const map = new Map();
+        
+        this.populate(root, 0, 0, map);
+        
+        const mapSortedByOrder = new Map([...map.entries()].sort((a, b) => a[0] - b[0]));
+        
+        for(let [key, val] of Array.from(mapSortedByOrder.entries())){
+            const valLevelArr = val;
+            
+            // valLevelArr.sort((a, b) => a[0] - b[0]);
+            valLevelArr.sort((a, b) => a[1] - b[1]);
+            
+            res.push(valLevelArr[0][0]);
+        }
+        
+        return res;
+    }
+    
+    populate(root, order, level, map){
+        if(!root)
+            return;
+            
+        if(!map.has(order))
+            map.set(order, []);
+        
+        map.get(order).push([root.data, level]);
+        
+        this.populate(root.left, order - 1, level + 1, map);
+        this.populate(root.right, order + 1, level + 1, map);
+    }
+}
+```
+</details>
+
+</details>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">02. Lowest Common Ancestor of a Binary Tree / Binary Search Tree</summary>
+
+### 1. Binary Tree
+Question: https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/
+![img_42.png](img_42.png)
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function(root, p, q) {
+    /**Why we are return node as soon as we found because
+    if next node is its child then current node itself will be
+    returned. If it is not in child node but sibling then node
+    parent will be LCA
+     */
+    if(!root || root === p || root === q)
+        return root;
+
+    const left = lowestCommonAncestor(root.left, p, q);
+    const right = lowestCommonAncestor(root.right, p, q);
+
+    if(left && right)
+        return root;
+    
+    if(left || right)
+        return left ? left : right;
+
+    return null;
+};
+```
+
+
+### 2. Binary Search Tree
+
+Question: https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/
+![img_43.png](img_43.png)
+
+**Above Binary solution will also work on BST**
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function(root, p, q) {
+    if(!root)
+        return root;
+    
+    const val = root.val
+
+    if(p.val > val && q.val > val)
+        return lowestCommonAncestor(root.right, p, q);
+
+    if(p.val < val && q.val < val)
+        return lowestCommonAncestor(root.left, p, q);
+
+    return root;
+};
+```
+</details>
+
+</details>
+
+</details>
+
+
+
 
 
 
@@ -1292,7 +1595,124 @@ Referred Video: https://www.youtube.com/watch?v=ArNyupe-XH0&list=PL_z_8CaSLPWfxJ
 <details >
  <summary style="font-size: medium; font-weight: bold">1. Subset Sum</summary>
 
+Question: https://www.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1
+![img_44.png](img_44.png)
+
 ![img_22.png](img_22.png)
+
+### 1. Recursion
+
+**Identification:** Since each time we are making choices whether to add a number to sum or not, also we have W which is sum here.
+
+- Time - `O(2 ^ N) [TLE]`
+- Space - `O(2 ^ N) [Auxiliary]`
+
+```js
+/**
+ * @param {number[]} arr
+ * @param {number} n
+ * @param {number} sum
+ * @return {boolean}
+ */
+
+class Solution {
+    isSubsetSum(arr,n,sum){
+        /*If Sum is 0 then definetly there will be empty subset*/
+       if(sum === 0)
+        return true;
+        
+       /*If n is 0 and still sum is not 0 then subset does not exist*/
+       if(n === 0 && sum > 0) 
+        return false;
+        
+       if(arr[n - 1] <= sum){
+           return this.isSubsetSum(arr, n - 1, sum - arr[n - 1]) ||
+           this.isSubsetSum(arr, n - 1, sum);
+       }
+       else{
+           return this.isSubsetSum(arr, n - 1, sum);
+       }
+    }
+}
+```
+### 2. Memoization
+
+- Time - `O(N * sum)`
+- Space - `O(N * sum)`
+
+```js
+/**
+ * @param {number[]} arr
+ * @param {number} n
+ * @param {number} sum
+ * @return {boolean}
+ */
+
+class Solution {
+    
+    /*Initializing with -1 is important because it will act as
+    visited or not*/
+    dp = Array(101).fill(null).map(() => Array(10001).fill(-1));
+    
+    isSubsetSum(arr,n,sum){
+        /*If Sum is 0 then definetly there will be empty subset*/
+       if(sum === 0)
+        return true;
+        
+       /*If n is 0 and still sum is not 0 then subset does not exist*/
+       if(n === 0 && sum > 0) 
+        return false;
+        
+       if(this.dp[n][sum] !== -1) 
+        return this.dp[n][sum]
+        
+       if(arr[n - 1] <= sum){
+           return this.dp[n][sum] = this.isSubsetSum(arr, n - 1, sum - arr[n - 1]) ||
+           this.isSubsetSum(arr, n - 1, sum);
+       }
+       else{
+           return this.dp[n][sum] = this.isSubsetSum(arr, n - 1, sum);
+       }
+    }
+}
+```
+
+
+### 3. Tabulation
+
+```js
+/**
+ * @param {number[]} arr
+ * @param {number} n
+ * @param {number} sum
+ * @return {boolean}
+ */
+
+class Solution {
+    isSubsetSum(arr,N,sum){
+        let dp = Array(N + 1).fill(null).map(() => Array(sum + 1).fill(false));
+
+       /** Intialization:
+        * Don't have to intialize all the position
+        * with sum = 0 because it will be filled
+        * automatically in for loop.
+        **/
+        dp[0][0] = true;
+        
+        for (let i = 1; i <= N; i++) {
+            for (let j = 0; j <= sum; j++) {
+                if (arr[i - 1] <= j) {
+                    dp[i][j] = dp[i - 1][j - arr[i - 1]] || dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        
+        return dp[N][sum];
+    }
+}
+```
 </details>
 
 
@@ -1300,6 +1720,7 @@ Referred Video: https://www.youtube.com/watch?v=ArNyupe-XH0&list=PL_z_8CaSLPWfxJ
  <summary style="font-size: medium; font-weight: bold">2. Equal Sum Partition</summary>
 
 ![img_23.png](img_23.png)
+
 </details>
 
 

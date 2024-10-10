@@ -54,28 +54,33 @@ Referred Article: https://www.freecodecamp.org/news/how-to-loop-through-an-array
 }
 ```
 
+</details >
 
-Right way to update 2-D array
-![img_14.png](images/img_14.png)
+
 
 
 <details >
- <summary style="font-size: medium; font-weight: bold">Good/Tricky Examples</summary>
+ <summary style="font-size: large; font-weight: bold">Initialization & Update 2D Array</summary>
 
-```js
-let score = Array(4).fill(Array(4)).map(a => a.fill(0));
-```
-This is wrong way to initialize an array.
-
-In this case, you're creating an array with 4 elements using Array(4). Then you use fill(Array(4)) to fill each of those elements with the same array reference (which is [0, 0, 0, 0]). This means all elements in the outer array refer to the same inner array. Finally, you use map to apply fill(0) to each inner array. This fills each inner array with zeros.
-
-
-#### Right Way to fill 2D Array
+#### ✅✅ Right Way to fill 2D Array
 ```js
 let score = Array(4).fill().map(() => Array(4).fill(0));
 ```
-</details >
-</details >
+
+#### ❌❌ Wrong Way to fill 2D Array
+```js
+let score = Array(4).fill(Array(4)).map(a => a.fill(0));
+```
+
+
+This is wrong way to initialize an array.
+
+In this case, you're creating an array with 4 elements using Array(4). Then you use fill(Array(4)) to fill each of those elements with the same array reference (which is [0, 0, 0, 0]). This means all elements in the outer array refer to the same inner array. Finally, you use map to apply fill(0) to each inner array. This fills each inner array with zeros.
+![img_18.png](img_18.png)
+
+#### ✅ Right way to update 2-D array
+![img_14.png](images/img_14.png)
+</details>
 
 
 
