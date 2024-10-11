@@ -1310,7 +1310,7 @@ var lowestCommonAncestor = function(root, p, q) {
 
 
 <details >
- <summary style="font-size: x-large; font-weight: bold">DP on Tree</summary>
+ <summary style="font-size: x-large; font-weight: bold">DP: Tree</summary>
 
 <details >
  <summary style="font-size: large; font-weight: bold">Concept</summary>
@@ -1538,7 +1538,7 @@ Referred Video: https://www.youtube.com/watch?v=ArNyupe-XH0&list=PL_z_8CaSLPWfxJ
 
 
 <details >
- <summary style="font-size: x-large; font-weight: bold">Knapsack</summary>
+ <summary style="font-size: x-large; font-weight: bold">DP: Knapsack</summary>
 
 <details >
  <summary style="font-size: large; font-weight: bold">Concept</summary>
@@ -2128,14 +2128,116 @@ class Solution
 
 
 <details >
- <summary style="font-size: x-large; font-weight: bold">Longest Common Subsequence</summary>
+ <summary style="font-size: x-large; font-weight: bold">DP: Longest Common Subsequence</summary>
 
 <details >
  <summary style="font-size: large; font-weight: bold">Concept</summary>
 
+**Identification:**
+- Two string given
+- Optimal stuff shortest is asked
+
 ![LongestCommonSubsequence_1.jpg](images/LongestCommonSubsequence_1.jpg)
 ![LongestCommonSubsequence_2.jpg](images/LongestCommonSubsequence_2.jpg)
 ![LongestCommonSubsequence_3.jpg](images/LongestCommonSubsequence_3.jpg)
+
+Question: https://leetcode.com/problems/longest-common-subsequence/description/
+![img_50.png](img_50.png)
+
+### 1. Recursion
+
+```js
+/**
+ * @param {string} text1
+ * @param {string} text2
+ * @return {number}
+ */
+var longestCommonSubsequence = function(text1, text2) {
+    const n = text1.length;
+    const m = text2.length;
+
+    return solve(text1, text2, n, m);
+};
+
+function solve(s1, s2, n, m){
+    if(n === 0 || m === 0)
+        return 0;
+
+    if(s1.charAt(n - 1) === s2.charAt(m - 1)){
+        return 1 + solve(s1, s2, n - 1, m - 1);
+    }
+    else{
+        return Math.max(solve(s1, s2, n - 1, m), solve(s1, s2, n, m - 1))
+    }
+}
+```
+
+### 2. Memoization
+
+```js
+/**
+ * @param {string} text1
+ * @param {string} text2
+ * @return {number}
+ */
+var longestCommonSubsequence = function(text1, text2) {
+    const n = text1.length;
+    const m = text2.length;
+
+    const dp = Array(n + 1).fill().map(() => Array(m + 1).fill(-1));
+
+    for(let i = 0; i <= n; i++)
+        dp[i][0] = 0;
+
+    for(let j = 0; j <= n; j++)
+        dp[0][j] = 0;
+
+    return solve(text1, text2, n, m, dp);
+};
+
+function solve(s1, s2, n, m, dp){
+    if(n === 0 || m === 0)
+        return 0;
+
+    if(dp[n][m] !== -1)
+        return dp[n][m];
+
+    if(s1.charAt(n - 1) === s2.charAt(m - 1)){
+        return dp[n][m] = 1 + solve(s1, s2, n - 1, m - 1, dp);
+    }
+    else{
+        return dp[n][m] = Math.max(solve(s1, s2, n - 1, m, dp), solve(s1, s2, n, m - 1, dp))
+    }
+}
+```
+
+### 3. Tabulation
+```js
+/**
+ * @param {string} text1
+ * @param {string} text2
+ * @return {number}
+ */
+var longestCommonSubsequence = function(s1, s2) {
+    const n = s1.length;
+    const m = s2.length;
+
+    const dp = Array(n + 1).fill().map(() => Array(m + 1).fill(0));
+
+    for(let i = 1; i <= n; i++){
+        for(let j = 1; j <= m; j++){
+            if(s1.charAt(i - 1) === s2.charAt(j - 1)){
+                dp[i][j] = 1 + dp[i - 1][j - 1];
+            }
+            else{
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+
+    return dp[n][m];
+};
+```
 </details>
 
 
@@ -2145,19 +2247,180 @@ class Solution
 <details >
  <summary style="font-size: medium; font-weight: bold">1. Longest Common Substring</summary>
 
+Question: https://www.geeksforgeeks.org/problems/longest-common-substring1452/1
+![img_48.png](img_48.png)
+![img_49.png](img_49.png)
+
 ![LongestCommonSubsequence_4.jpg](images/LongestCommonSubsequence_4.jpg)
+
+### 3. Tabulation
+- Time - `O(n * m)`
+- Space - `O(n * m)`
+
+```js
+/**
+ * @param {string} s1
+ * @param {string} s2
+ * @return {number}
+ */
+
+class Solution {
+    longestCommonSubstr(s1, s2) {
+        let res = 0;
+        const n = s1.length;
+        const m = s2.length;
+        
+        const dp = Array(n + 1).fill().map(() => Array(m + 1).fill(0));
+        
+        for(let i = 1; i <= n; i++){
+            for(let j = 1; j <= m; j++){
+                if(s1.charAt(i - 1) === s2.charAt(j - 1)){
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                    res = Math.max(res, dp[i][j]);
+                }
+                else{
+                    /*Since we are looking for substring hence when character don't
+                    match means we need to restart again*/
+                    dp[i][j] = 0;
+                }
+            }
+        }
+        
+        return res;
+    }
+}
+```
 </details>
 
 <details >
  <summary style="font-size: medium; font-weight: bold">2. Printing Longest Common Subsequence</summary>
 
+Use Question Longest Common Subsequence to solve this: https://leetcode.com/problems/longest-common-subsequence/submissions/1418673841
 ![LongestCommonSubsequence_5.jpg](images/LongestCommonSubsequence_5.jpg)
+
+### 3. Tabulation
+
+```js
+/**
+ * @param {string} text1
+ * @param {string} text2
+ * @return {number}
+ */
+var longestCommonSubsequence = function(s1, s2) {
+    const n = s1.length;
+    const m = s2.length;
+
+    const dp = Array(n + 1).fill().map(() => Array(m + 1).fill(''));
+
+    for(let i = 1; i <= n; i++){
+        for(let j = 1; j <= m; j++){
+            if(s1.charAt(i - 1) === s2.charAt(j - 1)){
+
+                dp[i][j] = dp[i - 1][j - 1] + s1.charAt(i - 1);
+            }
+            else{
+                dp[i][j] = dp[i - 1][j].length > dp[i][j - 1].length ? dp[i - 1][j] : dp[i][j - 1];
+            }
+        }
+    }
+
+    console.log("Printing longest Common Subsequence: ", dp[n][m]);
+
+    return dp[n][m].length;
+};
+```
 </details>
 
 <details >
  <summary style="font-size: medium; font-weight: bold">3. Shortest Common Super Sequence</summary>
 
+Question: https://leetcode.com/problems/shortest-common-supersequence/description/
+
+![img_51.png](img_51.png)
 ![img_27.png](img_27.png)
+
+- Using LCS technique
+- Time - `O(n * m)`
+- Space - `O(n * m)`
+
+**Identification:**
+- Two string given
+- Optimal stuff shortest is asked
+
+```js
+/**
+ * @param {string} str1
+ * @param {string} str2
+ * @return {string}
+ */
+var shortestCommonSupersequence = function(s1, s2) {
+    const lcs = longestCommonSubsequence(s1, s2);
+
+    return formShortestCommonSupersequence(s1, s2, lcs)
+};
+
+function longestCommonSubsequence(s1 , s2) {
+    const n = s1.length;
+    const m = s2.length;
+    let res = '';
+
+    const dp = Array(n + 1).fill().map(() => Array(m + 1).fill(''));
+
+    for(let i = 1; i <= n; i++){
+        for(let j = 1; j <= m; j++){
+            if(s1.charAt(i - 1) === s2.charAt(j - 1)){
+                dp[i][j] = dp[i - 1][j - 1] + s1.charAt(i - 1);
+            }
+            else{
+                dp[i][j] = dp[i][j - 1].length > dp[i - 1][j].length ? dp[i][j - 1] : dp[i - 1][j];
+            }
+        }
+    }
+
+    return dp[n][m];
+}
+
+function formShortestCommonSupersequence(s1, s2, lcs) {
+    const len1 = s1.length;
+    const len2 = s2.length;
+    const len3 = lcs.length;
+    let res = '';
+
+    let i = 0;
+    let j = 0;
+    let k = 0;
+
+    while(i < len1 && j < len2){
+
+        while(i < len1 && s1.charAt(i) !== lcs.charAt(k)){
+            res += s1.charAt(i);
+            i++;
+        }
+
+        while(j < len2 && s2.charAt(j) !== lcs.charAt(k)){
+            res += s2.charAt(j);
+            j++;
+        }
+
+        res += lcs.charAt(k);
+        i++;
+        j++;
+        k++;
+    }
+
+    while(i < len1){
+        res += s1.charAt(i);
+        i++;
+    }
+
+    while(j < len2){
+        res += s2.charAt(j);
+        j++;
+    }
+
+    return res;
+}
+```
 </details>
 
 <details >
@@ -2196,4 +2459,139 @@ class Solution
 
 </details>
 
+</details>
+
+
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Graph: BFS & DFS</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Concept</summary>
+
+![img_52.png](img_52.png)
+
+Question : https://www.geeksforgeeks.org/problems/number-of-provinces/1
+![img_53.png](img_53.png)
+
+
+### DFS
+```js
+/**
+ * @param {number} V
+ * @param {number[][]} adj
+ * @return {number}
+*/
+
+class Solution {
+  numProvinces(V,adj){
+    const adjList = {};
+    const visited = Array(V).fill(false);
+    let res = 0;
+    
+    for(let i = 0; i < V; i++)
+        adjList[i] = [];
+    
+    for(let i = 0; i < V; i++){
+        for(let j = 0; j < V; j++){
+            if(adj[i][j] === 1){
+                adjList[i].push(j);
+                adjList[j].push(i);
+            }
+        }
+    }
+    
+    
+    for(let i = 0; i < V; i++){
+        if(!visited[i]){
+            res++;
+            this.dfs(i, adjList, visited);
+        }
+    }
+    
+    return res;
+  }
+  
+  dfs(start, adjList, visited){
+      visited[start] = true;
+      
+      for(let child of adjList[start]){
+          if(!visited[child])
+            this.dfs(child, adjList, visited);
+      }
+  }
+}
+```
+
+
+### BFS
+```js
+/**
+ * @param {number} V
+ * @param {number[][]} adj
+ * @return {number}
+*/
+
+class Solution {
+   numProvinces(V,adj){
+     let visited = new Array(V).fill(false);
+     let res = 0;
+     let adjList = [];
+ 
+     // Convert adjacency matrix to adjacency list
+     for (let p = 0; p < V; p++) {
+         let temp = [];
+         for (let c = 0; c < V; c++) {
+             if (p !== c && adj[p][c] === 1) {
+                 temp.push(c);
+             }
+         }
+         adjList.push(temp);
+     }
+ 
+     // Traverse each node
+     for (let node = 0; node < V; node++) {
+         if (!visited[node]) {
+             res++;
+             this.bfs(node, visited, adjList);
+         }
+     }
+ 
+     return res;
+   }
+   
+   bfs(node, visited, adjList) {
+     let explored = [];
+     
+     explored.push(node);
+ 
+     while (explored.length > 0) {
+         let temp = explored.shift();
+         visited[temp] = true;
+ 
+         for (let child of adjList[temp]) {
+             if (!visited[child]) {
+                 explored.push(child);
+             }
+         }
+     }
+   }
+}
+```
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Important Examples</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. </summary>
+</details>
+
+</details>
 </details>
