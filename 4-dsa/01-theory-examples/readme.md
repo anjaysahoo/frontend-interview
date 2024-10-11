@@ -1600,6 +1600,59 @@ Question: https://www.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1
 
 ![img_22.png](img_22.png)
 
+[//]: # (### Note on Base Case: )
+
+[//]: # (1. Okay Base Case)
+
+[//]: # ()
+[//]: # (Below Base case works well in this question, but if at `n = 0` & `sum = 0` )
+
+[//]: # (we would expect different result then below base case will yield wrong result.)
+
+[//]: # (Here expectation is `true` only at this time also hence it works)
+
+[//]: # ()
+[//]: # (```js)
+
+[//]: # (/*If Sum is 0 then definetly there will be empty subset*/)
+
+[//]: # ( if&#40;sum === 0&#41;)
+
+[//]: # (  return true;)
+
+[//]: # (  )
+[//]: # ( /*If n is 0 and still sum is not 0 then subset does not exist*/)
+
+[//]: # ( if&#40;n === 0 && sum > 0&#41; )
+
+[//]: # (  return false;)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (2. Much Better Base Case would be)
+
+[//]: # (```js)
+
+[//]: # (/*We check for result only when n is 0, which means)
+
+[//]: # (* we used all array element and then check for sum*/)
+
+[//]: # (if&#40;n === 0&#41;{)
+
+[//]: # (   if&#40;sum === 0&#41;)
+
+[//]: # (      return true;)
+
+[//]: # (   else)
+
+[//]: # (      return false)
+
+[//]: # (})
+
+[//]: # (```)
+
+
 ### 1. Recursion
 
 **Identification:** Since each time we are making choices whether to add a number to sum or not, also we have W which is sum here.
@@ -1617,13 +1670,14 @@ Question: https://www.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1
 
 class Solution {
     isSubsetSum(arr,n,sum){
-        /*If Sum is 0 then definetly there will be empty subset*/
-       if(sum === 0)
-        return true;
-        
-       /*If n is 0 and still sum is not 0 then subset does not exist*/
-       if(n === 0 && sum > 0) 
-        return false;
+        /*We check for result only when n is 0, which means
+        * we used all array element and then check for sum*/
+       if(n === 0){
+          if(sum === 0)
+             return true;
+          else
+             return false
+       }
         
        if(arr[n - 1] <= sum){
            return this.isSubsetSum(arr, n - 1, sum - arr[n - 1]) ||
@@ -1655,13 +1709,14 @@ class Solution {
     dp = Array(101).fill(null).map(() => Array(10001).fill(-1));
     
     isSubsetSum(arr,n,sum){
-        /*If Sum is 0 then definetly there will be empty subset*/
-       if(sum === 0)
-        return true;
-        
-       /*If n is 0 and still sum is not 0 then subset does not exist*/
-       if(n === 0 && sum > 0) 
-        return false;
+       /*We check for result only when n is 0, which means
+       * we used all array element and then check for sum*/
+       if(n === 0){
+          if(sum === 0)
+             return true;
+          else
+             return false
+       }
         
        if(this.dp[n][sum] !== -1) 
         return this.dp[n][sum]
@@ -1721,15 +1776,203 @@ class Solution {
 <details >
  <summary style="font-size: medium; font-weight: bold">2. Equal Sum Partition</summary>
 
+Question: https://www.geeksforgeeks.org/problems/subset-sum-problem2014/1
+![img_45.png](img_45.png)
+
 ![img_23.png](img_23.png)
 
+**Identification :** Since each time we are making choices whether to add a number to sum or not, also we have W which is sum here.
+- Using Tabulation DP
+- Time -` O(Sum / 2 * n)`
+- Space - `O(Sum / 2 * n)`
+
+```js
+/**
+ * @param {number[]} arr
+ * @param {number} n
+ * @returns {boolean}
+*/
+
+class Solution {
+    equalPartition(arr, n)
+    {
+        let sum = 0;
+        
+        for(let a of arr)
+            sum += a;
+            
+        if(sum % 2 !== 0)
+            return false;
+        
+        return this.isSubsetSum(arr, n, sum / 2);
+    }
+    
+    isSubsetSum(arr,N,sum){
+        let dp = Array(N + 1).fill(null).map(() => Array(sum + 1).fill(false));
+
+       /** Intialization:
+        * Don't have to intialize all the position
+        * with sum = 0 because it will be filled
+        * automatically in for loop.
+        **/
+        dp[0][0] = true;
+        
+        for (let i = 1; i <= N; i++) {
+            for (let j = 0; j <= sum; j++) {
+                if (arr[i - 1] <= j) {
+                    dp[i][j] = dp[i - 1][j - arr[i - 1]] || dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        
+        return dp[N][sum];
+    }
+}
+```
 </details>
 
 
 <details >
- <summary style="font-size: medium; font-weight: bold">3. Count of Subsets Sum with a given Sum</summary>
+ <summary style="font-size: medium; font-weight: bold">3. Count of Subsets Sum with a given Sum / Perfect Sum Problem</summary>
 
+Question: https://www.geeksforgeeks.org/problems/perfect-sum-problem5633/1
+![img_46.png](img_46.png)
 ![img_24.png](img_24.png)
+
+[//]: # (**❌❌❌Below Base Case will not work in this question**)
+
+[//]: # ()
+[//]: # (Since at `n = 0` & `sum = 0` we are expecting `0` not `1`)
+
+[//]: # (```js)
+
+[//]: # (/*If Sum is 0 then definetly there will be empty subset*/)
+
+[//]: # ( if&#40;sum === 0&#41;)
+
+[//]: # (  return 1;)
+
+[//]: # (  )
+[//]: # ( /*If n is 0 and still sum is not 0 then subset does not exist*/)
+
+[//]: # ( if&#40;n === 0 && sum > 0&#41; )
+
+[//]: # (  return 0;)
+
+[//]: # (```)
+
+### 1. Recursion:
+**Identification :** Since each time we are making choices whether to add a number to sum or not, also we have W which is sum here.
+
+- Time - `O(2 ^ N) [TLE]`
+- Space - `O(2 ^ N) [Auxiliary]`
+
+```js
+/**
+ * @param {number[]} arr
+ * @param {number} n
+ * @param {number} sum
+ * @return {number}
+*/
+
+class Solution {
+
+    perfectSum(arr,n,sum){
+        /*We check for result only when n is 0, which means
+        * we used all array element and then check for sum*/
+       if(n === 0){
+          if(sum === 0)
+             return 1;
+          else
+             return 0;
+       }
+        
+        if(arr[n - 1] <= sum){
+            return this.perfectSum(arr, n - 1, sum - arr[n - 1]) + 
+            this.perfectSum(arr, n - 1, sum);
+        }
+        else{
+            return this.perfectSum(arr, n - 1, sum);
+        }
+    }
+}
+```
+
+### 2. Memoization
+- Time - `O(N * sum)`
+- Space - `O(N * sum)`
+
+```js
+/**
+ * @param {number[]} arr
+ * @param {number} n
+ * @param {number} sum
+ * @return {number}
+ */
+
+class Solution {
+   perfectSum(arr, n, sum) {
+      let dp = new Array(n + 1).fill().map(() => new Array(sum + 1).fill(-1));
+
+      return this.knapsack(arr, n, sum, dp);
+   }
+
+   knapsack(arr, n, sum, dp) {
+      if (n === 0) {
+         return sum === 0 ? 1 : 0;
+      }
+
+      if (dp[n][sum] !== -1) {
+         return dp[n][sum];
+      }
+
+      if (arr[n - 1] <= sum) {
+         dp[n][sum] = (this.knapsack(arr, n - 1, sum - arr[n - 1], dp) + 
+                 this.knapsack(arr, n - 1, sum, dp)) % 1000000007;
+      } else {
+         dp[n][sum] = this.knapsack(arr, n - 1, sum, dp);
+      }
+
+      return dp[n][sum];
+   }
+}
+```
+
+### 3. Tabulation
+
+- Time - `O(N * Sum)`
+- Space - `O(N * Sum)`
+
+```js
+/**
+ * @param {number[]} arr
+ * @param {number} n
+ * @param {number} sum
+ * @return {number}
+*/
+
+class Solution {
+    
+    perfectSum(arr,n,sum) {
+      const dp = Array(n + 1).fill(null).map(() => Array(sum + 1).fill(0));
+      dp[0][0] = 1;
+        
+        
+      for(let i = 1; i <= n; i++){
+          for(let j = 0; j <= sum; j++){
+              if(arr[i - 1] <= j)
+                dp[i][j] = (dp[i - 1][j - arr[i - 1]] + dp[i - 1][j]) % 1000000007;
+              else
+                dp[i][j] = dp[i - 1][j];
+          }
+      }
+      
+      return dp[n][sum];
+    }
+}
+```
 </details>
 
 
@@ -1751,7 +1994,115 @@ class Solution {
 <details >
  <summary style="font-size: medium; font-weight: bold">1. Rod Cutting Problem</summary>
 
+Question: https://www.geeksforgeeks.org/problems/rod-cutting0840/1
+![img_47.png](img_47.png)
+
 ![Knapsack_17.jpg](images/Knapsack_17.jpg)
+
+### 1. Recursion
+- Time - `[TLE]`
+- Space -
+
+```js
+/**
+ * @param {number[]} price
+ * @param {number} n
+ * @returns {number}
+*/
+
+class Solution
+{
+    //Function to find the maximum possible value of the function.
+    cutRod(price, n)
+    {
+        return this.solve(price, n, price.length);
+    }
+    
+    solve(price, sum, n){
+        if(n === 0 || sum === 0){
+            return 0;
+        }
+        
+        if(n <= sum){
+            return Math.max(price[n - 1] + this.solve(price, sum - n, n), this.solve(price, sum, n - 1))
+        }
+        else{
+            return this.solve(price, sum, n - 1);
+        }
+    }
+}
+```
+
+### 2. Memoization
+
+```js
+/**
+ * @param {number[]} price
+ * @param {number} n
+ * @returns {number}
+*/
+
+class Solution
+{
+    //Function to find the maximum possible value of the function.
+    cutRod(price, sum)
+    {
+        const n = price.length;
+        const dp = Array(n + 1).fill().map(() => Array(sum + 1).fill(-1))
+        return this.solve(price, sum, n, dp);
+    }
+    
+    solve(price, sum, n, dp){
+        if(n === 0 || sum === 0){
+            return 0;
+        }
+        
+        if(dp[n][sum] !== -1)
+            return dp[n][sum];
+        
+        if(n <= sum){
+            return dp[n][sum] = Math.max(
+                    price[n - 1] + this.solve(price, sum - n, n, dp), 
+                    this.solve(price, sum, n - 1, dp))
+        }
+        else{
+            return dp[n][sum] = this.solve(price, sum, n - 1, dp);
+        }
+    }
+}
+```
+
+### 3. Tabulation
+
+```js
+/**
+ * @param {number[]} price
+ * @param {number} n
+ * @returns {number}
+*/
+
+class Solution
+{
+    cutRod(price, sum)
+    {
+        const n = price.length;
+        const dp = Array(n + 1).fill().map(() => Array(sum + 1).fill(0));
+        
+        for(let i = 1; i <= n; i++){
+            for(let j = 1; j <= sum; j++){
+                if(i <= j){
+                    dp[i][j] = Math.max(price[i - 1] + dp[i][j - i], dp[i - 1][j])
+                }
+                else{
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        
+        return dp[n][sum];
+    }
+}
+```
 </details>
 
 
