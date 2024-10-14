@@ -1298,6 +1298,102 @@ var lowestCommonAncestor = function(root, p, q) {
 ```
 </details>
 
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">03. Burning Tree</summary>
+
+Question: 
+![img_57.png](img_57.png)
+
+Referred Video: https://www.youtube.com/watch?v=2r5wLmQfD6g
+```js
+/*
+class Node
+{
+    constructor(x){
+        this.key=x;
+        this.left=null;
+        this.right=null;
+    }
+}
+*/
+/**
+ * @param {Node} root
+ * @param {number} target
+ * @return {number}
+*/
+class Solution {
+  	minTime(root,target){
+  	    let res = 0;
+  		const parentMap = new Map();
+  		this.fillParentMap(root, parentMap);
+  		
+  		// console.log("parentMap ", parentMap)
+  		
+  		const queue = [];
+  		const visited = new Map();
+  		
+  		const targetNode = this.getTargetNode(root, target);
+  		// console.log("targetNode : ", targetNode)
+  		
+  		queue.push([targetNode, 0]);
+  	
+  		
+  		while(queue.length !== 0){
+  		    const currTime = queue[0][1];
+  		    res = currTime;
+  		    
+  		    while(queue.length !== 0 && queue[0][1] === currTime){
+  		        const [node, time] = queue.shift();
+  		        // console.log("node : ", node)
+  		        visited.set(node, true);
+  		        
+  		        if(node.left && !visited.has(node.left))
+  		            queue.push([node.left, currTime + 1])
+  		            
+  		        if(node.right && !visited.has(node.right))
+  		            queue.push([node.right, currTime + 1])
+  		            
+  		        // console.log("parentMap.get(node) : ", parentMap.get(node))
+  		        if(parentMap.get(node) && !visited.has(parentMap.get(node)))
+  		            queue.push([parentMap.get(node), currTime + 1])
+  		    }
+  		}
+  		
+  		return res;
+  		
+  	}
+  	
+  	getTargetNode(root, target) {
+  	    if(!root)
+  	        return null;
+  	        
+  	    if(root.key === target)
+  	        return root
+  	        
+  	    const l = this.getTargetNode(root.left, target);
+  	    const r = this.getTargetNode(root.right, target);
+  	    
+  	    return l || r;
+  	}
+  	
+  	fillParentMap(root, map) {
+  	    if(!root)
+  	        return;
+  	        
+  	    if(root.left)
+  	        map.set(root.left, root);
+  	        
+  	    if(root.right)
+  	        map.set(root.right, root);
+  	      
+  	    this.fillParentMap(root.left, map);
+  	    this.fillParentMap(root.right, map);
+  	}
+}
+```
+</details>
+
 </details>
 
 </details>
@@ -2476,9 +2572,12 @@ function formShortestCommonSupersequence(s1, s2, lcs) {
 
 ![img_52.png](img_52.png)
 
+### Number of Provinces
 Question : https://www.geeksforgeeks.org/problems/number-of-provinces/1
 ![img_53.png](img_53.png)
 
+- Time Complexity: `O(V + E)`. Each node will be visited only once(V) + we will traverse through all and check if node is visited or not(E)
+- Space Complexity: `O(3V)`. Visited array space(V) + result space(V) + in worst case stack space(V)
 
 ### DFS
 ```js
@@ -2593,5 +2692,573 @@ class Solution {
  <summary style="font-size: medium; font-weight: bold">1. </summary>
 </details>
 
+</details>
+</details>
+
+
+
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Graph: Topological Sort</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Concept</summary>
+
+![img_54.png](img_54.png)
+
+Question : https://www.geeksforgeeks.org/problems/topological-sort/1
+
+- Time Complexity: `O(V + E)`. Each node will be visited only once(V) + we will traverse through all and check if node is visited or not(E)
+- Space Complexity: `O(3V)`. Visited array space(V) + result space(V) + in worst case stack space(V)
+
+### DFS
+```js
+/**
+ * @param {number} V
+ * @param {number[][]} adj
+ * @returns {number[]}
+ */
+class Solution {
+   topoSort(V, adj) {
+      let resStack = [];
+      let visited = new Array(V).fill(false);
+
+      for (let i = 0; i < V; i++) {
+         if (!visited[i]) {
+            this.dfsTopoSort(i, visited, adj, resStack);
+         }
+      }
+
+      /*Reverse the result stack is important*/
+      return resStack.reverse();
+   }
+
+   dfsTopoSort(node, visited, adj, resStack) {
+      visited[node] = true;
+
+      for (let child of adj[node]) {
+         if (!visited[child]) {
+            this.dfsTopoSort(child, visited, adj, resStack);
+         }
+      }
+
+      /*This is very important step:
+      Add the node to the stack after visiting its children*/
+      resStack.push(node);
+   }
+}
+```
+
+
+### BFS(Kahn’s Algorithm)
+
+![img_55.png](img_55.png)
+```js
+/**
+ * @param {number} V
+ * @param {number[][]} adj
+ * @returns {number[]}
+ */
+class Solution {
+   topoSort(V, adjList) {
+      const indegree = Array(V).fill(0);
+      const queue = [];
+      const res = [];
+
+      for(let i = 0; i < V; i++){
+         for(let child of adjList[i]){
+            indegree[child]++;
+         }
+      }
+
+      for(let n = 0; n < V; n++){
+         if(indegree[n] === 0)
+            queue.push(n);
+      }
+
+
+      while(queue.length !== 0){
+         const node = queue.shift();
+         res.push(node);
+
+         for(let child of adjList[node]){
+            indegree[child]--;
+
+            if(indegree[child] === 0)
+               queue.push(child);
+         }
+      }
+
+      return res;
+   }
+}
+```
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Important Examples</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. Course Schedule</summary>
+
+Question: https://leetcode.com/problems/course-schedule/description/
+![img_56.png](img_56.png)
+
+- **Using BFS(Kahn’s Algorithm)**
+```js
+/**
+ * @param {number} numCourses
+ * @param {number[][]} prerequisites
+ * @return {boolean}
+ */
+var canFinish = function(numCourses, prerequisites) {
+    const adjList = {};
+    const indegree = Array(numCourses).fill(0);
+    const queue = [];
+    let res = true;
+
+    for(let i = 0; i < numCourses; i++)
+        adjList[i] = [];
+
+    for(let [source, target] of prerequisites){
+        adjList[source].push(target);
+        indegree[target]++;
+    }
+
+    for(let i = 0; i < numCourses; i++){
+        if(indegree[i] === 0)
+            queue.push(i);
+    }
+
+    while(queue.length !== 0){
+        const node = queue.shift();
+
+        for(let child of adjList[node]){
+            indegree[child]--;
+
+            if(indegree[child] === 0)
+                queue.push(child);
+        }
+    }
+
+    /*If Indegree of any index is non zero then course can't be completed */
+    for(let i = 0; i < numCourses; i++)
+        if(indegree[i] !== 0){
+            res = false;
+            break;
+        }
+
+    return res;
+};
+```
+</details>
+
+</details>
+</details>
+
+
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Graph: Shortest Path</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Concept</summary>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">DFS</summary>
+
+- Time Complexity: `O(V + E)`. Each node will be visited only once(V) + we will traverse through all and check if node is visited or not(E)
+- Space Complexity: `O(3V)`. Visited array space(V) + result space(V) + in worst case stack space(V)
+
+**Important Notes:**
+
+1. Works on if it is
+   - Directed or Undirected
+   - Acyclic
+   - Edges negative or postive
+2. Does not work on
+   - Cycle: Goes into infinite recursion
+
+#### 1. Undirected Graph
+
+Question: https://www.geeksforgeeks.org/problems/shortest-path-in-undirected-graph-having-unit-distance/1
+![img_58.png](img_58.png)
+
+```js
+class Solution {
+    /**
+    * @param number n
+    * @param number m
+    * @param number src
+    * @param number[][] edges
+
+    * @returns number[]
+    */
+    shortestPath(edges, n, m, src) {
+        const res = Array(n).fill(Infinity);
+        const pathVisited = Array(n).fill(false);
+        const adjList = {};
+        
+        
+        for(let i = 0; i < n; i++)
+            adjList[i] = [];
+            
+            
+        for(let [src, dst] of edges){
+            adjList[src].push(dst);
+            adjList[dst].push(src);
+        }
+        
+        res[src] = 0;
+        
+        this.dfs(src, 0, adjList, pathVisited, res);
+        
+        for(let i = 0; i < n; i++){
+            if(res[i] === Infinity)
+                res[i] = -1;
+                
+        }
+        
+        return res;
+    }
+    
+    
+    dfs(start, len, adjList, pathVisited, res){
+        pathVisited[start] = true;
+        
+        for(let child of adjList[start]){
+            if(!pathVisited[child]){
+                res[child] = Math.min(res[child], len + 1);
+                this.dfs(child, len + 1, adjList, pathVisited, res);
+            }
+        }
+        
+        pathVisited[start] = false;
+    }
+}
+```
+
+#### 2. Directed Graph
+Question: https://www.geeksforgeeks.org/problems/shortest-path-in-undirected-graph/1
+![img_59.png](img_59.png)
+
+```js
+class Solution {
+
+    public int[] shortestPath(int N,int M, int[][] edges) {
+        int[] res = new int[N];
+        
+        List<List<int[]>> adj = new ArrayList<>();
+        
+        for(int i = 0; i < N; i++){
+            res[i] = Integer.MAX_VALUE;
+            adj.add(new ArrayList<int[]>());
+        }
+        
+        for(int i = 0; i < M; i++){
+            int src = edges[i][0];
+            int dst = edges[i][1];
+            int dis = edges[i][2];
+            adj.get(src).add(new int[]{dst, dis});
+        }
+        
+        res[0] = 0;
+            
+        boolean[] pathVisited = new boolean[N];
+        
+        dfs(0, 0, pathVisited, adj, res);
+        
+        for(int i = 1; i < N; i++){
+            if(res[i] == Integer.MAX_VALUE)
+                res[i] = -1;
+        }
+        
+        return res;
+    }
+    
+    public void dfs(int start, int len, boolean[] pathVisited, List<List<int[]>> adj, int[] res){
+        pathVisited[start] = true;
+        
+        for(int[] child: adj.get(start)){
+            int dst = child[0];
+            
+            if(!pathVisited[dst]){
+                int dis = child[1];
+                
+                res[dst] = Math.min(res[dst], len + dis);
+                
+                dfs(dst, len + dis, pathVisited, adj, res);
+            }
+        }
+        
+        pathVisited[start] = false;
+        
+        return;
+    }
+}
+```
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">BFS(Dijkstra Algorithm)</summary>
+
+![img_61.png](img_61.png)
+Explanation: https://www.youtube.com/watch?v=V6H1qAeB-l4
+
+**Important Notes:**
+1. Works on if it is
+   - Directed or Undirected
+   - Acyclic
+   - Edges positive
+2. Does not work on
+   - Cyclic: Goes into infinite recursion
+   - Negative Edge: See above example
+3. Can’t detect cycles
+
+![img_62.png](img_62.png)
+
+Question: https://www.geeksforgeeks.org/problems/implementing-dijkstra-set-1-adjacency-matrix/1
+![img_60.png](img_60.png)
+
+```js
+/**
+ * @param {number} V
+ * @param {number[][][]} Adj
+ * @param {number} S
+ * @return {number[]}
+ */
+class Solution
+{
+    //Function to find the shortest distance of all the vertices
+    //from the source vertex S.
+    dijkstra(V,adj,S)
+    {
+        const res = Array(V).fill(Infinity);
+        const minHeap = [];
+        
+        minHeap.push([0, S]);
+        res[S] = 0;
+        
+        while(minHeap.length !== 0){
+            /*Sorting done in each loop to make it behave like Min Heap
+            Since JS don't have any Priority Queue DS by default*/
+            minHeap.sort((a, b) => a[0] - b[0]);
+            
+            const [dis, parent] = minHeap.shift();
+            
+            for(let [node, wt] of adj[parent]){
+                const totalDis = dis + wt;
+                
+                if(totalDis < res[node]){
+                    res[node] = totalDis;
+                    minHeap.push([totalDis, node]);
+                }
+            }
+        }
+        
+        return res;
+    }
+    
+}
+```
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Bellman-Ford Algorithm(For Negative/Positive Edges)</summary>
+
+- Iterate through (V - 1) times through all given Edges to get shortest
+distance for all vertices from source
+![img_63.png](img_63.png)
+
+Explanation: https://youtu.be/0vVofAhAYjc?si=t-4MBowgXL5-ze3r
+
+- Time : `O(V*E)`, where V = no. of vertices and E = no. of Edges.
+- Space: `O(V)` for the distance array which stores the minimized distances.
+
+
+1. Works on if it is
+   - Directed
+   - Acyclic or Cyclic(Only detect negative cycle)
+   - Edges postive or negative
+2. Detect Negative Cycle
+
+
+1. Why we need to iterate (V - 1) times?
+   - In worst case we will get shortest distance for each node in each iteration and which will be used to get shortest distance for another node
+2. How to know negative cycle?
+   - After V - 1 times we will get shortest distance for all node, so if on Vth iteration value are further reduced means there is negative cycle
+
+![img_65.png](img_65.png)
+
+Question: https://www.geeksforgeeks.org/problems/distance-from-the-source-bellman-ford-algorithm/1
+![img_64.png](img_64.png)
+```js
+class Solution {
+    /**
+     * @param {number} V
+     * @param {number[][]} edges
+     * @param {number} S
+     * @returns {number[]}
+     */
+    bellman_ford(V, edges, S) {
+        const res = Array(V).fill(Infinity);
+        res[S] = 0;
+        
+        /* Loop through V times and during last loop
+        * check if we still able to reduce the wt
+        * if yes then negative cycle is present*/
+        for(let i = 0; i < V; i++){
+            for(let [src, dst, wt] of edges){
+                if(res[src] + wt < res[dst]){
+                    
+                    if(i === V - 1)
+                        return [-1];
+                    res[dst] = res[src] + wt;
+                }
+            }
+        }
+        
+        for(let i = 0; i < V; i++){
+            if(res[i] === Infinity)
+                res[i] = 100000000;
+        }
+            
+        return res;
+    }
+}
+```
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Floyd Warshall(Multi-source shortest path algorithm )</summary>
+
+![img_66.png](img_66.png)
+![img_67.png](img_67.png)
+![img_68.png](img_68.png)
+
+Explanation: https://youtu.be/YbY8cVwWAvw?si=O_zfpT9AJXigWVgO
+
+- Time: `O(V^3)`, as we have three nested loops each running for V times, where V = no. of vertices.
+- Space: `O(V^2)`, where V = no. of vertices. This space complexity is due to storing the adjacency matrix of the given graph.
+
+
+1. Works on if it is
+   - Directed
+   - Acyclic or Cyclic(Only detect negative cycle)
+   - Edges postive or negative
+
+- ![img_69.png](img_69.png)
+</details>
+
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Important Examples</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. </summary>
+</details>
+</details>
+
+</details>
+
+
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Graph: Minimum Spanning Tree(MST)</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Concept</summary>
+
+![img_70.png](img_70.png)
+![img_71.png](img_71.png)
+
+Question: https://www.geeksforgeeks.org/problems/minimum-spanning-tree/1
+![img_72.png](img_72.png)
+
+#### Prim's Algorithm(BFS)
+![img_73.png](img_73.png)
+![img_74.png](img_74.png)
+
+Explanation: https://www.youtube.com/watch?v=mJcZjjKzeqk
+
+```js
+/**
+ * @param {number[][]} adj
+ * @param {number} V
+ * @returns {number}
+ */
+class Solution {
+    spanningTree(V, adj) {
+        const minHeap = [];
+        const visited = new Array(V).fill(false);
+        let sum = 0;
+        const minWt = [];
+        const mst = [];
+        
+        minHeap.push([0, 0, -1]); // [weight, node, parent]
+        minWt[0] = 0;
+        
+        while (minHeap.length !== 0) {
+            /*Sorting done in each loop to make it behave like Min Heap
+            Since JS don't have any Priority Queue DS by default*/
+          minHeap.sort((a, b) => a[0] - b[0]);
+          const [wt, node, parent] = minHeap.shift();
+          
+         /*We might think this is not required since we always put those
+         node which are not visited. But all node are visited at different time
+         hence some node might have inserted them in minHeap while they where not visited
+         */
+          if (visited[node]) continue;
+          
+          // Add the weight to the sum (as part of the minimum spanning tree)
+          sum += wt;
+          visited[node] = true;
+          minWt[node] = wt;
+          
+          if(parent !== -1)
+            mst.push([parent, node]);
+          
+          for (const [child, childWt] of adj[node]) {
+            if (!visited[child]) {
+              minHeap.push([childWt, child, node]);
+            }
+          }
+        }
+        
+        return sum;
+    }
+}
+```
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Important Examples</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. </summary>
+</details>
 </details>
 </details>
