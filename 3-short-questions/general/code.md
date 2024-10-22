@@ -546,6 +546,9 @@ hierarchy.addRelationship('blacksheep', 'sheep');
 hierarchy.printHierarchy();
 
 ```
+
+Output:
+![img_9.png](img_9.png)
 </details>
 
 </details>
@@ -751,6 +754,9 @@ export default async function mapAsyncLimit(iterable, callbackFn, size = Infinit
   if(len === 0)
     return res;
 
+  /*Using for loop like below will not work for size = Infinity because
+  0*Infinity is NaN */
+  // for(let i = 0; i <= Math.floor(len / size); i++)
   for(let i = 0; i < len; i += size){
     const response = await Promise.all(iterable.slice(i, i + size).map(callbackFn));
 
@@ -826,17 +832,18 @@ https://leetcode.com/discuss/interview-question/573751/Amazon-FEE-Phone-Screen
 
 ```js
 function getValues(id) {
-	let element = document.querySelector(`#${id}`);
+  let element = document.querySelector(`#${id}`);
   let inputs = element.querySelectorAll('input[type="text"]');
   let obj = {};
 
   for(let input of inputs) {
   	let inputValue = input.value;
   	let names = input.name.split('.');
-		let tmpObject = obj;
+    let tmpObject = obj;
     
     for (let i = 0; i < names.length; i++) {
-    	 tmpObject[names[i]] = {...tmpObject[names[i]]};
+       tmpObject[names[i]] = {...tmpObject[names[i]]};
+         
        if (i === names.length - 1) {
          tmpObject[names[i]] = inputValue;
        } else {
@@ -851,3 +858,12 @@ function getValues(id) {
 getValues('parent');
 ```
 </details>
+
+
+1. https://www.greatfrontend.com/questions/quiz/whats-a-typical-use-case-for-anonymous-functions
+2. https://www.greatfrontend.com/questions/quiz/what-are-the-pros-and-cons-of-using-promises-instead-of-callbacks
+3. https://www.greatfrontend.com/questions/quiz/what-are-the-differences-between-map-set-and-weakmap-weakset
+4. https://www.greatfrontend.com/questions/quiz/what-are-workers-in-javascript-used-for
+5. https://www.greatfrontend.com/questions/quiz/can-you-offer-a-use-case-for-the-new-arrow-function-syntax-how-does-this-new-syntax-differ-from-other-functions
+6. https://www.greatfrontend.com/questions/quiz/whats-the-difference-between-feature-detection-feature-inference-and-using-the-ua-string
+7. 

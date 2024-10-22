@@ -98,6 +98,16 @@ let nums2 = [1,5,2,9,6];
 nums1.sort((a, b) => b - a); //[9, 6, 5, 2, 1]
 nums2.sort((a, b) => a - b); //[1, 2, 5, 6, 9]
 ```
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Alphabetical Sort</summary>
+
+### Alphabetical sort based on one key value
+Sorting done here based on `name` key value
+![img_13.png](img_13.png)
+
+Other helpful methods: https://dev.to/sanchithasr/how-to-add-modify-and-delete-javascript-object-literal-properties-49cd
+</details>
 </details>
 
 
@@ -580,7 +590,24 @@ for (const entry of iterator1) {
 </details>
 
 <details >
- <summary style="font-size: large; font-weight: bold">`has()`</summary>
+ <summary style="font-size: large; font-weight: bold">`hasOwnProperty()` & `has()`</summary>
+
+The `hasOwnProperty()` method of Object instances returns a boolean indicating whether this object has the specified property as its own property (as opposed to inheriting it).
+
+### Object
+```js
+const object1 = {};
+object1.property1 = 42;
+
+console.log(object1.hasOwnProperty('property1'));
+// Expected output: true
+
+console.log(object1.hasOwnProperty('toString'));
+// Expected output: false
+
+console.log(object1.hasOwnProperty('hasOwnProperty'));
+// Expected output: false
+```
 
 ### Map
 ```js
@@ -715,6 +742,7 @@ Map: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Ob
 <br>
 Set: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/add
 
+![img_19.png](img_19.png)
 </details>
 
 
@@ -765,10 +793,13 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/inst
  <summary style="font-size: x-large; font-weight: bold">map, filter & reduce</summary>
 
 ### `map()`
+The map() method of Array instances `CREATES a NEW ARRAY` populated with the results of calling a provided function on every element in the calling array.
 
 ![img_1.png](images/img_1.png)
 
 ### `filter()`
+
+The filter() method of Array instances creates a `shallow copy of a portion of a given array`, filtered down to just the elements from the given array that pass the test implemented by the provided function.
 
 ![img_2.png](images/img_2.png)
 
@@ -1404,6 +1435,15 @@ export default function App() {
 let n = Infinity;
 let m = -Infinity;
 ```
+```js
+console.log(0*Infinity); /* NaN */
+console.log(Infinity); /* Infinity */
+console.log(Infinity + 1); /* Infinity */
+console.log(Math.pow(10, 1000)); /* Infinity */
+console.log(Math.log(0)); /* -Infinity */
+console.log(1 / Infinity); /* 0 */
+console.log(1 / 0); /* Infinity */
+```
 
 2. Number formatting is tricky:
    1. `Number()` constructor: converts a value into a number or NaN if not possible. note that this returns `Number(anyFalseyValue)` gives `0`, so we need to differentiate the empty string case from a real `0`.
@@ -1412,7 +1452,58 @@ let m = -Infinity;
 
 3. `toFixed()` &  `parseFloat()`
 ![img_9.png](img_9.png)
-4. 
+4. **Switch Statement**
+```js
+const expr = 'Papayas';
+switch (expr) {
+  case 'Oranges':
+    console.log('Oranges are $0.59 a pound.');
+    break;
+  case 'Mangoes':
+  case 'Papayas':
+    console.log('Mangoes and papayas are $2.79 a pound.');
+    // Expected output: "Mangoes and papayas are $2.79 a pound."
+    break;
+  default:
+    console.log(`Sorry, we are out of ${expr}.`);
+}
+```
+
+5. `isPlainObject(value)`  Plain Old JavaScript Object (POJO)
+
+Return `true` if value is a plain object, false otherwise (for **arrays**, **functions**, etc).
+
+There are two types of plain objects:
+1. Objects without prototypes, created using `Object.create(null)`s.
+2. Object defined using literals (e.g. `let a = {}`).
+
+To check for the first case, `Object.getPrototypeOf(value)` will be exactly `null`. To check for the second case, we can use the constructor of its prototype, similar to how we check if an object is an `Array`.
+
+```js
+function isPlainObject(value) {
+  // For null and undefined.
+  if (value == null) {
+    return false;
+  }
+
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === null || prototype === Object.prototype;
+}
+```
+This useful when we want to discard `Set`, `Map`, `Array` etc which are also Object type.
+
+
+6. **Symbols**
+   Symbols in JavaScript are a new primitive data type introduced in ES6 (ECMAScript 2015). They are `unique and immutable identifiers` that is primarily for object property keys to avoid name collisions. These values can be created using Symbol(...) function, and each Symbol value is guaranteed to be unique, even if they have the same key/description. Symbol properties are not enumerable in for...in loops or Object.keys(), making them suitable for creating private/internal object state.
+
+```js
+const sym1 = Symbol();
+const sym2 = Symbol("foo");
+const sym3 = Symbol("foo");
+Symbol("foo") === Symbol("foo"); // false
+```
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol
+https://www.greatfrontend.com/questions/quiz/what-are-symbols-used-for
 </details>
 
 

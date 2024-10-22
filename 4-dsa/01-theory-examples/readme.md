@@ -1,10 +1,147 @@
 <details >
+ <summary style="font-size: x-large; font-weight: bold">General Important Concepts</summary>
+
+![img_81.png](img_81.png)
+</details>
+
+
+
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Array</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Concept</summary>
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Important Examples</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. Next Permutation</summary>
+
+Question:https://leetcode.com/problems/next-permutation/description/
+![img_78.png](img_78.png)
+![img_79.png](img_79.png)
+
+
+### 1. My Solution
+- Time Complexity-`O(n*log n)`
+- Space Complexity-`O(1)`
+
+_Do It in JS_
+```js
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int l=nums.length;
+        if(l==0 || l==1)
+            return;
+        boolean flag=false;
+        for(int i=1;i<l;i++){
+            if(nums[i-1]<nums[i])
+                flag=true;
+        }
+        if(!flag){
+            Arrays.sort(nums);
+            return ;
+        }
+        int index=0;
+        for(int i=l-1;i>0;i--){
+            if(nums[i]>nums[i-1]){
+                index=i-1;
+                break;
+            }
+        }
+        int min=Integer.MAX_VALUE;
+        int hold=index;
+        for(int i=index+1;i<l;i++){
+            if(nums[i]>nums[index] && nums[index]<min){
+                min=nums[i];
+                hold=i;
+            }
+        }
+        int temp=nums[index];
+        nums[index]=nums[hold];
+        nums[hold]=temp;
+        Arrays.sort(nums,index+1,l);
+}
+}
+```
+
+### 2. Leetcode solution
+
+![img_80.png](img_80.png)
+![31_Next_Permutation.gif](images/31_Next_Permutation.gif)
+- Time Complexity: `O(n)`
+- Space Complexity: `O(1)`
+
+
+```js
+public class Solution {
+    public void nextPermutation(int[] nums) {
+        int i = nums.length - 2;
+        while (i >= 0 && nums[i + 1] <= nums[i]) {
+            i--;
+        }
+        if (i >= 0) {
+            int j = nums.length - 1;
+            while (j >= 0 && nums[j] <= nums[i]) {
+                j--;
+            }
+            swap(nums, i, j);
+        }
+        reverse(nums, i + 1);
+    }
+
+    private void reverse(int[] nums, int start) {
+        int i = start, j = nums.length - 1;
+        while (i < j) {
+            swap(nums, i, j);
+            i++;
+            j--;
+        }
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
+```
+</details>
+</details>
+
+</details>
+
+
+
+
+
+
+
+
+
+<details >
  <summary style="font-size: x-large; font-weight: bold">Binary Search</summary>
 
 <details >
  <summary style="font-size: large; font-weight: bold">Concept</summary>
 
 ![BinarySearch_1.jpg](images/BinarySearch_1.jpg)
+
+- **Identification :** Always look in question whether **things are sorted or not**. If sorted then think thoroughly using below approach whether we can solve given question using Binary Search.
+- **Approach :**
+  1. Look out for target, if it is **directly not given** then think in **terms of range where target may lie**.
+  2. It may also happen that sometime we may need to use binary search **without any target**, but depending on some different criteria like in "Median of Two Sorted Arrays" where cut should be made in smaller array etc.  For getting idea about different criteria think naively what we need to break this problem.
+  3. Then think about the criteria upon which you will **eliminate left or right half**.
+  4. **In indirect target start recalibrating your target using** 2nd point found criteria.
 </details>
 
 
@@ -14,7 +151,72 @@
 <details >
  <summary style="font-size: medium; font-weight: bold">1. First & Last Occurrence of a Element / Count of an Element</summary>
 
+Question: https://www.geeksforgeeks.org/problems/number-of-occurrence2259/1
+![img_75.png](img_75.png)
+
+
 ![BinarySearch_2.jpg](images/BinarySearch_2.jpg)
+
+```js
+class Solution {
+    
+    count(arr,n,x){
+        const firstOccurencePos = this.firstOccurence(arr, n, x);
+        const lastOccurencePos = this.lastOccurence(arr, n, x);
+        
+        if(firstOccurencePos === -1)
+            return 0;
+        
+        return lastOccurencePos - firstOccurencePos + 1;
+    }
+    
+    firstOccurence(arr, n, x){
+        let start = 0;
+        let end = n - 1;
+        let res = -1;
+        
+        while(start <= end){
+            const mid = start + Math.floor((end - start) / 2);
+ 
+            if(arr[mid] === x){
+                end = mid - 1;
+                res = mid;
+            }
+            else if(arr[mid] > x){
+                end = mid - 1;
+            }
+            else{
+                start = mid + 1;
+            }
+        }
+        
+        return res;
+    }
+    
+    lastOccurence(arr, n, x){
+        let start = 0;
+        let end = n - 1;
+        let res = -1;
+        
+        while(start <= end){
+            const mid = start + Math.floor((end - start) / 2);
+            
+            if(arr[mid] === x){
+                start = mid + 1;
+                res = mid;
+            }
+            else if(arr[mid] > x){
+                end = mid - 1;
+            }
+            else{
+                start = mid + 1;
+            }
+        }
+        
+        return res;
+    }
+}
+```
 </details>
 
 
@@ -110,14 +312,93 @@
 <details >
  <summary style="font-size: medium; font-weight: bold">1. Maximum Sum Subarray of Size K</summary>
 
+Question: https://www.geeksforgeeks.org/problems/max-sum-subarray-of-size-k5313/1
 ![img_15.png](img_15.png)
+
+```js
+/**
+ * @param {number} K
+ * @param {number[]} Arr
+ * @param {number} N
+ * @return {number}
+ */
+class Solution {
+  maximumSumSubarray(k, arr, n) {
+    let i = 0;
+    let j = 0;
+    let sum = 0;
+    let res = 0;
+    
+    while(j < n){
+        sum += arr[j];
+        
+        res = Math.max(res, sum);
+        
+        if(j - i + 1 < k){
+            j++;
+        }
+        else{
+            sum -= arr[i];
+            i++;
+            j++;
+        }
+    }
+    
+    return res;
+  }
+}
+
+```
 </details>
 
 
 <details >
  <summary style="font-size: medium; font-weight: bold">2. First -ve number in every window of size K</summary>
 
+Question: https://www.geeksforgeeks.org/problems/first-negative-integer-in-every-window-of-size-k3345/1
+![img_76.png](img_76.png)
+
 ![img_16.png](img_16.png)
+
+```js
+class Solution {
+/**
+* @param number n
+* @param number k
+* @param number[] arr
+
+* @returns number[]
+*/
+    printFirstNegativeInteger(n, k, arr) {
+        let i = 0;
+        let j = 0;
+        const queue = [];
+        const res = Array(n - k + 1).fill(0);
+        
+        while(j < n){
+            if(arr[j] < 0)
+                queue.push(arr[j]);
+            
+            if(j - i + 1 < k){
+                j++;
+            }
+            else{
+                if(queue.length !== 0){
+                    res[i] = queue[0];
+                    
+                    if(arr[i] === queue[0])
+                        queue.shift();
+                }
+                    
+                i++;
+                j++;
+            }
+        }
+        
+        return res;
+    }
+}
+```
 </details>
 
 
@@ -169,8 +450,33 @@
 <details >
  <summary style="font-size: medium; font-weight: bold">1. Nearest Greater to Right / Next Largest Element</summary>
 
+Question: https://www.interviewbit.com/problems/nearest-smaller-element/
+![img_77.png](img_77.png)
+
 ![Stack_2.jpg](images/Stack_2.jpg)
 ![Stack_3.jpg](images/Stack_3.jpg)
+
+```js
+function(A){
+    const res = [];
+    const stack = [];
+    
+    for(let a of A){
+        while(stack.length !== 0 && stack[stack.length - 1] >= a){
+            stack.pop();
+        }
+        
+        if(stack.length === 0)
+            res.push(-1);
+        else
+            res.push(stack[stack.length - 1]);
+            
+        stack.push(a);
+    }
+    
+    return res;
+}
+```
 </details>
 
 

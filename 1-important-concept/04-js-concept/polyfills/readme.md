@@ -181,6 +181,25 @@ Array.prototype.myReduce = function (callbackFn, initialValue) {
 - Single-value array, with and without the `initialValue` argument.
 - Passing the `index` and `array` to the reducer callback.
 - Sparse arrays, e.g. `[1, 2, , 4]`. The empty values should be ignored while traversing the array.
+
+```js
+const getMax = (a, b) => Math.max(a, b);
+
+// callback is invoked for each element in the array starting at index 0
+[1, 100].reduce(getMax, 50); // 100
+[50].reduce(getMax, 10); // 50
+
+// callback is invoked once for element at index 1
+[1, 100].reduce(getMax); // 100
+
+// callback is not invoked
+[50].reduce(getMax); // 50
+[].reduce(getMax, 1); // 1
+
+[].reduce(getMax); // TypeError
+```
+![img_2.png](img_2.png)
+    
 </details>
 
 <details >
