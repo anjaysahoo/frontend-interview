@@ -829,4 +829,45 @@ An alternative solution here is to use classes to retain a reference to the sele
 
 </details>
 
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">4. getElementsByStyle
+</summary>
+
+**Question:**
+
+https://www.greatfrontend.com/questions/javascript/get-elements-by-style
+![img_5.png](img_5.png)
+
+```js
+/**
+ * @param {Element} element
+ * @param {string} property
+ * @param {string} value
+ * @return {Array<Element>}
+ */
+export default function getElementsByStyle(element, property, value) {
+  const res = [];
+
+  function traverse(el) {
+    if(el === null)
+      return;
+
+    if(getComputedStyle(el).getPropertyValue(property) === value)
+      res.push(el);
+
+    for(let child of el.children)
+      traverse(child);
+  }
+
+  for(let child of element.children)
+      traverse(child);
+
+  return res;
+}
+```
+
+</details>
+
 </details>

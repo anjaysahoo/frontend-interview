@@ -65,6 +65,25 @@ const TemplateNode = ({ label,icon, id, config, inputHandles=[], outputHandles=[
         updateHandle(textarea.value);
     };
 
+    const handleCheckboxChange = (e, fieldName) => {
+        const value = e.target.value;
+        setFormValues((prevValues) => {
+            const currentValues = prevValues[fieldName] || [];
+            if (e.target.checked) {
+                return {
+                    ...prevValues,
+                    [fieldName]: [...currentValues, value],
+                };
+            } else {
+                return {
+                    ...prevValues,
+                    [fieldName]: currentValues.filter((item) => item !== value),
+                };
+            }
+        });
+    };
+
+
     const updateHandle = (value) => {
         const newHandles = extractVariables(value).reduce((acc, variable) => {
             if (isValidVariableName(variable)) {
@@ -167,6 +186,30 @@ const TemplateNode = ({ label,icon, id, config, inputHandles=[], outputHandles=[
                                     form={field.name}
                                     htmlFor={field.name}
                                 >{option.label}
+                                </label>
+                            </div>
+                        ))}
+                    </div>
+                );
+            case 'checkbox':
+                return (
+                    <div key={field.name} className={classes["node__fields__field"]}>
+                        <label>{field.label}</label>
+                        {field.options.map((option) => (
+                            <div className={classes["node__fields__field-checkbox"]}>
+                                <input
+                                    type="checkbox"
+                                    name={field.name}
+                                    id={`${field.name}-${option.value}`}
+                                    value={option.value}
+                                    checked={formValues[field.name]?.includes(option.value)}
+                                    onChange={(e) => handleCheckboxChange(e, field.name)}
+                                />
+                                <label
+                                    key={option.value}
+                                    htmlFor={`${field.name}-${option.value}`}
+                                >
+                                    {option.label}
                                 </label>
                             </div>
                         ))}
@@ -315,7 +358,7 @@ When we install React via npm, wegain access to these superpowers
 <details >
  <summary style="font-size: medium; font-weight: bold">useState()</summary>
 
-❌Wrong way to update state variable
+❌Wrong way to update state variable in `setInterval`
 ```js
 const [currentImageNo, setCurrentImageNo] = useState(0);
 
@@ -326,7 +369,7 @@ useEffect(() => {
 })
 ```
 
-✅Right way to update state variable
+✅Right way to update state variable in `setInterval`
 ```js
 const [currentImageNo, setCurrentImageNo] = useState(0);
 
@@ -339,6 +382,273 @@ useEffect(() => {
 In React, state updates inside a function use the state at the time the function was created.
 This means that the `currentImageNo` in your setInterval callback will always be `0` because
 it doesn't get the latest value from React's state.
+
+![img_12.png](img_12.png)
+![img_13.png](img_13.png)
+https://react.dev/reference/react/useState#updating-state-based-on-the-previous-state
+
+### Updating Objects in State
+
+- Treat all state in React as immutable.
+- When you store objects in state, mutating them will not trigger renders and will change the state in previous render “snapshots”.
+- Instead of mutating an object, create a new version of it, and trigger a re-render by setting state to it.
+- You can use the {...obj, something: 'newValue'} object spread syntax to create copies of objects.
+- Spread syntax is shallow: it only copies one level deep.
+- To update a nested object, you need to create copies all the way up from the place you’re updating.
+- To reduce repetitive copying code, use Immer.
+
+https://react.dev/learn/updating-objects-in-state
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">Important Example to go deep for above concept</summary>
+
+Question: https://www.greatfrontend.com/questions/user-interface/grid-lights/v/e1b65101-e094-410b-8a43-63f32bcad8db
+
+Below are two code and their logs, explain why logs are different even though logic for removing element from 'order' array is same
+
+#### Code:1
+````jsx
+import { useState } from 'react';
+
+
+export default function App() {
+  const [order, setOrder] = useState([]);
+
+  function updateCount (boxNo) {
+    setOrder((prevOrder) => {
+      const temp = [...prevOrder];
+      temp.push(boxNo);
+
+      if(temp.length === 8)
+        deactivateCells();
+
+      return temp;
+    })
+  }
+
+  function deactivateCells () {
+    const timer = setInterval(() => {
+      // Use the callback version of setOrder to ensure
+      // we are reading the most updated order value.
+      setOrder((origOrder) => {
+        // Make a clone to avoid mutation of the orders array.
+        const newOrder = origOrder.slice();
+        newOrder.pop();
+
+        console.log("newOrder : ", newOrder);
+
+        if (newOrder.length === 0) {
+          clearInterval(timer);
+        }
+
+        return newOrder;
+      });
+    }, 300);
+  }
+
+  return (
+    <div className="main">
+      <div className="row">
+        <div 
+          className="box"
+          style={{background: order.includes(0) ? 'green' : ''}}
+          onClick={() => updateCount(0)}
+        ></div>
+        <div 
+          className="box"
+          style={{background: order.includes(1) ? 'green' : ''}}
+          onClick={() => updateCount(1)}
+        ></div>
+        <div 
+          className="box"
+          style={{background: order.includes(2) ? 'green' : ''}}
+          onClick={() => updateCount(2)}
+        ></div>
+      </div>
+      <div className="mid">
+        <div 
+          className="box"
+          style={{background: order.includes(3) ? 'green' : ''}}
+          onClick={() => updateCount(3)}
+        ></div>
+        <div 
+          className="box"
+          style={{background: order.includes(5) ? 'green' : ''}}
+          onClick={() => updateCount(5)}
+        ></div>
+      </div>
+      <div className="row">
+       <div 
+          className="box"
+          style={{background: order.includes(6) ? 'green' : ''}}
+          onClick={() => updateCount(6)}
+        ></div>
+        <div 
+          className="box"
+          style={{background: order.includes(7) ? 'green' : ''}}
+          onClick={() => updateCount(7)}
+        ></div>
+        <div 
+          className="box"
+          style={{background: order.includes(8) ? 'green' : ''}}
+          onClick={() => updateCount(8)}
+        ></div>
+      </div>
+    </div>
+  );
+}
+````
+
+#### Log-1:
+```html
+newOrder :  (7) [0, 1, 2, 5, 8, 7, 6]
+App.js:28 newOrder :  (6) [0, 1, 2, 5, 8, 7]
+App.js:28 newOrder :  (7) [0, 1, 2, 5, 8, 7, 6]
+App.js:28 newOrder :  (6) [0, 1, 2, 5, 8, 7]
+App.js:28 newOrder :  (5) [0, 1, 2, 5, 8]
+App.js:28 newOrder :  (4) [0, 1, 2, 5]
+App.js:28 newOrder :  (5) [0, 1, 2, 5, 8]
+App.js:28 newOrder :  (4) [0, 1, 2, 5]
+App.js:28 newOrder :  (3) [0, 1, 2]
+App.js:28 newOrder :  (2) [0, 1]
+App.js:28 newOrder :  (3) [0, 1, 2]
+App.js:28 newOrder :  (2) [0, 1]
+App.js:28 newOrder :  [0]
+App.js:28 newOrder :  []
+App.js:28 newOrder :  [0]
+App.js:28 newOrder :  []
+App.js:28 newOrder :  []
+App.js:28 newOrder :  []
+```
+
+
+
+
+#### Code-2:
+
+```jsx
+import { useState } from 'react';
+
+// Make it easy to visualize the board.
+// Customize the board rendering just by changing
+// this 2D array. Note that all rows have to
+// contain the same number of elements in order
+// for the grid to render properly.
+const config = [
+  [1, 1, 1],
+  [1, 0, 1],
+  [1, 1, 1],
+];
+
+function Cell({ filled, label, onClick, isDisabled }) {
+  // Use <button> so that can use the keyboard to move between
+  // cells with Tab and activate them with Enter/Space.
+  return (
+    <button
+      aria-label={label}
+      type="button"
+      className={['cell', filled && 'cell--activated']
+        .filter(Boolean)
+        .join(' ')}
+      onClick={onClick}
+      // disabled prevents cells from responding to clicks.
+      disabled={isDisabled}
+    />
+  );
+}
+
+export default function App() {
+  const [order, setOrder] = useState([]);
+
+  // If necessary, disable clicking during deactivation is playing.
+  function deactivateCells() {
+    const timer = setInterval(() => {
+      // Use the callback version of setOrder to ensure
+      // we are reading the most updated order value.
+      setOrder((origOrder) => {
+        // Make a clone to avoid mutation of the orders array.
+        const newOrder = origOrder.slice();
+        newOrder.pop();
+
+        console.log("newOrder : ", newOrder);
+
+        if (newOrder.length === 0) {
+          clearInterval(timer);
+        }
+
+        return newOrder;
+      });
+    }, 300);
+  }
+
+  return (
+    <div className="wrapper">
+      <div
+        className="grid"
+        style={{
+          gridTemplateColumns: `repeat(${config[0].length}, 1fr)`,
+        }}>
+        {config.flat(1).map((value, index) =>
+          value ? (
+            <Cell
+              key={index}
+              label={`Cell ${index}`}
+              // Lookup efficiency can be improved by using
+              // a separate set/dict but that's overkill given
+              // the low number of cells.
+              filled={order.includes(index)}
+              isDisabled={
+                order.includes(index) 
+              }
+              onClick={() => {
+                // Make a clone to avoid mutation of the orders array.
+                const newOrder = [...order, index];
+                setOrder(newOrder);
+
+                // All the cells have been activated, we can proceed
+                // to deactivate them one by one.
+                if (
+                  newOrder.length ===
+                  config.flat(1).filter(Boolean).length
+                ) {
+                  deactivateCells();
+                }
+              }}
+            />
+          ) : (
+            <span key={index} />
+          ),
+        )}
+      </div>
+      {/* Helper to show the state */}
+      <pre>order array: {order.join(', ')}</pre>
+    </div>
+  );
+}
+```
+
+
+#### Log-2:
+```html
+newOrder :  (7) [0, 1, 2, 5, 8, 7, 6]
+App.js:47 newOrder :  (7) [0, 1, 2, 5, 8, 7, 6]
+App.js:47 newOrder :  (6) [0, 1, 2, 5, 8, 7]
+App.js:47 newOrder :  (6) [0, 1, 2, 5, 8, 7]
+App.js:47 newOrder :  (5) [0, 1, 2, 5, 8]
+App.js:47 newOrder :  (5) [0, 1, 2, 5, 8]
+App.js:47 newOrder :  (4) [0, 1, 2, 5]
+App.js:47 newOrder :  (4) [0, 1, 2, 5]
+App.js:47 newOrder :  (3) [0, 1, 2]
+App.js:47 newOrder :  (3) [0, 1, 2]
+App.js:47 newOrder :  (2) [0, 1]
+App.js:47 newOrder :  (2) [0, 1]
+App.js:47 newOrder :  [0]
+App.js:47 newOrder :  [0]
+App.js:47 newOrder :  []
+App.js:47 newOrder :  []
+```
+</details>
 </details>
 
 <details >
@@ -526,6 +836,7 @@ the `input` element.
 ![img_6.png](img_6.png)
 
 </details>
+
 
 </details>
 

@@ -1514,4 +1514,6 @@ https://www.greatfrontend.com/questions/quiz/what-are-symbols-used-for
 1. Always return `this` in any function **CHAIN** type of question
    1. Good Example 1: [3-short-questions/greatFrontEnd/07-jQuery.css](../../3-short-questions/greatFrontEnd/code.md#07)
    2. Good Example 2: [3-short-questions/general/01](../../3-short-questions/general/code.md#01)
+2. Read question properly before solving 
+3. Go thorough given testcase to get hint. Don't keep spending time by reading question again and again
 </details>

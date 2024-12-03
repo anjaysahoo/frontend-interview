@@ -1700,6 +1700,908 @@ class Solution {
 ```
 </details>
 
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">04. Construction of Binary Tree & Binary Search Tree</summary>
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">1. Using Preorder & Inorder Traversal</summary>
+
+Question: https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
+![img_82.png](img_82.png)
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} preorder
+ * @param {number[]} inorder
+ * @return {TreeNode}
+ */
+var buildTree = function(preorder, inorder) {
+    const len = preorder.length;
+    const inOrderMap = new Map();
+
+    for(let i = 0; i < len; i++)
+        inOrderMap.set(inorder[i], i);
+
+    return solve(0, preorder, 0, len - 1, inorder, inOrderMap);
+};
+
+function solve(preStart, preorder, inStart, inEnd, inorder, inOrderMap){
+    if(inStart > inEnd || preStart >= preorder.length)
+        return null;
+
+    const root = new TreeNode(preorder[preStart]);
+    const mid = inOrderMap.get(preorder[preStart]);
+    
+    root.left = solve(preStart + 1, preorder, inStart, mid - 1, inorder, inOrderMap);
+    root.right = solve(preStart + (mid - inStart + 1), preorder, mid + 1, inEnd, inorder, inOrderMap);
+
+    return root;
+}
+```
+
+**The basic idea is here:**
+- Say we have 2 arrays, PRE and IN.
+- Preorder traversing implies that PRE[0] is the root node.
+- Then we can find this PRE[0] in IN, say it's IN[5].
+- Now we know that IN[5] is root, so we know that IN[0] - IN[4] is on the left side, IN[6] to the end is on the right side.
+- Recursively doing this on subarrays, we can build a tree out of it :)
+</details>
+
+<details >
+ <summary style="font-size: small; font-weight: bold">2. Using Preorder & Postorder Traversal</summary>
+
+Question: https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/description/
+![img_83.png](img_83.png)
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} preorder
+ * @param {number[]} postorder
+ * @return {TreeNode}
+ */
+var constructFromPrePost = function(preorder, postorder) {
+    const len = preorder.length;
+    const postOrderMap = new Map();
+
+    for(let i = 0; i < len; i++)
+        postOrderMap.set(postorder[i], i);
+
+    return solve(0, len - 1, preorder, 0, len - 1, postorder, postOrderMap);
+};
+
+function solve(preStart, preEnd, preorder, postStart, postEnd, postorder, postOrderMap) {
+    if(preStart > preEnd)
+        return null;
+
+    const root = new TreeNode(preorder[preStart]);
+
+    if(preStart === preEnd)
+        return root;
+    
+    const postIndex = postOrderMap.get(preorder[preStart + 1]);
+
+    const leftLen = postIndex - postStart + 1;
+    root.left = solve(preStart + 1, preStart + leftLen, preorder, postStart, postIndex, postorder, postOrderMap);
+    root.right = solve(preStart + leftLen + 1, preEnd, preorder, postIndex + 1, postEnd - 1, postorder, postOrderMap);
+
+    return root;
+} 
+```
+</details>
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">3. Using Inorder & Postorder Traversal</summary>
+
+Question: https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/description/
+![img_84.png](img_84.png)
+
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} inorder
+ * @param {number[]} postorder
+ * @return {TreeNode}
+ */
+var buildTree = function(inorder, postorder) {
+    const len = inorder.length;
+    const inorderMap = new Map();
+
+    for(let i = 0; i < len; i++)
+        inorderMap.set(inorder[i], i);
+
+    return solve(len - 1, postorder, 0, len - 1, inorder, inorderMap);
+};
+
+function solve(postEnd, postorder, inStart, inEnd, inorder, inorderMap) {
+    if(postEnd < 0 || inEnd < inStart)
+        return null;
+
+    const val = postorder[postEnd];
+    const root = new TreeNode(val);
+
+    const inIndex = inorderMap.get(val);
+
+    root.left = solve(postEnd - (inEnd - inIndex + 1), postorder, inStart, inIndex - 1, inorder, inorderMap);
+    root.right = solve(postEnd - 1, postorder, inIndex + 1, inEnd, inorder, inorderMap);
+
+    return root;
+}
+```
+</details>
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">4. Binary Search Tree from Preorder Traversal</summary>
+
+Question: https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/description/
+![img_85.png](img_85.png)
+
+#### Solution-1:
+Convert the question into PreOrder and InOrder Traversal.
+**As sorted array in BST is equal to InOrder**
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} preorder
+ * @return {TreeNode}
+ */
+var bstFromPreorder = function(preorder) {
+    const len = preorder.length;
+    const inorder = [...preorder].sort((a, b) => a - b);
+    const inorderMap = new Map();
+
+    for(let i = 0; i < len; i++)
+        inorderMap.set(inorder[i], i);
+
+    return solve(0, preorder, 0, len - 1, inorder, inorderMap);
+};
+
+function solve(preStart, preorder, inStart, inEnd, inorder, inorderMap) {
+    if(preStart >= preorder.length || inStart > inEnd)
+        return null;
+
+    const val = preorder[preStart];
+    const root = new TreeNode(val);
+
+    const inIndex = inorderMap.get(val);
+
+    root.left = solve(preStart + 1, preorder, inStart, inIndex - 1, inorder, inorderMap);
+    root.right = solve(preStart + inIndex - inStart + 1, preorder, inIndex + 1, inEnd, inorder, inorderMap);
+
+    return root;
+}
+```
+
+
+#### Solution-2:
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} preorder
+ * @return {TreeNode}
+ */
+var bstFromPreorder = function(preorder) {
+    const len = preorder.length;
+
+    return solve(0, len - 1, preorder);
+};
+
+function solve(preStart, preEnd, preorder){
+    if(preStart > preEnd)
+        return null;
+
+    const val = preorder[preStart];
+    const root = new TreeNode(val);
+
+    let preIndex;
+
+    for(preIndex = preStart; preIndex <= preEnd; preIndex++)
+        if(preorder[preIndex] > val)
+            break;
+
+    root.left = solve(preStart + 1, preIndex - 1, preorder);
+    root.right = solve(preIndex, preEnd, preorder);
+
+    return root;
+}
+```
+</details>
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">5. Convert Sorted Array to Binary Search Tree</summary>
+
+Question: https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/description/
+![img_86.png](img_86.png)
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} nums
+ * @return {TreeNode}
+ */
+var sortedArrayToBST = function(nums) {
+    const len = nums.length;
+
+    return solve(0, len - 1, nums);
+};
+
+function solve(inStart, inEnd, inorder) {
+    if(inStart > inEnd)
+        return null;
+
+    const inIndex = inStart + Math.floor((inEnd - inStart) / 2);
+    const val = inorder[inIndex];
+    const root = new TreeNode(val);
+
+    root.left = solve(inStart, inIndex - 1, inorder);
+    root.right = solve(inIndex + 1, inEnd, inorder);
+
+    return root;
+}
+```
+</details>
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">05. Convert Sorted Array to Binary Search Tree</summary>
+
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">06. Delete Node in a BST</summary>
+
+Question: https://leetcode.com/problems/delete-node-in-a-bst/description/
+
+![img_87.png](img_87.png)
+
+![img_88.png](img_88.png)
+
+#### My Solution:
+Below solution tries to get possible 1 & 2 answer
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} key
+ * @return {TreeNode}
+ */
+var deleteNode = function(root, key) {
+
+    if(!root)
+        return null;
+
+    let [node, parent] = findNodeParent(root, key, null);
+
+    if(!node)
+        return root;
+    
+    if(!node.left && !node.right){
+        if(!parent)
+            return null;
+
+        if(parent.left === node)
+            parent.left = null;
+        else
+            parent.right = null;
+    }
+    else if(node.left){
+        let tempLeft = node.left;
+
+        while(tempLeft.right)
+            tempLeft = tempLeft.right;
+
+        tempLeft.right = node.right;
+
+        if(!parent)
+            return node.left;
+
+        if(parent.left === node)
+            parent.left = node.left;
+        else
+            parent.right = node.left;
+    }
+    else{
+        let tempRight = node.right;
+
+        while(tempRight.left)
+            tempRight = tempRight.left;
+
+        tempRight.left = node.left;
+
+        if(!parent)
+            return node.right;
+
+        if(parent.left === node)
+            parent.left = node.right;
+        else
+            parent.right = node.right;
+    }
+
+    return root;
+};
+
+function findNodeParent(root, key, parent) {
+    if(!root)
+        return [null, null];
+
+    if(root.val === key){
+        return [root, parent];
+    }
+
+    const [left, leftParent] = findNodeParent(root.left, key, root);
+    const [right, rightParent] = findNodeParent(root.right, key, root);
+
+    if(!left && !right)
+        return [null, null];
+
+    return left ? [left, leftParent] : [right, rightParent];
+}
+
+
+```
+
+
+#### Leetcode Solution:
+
+Below solution tries to get possible 3 answer
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} key
+ * @return {TreeNode}
+ */
+var deleteNode = function(root, key) {
+      if(root == null)
+            return null;
+        
+        if(key < root.val){
+            root.left = deleteNode(root.left, key);
+        }
+        else if(key > root.val){
+            root.right = deleteNode(root.right, key);
+        }
+        else{
+            if(root.right == null){
+                root = root.left;
+            }
+            else if(root.left == null){
+                root = root.right;
+            }
+            else{
+                let rightSmallest = root.right;;
+                while(rightSmallest.left != null)
+                    rightSmallest = rightSmallest.left;
+                
+                root.val = rightSmallest.val;
+                
+                root.right = deleteNode(root.right, rightSmallest.val);
+            }
+        }
+        
+        return root;
+};
+```
+
+**Steps:**
+1. Recursively find the node that has the same value as the key, while setting the left/right nodes equal to the returned subtree
+2. Once the node is found, have to handle the below 4 cases
+
+- node doesn't have left or right - return null
+- node only has left subtree- return the left subtree
+- node only has right subtree- return the right subtree
+- node has both left and right - find the minimum value in the right subtree, set that value to the currently found node, then recursively delete the minimum value in the right subtree
+
+https://leetcode.com/problems/delete-node-in-a-bst/solutions/93296/Recursive-Easy-to-Understand-Java-Solution/
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">07. Binary InOrder / PreOrder Traversal</summary>
+
+### Inorder (Left -> Root -> Right)
+
+Question: https://leetcode.com/problems/binary-tree-inorder-traversal/description/
+![img_89.png](img_89.png)
+
+1. Recursive Solution
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function(root) {
+    const res = [];
+
+    solve(root, res);
+
+    return res;
+};
+
+function solve(root, res){
+    if(!root)
+        return;
+
+    solve(root.left, res);
+    res.push(root.val);
+    solve(root.right, res);
+}
+```
+
+2. Iterative Solution
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function(root) {
+    const res = [];
+    const stack = [];
+
+    while(root){
+        stack.push(root);
+        root = root.left;
+    }
+
+    while(stack.length !== 0){
+        let node = stack.pop();
+
+        res.push(node.val);
+
+        node = node.right;
+        if(node){
+            while(node){
+                stack.push(node);
+                node = node.left;
+            }
+        }
+    }
+
+    return res;
+};
+```
+
+3. Morris Traversal (Space Complexity O(1))
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function(root) {
+    const res = [];
+    let curr = root;
+
+    while(curr){
+        if(curr.left === null){
+            res.push(curr.val);
+            curr = curr.right;
+        }
+        else{
+            let prev = curr.left;
+
+            while(prev.right !== null && prev.right !== curr)
+                prev = prev.right;
+
+            if(prev.right === null){
+                prev.right = curr;
+                curr = curr.left;
+            }
+            else{
+                res.push(curr.val);
+                curr = curr.right;
+                prev.right = null;
+            }
+        }
+    }
+
+    return res;
+};
+```
+![img_90.png](img_90.png)
+Morris-traversal is similar to recursive/iterative traversal, but we need to modify the tree structure during the
+traversal. before we visiting the left tree of a root, we will build a back-edge between rightmost node in left tree and the root. So we can go back to the root node after we are done with the left tree. Then we locate the rightmost node in left subtree again, cut the back-edge, recover the tree structure and start visit right subtree.
+
+
+### Preorder (Left -> Root -> Right)
+
+Question: https://leetcode.com/problems/binary-tree-preorder-traversal/description/
+
+1. Morris Traversal (Space Complexity O(1))
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var preorderTraversal = function(root) {
+    let curr = root;
+    const res = [];
+
+    while(curr){
+        if(curr.left === null){
+            res.push(curr.val);
+            curr = curr.right;
+        }
+        else{
+            let prev = curr.left;
+
+            while(prev.right !== null && prev.right !== curr)
+                prev = prev.right;
+
+            if(prev.right === null){
+                res.push(curr.val); // Only change from Inorder
+                prev.right = curr;
+                curr = curr.left;
+            }
+            else{
+                prev.right = null;
+                curr = curr.right;
+            }
+        }
+    }
+
+    return res;
+};
+```
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">08.  Binary Search Tree Iterator</summary>
+
+Question: https://leetcode.com/problems/binary-search-tree-iterator/description/
+![img_92.png](img_92.png)
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ */
+
+ const stack = [];
+var BSTIterator = function(root) {
+    while(root){
+        stack.push(root);
+        root = root.left;
+    }
+};
+
+/**
+ * @return {number}
+ */
+BSTIterator.prototype.next = function() {
+    let node = stack.pop();
+    const res = node.val;
+
+    node = node.right;
+
+    while(node){
+        stack.push(node);
+        node = node.left;
+    }
+
+    return res;
+};
+
+/**
+ * @return {boolean}
+ */
+BSTIterator.prototype.hasNext = function() {
+    return stack.length !== 0;
+};
+
+/** 
+ * Your BSTIterator object will be instantiated and called as such:
+ * var obj = new BSTIterator(root)
+ * var param_1 = obj.next()
+ * var param_2 = obj.hasNext()
+ */
+```
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">09. Two Sum In BST | Check if there exists a pair with Sum K</summary>
+
+Question: https://leetcode.com/problems/two-sum-iv-input-is-a-bst/description/
+![img_91.png](img_91.png)
+
+1. **T: O(n) & S: O(n)**
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} k
+ * @return {boolean}
+ */
+var findTarget = function(root, k) {
+    const map = new Map();
+    return solve(root, map, k);
+};
+
+function solve(root, map, k){
+    if(!root)
+        return false;
+
+    const diff = k - root.val;
+    if(map.has(diff))
+        return true;
+    
+    map.set(root.val, root);
+
+    return solve(root.left, map, k) || solve(root.right, map, k); 
+}
+```
+
+2. **T: O(n) & S: O(2*h) using BST Iterator**
+
+    1. https://leetcode.com/problems/binary-search-tree-iterator/submissions/1468868455/
+    2. https://www.youtube.com/watch?v=ssL3sHwPeb4&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=54
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} k
+ * @return {boolean}
+ */
+
+const stackNext = [];
+const stackPrev = [];
+
+var findTarget = function(root, k) {
+    pushAllLeft(root);
+    pushAllRight(root);
+
+    let forwardVal = next();
+    let backwardVal = prev();
+
+    while(hasNext() && hasPrev() && forwardVal !== backwardVal){
+        const total = forwardVal + backwardVal;
+
+        if(total === k){
+            return true;
+        }
+        else if(total < k){
+            forwardVal = next();
+        }
+        else{
+            backwardVal = prev();
+        }
+    }
+
+    return false;
+};
+
+function pushAllLeft(node) {
+    while(node){
+        stackNext.push(node);
+        node = node.left;
+    }
+}
+
+function next() {
+    let node = stackNext.pop();
+    pushAllLeft(node.right)
+
+    return node.val;
+}
+
+function hasNext() {
+    return stackNext.length !== 0;
+}
+
+function pushAllRight(node) {
+   while(node){
+        stackPrev.push(node);
+        node = node.right;
+    }
+}
+
+function prev() {
+    let node = stackPrev.pop();
+    pushAllRight(node.left);
+    
+    return node.val;
+}
+
+function hasPrev() {
+    return stackPrev.length !== 0;
+}
+```
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">10. Largest BST</summary>
+
+Question: https://www.geeksforgeeks.org/problems/largest-bst/1
+![img_93.png](img_93.png)
+
+```js
+/*
+class Node
+{
+    constructor(x){
+        this.key=x;
+        this.left=null;
+        this.right=null;
+    }
+}
+*/
+
+/**
+ * @param {Node} root
+ * @return {number}
+ */
+ 
+class NodeValue {
+    minNode;
+    maxNode;
+    maxSize;
+    
+    constructor(minNode, maxNode, maxSize) {
+        this.minNode = minNode;
+        this.maxNode = maxNode;
+        this.maxSize = maxSize;
+    }
+}
+
+
+class Solution {
+    largestBst(root) {
+        return this.largestBstHelper(root).maxSize;
+    }
+    
+    largestBstHelper(root) {
+        if(!root){
+            return new NodeValue(Infinity, -Infinity, 0);
+        };
+        
+        const leftNodeVal = this.largestBstHelper(root.left);
+        const rightNodeVal = this.largestBstHelper(root.right);
+        
+        if(root.key > leftNodeVal.maxNode && root.key < rightNodeVal.minNode){
+            return new NodeValue(Math.min(root.key, leftNodeVal.minNode), 
+                                 Math.max(root.key, rightNodeVal.maxNode),
+                                 leftNodeVal.maxSize + rightNodeVal.maxSize + 1)
+        }
+        
+        return new NodeValue(-Infinity, Infinity, Math.max(leftNodeVal.maxSize, rightNodeVal.maxSize));
+    }
+}
+```
+https://www.youtube.com/watch?v=X0oXMdtUDwo&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=57
+</details>
+
 </details>
 
 </details>
