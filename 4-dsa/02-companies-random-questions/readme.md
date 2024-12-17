@@ -340,3 +340,40 @@ console.log(strobogrammatic_num(2));
 // Output: 88 11 96 69
 ```
 </details>
+
+
+
+
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">06. Convert 12 hours to 24 hours (Razorpay)</summary>
+
+Question: 
+Input: 01:24 PM
+Output: 13:24
+
+
+**Solution:**
+```js
+function convert12to24Hour(time12h) {
+    const [time, modifier] = time12h.split(' ');
+    let [hour, min] = time.split(':');
+
+    if(modifier === 'PM')
+        hour = 12 + Number(hour);
+
+    return `${hour}:${min}`;
+}
+
+console.log("24 Hour time : ", convert12to24Hour('12:00 AM'));
+console.log("24 Hour time : ", convert12to24Hour('12:53 AM'));
+console.log("24 Hour time : ", convert12to24Hour('01:00 AM'));
+console.log("24 Hour time : ", convert12to24Hour('01:05 AM'));
+console.log("24 Hour time : ", convert12to24Hour('12:00 PM'));
+console.log("24 Hour time : ", convert12to24Hour('12:05 PM'));
+console.log("24 Hour time : ", convert12to24Hour('01:53 PM'));
+```
+</details>

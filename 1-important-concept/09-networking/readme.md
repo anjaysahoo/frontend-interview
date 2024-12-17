@@ -147,6 +147,7 @@ Looking code-wise the critical rendering path is as follows:
 - In theory parser-blocking resources are worse than merely render-blocking ones, as images or additional scripts or stylesheet won't be discovered until the parser reaches those HTML tags.
 
 - In practice this is rarely a problem, as the [browser's preload scanner](https://web.dev/articles/preload-scanner) can quickly identify important resources that need to be downloaded, without pausing to run any scripts.
+- Why is it generally a good idea to position CSS `<link>`s between `<head></head>` and JS `<script>`s just before `</body>`? https://www.greatfrontend.com/questions/quiz/css-link-between-head-and-js-script-just-before-body?format=quiz
 - Referred Article: https://www.debugbear.com/blog/visualize-render-blocking-scripts.
 
 3. 

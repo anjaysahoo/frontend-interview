@@ -870,4 +870,8 @@ export default function getElementsByStyle(element, property, value) {
 
 </details>
 
+1. AJAX: 
+   1. https://www.greatfrontend.com/questions/quiz/what-are-the-advantages-and-disadvantages-of-using-ajax?format=quiz
+   2. https://www.greatfrontend.com/questions/quiz/explain-ajax-in-as-much-detail-as-possible
+3. 
 </details>

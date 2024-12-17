@@ -530,102 +530,116 @@ App.js:28 newOrder :  []
 ```jsx
 import { useState } from 'react';
 
-// Make it easy to visualize the board.
-// Customize the board rendering just by changing
-// this 2D array. Note that all rows have to
-// contain the same number of elements in order
-// for the grid to render properly.
-const config = [
-  [1, 1, 1],
-  [1, 0, 1],
-  [1, 1, 1],
-];
-
-function Cell({ filled, label, onClick, isDisabled }) {
-  // Use <button> so that can use the keyboard to move between
-  // cells with Tab and activate them with Enter/Space.
-  return (
-    <button
-      aria-label={label}
-      type="button"
-      className={['cell', filled && 'cell--activated']
-        .filter(Boolean)
-        .join(' ')}
-      onClick={onClick}
-      // disabled prevents cells from responding to clicks.
-      disabled={isDisabled}
-    />
-  );
-}
 
 export default function App() {
-  const [order, setOrder] = useState([]);
+    const [order, setOrder] = useState([]);
 
-  // If necessary, disable clicking during deactivation is playing.
-  function deactivateCells() {
-    const timer = setInterval(() => {
-      // Use the callback version of setOrder to ensure
-      // we are reading the most updated order value.
-      setOrder((origOrder) => {
-        // Make a clone to avoid mutation of the orders array.
-        const newOrder = origOrder.slice();
-        newOrder.pop();
+    function updateCount (boxNo) {
+        console.log("prevOrder : ", order);
+        const temp = [...order, boxNo];
+        setOrder(temp);
 
-        console.log("newOrder : ", newOrder);
+        if(temp.length === 8)
+            deactivateCells();
+    }
 
-        if (newOrder.length === 0) {
-          clearInterval(timer);
-        }
+    /** If we use below function instead of above, we will see
+     * two blocks getting earse at a time, which is not expected
+     * behavior we are looking for
+     */
+    //  function updateCount (boxNo) {
+    //   setOrder((prevOrder) => {
+    //     console.log("prevOrder : ", prevOrder);
+    //     const temp = [...prevOrder];
+    //     temp.push(boxNo);
 
-        return newOrder;
-      });
-    }, 300);
-  }
+    //     if(temp.length === 8)
+    //       deactivateCells();
 
-  return (
-    <div className="wrapper">
-      <div
-        className="grid"
-        style={{
-          gridTemplateColumns: `repeat(${config[0].length}, 1fr)`,
-        }}>
-        {config.flat(1).map((value, index) =>
-          value ? (
-            <Cell
-              key={index}
-              label={`Cell ${index}`}
-              // Lookup efficiency can be improved by using
-              // a separate set/dict but that's overkill given
-              // the low number of cells.
-              filled={order.includes(index)}
-              isDisabled={
-                order.includes(index) 
-              }
-              onClick={() => {
+    //     return temp;
+    //   })
+    // }
+
+    function deactivateCells () {
+        const timer = setInterval(() => {
+            // Use the callback version of setOrder to ensure
+            // we are reading the most updated order value.
+            setOrder((origOrder) => {
                 // Make a clone to avoid mutation of the orders array.
-                const newOrder = [...order, index];
-                setOrder(newOrder);
+                const newOrder = origOrder.slice();
+                newOrder.pop();
 
-                // All the cells have been activated, we can proceed
-                // to deactivate them one by one.
-                if (
-                  newOrder.length ===
-                  config.flat(1).filter(Boolean).length
-                ) {
-                  deactivateCells();
+                console.log("newOrder : ", newOrder);
+
+                if (newOrder.length === 0) {
+                    clearInterval(timer);
                 }
-              }}
-            />
-          ) : (
-            <span key={index} />
-          ),
-        )}
-      </div>
-      {/* Helper to show the state */}
-      <pre>order array: {order.join(', ')}</pre>
-    </div>
-  );
+
+                return newOrder;
+            });
+        }, 300);
+    }
+
+    return (
+        <div className="main">
+            <div className="row">
+                <button
+                    className="box"
+                    style={{background: order.includes(0) ? 'green' : ''}}
+                    onClick={() => updateCount(0)}
+                    disabled={order.includes(0) || order.length === 8}
+                ></button>
+                <button
+                    className="box"
+                    style={{background: order.includes(1) ? 'green' : ''}}
+                    onClick={() => updateCount(1)}
+                    disabled={order.includes(1) || order.length === 8}
+                ></button>
+                <button
+                    className="box"
+                    style={{background: order.includes(2) ? 'green' : ''}}
+                    onClick={() => updateCount(2)}
+                    disabled={order.includes(2) || order.length === 8}
+                ></button>
+            </div>
+            <div className="mid">
+                <button
+                    className="box"
+                    style={{background: order.includes(3) ? 'green' : ''}}
+                    onClick={() => updateCount(3)}
+                    disabled={order.includes(3) || order.length === 8}
+                ></button>
+                <button
+                    className="box"
+                    style={{background: order.includes(5) ? 'green' : ''}}
+                    onClick={() => updateCount(5)}
+                    disabled={order.includes(5) || order.length === 8}
+                ></button>
+            </div>
+            <div className="row">
+                <button
+                    className="box"
+                    style={{background: order.includes(6) ? 'green' : ''}}
+                    onClick={() => updateCount(6)}
+                    disabled={order.includes(6) || order.length === 8}
+                ></button>
+                <button
+                    className="box"
+                    style={{background: order.includes(7) ? 'green' : ''}}
+                    onClick={() => updateCount(7)}
+                    disabled={order.includes(7) || order.length === 8}
+                ></button>
+                <button
+                    className="box"
+                    style={{background: order.includes(8) ? 'green' : ''}}
+                    onClick={() => updateCount(8)}
+                    disabled={order.includes(8) || order.length === 8}
+                ></button>
+            </div>
+        </div>
+    );
 }
+
 ```
 
 
@@ -868,13 +882,79 @@ the `input` element.
    to the actual DOM accordingly.It's important to understand these fundamentals in order
    to unlock a world of possibilities for front-end developers!
 
-3. _Do you want to understand and dive deep into it?_
+
+
+3. **React Fiber** is a complete rewrite of **React's reconciliation** algorithm, introduced in React 16. It improves the rendering process by **breaking down rendering work into smaller units**, **allowing React to pause and resume work**, which makes the UI more responsive. This approach enables features like time slicing and suspense, which were not possible with the previous stack-based algorithm.
+
+4. _Do you want to understand and dive deep into it?_
    Take a look at this awesome React Fiber architecture repository
    on the web: https://github.com/acdlite/react-fiber-architecture
 
+5. Reconciliation Cycle: https://www.greatfrontend.com/questions/quiz/what-is-reconciliation-in-react?format=quiz
 
 <details >
- <summary style="font-size: medium; font-weight: bold">Why not to use index as key in React Lists</summary>
+ <summary style="font-size: small; font-weight: bold">React Fiber</summary>
+
+---
+title: What is React Fiber and how is it an improvement over the previous approach?
+---
+## What is React Fiber and how is it an improvement over the previous approach?
+
+### Introduction to React Fiber
+
+React Fiber is a reimplementation of React's core algorithm for rendering and reconciliation. It was introduced in React 16 to address limitations in the previous stack-based algorithm. The primary goal of Fiber is to enable incremental rendering of the virtual DOM, which allows React to split rendering work into chunks and spread it out over multiple frames.
+
+### Key improvements over the previous approach
+
+#### Incremental rendering
+
+The previous stack-based algorithm processed updates in a single, synchronous pass, which could lead to performance issues, especially with complex UIs. React Fiber breaks down rendering work into smaller units called "fibers," allowing React to pause and resume work. This makes the UI more responsive and prevents blocking the main thread for long periods.
+
+#### Time slicing
+
+React Fiber introduces the concept of time slicing, which allows React to prioritize updates based on their urgency. For example, user interactions like clicks and key presses can be prioritized over less critical updates. This ensures that the UI remains responsive even during heavy rendering tasks.
+
+#### Concurrency
+
+With Fiber, React can work on multiple tasks concurrently. This means that React can start rendering updates while still processing other tasks, leading to a smoother and more responsive user experience.
+
+#### Error boundaries
+
+React Fiber introduced error boundaries, which allow developers to catch and handle errors in the component tree gracefully. This was not possible with the previous stack-based algorithm, where errors could cause the entire application to crash.
+
+#### Improved support for animations
+
+Fiber's incremental rendering and time slicing capabilities make it easier to implement smooth animations and transitions. React can now prioritize animation frames and ensure that they are rendered in a timely manner, leading to a better user experience.
+
+### Code example
+
+Here's a simple example to illustrate how React Fiber improves rendering performance:
+
+```jsx
+class MyComponent extends React.Component {
+  state = {
+    items: Array.from({ length: 10000 }, (_, i) => i)
+  };
+
+  render() {
+    return (
+      <div>
+        {this.state.items.map(item => (
+          <div key={item}>{item}</div>
+        ))}
+      </div>
+    );
+  }
+}
+```
+
+With the previous stack-based algorithm, rendering this component could cause the UI to freeze. With React Fiber, the rendering work is broken down into smaller units, allowing React to pause and resume work, keeping the UI responsive.
+
+Referred: https://www.greatfrontend.com/questions/quiz/what-is-react-fiber-and-how-is-it-an-improvement-over-the-previous-approach?format=quiz
+</details>
+
+<details >
+ <summary style="font-size: small; font-weight: bold">Why not to use index as key in React Lists</summary>
 
 Suppose we've a list of elements, with key attribute as index.
 
@@ -2078,6 +2158,7 @@ const fetchJobs = async () => {
 <details >
  <summary style="font-size: x-large; font-weight: bold">Hooks</summary>
 
+Hooks in React allow you to use state and other React features without writing a class. They make it easier to reuse stateful logic between components, improve code readability, and simplify the codebase by reducing the need for lifecycle methods. Hooks like useState and useEffect are commonly used to manage state and side effects in functional components.
 <details >
  <summary style="font-size: large; font-weight: bold">Simple Custom Hooks</summary>
 
@@ -2611,6 +2692,12 @@ To know more about `arePropsEqual` and usage details refer to: https://react.dev
 Referred article for both topic: https://blog.webdevsimplified.com/2020-05/memoization-in-react/
 
 
+### We can `useMemo()`, `useCallback()` and `React.memo()` all in combination to prevent unnecessary re-renders of child components.
+
+Since each time parent is re-render it will re-render child components
+### 1. To prevent unnecessary props changes we can use `useMemo()` for variable & `useCallback()` for functions.
+### 2. Once we prevent unnecessary props changes, we can use `React.memo()` to skip re-rendering of child components when props are unchanged.
+
 <details>
  <summary style="font-size: medium; font-weight: bold">useMemo Polyfill</summary>
 
@@ -2998,6 +3085,74 @@ const Navbar = () => {
 export default Navbar;
 
 ```
+
+
+---
+title: What are some pitfalls about using context in React?
+---
+
+## TL;DR
+
+Using context in React can lead to performance issues if not managed properly. It can cause unnecessary re-renders of components that consume the context, even if the part of the context they use hasn't changed. Additionally, overusing context for state management can make the code harder to understand and maintain. It's important to use context sparingly and consider other state management solutions like Redux or Zustand for more complex state needs.
+
+---
+
+## Pitfalls about using context in React
+
+### Performance issues
+
+One of the main pitfalls of using context in React is the potential for performance issues. When the context value changes, all components that consume the context will re-render, even if they don't use the part of the context that changed. This can lead to unnecessary re-renders and degrade the performance of your application.
+
+#### Example
+
+```jsx
+const MyContext = React.createContext();
+
+function ParentComponent() {
+  const [value, setValue] = React.useState(0);
+
+  return (
+    <MyContext.Provider value={value}>
+      <ChildComponent />
+    </MyContext.Provider>
+  );
+}
+
+function ChildComponent() {
+  const value = React.useContext(MyContext);
+  console.log('ChildComponent re-rendered');
+  return <div>{value}</div>;
+}
+```
+
+In this example, `ChildComponent` will re-render every time the `value` in `ParentComponent` changes, even if `ChildComponent` doesn't need to update.
+
+### Overusing context
+
+Using context for state management can make the code harder to understand and maintain. Context is best suited for global state that doesn't change frequently, such as theme settings or user authentication status. Overusing context for more complex state management can lead to a tangled and hard-to-follow codebase.
+
+### Debugging difficulties
+
+Debugging issues related to context can be challenging. Since context updates can trigger re-renders in multiple components, it can be difficult to trace the source of a bug or performance issue. This is especially true in larger applications with many context providers and consumers.
+
+### Lack of fine-grained control
+
+Context provides a way to pass data through the component tree without having to pass props down manually at every level. However, it lacks fine-grained control over which components should re-render when the context value changes. This can lead to performance bottlenecks if not managed carefully.
+
+### Alternatives to context
+
+For more complex state management needs, consider using other state management solutions like Redux, Zustand, or Recoil. These libraries provide more fine-grained control over state updates and can help avoid some of the pitfalls associated with using context.
+
+https://www.greatfrontend.com/questions/quiz/what-are-some-pitfalls-about-using-context-in-react?format=quiz
+
+## Further reading
+
+- [React Context API](https://reactjs.org/docs/context.html)
+- [React Performance Optimization](https://reactjs.org/docs/optimizing-performance.html)
+- [Redux](https://redux.js.org/)
+- [Zustand](https://github.com/pmndrs/zustand)
+- [Recoil](https://recoiljs.org/)
+
 </details>
 
 
@@ -3182,6 +3337,11 @@ export default ItemList;
 <details >
  <summary style="font-size: x-large; font-weight: bold">react-router-dom</summary>
 
+<details >
+ <summary style="font-size: large; font-weight: bold">Usage</summary>
+
+
+</details>
 </details>
 
 
@@ -4182,4 +4342,18 @@ function TouchExample() {
 These event handlers enable React to respond to a wide range of user interactions, making it easier to build interactive UIs.
 </details>
 
+</details>
+
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Forms</summary>
+
+1. Multistep Form Custom Hook With React And TypeScript: https://www.youtube.com/watch?v=uDCBSnWkuH0
+2. React Hook Form (with Zod): https://www.youtube.com/watch?v=qyzznUNe1ho
+   1. https://github.com/piyush-eon/react-hook-form-tutorial/tree/master
 </details>

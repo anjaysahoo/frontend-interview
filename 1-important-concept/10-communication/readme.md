@@ -344,7 +344,7 @@ app.listen(port, () => {
 ```
 
 
-Frontend
+Frontend(Vanilla JS)
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -372,6 +372,22 @@ Frontend
 ```
 
 Full code: https://github.com/namastedev/namaste-frontend-system-design/tree/master/CommunicationTechniques/sse
+
+Frontend(React)
+```jsx
+const [data, setData] = useState<{ num: number } | null>();
+useEffect(() => {
+    const evtSource = new EventSource("http://localhost:4000/event-source");
+    evtSource.onmessage = (event) => {
+      if (event.data) {
+        setData(JSON.parse(event.data));
+      }
+    };
+}, []);
+```
+
+For good extensive explanation: https://www.greatfrontend.com/questions/quiz/what-are-server-sent-events?format=quiz
+Referred from: https://dev.to/lagoni/how-to-implement-eventsource-and-sse-in-your-frontend-and-backend-18co
 </details>
 
 

@@ -448,13 +448,14 @@ class Solution {
  <summary style="font-size: large; font-weight: bold">Important Examples</summary>
 
 <details >
- <summary style="font-size: medium; font-weight: bold">1. Nearest Greater to Right / Next Largest Element</summary>
+ <summary style="font-size: medium; font-weight: bold">1. Nearest Greater to Right / Next Largest Element / Nearest Smaller Element</summary>
+
+![Stack_2.jpg](images/Stack_2.jpg)
+![Stack_3.jpg](images/Stack_3.jpg)
 
 Question: https://www.interviewbit.com/problems/nearest-smaller-element/
 ![img_77.png](img_77.png)
 
-![Stack_2.jpg](images/Stack_2.jpg)
-![Stack_3.jpg](images/Stack_3.jpg)
 
 ```js
 function(A){
@@ -812,6 +813,8 @@ class Solution
 <details >
  <summary style="font-size: medium; font-weight: bold">6. Kth Symbol in Grammar</summary>
 
+Question: https://leetcode.com/problems/k-th-symbol-in-grammar/
+![img_94.png](img_94.png)
 
 1. My TLE Solution:
 ```js
@@ -889,6 +892,8 @@ var kthGrammar = function(n, k) {
 
 <details >
  <summary style="font-size: medium; font-weight: bold">7. Tower of Hanoi</summary>
+
+Question: https://www.geeksforgeeks.org/problems/help-the-old-man3848/1
 
 ![img_31.png](img_31.png)
 

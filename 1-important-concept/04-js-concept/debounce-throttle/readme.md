@@ -127,7 +127,7 @@ export default function debounce(func, wait = 0) {
 ```
 To understand above code, please go through the 
 1. `call()`, `apply()` & `bind()` in important concept
-2. `this` in [important concept](../this-call-apply-bind/chirag-this-call-apply-bind/readme.md)
+2. `this` in [important concept](../11-this-call-apply-bind/chirag-this-call-apply-bind/readme.md)
 3. Lastly go through this for more details: https://www.greatfrontend.com/questions/javascript/debounce?list=one-week
 
 ### Use case

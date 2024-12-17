@@ -24,6 +24,8 @@
 
 2. Native video support
 ![img_5.png](img_5.png)
+
+https://www.greatfrontend.com/questions/quiz/html5-as-an-open-web-platform-building-blocks?format=quiz
 </details>
 
 

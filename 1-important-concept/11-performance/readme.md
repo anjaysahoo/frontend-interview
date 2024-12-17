@@ -1290,4 +1290,77 @@ We communicate with Web Worker using `postMessage`
 ![img_50.png](img_50.png)
 ![img_51.png](img_51.png)
 ![img_52.png](img_1152.png)
+
+Parcel Feature:
+- Hot Module Replacement (HMR)
+- File Watcher Algorithm - C++
+- Bundling
+- Minify Code
+- Cleaning our code
+- Dev and production build
+- Igniting Our App!  Namaste-React )8Super fast build algorithm
+- Image Optimization
+- Caching while development
+- Compression
+- Compatible with older browser versions
+- Https on dev
+- Image Optimization
+- Port No
+- Consistency Hashing Algorithm
+- Zero Config
+- Tree Shaking
+
+<details >
+ <summary style="font-size: large; font-weight: bold">NPX</summary>
+
+https://dev.to/orlikova/understanding-npx-1m4#:~:text=npx%20stands%20for%20Node%20Package,installing%20them%20on%20your%20system.
+1. **What is npx?**
+
+npx stands for Node Package eXecute. This command-line utility, bundled with npm version 5.2.0 and above, allows developers to execute Node.js packages directly from the npm registry without globally installing them on your system.
+
+2. **How Does npx Work?**
+
+- **Checks for Local Installation**: When you run npx <package-name>, npx first looks for a local installation of the package in your project.
+
+- **Executes if Found:** If the package is installed locally, npx executes the package's associated command.
+
+- **Temporary Installation**: If the package is not found npx downloads the package from the npm registry into a temporary cache and adds the necessary executables to your PATH for the execution.
+
+- **Runs the Command**: npx executes the command in the temporary environment, ensuring it uses the correct version and dependencies.
+
+- **Cleanup**: After execution, npx deletes the temporary installation of the package.
+
+If the package exists in your project's package.json, npx will use the version specified there. You can use npx <package-name>@<version> to execute a specific version of a package.
+
+3. **When to Use npx**
+
+One-Off Commands
+When you need to use a command-line tool only once or occasionally, npx eliminates the need for a permanent global installation. This keeps your global environment clean and avoids potential version conflicts.
+
+**Examples:**
+
+**Project Initialization:** Create projects without globally installing framework-specific CLIs (e.g., npx create-react-app my-app, npx vue create my-vue-project).
+Linting and Formatting: Run code quality tools without installing them globally (e.g., npx eslint ., npx prettier --write .).
+Experimenting with New Packages
+Test drive different packages or specific versions of packages without committing to a full installation. This is great for evaluating tools before deciding to include them in your project.
+
+**Examples:**
+
+**Trying a Testing Framework:** Explore a new testing framework like Jest (e.g., npx jest --init).
+Using a Different Linter: Experiment with an alternative linter (e.g., npx jshint .).
+
+4. **When Not to Use npx**
+
+* **Frequently Used Commands**
+For tools you use often (like Vue CLI, TypeScript, etc.), global installation (`npm install -gz) is more efficient.
+
+* **Projects with Tight Dependency Control**
+In projects requiring precise versions of tools, install them as project dependencies (npm install) for consistency.
+
+* **Packages Requiring Frequent Updates**
+If a tool needs regular updates, a local project installation (npm install) avoids repeated downloads with npx.
+
+* **Long-Running Processes**
+npx is meant for short tasks. For ongoing processes, install the package either globally or locally.
+</details>
 </details>

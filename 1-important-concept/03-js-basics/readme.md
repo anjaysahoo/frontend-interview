@@ -458,6 +458,7 @@ console.log(sentence.toLowerCase());
 
 The main common difference between `Map` or `Set` vs `Object` is that **in `Object` insertion order is not maintained**
 
+![img_20.png](img_20.png)
 <details >
  <summary style="font-size: large; font-weight: bold">Length</summary>
 
