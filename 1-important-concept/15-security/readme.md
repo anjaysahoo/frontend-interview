@@ -97,6 +97,12 @@ TODO: Read this in spare time: https://hasura.io/blog/best-practices-of-using-jw
 
 ![img.png](img.png)
 
+Everything start from clicking any phishing link, which will execute certain JS.
+1. Like if if cookies are not set from server side and made HTTPS- only then those cookies can be sent to hacker
+2. If there is no validation before rending content from backend on UI then hacker can render 
+false login page on top of real one which can then sent user credential to hacker
+3. They can again this to run certain javascript in background to capture keystroke
+
 ### Type vulnerability
 1. User session hacking
 2. Unauthorized activities
@@ -374,6 +380,56 @@ Here with above CSP set are able to execute only `trusted code` which has `nonce
 
 </details>
 
+</details>
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Client-Storage Security</summary>
+
+![img_40.png](img_40.png)
+
+1. Storing sensitive data on client
+   1. Encrypt Data: 
+      1. ![img_41.png](img_41.png)
+      2. The secret key can be generated dynamically using the environment variables configured on the server. The example above is just for a demo purpose. 
+      3. Encrypt your Local Storage data!: https://dev.to/codecraftjs/encrypt-your-local-storage-data-5ag8
+   2. Token expiry ![img_42.png](img_42.png)
+3. Data Integrity
+   1. CheckSum ![img_43.png](img_43.png)
+4. Storage Limit
+   ![img_44.png](img_44.png)
+5. Session Management
+   ![img_45.png](img_45.png)
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Input Validation & Sanitization</summary>
+
+![img_34.png](img_34.png)
+</details>
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Server-Side Request Forgery (SSRF)</summary>
+
+![img_35.png](img_35.png)
+This attack happens when we have internal servers which can be accessed by some servers and inforamtion 
+of such server is leaked.
+
+Now hacker can just sent request from web server to internal server in some input box, because of
+lack of validation on input box, it will be able to send request to internal server.
+
+![img_36.png](img_36.png)
+
+Mitigation:
+
+1. Whitelisting: On server we can add servers which can access these internal servers
+![img_37.png](img_37.png)
+2. ![img_38.png](img_38.png)
+3. ![img_39.png](img_39.png)
 </details>
 
 

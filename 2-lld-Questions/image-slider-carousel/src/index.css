@@ -1,0 +1,56 @@
+.App{
+  display: flex;
+  justify-content: center;
+}
+
+.image-carousel {
+  background-color: #000;
+  height: 400px;
+  width: min(600px, 100vw);
+  position: relative;
+  overflow: hidden;
+}
+
+.image-carousel__track {
+  display: flex;
+  height: 100%;
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+}
+
+.image-carousel__slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-carousel__image {
+  max-width: 100%;
+  max-height: 100%;
+  /*Multiple aspect ratios and portrait and landscape images (an Aspect ratio should be preserved)*/
+  object-fit: contain;
+}
+
+.image-carousel__button {
+  --size: 40px;
+  height: var(--size);
+  width: var(--size);
+  border-radius: 100%;
+  border: none;
+  top: 50%;
+}
+
+.image-carousel__button--prev {
+  position: absolute;
+  left: 15px;
+  z-index: 1;
+}
+
+.image-carousel__button--next {
+  position: absolute;
+  right: 15px;
+  z-index: 1;
+}

@@ -48,3 +48,35 @@ Design Patterns: https://www.patterns.dev/vanilla
 ![img_17.png](img_17.png)
 
 </details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Design Pattern</summary>
+
+Quick Explanation: https://www.youtube.com/watch?v=tv-_1er1mWI
+
+![img_18.png](img_18.png)
+
+### Creational Design Pattern
+
+1. ![img_23.png](img_23.png)
+2. ![img_24.png](img_24.png)
+3. ![img_25.png](img_25.png)
+4. ![img_26.png](img_26.png)
+
+### Structural Design Pattern
+
+1. ![img_27.png](img_27.png)
+2. ![img_28.png](img_28.png)
+
+### Behavioral Design Pattern
+
+1. ![img_19.png](img_19.png)
+2. ![img_20.png](img_20.png)
+3. ![img_21.png](img_21.png)
+4. ![img_22.png](img_22.png)
+
+
+1. https://refactoring.guru/design-patterns/singleton
+2. https://javascriptpatterns.vercel.app/patterns
+</details>

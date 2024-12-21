@@ -13,6 +13,9 @@
 
 https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
 
+Difference between Service Worker and Web Worker: 
+1. https://dev.to/bharat5604/web-worker-service-worker-and-worklets-a-comprehensive-guide-1f64
+2. https://www.dhiwise.com/post/web-workers-vs-service-workers-in-javascript
 ### Setting Up Service Worker
 
 ```html

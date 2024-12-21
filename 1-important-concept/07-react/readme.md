@@ -3327,6 +3327,18 @@ export default ItemList;
 
 </details>
 
+<details >
+ <summary style="font-size: large; font-weight: bold">Reducer</summary>
+
+https://react.dev/learn/extracting-state-logic-into-a-reducer
+</details>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Context + Reducer</summary>
+
+https://react.dev/learn/scaling-up-with-reducer-and-context
+</details>
+
 </details>
 
 
