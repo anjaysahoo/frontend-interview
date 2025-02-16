@@ -1,5 +1,8 @@
 ## Dark Mode
 
+![img.png](img.png)
+![img_1.png](img_1.png)
+
 Using context API
 
 ```jsx

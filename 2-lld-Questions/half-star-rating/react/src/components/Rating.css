@@ -1,0 +1,15 @@
+.star-rating {
+    font-size: 64px;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 8px;
+}
+
+.star.highlight {
+    color: var(--primary-hover);
+}
+
+
+i {
+    font-style: normal;
+}

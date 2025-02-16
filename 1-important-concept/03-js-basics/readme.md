@@ -754,7 +754,13 @@ Set: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Ob
  <summary style="font-size: x-large; font-weight: bold">`typeof()`, `instanceof`</summary>
 
 ### `typeof()`
+
+In JavaScript, a primitive (primitive value, primitive data type) is data that is not an `object` and has no methods or properties. There are 7 primitive data types:
+
 ![img.png](images/img.png)
+- Most of the time, a primitive value is represented directly at the lowest level of the language implementation.
+- All primitive types, except `null` and `undefined`, have their corresponding object wrapper types, which provide useful methods for working with the primitive values. For example, the `Number` object provides methods like `toExponential()`.
+
 
 ```javascript
 typeof([])
@@ -767,6 +773,60 @@ Array.isArray([])
 Referred Article: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#bigint_type
 
 
+### `object`
+- Understand that in JavaScript most things are `objects`, and you've probably used objects every time you've touched JavaScript.
+- In JavaScript, `objects` are the only mutable values.
+- `Functions` are, in fact, also objects with the additional capability of being callable.
+```js
+const person = {
+   name: ["Bob", "Smith"],
+   age: 32,
+   bio() {
+   console.log(`${this.name[0]} ${this.name[1]} is ${this.age} years old.`);
+   },
+   introduceSelf() {
+   console.log(`Hi! I'm ${this.name[0]}.`);
+   },
+};
+```
+- An object like this is referred to as an object literal — we've literally written out the object contents as we've come to create it. This is different compared to objects instantiated from classes
+- Using object literals is fine when you only need to create one object
+
+
+```js
+function createPerson(name) {
+    const obj = {};
+    obj.name = name;
+    obj.introduceSelf = function () {
+        console.log(`Hi! I'm ${this.name}.`);
+    };
+    return obj;
+}
+
+```
+- This function creates and returns a new `object` each time we call it. The object will have two members:
+  - a property `name`
+  - a method `introduceSelf()`.
+- We can use `Factory Function`, `Constructor Function` or `Class` for creating objects in much better way
+
+About how functions and objects are related in javascript, consider the following points:
+
+- All non-primitive types are objects in JavaScript.
+- All objects directly or indirectly inherit from Object.prototype (unless prototype is changed explicitly using setPrototypeOf).
+- All native functions inherit from Function.prototype which inherits from Object.prototype, so it means function indirectly inherits from Object.prototype because functions are treated as objects in JavaScript.
+- The reason functions are treated as objects is because they can be passed as parameters to other functions and can be returned from functions i.e. higher order functions(a powerful feature of javascript).
+- A function can be called using the () operator because the JavaScript engine knows it is declared using a function keyword and has executable code. So whenever it is called, the JavaScript engine creates a new execution context and set the this binding and then executes the function. None of that happens when you try to call an object instead an error is thrown i.e. "is not a function".
+
+So we can say that not every object is a function because they may have not been declared using the function keyword and not have executable code.
+
+As the function is treated as an object in JavaScript, we can add properties to it, create new objects from it.
+A non-function type object cannot be called using () because it does not have executable code and is not declared using the function keyword. Instead, it is declared using new Object() or object notation and contains methods and properties.
+
+
+More Details:-
+- https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Object_basics#introducing_constructors
+
+- https://stackoverflow.com/questions/54861385/is-object-a-function-in-javascript
 ### `instanceof`
 ![img_5.png](img_5.png)
 

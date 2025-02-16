@@ -80,3 +80,15 @@ Quick Explanation: https://www.youtube.com/watch?v=tv-_1er1mWI
 1. https://refactoring.guru/design-patterns/singleton
 2. https://javascriptpatterns.vercel.app/patterns
 </details>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Mono Repo Vs Micro Repo</summary>
+
+![img_29.png](img_29.png)
+
+1. https://www.youtube.com/watch?v=x3cANGNPyx0
+2. https://www.youtube.com/watch?v=9iU_IE6vnJ8
+</details>
+
+
+https://www.greatfrontend.com/front-end-system-design-playbook/framework

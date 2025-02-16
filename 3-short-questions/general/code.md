@@ -1,4 +1,7 @@
 ## Revision Questions:
+TODO: Add below question details
+1. https://www.greatfrontend.com/questions/javascript/backbone-model
+2. https://bigfrontend.dev/problem/create-lazyman
 <details >
  <summary style="font-size: small; font-weight: bold">01. Two-way binding [BFE]</summary>
 
@@ -353,6 +356,407 @@ First Step
 ![img_5.png](img_5.png)
 Final Step
 ![img_6.png](img_6.png)
+</details>
+
+
+
+
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">
+04. create LazyMan()
+</summary>
+
+###### r04.
+
+#### Question:
+LazyMan is very lazy, he only eats and sleeps.
+
+LazyMan(name: string, logFn: (log: string) => void) would output a message, the passed logFn is used.
+```js
+LazyMan('Jack', console.log)
+  .eat('banana')
+  .sleep(10)
+  .eat('apple')
+  .sleep(1)
+// Hi, I'm Jack.
+// Eat banana.
+// Wake up after 10 seconds.
+// Eat Apple.
+// Wake up after 1 second.
+```
+
+```js
+LazyMan('Jack', console.log)
+  .eat('banana')
+  .sleepFirst(10)
+  .eat('apple')
+  .sleep(1)
+// Wake up after 10 seconds.
+// Hi, I'm Jack.
+// Eat banana
+// Eat apple
+// Wake up after 1 second.
+```
+
+<details >
+ <summary style="font-size: small; font-weight: bold">
+Working / Not Working Code
+</summary>
+
+#### 1. Implicit Globals Type Code
+1. ✅ Works
+
+- When variables are declared without `const`, `let`, or `var`, they become implicit global variables
+- In this case, `queue`, `eat`, `sleep`, and `sleepFirst` all become properties of the global object (window in browsers)
+- This is generally considered bad practice as **_it pollutes the global namespace_**
+- It works because this in the function context refers to the global object when not in strict mode
+```js
+function LazyMan(name, logFn) {
+  queue = []; // Implicitly becomes a global variable
+  queue.push({key: 'greet', value: name});
+  
+  const action = {
+    eat: (food) => {logFn(`Eat ${food}.`)},
+    greet: (name) => {logFn(`Hi, I'm ${name}.`)},
+    sleep: async (seconds) => {
+      await delay(seconds);
+      logFn(`Wake up after ${seconds} second${seconds !== 1 ? 's' : ''}.`);
+    }
+  };
+
+  async function execute() {
+    for(let item of queue) {
+      await action[item.key](item.value);
+    }
+  }
+
+  Promise.resolve().then(execute);
+
+  eat = (food) => { // Implicitly becomes a global variable
+    queue.push({key: 'eat', value: food});
+    return this;
+  }
+
+  sleep = (seconds) => { // Implicitly becomes a global variable
+    queue.push({key: 'sleep', value: seconds});
+    return this;
+  }
+
+  sleepFirst = (seconds) => { // Implicitly becomes a global variable
+    queue.unshift({key: 'sleep', value: seconds});
+    return this;
+  }
+  
+  return this;
+}
+
+// Helper function for all versions
+function delay(seconds) {
+  return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+}
+
+// LazyMan('Jack', console.log)
+//   .eat('banana')
+//   .sleepFirst(2)
+//   .eat('apple')
+//   .sleep(1)
+
+  LazyMan('Jack', console.log)
+  .eat('banana')
+  .eat('apple')
+  .sleepFirst(1)
+  .eat('egg')
+  .sleepFirst(1)
+```
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">
+⭐Chrome Dev Tools Logs (Deeply Explained) [VERY IMPORTANT]
+</summary>
+
+1. We have 3 types of Scope `Global`, `Local` & `Block`. Also there are `Closure` & `Function` scopes
+
+At start, we first hit line 68 breakpoint, and during that time there is no `local` scope 
+created and `global` scope only hold `LazyMan` function definition
+![img_11.png](img_11.png)
+
+2. Then we hit line 20 breakpoint, and still in `global` scope we have just `LazyMan` function definition.
+But now we have created `local` scope, and it holds `this` pointing to `Window` object **_[which has `Global` scope in it]_**, `action`, `execute`, `logFn`, and `name` variables
+
+![img_12.png](img_12.png)
+
+3. Then we hit line 22 if we _step over to next function_. Now we will have `queue` in our global
+scope. Likewise if we keep executing this function after `LazyMan` function in line 68 is fully
+executed then we will have `eat`, `sleep`, and `sleepFirst` in our global scope as well
+![img_13.png](img_13.png)
+
+4. Then when we start executing `eat` function in line 69, we have `LazyMan` function `Closure` scope and 
+`local` scope containing `this` pointing `Window` object and `food` variable.
+![img_14.png](img_14.png)
+
+5. We can keep executing rest of below line till 72 with same behavior. At this point we have `eat` function in Call Stack
+from `global` scope. 
+![img_16.png](img_16.png)
+
+6. After everything is executed and Call Stack is empty, we look for anything there on `Micro Task Queue`.
+So here we start executing `Promise` we encounter earlier and add it to Call Stack. Here we have all the required
+stuff in Scope 
+![img_17.png](img_17.png)
+
+7. After this we start picking things one by one from `Global` scope `queue` array
+![img_18.png](img_18.png)
+</details>
+
+
+
+2. ✅ Working
+
+If we use `const queue = []` instead of `queue = []` still code will work.
+
+Only difference here would be that instead of being stored in `global` scope it will be
+stored in `LazyMan` function `Closure` scope, which can be accessed by `eat`, `sleep`, and `sleepFirst` functions.
+
+
+3. ❌ Not Working
+
+You can't just add `const` to `eat`, `sleep`, and `sleepFirst`, by doing this you will make these
+function available just in `LazyMan` function `Closure` scope. Since after executing `LazyMan` function 
+we are returning `this` which is pointing to `Window` object and inside this `Window` object we just
+have `LazyMan` function definition.
+
+4. ✅ Working
+
+But we can write `this.eat = () => {...}` and this will work because now returned `this` `Window` object also
+contain `eat` function.
+
+5. ❌ Not Working
+
+From above code if remove `const` from `action` object then it will not work. 
+![img_10.png](img_10.png)
+
+The one testcase that is failing will yield right result if you just run that testcase. But when all are
+executed together then because all the testcase didn't get separate copy of `action` alike we where getting
+earlier through `Lazyman` function `Closure` scope. Now all testcase shared same `action` object.
+
+
+
+#### 2. Factory Function Type Code
+
+1. ✅ Works
+
+```js
+function LazyMan(name, logFn) {
+  const queue = [];
+  queue.push({key: 'greet', value: name});
+  
+  const action = {
+    eat: (food) => {logFn(`Eat ${food}.`)},
+    greet: (name) => {logFn(`Hi, I'm ${name}.`)},
+    sleep: async (seconds) => {
+      await delay(seconds);
+      logFn(`Wake up after ${seconds} second${seconds !== 1 ? 's' : ''}.`);
+    }
+  };
+
+  async function execute() {
+    for(let item of queue) {
+      await action[item.key](item.value);
+    }
+  }
+
+  Promise.resolve().then(execute);
+
+  const obj = {
+    eat: (food) => { 
+      queue.push({key: 'eat', value: food});
+      return obj;
+    },
+    sleep: (seconds) => { 
+      queue.push({key: 'sleep', value: seconds});
+      return obj;
+    },
+    sleepFirst: (seconds) => { 
+      queue.unshift({key: 'sleep', value: seconds});
+      return obj;
+    }
+  }
+
+  return obj;
+}
+
+// Helper function for all versions
+function delay(seconds) {
+  return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+}
+
+
+  LazyMan('Jack', console.log)
+  .eat('banana')
+  .eat('apple')
+  .sleepFirst(1)
+  .eat('egg')
+  .sleepFirst(1)
+```
+
+2. ❌ Not Working
+
+```js
+return {
+    eat: (food) => { 
+      queue.push({key: 'eat', value: food});
+      return this;
+    },
+    sleep: (seconds) => { 
+      queue.push({key: 'sleep', value: seconds});
+      return this;
+    },
+    sleepFirst: (seconds) => { 
+      queue.unshift({key: 'sleep', value: seconds});
+      return this;
+    }
+  }
+```
+
+Because `eat`, `sleep`, and `sleepFirst` function are returning `this` which is pointing to `Window` object 
+and `Window` object do not have `eat`, `sleep`, and `sleepFirst` function, hence when called in chained 
+fashion it will not work.
+
+
+#### 3. Constructor Function Type Code
+
+```js
+function createLazyMan(name, logFn) {
+  const queue = [];
+  queue.push({key: 'greet', value: name});
+  
+  const action = {
+    eat: (food) => {logFn(`Eat ${food}.`)},
+    greet: (name) => {logFn(`Hi, I'm ${name}.`)},
+    sleep: async (seconds) => {
+      await delay(seconds);
+      logFn(`Wake up after ${seconds} second${seconds !== 1 ? 's' : ''}.`);
+    }
+  };
+
+  async function execute() {
+    for(let item of queue) {
+      await action[item.key](item.value);
+    }
+  }
+
+  Promise.resolve().then(execute);
+
+
+  this.eat = (food) => { 
+    queue.push({key: 'eat', value: food});
+    return this;
+  };
+
+  this.sleep = (seconds) => { 
+    queue.push({key: 'sleep', value: seconds});
+    return this;
+  };
+
+  this.sleepFirst = (seconds) => { 
+    queue.unshift({key: 'sleep', value: seconds});
+    return this;
+  }
+}
+
+function LazyMan(name, logFn) {
+  return new createLazyMan(name, logFn);
+}
+
+// Helper function for all versions
+function delay(seconds) {
+  return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+}
+
+ LazyMan('Jack', console.log)
+  .eat('banana')
+  .eat('apple')
+  .sleepFirst(1)
+  .eat('egg')
+  .sleepFirst(1)
+```
+
+
+
+#### 4. Class Type Code
+
+1. ✅ Works
+```js
+class createLazyMan {
+    queue = [];
+    logFn;
+
+    action = {
+        eat: (food) => {this.logFn(`Eat ${food}.`)},
+        greet: (name) => {this.logFn(`Hi, I'm ${name}.`)},
+        sleep: async (seconds) => {
+            await delay(seconds);
+            this.logFn(`Wake up after ${seconds} second${seconds !== 1 ? 's' : ''}.`);
+        }
+    };
+
+    activity = {
+        eat: (food) => {
+            this.queue.push({key: 'eat', value: food});
+            return this.activity;
+        },
+        sleep: (seconds) => {
+            this.queue.push({key: 'sleep', value: seconds});
+            return this.activity;
+        },
+        sleepFirst: (seconds) => {
+            this.queue.unshift({key: 'sleep', value: seconds});
+            return this.activity;
+        }
+    }
+
+    constructor(name, logFn) {
+        this.logFn = logFn;
+        this.queue.push({key: 'greet', value: name});
+        Promise.resolve().then(this.execute);
+
+        return this.activity;
+    }
+
+    execute = async () => {
+        for(let item of this.queue) {
+            await this.action[item.key](item.value);
+        }
+    }
+}
+
+function LazyMan(name, logFn) {
+    return new createLazyMan(name, logFn);
+}
+
+// Helper function for all versions
+function delay(seconds) {
+    return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+}
+
+LazyMan('Jack', console.log)
+    .eat('banana')
+    .eat('apple')
+    .sleepFirst(1)
+    .eat('egg')
+    .sleepFirst(1)
+
+
+```
+
+Here anything inside constructor will be executed on creation of instance of `createLazyMan` class.
+![img_19.png](img_19.png)
+![img_20.png](img_20.png)
+![img_21.png](img_21.png)
+![img_22.png](img_22.png)
+</details>
+
 </details>
 
 

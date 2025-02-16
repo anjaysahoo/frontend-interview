@@ -50,6 +50,11 @@ flex: 2 2; /* 2 2 0% */
 ```
 
 Short Video Explanation: https://youtu.be/1zKX71GYisE?si=OyuV4mzevtMUsCuN&t=375
+
+### Grid
+
+https://fireship.io/lessons/three-responsive-css-grid-layouts/
+
 <details >
  <summary style="font-size: large; font-weight: bold">CSS3</summary>
 
@@ -249,4 +254,36 @@ https://www.greatfrontend.com/questions/quiz/explain-how-a-browser-determines-wh
 
 https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors
 https://youtu.be/1h5StQJ8hww?si=Sxyq0sqt-IVHQR7c
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Useful CSS Snippets</summary>
+
+1. Always apply below css in root css file of project, putting it any where will not work
+   
+https://www.greatfrontend.com/questions/quiz/what-does-box-sizing-border-box-do-what-are-its-advantages?format=quiz
+```css
+*{
+  box-sizing: border-box;/*So that padding & border are considered in height*/
+}
+```
+
+2. Remove default style of button disabled. Put below CSS in class which is applied to the respective button
+```css
+.overriding-class-of-button {
+   color: inherit;
+}
+```
+
+3. Grid Layout
+   
+https://fireship.io/lessons/three-responsive-css-grid-layouts/
+```css
+.basic-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+ }
+```
 </details>

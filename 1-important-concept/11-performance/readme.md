@@ -73,6 +73,7 @@ Do this in browser using LightHouse
 4. NewRelic
 5. Sentry
 6. Google Analytics
+7. PingDom: LensView result -> https://tools.pingdom.com/#64fef24db4000000
 
 
 ### Simulated Data
@@ -88,6 +89,7 @@ Do this in browser using LightHouse
 2. Network Tab
 3. Performance Tab
 
+![img.png](img.png)
 
 </details>
 

@@ -1,4 +1,8 @@
+
+
 ## Closure
+
+
 
 ![img_18.png](images/img_18.png)
 ![img_17.png](images/img_17.png)
@@ -14,6 +18,11 @@ How to create closure?
 Whenever we want to create Closure then just create a function wraping
 variables & functions in them
 
+### Closure is created irrespective of `Arrow` or `Normal` function in all inner and outer function permutation
+
+### Also, there is a need to be variable defined and used inside inner function to see the closure in the browser dev tool
+
+If defined but not used, then it will skip in the browser dev tool
 
 **Few more examples**
 ![img_19.png](images/img_19.png)

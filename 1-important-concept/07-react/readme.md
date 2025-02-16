@@ -325,13 +325,12 @@ import classes from './filter-modal.component.module.css';
 ```
 
 2. **Style**
-`style` takes `object`. The First curly bracket is for writing JS in JSX, and the second  
-is object of styling where all keys are camelCased, and values are in string.
+### `style` takes `object`. The First curly bracket is for writing JS in JSX, and the second is object of styling where all `keys` are `camelCased`, and `values` are in `string`.
 
 We can write conditional styling in below two ways
 ```js
 <div
-    style={selectedSecondaryItem?.inputType === InputType.CHECKBOX ? {"borderRadius": "5px"} : {"borderRadius": "50%"}}
+    style={selectedSecondaryItem?.inputType === InputType.CHECKBOX ? {borderRadius: "5px"} : {"borderRadius": "50%"}}
 >
 ```
 
@@ -4365,7 +4364,10 @@ These event handlers enable React to respond to a wide range of user interaction
 <details >
  <summary style="font-size: x-large; font-weight: bold">Forms</summary>
 
-1. Multistep Form Custom Hook With React And TypeScript: https://www.youtube.com/watch?v=uDCBSnWkuH0
-2. React Hook Form (with Zod): https://www.youtube.com/watch?v=qyzznUNe1ho
-   1. https://github.com/piyush-eon/react-hook-form-tutorial/tree/master
+1. Multistep Form Custom Hook With React And TypeScript: 
+   1. https://www.youtube.com/watch?v=uDCBSnWkuH0
+   2. https://github.com/WebDevSimplified/react-multistep-form/tree/main
+2. React Hook Form (with Zod): 
+   1. https://www.youtube.com/watch?v=qyzznUNe1ho
+   2. https://github.com/piyush-eon/react-hook-form-tutorial/tree/master
 </details>

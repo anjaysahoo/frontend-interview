@@ -1,87 +1,47 @@
-"use strict";
+const Person = function (name) {
+    this.name = name;
+    this.sayName1 = function () {
+        console.log(this.name);
+    };
+    this.sayName2 = () => {
+        console.log(this.name);
+    };
+};
 
-console.log('Direct Strict mode log:', typeof this === 'undefined')
-
-function myFunction() {
-    console.log('Strict mode:', typeof this === 'undefined'); // Logs true
-}
-
-myFunction();
-
-let bfKapoorObject = {
-    name: "Ranbir Kapoor",
-    age: 41,
-    gfFunction: function() {
-        console.log("Kapoor Normal Function : ", this)
-    },
-    gfArrowFunction: () => {
-        console.log("Kapoor Arrow Function : ", this)
-    }
-}
-
-let bfSinghObject = {
-    name: "Ranbir Singh",
-    age: 38,
-    gfFunction() {
-        console.log("Singh Normal Function : ", this)
-    },
-    gfArrowFunction: () => {
-        console.log("Singh Arrow Function : ", this)
-    }
-}
-
-//Normal BF Calls
-
-//Case-1
-console.log("With BF Normal Function : ");
-bfKapoorObject.gfFunction()
-
-//Case-2
-console.log("With BF Arrow Function : ");
-bfKapoorObject.gfArrowFunction();
-
-//Case-3
-console.log("Without BF Normal Function: ");
-const withoutBfNormalGfFn = bfKapoorObject.gfFunction;
-withoutBfNormalGfFn();
-
-//Case-4
-console.log("Without BF Arrow Function: ");
-const withoutBfArrowGfFn = bfKapoorObject.gfArrowFunction;
-withoutBfArrowGfFn();
+// const Person = function (name) {
+//     this.name = name;
+//     return {
+//         sayName1() {
+//             console.log(this.name);
+//         },
+//         sayName2: () => {
+//             console.log(this.name);
+//         }
+//     }
+// };
 
 
-// Change BF Techniques using `call()`/`apply()`
+const john = new Person('John');
+const dave = new Person('Dave');
 
-//Case-1
-console.log("Call: With BF Normal Function : ");
-bfKapoorObject.gfFunction.call(bfSinghObject)
+console.log("John : ", john);
+console.log("Dave : ", dave);
 
-//Case-2
-console.log("Call: With BF Arrow Function : ");
-bfKapoorObject.gfArrowFunction.call(bfSinghObject);
+john.sayName1(); // John
+john.sayName2(); // John
 
-//Case-3
-console.log("Call: Without BF Normal Function: ");
-const withoutBfNormallGfCallFn = bfKapoorObject.gfFunction;
-withoutBfNormallGfCallFn.call(bfSinghObject);
+// The regular function can have its `this` value changed, but the arrow function cannot
+john.sayName1.call(dave); // Dave (because `this` is now the dave object)
+john.sayName2.call(dave); // John
 
-//Case-4
-console.log("Call: Without BF Arrow Function: ");
-const withoutBfArrowGfCallFn = bfKapoorObject.gfArrowFunction;
-withoutBfArrowGfCallFn.call(bfSinghObject);
+john.sayName1.apply(dave); // Dave (because `this` is now the dave object)
+john.sayName2.apply(dave); // John
 
+john.sayName1.bind(dave)(); // Dave (because `this` is now the dave object)
+john.sayName2.bind(dave)(); // John
 
+const sayNameFromWindow1 = john.sayName1;
+sayNameFromWindow1(); // undefined (because `this` is now the window object)
 
-// Marry BF using `bind()`
-
-//Case-1
-console.log("Bind: BF Normal Function: ");
-const BfNormalGfBindFn = bfKapoorObject.gfFunction.bind(bfSinghObject);
-BfNormalGfBindFn();
-
-//Case-2
-console.log("Bind: BF Arrow Function: ");
-const BfArrowGfBindFn = bfKapoorObject.gfArrowFunction.bind(bfSinghObject);
-BfArrowGfBindFn();
-
+const sayNameFromWindow2 = john.sayName2;
+sayNameFromWindow2(); // John

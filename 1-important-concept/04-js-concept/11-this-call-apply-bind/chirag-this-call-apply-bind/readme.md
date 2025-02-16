@@ -7,6 +7,9 @@ All `undefined` output in below cases in `Non-Strict` mode will return `window` 
 
 All Below code are in `Strict` Mode
 
+
+# All of these need to be memorized first, and once it is done, then we can apply them logically in other places like constructor function, factory function, class etc
+
 ## Synchronous Scenarios
 
 
@@ -73,8 +76,32 @@ Output:
 ![img_12.png](images/img_12.png)
 
 
+<details >
+ <summary style="font-size: small; font-weight: bold">⭐Dev Tool Explanation[Important]</summary>
+
+
+### Case-1
+
+**Here `normal gf function` is _attached_ to its `bf object`, hence calling out his name**
+![img.png](images/img_27.png)
+
+### Case-2
+**Even though `arrow gf function` is with `bf object`, but it is attached to `Nearest parent -> global scope`, hence it will call global scope**
+![img_1.png](images/img_28.png)
+
+### Case-3
+**Here we are just storing `normal gf function` definition and because during the time of execution there
+is no one with `normal gf function`, hence it will call `Next Nearest parent -> global scope`**
+![img_2.png](images/img_29.png)
+
+### Case-4
+**Same as above, just storing `arrow gf function` definition and calling `Nearest parent -> global scope`  irrespective of with or without `bf object`**
+![img_3.png](images/img_30.png)
+</details>
+
 ### Change BF Techniques using `call()`/`apply()`
 
+### `call()`/`apply()` help `Normal GF Function` change its `BF Object` with `Other BF Object` irrespective with or without its `BF Object`
 ```js
 //Case-1
 console.log("Call: With BF Normal Function : ");
@@ -99,7 +126,21 @@ Output:
 ![img_13.png](images/img_13.png)
 
 
+<details >
+ <summary style="font-size: small; font-weight: bold">⭐Dev Tool Logs[Important]</summary>
 
+### Case-1
+![img_4.png](images/img_31.png)
+
+### Case-2
+![img_5.png](images/img_32.png)
+
+### Case-3
+![img_6.png](images/img_33.png)
+
+### Case-4
+![img_7.png](images/img_34.png)
+</details>
 
 ### Marry BF using `bind()`
 
@@ -119,6 +160,15 @@ Output:
 ![img_14.png](images/img_14.png)
 
 
+<details >
+ <summary style="font-size: small; font-weight: bold">⭐Dev Tool Logs[Important]</summary>
+
+### Case-1
+![img_8.png](images/img_35.png)
+
+### Case-2
+![img_9.png](images/img_36.png)
+</details>
 
 
 ## Asynchronous Inner Function Scenarios
@@ -234,6 +284,28 @@ bfAsynObject.gfArrowFnAsyncArrowInnerFn();
 
 Output:
 ![img_15.png](images/img_15.png)
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">⭐Dev Tool With BF Sync Explanation[Important]</summary>
+
+### Case-1
+
+![img_10.png](images/img_37.png)
+When we start executing `gfInnerFn` we can see in its execution context we have `this` pointing to its attached `bf object`
+and `inner` function definition
+![img_11.png](images/img_38.png)
+Then once we start executing `inner` function we can see in its execution context we have `this` pointing to `global scope`
+
+### Case-2
+
+![img_12.png](images/img_39.png)
+When we start executing `gfArrowInnerFn` we can see in its execution context we have `this` pointing to its attached `bf object`
+and `inner` function definition
+
+![img_13.png](images/img_40.png)
+Now since `inner` function is an arrow function, we can see in its execution context we have `this` pointing to `Nearest parent -> bfSyncObject`
+</details>
 
 
 
