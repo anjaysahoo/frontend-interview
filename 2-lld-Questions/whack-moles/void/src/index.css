@@ -1,0 +1,78 @@
+.whack-a-mole {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.whack-a-mole__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.whack-a-mole__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.whack-a-mole__hole {
+  background-color: #8b4513;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.whack-a-mole__mole {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 80%;
+  background-color: #3d3d3d;
+  border-radius: 50%;
+  transition: bottom 0.1s ease-in;
+}
+
+.whack-a-mole__hole--active .whack-a-mole__mole {
+  bottom: 10%;
+}
+
+.whack-a-mole__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.whack-a-mole__game-over {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.whack-a-mole__button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.whack-a-mole__button:hover {
+  background-color: #45a049;
+}
