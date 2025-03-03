@@ -758,6 +758,7 @@ Set: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Ob
 In JavaScript, a primitive (primitive value, primitive data type) is data that is not an `object` and has no methods or properties. There are 7 primitive data types:
 
 ![img.png](images/img.png)
+![img_21.png](img_21.png)
 - Most of the time, a primitive value is represented directly at the lowest level of the language implementation.
 - All primitive types, except `null` and `undefined`, have their corresponding object wrapper types, which provide useful methods for working with the primitive values. For example, the `Number` object provides methods like `toExponential()`.
 
@@ -768,6 +769,50 @@ typeof([])
 
 //Check if an object is an array
 Array.isArray([])
+```
+
+**Everything related to datatype + better way to get all datatype correctly :**
+https://www.zhenghao.io/posts/js-data-type
+
+```js
+Object.prototype.toString.call({}); // "[object Object]"
+Object.prototype.toString.call(1); // "[object Number]"
+Object.prototype.toString.call('1'); // "[object String]"
+Object.prototype.toString.call(true); // "[object Boolean]"
+Object.prototype.toString.call(new String('string')); // "[object String]"
+Object.prototype.toString.call(function () {}); // "[object Function]"
+Object.prototype.toString.call(null); //"[object Null]"
+Object.prototype.toString.call(undefined); //"[object Undefined]"
+Object.prototype.toString.call(/123/g); //"[object RegExp]"
+Object.prototype.toString.call(new Date()); //"[object Date]"
+Object.prototype.toString.call([]); //"[object Array]"
+Object.prototype.toString.call(document); //"[object HTMLDocument]"
+Object.prototype.toString.call(window); //"[object Window]
+```
+
+```js
+function getType(obj) {
+  const lowerCaseTheFirstLetter = (str) => str[0].toLowerCase() + str.slice(1);
+  const type = typeof obj;
+  if (type !== 'object') {
+    return type;
+  }
+
+  return lowerCaseTheFirstLetter(
+    Object.prototype.toString.call(obj).replace(/^\[object (\S+)\]$/, '$1')
+  );
+}
+
+getType([]); // "array"
+getType('123'); // "string"
+getType(null); // "null"
+getType(undefined); // "undefined"
+getType(); // "undefined"
+getType(function () {}); // "function"
+getType(/123/g); // "regExp"
+getType(new Date()); // "date"
+getType(new Map()); // "map"
+getType(new Set()); // "set
 ```
 
 Referred Article: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#bigint_type
@@ -924,6 +969,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 
 ### `splice()`
 
+### Always execute splice function first then assign because it does not return anything 
 ![img_10.png](images/img_10.png)
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
 
@@ -1569,6 +1615,37 @@ https://www.greatfrontend.com/questions/quiz/what-are-symbols-used-for
 
 
 
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Regex</summary>
+
+![img_22.png](img_22.png)
+
+1. Below will just find first match
+```js
+const regex = /bob/
+```
+
+2. Below will find all matches in a string
+![img_23.png](img_23.png)
+
+We can add additional `Flags` as per our need
+![img_24.png](img_24.png)
+
+![img_25.png](img_25.png)
+![img_26.png](img_26.png)
+![img_27.png](img_27.png)
+![img_29.png](img_29.png)
+![img_28.png](img_28.png)
+
+![img_31.png](img_31.png).
+![img_30.png](img_30.png)
+
+Reference: https://fireship.io/lessons/regex-cheat-sheet-js/
+</details>
+
+
+
 <details >
  <summary style="font-size: x-large; font-weight: bold">Things to Pay Attention while Solving Questions</summary>
 
@@ -1576,5 +1653,6 @@ https://www.greatfrontend.com/questions/quiz/what-are-symbols-used-for
    1. Good Example 1: [3-short-questions/greatFrontEnd/07-jQuery.css](../../3-short-questions/greatFrontEnd/code.md#07)
    2. Good Example 2: [3-short-questions/general/01](../../3-short-questions/general/code.md#01)
 2. Read question properly before solving 
+3. While any questions always first think about what you need to return like a `function`, `Promise`, `object` etc. Once you know then just write that first then think about anything else
 3. Go thorough given testcase to get hint. Don't keep spending time by reading question again and again
 </details>

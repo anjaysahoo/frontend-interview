@@ -12,8 +12,8 @@
       change or add context to it by any means** 
    2. For a `Normal Function`, we have different way to `change` and `add` context to a given function. If we don't give any context, then it is `undefined` by default
       1. **Directly**: `bfObj.gfFn()`(`bfObj` is context of `gfFn`)  or `gfFn.call(bfObj)` (`gfFn` is context of `call` method)
-      2. Use `call`/`apply` method with it to change its context `bfObj.gfFn.call(bfObj)`
-      3. Use `bind` method with it to make its context permanent `bfObj.gfFn.bind(bfObj)`
+      2. Use `call`/`apply` method with it to change its context `bfObj1.gfFn.call(bfObj2)`
+      3. Use `bind` method with it to make its context permanent `bfObj1.gfFn.bind(bfObj2)`
 
 
 <details >
@@ -66,3 +66,29 @@ Referred Video: https://www.youtube.com/watch?v=rZc7_2YXbP8
 
 </details>
 
+Why there is sometime `undefined` and sometime `window`?
+
+Whats the difference in output for objects created using `constructor` v/s `factor` v/s `class` function
+
+
+For any object created using `new` keyword in case of `constructor Function` & `class`, 
+
+If we have`Arrow Function` inside then execution context is set for that `Arrow Function` during the creation time only and
+since we cannot change context of `Arrow Function`[through `call`, `apply`, `bind`], so `this` inside the
+`Arrow Function` is always point to the `object` which is created using `new` keyword.
+
+Whereas in case of `Normal Function` it always needs context to make `this` defined. And if we don't 
+give context using any of the methods like `call`, `apply`, `bind` or executing it with given object
+then it will always be `undefined`.
+
+
+For normal function it really does not matter how it was created, the only thing important 
+for normal function is that while we execute are we able to give context to it
+
+For Arrow function only thing matter is how it was created. While executing it does not
+matter how you want to execute it. Nothing can change context. Only way to provide context
+to arrow function is through wrapping it into a normal function or or using `constructor` or `class` while creating object.
+
+
+
+While executing `setTimeout` execution context is `Windows` for it

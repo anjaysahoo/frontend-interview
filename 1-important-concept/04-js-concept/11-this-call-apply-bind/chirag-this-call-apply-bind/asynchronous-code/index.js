@@ -1,142 +1,77 @@
-// "use strict";
+// You are free to use alternative approaches of
+// instantiating the EventEmitter as long as the
+// default export is correct.
+class EventEmitter {
+    map;
+    constructor() {
+        this.map = new Map();
+    }
 
-console.log('Direct Strict mode log:', typeof this === 'undefined')
+    /**
+     * @param {string} eventName
+     * @param {Function} listener
+     * @returns {{off: Function}}
+     */
+    on(eventName, listener) {
+        const prevListeners = this.map.has(eventName) ? this.map.get(eventName) : [];
 
-function myFunction() {
-    console.log('Strict mode:', typeof this === 'undefined'); // Logs true
-}
+        this.map.set(eventName, [...prevListeners, listener]);
 
-myFunction();
+        return {
+            newMap: this.map,
+            off() {
+                /** Here eventName & listener are all accessible to off
+                 * function because of closure
+                 */
+                const listeners = this.newMap.get(eventName);
 
-let bfSyncObject = {
-    name: "Ranbir Kapoor",
-    age: 41,
-    gfFnInnerFn: function() {
-        function inner() {
-            console.log("Normal Function with Normal Inner Function : ", this)
+                listeners.forEach((fn, index) => {
+                    if(fn === listener){
+                        listeners.splice(index, 1);
+                        this.newMap.set(eventName, listeners);
+                    }
+                })
+            }
         }
-        inner();
-    },
-    gfFnArrowInnerFn: function() {
-        const inner = () => {
-            console.log("Normal Function with Arrow Inner Function : ", this)
+    }
+
+    /**
+     * @param {string} eventName
+     * @param {...any} args
+     * @returns boolean
+     */
+    emit(eventName, ...args) {
+        if(!this.map.has(eventName))
+            return false;
+
+        for(let fn of this.map.get(eventName)){
+            fn.call(this, ...args);
         }
-        inner();
-    },
-    gfArrowFnInnerFn: () => {
-        function inner() {
-            console.log("Arrow Function with Normal Inner Function : ", this)
-        }
-        inner();
-    },
-    gfArrowFnArrowInnerFn: () => {
-        const inner = () => {
-            console.log("Arrow Function with Arrow Inner Function : ", this)
-        }
-        inner();
+
+        return true;
     }
 }
 
-let bfAsynObject = {
-    name: "Ranbir Kapoor",
-    age: 41,
-    gfFnAsyncInnerFn: function() {
-        setTimeout(function() {
-            console.log("Normal Function with Async Normal Inner Function : ", this)
-        }, 1000)
-    },
-    gfFnAsyncArrowInnerFn: function() {
-        setTimeout(() => {
-            console.log("Normal Function with Async Arrow Inner Function : ", this)
-        }, 1000)
-    },
-    gfArrowFnAsyncInnerFn: () => {
-        setTimeout(function() {
-            console.log("Arrow Function with Async Normal Inner Function : ", this)
-        }, 1000)
-    },
-    gfArrowFnAsyncArrowInnerFn: () => {
-        setTimeout(() => {
-            console.log("Arrow Function with Async Arrow Inner Function : ", this)
-        }, 1000)
-    }
+const emitter = new EventEmitter();
+
+function addTwoNumbers(a, b) {
+    console.log(`The sum is ${a + b}`);
 }
 
-//With BF Synchronous Calls
+// Returns a subscription object that has an .off() method.
+const sub = emitter.on('foo', addTwoNumbers);
+emitter.emit('foo', 2, 5);
+// > "The sum is 7"
 
-console.log("With BF Synchronous Calls :-");
+emitter.on('foo', (a, b) => {
+    console.log(`The product is ${a * b}`);
+});
+emitter.emit('foo', 4, 5);
+// > "The sum is 9"
+// > "The product is 20"
 
-//Case-1
+sub.off(); // This unsubscribes the callback that logs the sum of the numbers.
+emitter.emit('foo', -3, 9);
+// > "The product is -27"
+// (Only the multiply callback is triggered, the first one was unsubscribed.)
 
-bfSyncObject.gfFnInnerFn();
-
-//Case-2
-bfSyncObject.gfFnArrowInnerFn();
-
-//Case-3
-bfSyncObject.gfArrowFnInnerFn();
-
-//Case-4
-bfSyncObject.gfArrowFnArrowInnerFn();
-
-
-
-//With BF Asynchronous Calls
-
-console.log("With BF Asynchronous Calls :-");
-
-//Case-1
-bfAsynObject.gfFnAsyncInnerFn();
-
-//Case-2
-bfAsynObject.gfFnAsyncArrowInnerFn();
-
-//Case-3
-bfAsynObject.gfArrowFnAsyncInnerFn();
-
-//Case-4
-bfAsynObject.gfArrowFnAsyncArrowInnerFn();
-
-
-// //Without BF Synchronous Calls
-//
-// console.log("Without BF Synchronous Calls :-");
-//
-// //Case-1
-//
-// const withoutBfGfFnInnerFn = bfSyncObject.gfFnInnerFn;
-// withoutBfGfFnInnerFn();
-//
-// //Case-2
-// const withoutBfGfFnArrowInnerFn = bfSyncObject.gfFnArrowInnerFn;
-// withoutBfGfFnArrowInnerFn();
-//
-// //Case-3
-// const withoutBfGfArrowFnInnerFn = bfSyncObject.gfArrowFnInnerFn;
-// withoutBfGfArrowFnInnerFn();
-//
-// //Case-4
-// const withoutBfGfArrowFnArrowInnerFn = bfSyncObject.gfArrowFnArrowInnerFn;
-// withoutBfGfArrowFnArrowInnerFn();
-//
-//
-//
-// //Without BF Asynchronous Calls
-//
-// console.log("Without BF Asynchronous Calls :-");
-//
-// //Case-1
-// const withoutBfGfFnAsyncInnerFn = bfAsynObject.gfFnAsyncInnerFn;
-// withoutBfGfFnAsyncInnerFn();
-//
-// //Case-2
-// const withoutBfGfFnAsyncArrowInnerFn = bfAsynObject.gfFnAsyncArrowInnerFn;
-// withoutBfGfFnAsyncArrowInnerFn();
-//
-// //Case-3
-// const withoutBfGfArrowFnAsyncInnerFn = bfAsynObject.gfArrowFnAsyncInnerFn;
-// withoutBfGfArrowFnAsyncInnerFn();
-//
-// //Case-4
-// const withoutBfGfArrowFnAsyncArrowInnerFn = bfAsynObject.gfArrowFnAsyncArrowInnerFn;
-// withoutBfGfArrowFnAsyncArrowInnerFn();

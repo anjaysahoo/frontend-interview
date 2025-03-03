@@ -1,0 +1,66 @@
+.task-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.task-table th,
+.task-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.task-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #444;
+}
+
+.task-table tr:hover {
+  background: #f8f9fa;
+}
+
+.priority-badge,
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.priority-high {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.priority-medium {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.priority-low {
+  background: #e8f5e9;
+  color: #388e3c;
+}
+
+.status-todo {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-in-progress {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.status-done {
+  background: #e8f5e9;
+  color: #388e3c;
+} 

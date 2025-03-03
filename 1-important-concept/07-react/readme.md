@@ -3,7 +3,7 @@
 
 Quick Speed Run: https://learnweb3.io/degrees/ethereum-developer-degree/sophomore/intro-to-react-and-next-js/
 
-
+For generating random Id: `crypto.randomUUID()` directly present in browser
 <details >
  <summary style="font-size: large; font-weight: bold">Input Fields</summary>
 
@@ -399,6 +399,30 @@ https://react.dev/reference/react/useState#updating-state-based-on-the-previous-
 https://react.dev/learn/updating-objects-in-state
 
 
+## Queueing a Series of State Updates
+
+```jsx
+<button onClick={() => {
+  setNumber(number + 5);
+  setNumber(n => n + 1);
+  setNumber(42);
+}}>
+```
+
+![img_14.png](img_14.png)
+
+- Setting state does not change the variable in the existing render, but it requests a new render.
+- React processes state updates after event handlers have finished running. This is called `Batching`.
+- To update some state multiple times in one event, you can use `setNumber(n => n + 1)` `Updater function`.
+
+- After the event handler completes, React will trigger a re-render. 
+During the re-render, React will process the queue. `Updater` functions run during rendering, so `updater` functions must be `pure` and only return the result. 
+- **Don’t try to set state from inside of them or run other side effects.** 
+- In Strict Mode, React will run each updater function twice (but discard the second result) to help you find mistakes.
+
+
+
+https://react.dev/learn/queueing-a-series-of-state-updates
 <details >
  <summary style="font-size: small; font-weight: bold">Important Example to go deep for above concept</summary>
 
@@ -4040,6 +4064,15 @@ In this example, a `Button` component is created using Styled Components. The st
  <summary style="font-size: x-large; font-weight: bold">Useful Things</summary>
 
 <details >
+ <summary style="font-size: large; font-weight: bold">Less Known Fact</summary>
+
+![img_15.png](img_15.png)
+Here `intializeCount` is called without parenthesis because we don't want it be called
+every time component re-render. If put parenthesis, it will still yield same result, 
+but it will be called every time component re-render.
+</details>
+
+<details >
  <summary style="font-size: large; font-weight: bold">Most Common React Events</summary>
 
 In React, event handlers like `onClick`, `onBlur`, and others are used to handle events triggered by the user, such as clicks, focus changes, key presses, etc. These event handlers are camelCase versions of standard HTML events and are passed to elements as props.
@@ -4368,6 +4401,9 @@ These event handlers enable React to respond to a wide range of user interaction
    1. https://www.youtube.com/watch?v=uDCBSnWkuH0
    2. https://github.com/WebDevSimplified/react-multistep-form/tree/main
 2. React Hook Form (with Zod): 
-   1. https://www.youtube.com/watch?v=qyzznUNe1ho
-   2. https://github.com/piyush-eon/react-hook-form-tutorial/tree/master
+   1. https://www.youtube.com/watch?v=cc_xmawJ8Kg
+   2. https://www.youtube.com/watch?v=qyzznUNe1ho
+   3. https://github.com/piyush-eon/react-hook-form-tutorial/tree/master
+3. Zod: https://www.youtube.com/watch?v=U9PYyMhDc_k
+![img_16.png](img_16.png)
 </details>
