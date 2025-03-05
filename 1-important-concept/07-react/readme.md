@@ -2541,6 +2541,66 @@ export default useCustomEffect;
 
 
 
+<details >
+ <summary style="font-size: large; font-weight: bold">useInterval() Custom Hook</summary>
+
+```jsx
+import React, { useState, useEffect, useRef } from 'react';
+ 
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+ 
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+ 
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+```
+
+### Usage-1
+```jsx
+import React, { useState, useEffect, useRef } from 'react';
+ 
+function Counter() {
+  let [count, setCount] = useState(0);
+ 
+  useInterval(() => {
+    // Your custom logic here
+    setCount(count + 1);
+  }, 1000);
+ 
+  return <h1>{count}</h1>;
+}
+```
+
+### Usage-2
+What if I want to temporarily pause my interval? I can do this with state too:
+```jsx
+const [delay, setDelay] = useState(1000);
+  const [isRunning, setIsRunning] = useState(true);
+ 
+  useInterval(() => {
+    setCount(count + 1);
+  }, isRunning ? delay : null);
+```
+
+Full Explanation: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
+
+Used in https://www.greatfrontend.com/interviews/study/state-management/questions/user-interface/grid-lights/react
+</details>
+
+
 
 <details>
  <summary style="font-size: large; font-weight: bold">`useMemo`, `useCallback` & `React.memo / memo` [Increase React Performance]</summary>
