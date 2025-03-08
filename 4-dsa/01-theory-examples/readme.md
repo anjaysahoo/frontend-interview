@@ -4631,3 +4631,254 @@ class Solution {
 </details>
 </details>
 </details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Trie Data Structure</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Concept</summary>
+
+### Implement Trie 1 (Prefix Tree)
+Question: https://leetcode.com/problems/implement-trie-prefix-tree/description/
+
+![img_99.png](img_99.png)
+
+- Time Complexity: O(n)
+- Space Complexity: n * 26
+
+https://www.youtube.com/watch?v=dBGUmUQhjaM&t=121s
+![img_100.png](img_100.png)
+
+```js
+class Node {
+    constructor() {
+        this.links = new Array(26).fill(null);
+        this.flag = false;
+    }
+
+    containsKey(ch) {
+        return this.links[ch.charCodeAt(0) - 'a'.charCodeAt(0)] !== null;
+    }
+
+    put(ch, node) {
+        this.links[ch.charCodeAt(0) - 'a'.charCodeAt(0)] = node;
+    }
+
+    get(ch) {
+        return this.links[ch.charCodeAt(0) - 'a'.charCodeAt(0)];
+    }
+
+    setEnd() {
+        this.flag = true;
+    }
+
+    isEnd() {
+        return this.flag;
+    }
+}
+
+var Trie = function() {
+    this.root = new Node();
+};
+
+/** 
+ * @param {string} word
+ * @return {void}
+ */
+Trie.prototype.insert = function(word) {
+    let node = this.root;
+    for (let i = 0; i < word.length; i++) {
+        let ch = word[i];
+        if (!node.containsKey(ch)) {
+            node.put(ch, new Node());
+        }
+        node = node.get(ch);
+    }
+    node.setEnd();
+};
+
+/** 
+ * @param {string} word
+ * @return {boolean}
+ */
+Trie.prototype.search = function(word) {
+    let node = this.root;
+    for (let i = 0; i < word.length; i++) {
+        let ch = word[i];
+        if (!node.containsKey(ch)) {
+            return false;
+        }
+        node = node.get(ch);
+    }
+    return node.isEnd();
+};
+
+/** 
+ * @param {string} prefix
+ * @return {boolean}
+ */
+Trie.prototype.startsWith = function(prefix) {
+    let node = this.root;
+    for (let i = 0; i < prefix.length; i++) {
+        let ch = prefix[i];
+        if (!node.containsKey(ch)) {
+            return false;
+        }
+        node = node.get(ch);
+    }
+    return true;
+};
+
+/** 
+ * Your Trie object will be instantiated and called as such:
+ * var obj = new Trie()
+ * obj.insert(word)
+ * var param_2 = obj.search(word)
+ * var param_3 = obj.startsWith(prefix)
+ */
+```
+
+
+### Implement Trie - 2 (Prefix Tree)
+Question: https://www.naukri.com/code360/problems/implement-trie_1387095?leftPanelTab=0
+
+![img_101.png](img_101.png)
+
+- Time Complexity: O(n)
+- Space Complexity: n * 26
+
+```js
+class Node{
+    Node[] link = new Node[26];
+    int countPrefix = 0;
+    int countEnd = 0;
+    
+    Node(){
+        
+    }
+    
+    boolean containsKey(char ch){
+        return link[ch - 'a'] != null;
+    }
+    
+    void put(char ch, Node node){
+        link[ch - 'a'] = node;
+        return;
+    }
+    
+    Node get(char ch){
+        return link[ch - 'a'];
+    }
+    
+    void increasePrefix(){
+        countPrefix++;
+    }
+    
+    void decreasePrefix(){
+        countPrefix--;
+    }
+    
+    void increaseEnd(){
+        countEnd++;
+    }
+    
+    void decreaseEnd(){
+        countEnd--;
+    }
+    
+    int getPrefixCount(){
+        return countPrefix;
+    }
+    
+    int getEndCount(){
+        return countEnd;
+    }
+}
+
+public class Trie {
+    Node root;
+    public Trie() {
+        root = new Node();
+    }
+
+    public void insert(String word) {
+        Node node = root;
+        
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
+            if(!node.containsKey(ch)){
+                node.put(ch, new Node());
+            }
+            node = node.get(ch);
+            node.increasePrefix();
+        }
+        
+        node.increaseEnd();
+    }
+
+    public int countWordsEqualTo(String word) {
+        Node node = root;
+        
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
+            if(!node.containsKey(ch)){
+                return 0;
+            }
+            node = node.get(ch);
+        }
+       
+        return node.getEndCount();
+    }
+
+    public int countWordsStartingWith(String word) {
+        Node node = root;
+    
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
+            if(!node.containsKey(ch)){
+                return 0;
+            }
+            node = node.get(ch);
+        }
+
+        return node.getPrefixCount();
+    }
+
+    public void erase(String word) {
+        Node node = root;
+        
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
+            node = node.get(ch);
+            node.decreasePrefix();
+        }
+        
+        node.decreaseEnd();
+    }
+
+}
+```
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Important Examples</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. </summary>
+</details>
+</details>
+</details>
+
