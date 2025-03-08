@@ -128,6 +128,330 @@ public class Solution {
 
 
 
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Linked List</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Concept</summary>
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Important Examples</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. Middle of the Linked List</summary>
+
+Question: https://leetcode.com/problems/middle-of-the-linked-list/description/
+![img_103.png](img_103.png)
+
+- Time - O(n)
+- Space - O(1)
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var middleNode = function(head) {
+    let slow = head;
+    let fast = head?.next;
+
+    while (fast !== null) {
+        slow = slow.next;
+        fast = fast.next;
+        if (fast !== null) {
+            fast = fast.next;
+        }
+    }
+
+    return slow;
+};
+
+```
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">2. Linked List Cycle</summary>
+
+Question: https://leetcode.com/problems/linked-list-cycle/description/
+![img_104.png](img_104.png)
+
+- Time - O(n)
+- Space - O(1)
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var hasCycle = function(head) {
+    if (head === null) return false;
+    
+    let walker = head;
+    let runner = head;
+    
+    while (runner?.next !== null && runner?.next?.next !== null) {
+        walker = walker.next;
+        runner = runner.next.next;
+        
+        if (walker === runner) return true;
+    }
+    
+    return false;
+};
+
+```
+
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">3. Remove Nth Node From End of List</summary>
+
+Question: https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/
+![img_105.png](img_105.png)
+
+### 1. Two Pass Solution
+
+- Time - O(n)
+- Space - O(1)
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val);
+ *     this.next = (next===undefined ? null : next);
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = function(head, n) {
+    let curr = head;
+    let len = 0;
+
+    // Calculate the length of the list
+    while (curr !== null) {
+        len++;
+        curr = curr.next;
+    }
+
+    let removePos = len - n;
+    let prev = null;
+    curr = head;
+    
+    // Move to the node just before the one we want to remove
+    for (let i = 0; i < removePos; i++) {
+        prev = curr;
+        curr = curr.next;
+    }
+
+    // If prev is still null, it means we're removing the first node
+    if (prev === null) {
+        return head.next;
+    }
+
+    // Skip the node to be removed
+    prev.next = curr.next;
+
+    return head;
+};
+```
+
+### One Pass Solution
+- Time - O(n)
+- Space - O(1)
+
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val);
+ *     this.next = (next===undefined ? null : next);
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = function(head, n) {
+    let dummy = new ListNode(0);
+    dummy.next = head;
+    let first = dummy;
+    let second = dummy;
+
+    // Move first ahead by n + 1 steps
+    for (let i = 0; i <= n; i++) {
+        first = first.next;
+    }
+
+    // Move first to the end, maintaining the gap
+    while (first !== null) {
+        first = first.next;
+        second = second.next;
+    }
+
+    // Remove the nth node from the end
+    second.next = second.next.next;
+
+    return dummy.next;
+};
+
+```
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">4. Intersection of Two Linked Lists </summary>
+
+Question: https://leetcode.com/problems/intersection-of-two-linked-lists/description/
+
+![img_106.png](img_106.png)
+
+### 1. Making length same
+
+- Time - O(n)
+- Space - O(1)
+
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
+ */
+var getIntersectionNode = function(headA, headB) {
+    const length = (node) => {
+        let length = 0;
+        while (node !== null) {
+            node = node.next;
+            length++;
+        }
+        return length;
+    };
+
+    let lenA = length(headA), lenB = length(headB);
+
+    // Move headA and headB to the same start point
+    while (lenA > lenB) {
+        headA = headA.next;
+        lenA--;
+    }
+    while (lenA < lenB) {
+        headB = headB.next;
+        lenB--;
+    }
+
+    // Find the intersection
+    while (headA !== headB) {
+        headA = headA.next;
+        headB = headB.next;
+    }
+
+    return headA;
+};
+
+```
+
+### 2. Without knowing difference
+
+- Time - O(n)
+- Space - O(A + B)
+
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
+ */
+var getIntersectionNode = function(headA, headB) {
+    // Boundary check
+    if (headA === null || headB === null) return null;
+    
+    let a = headA;
+    let b = headB;
+    
+    // If a & b have different lengths, they will equal after at most 2 iterations
+    while (a !== b) {
+        // Move to the next node, or switch to the head of the other list at the end
+        a = a === null ? headB : a.next;
+        b = b === null ? headA : b.next;
+    }
+    
+    return a;
+};
+
+```
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">2. </summary>
+
+
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">2. </summary>
+
+
+</details>
+
+</details>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
 <details >
  <summary style="font-size: x-large; font-weight: bold">Binary Search</summary>
 
