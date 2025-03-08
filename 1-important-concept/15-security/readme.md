@@ -10,20 +10,20 @@
 2. Good for Monolithic Application
 3. Latency issue
 4. The Server has full control on closing the session
-![img_21.png](img_21.png)
+![img_21.png](images/img_21.png)
 
 ### JWT
 1. Stateless
 2. Good for Microservice Application
 3. Server cannot revoke the token
 
-![img_23.png](img_23.png)
+![img_23.png](images/img_23.png)
 #### HMAC
 Single Key
-![img_24.png](img_24.png)
+![img_24.png](images/img_24.png)
 
 ### RSA or ECDSA
-![img_25.png](img_25.png)
+![img_25.png](images/img_25.png)
 
 Referred Videos: 
 1. https://www.youtube.com/watch?v=fyTxwIa-1U0
@@ -95,7 +95,7 @@ TODO: Read this in spare time: https://hasura.io/blog/best-practices-of-using-jw
 <details >
  <summary style="font-size: large; font-weight: bold">XSS(Cross-Site Scripting)</summary>
 
-![img.png](img.png)
+![img.png](images/img.png)
 
 Everything start from clicking any phishing link, which will execute certain JS.
 1. Like if if cookies are not set from server side and made HTTPS- only then those cookies can be sent to hacker
@@ -114,7 +114,7 @@ false login page on top of real one which can then sent user credential to hacke
 1. If user is able to insert any script(JS) into your website then they can render there HTML,CSS & JS which can mimic like your website and do sort of attack mentioned here
 2. This mostly happen through user input
 
-![img_1.png](img_1.png)
+![img_1.png](images/img_1.png)
 https://github.com/namastedev/namaste-frontend-system-design/blob/master/Security/XSS/vulnerability/example1.html
 
 
@@ -162,13 +162,13 @@ https://github.com/namastedev/namaste-frontend-system-design/blob/master/Securit
 ```
 
 Here user can pass malicious code in url param like below. We need to use `encodeURIComponent` to encode below code, so that special character interpreted correctly
-![img_2.png](img_2.png)
+![img_2.png](images/img_2.png)
 
 Hacker able to hit his own server with our user cookies information. Cookies can be holding authorization details
 which will help hacker to hijack the user session
-![img_3.png](img_3.png)
+![img_3.png](images/img_3.png)
 User cookies hijacked by hacker.
-![img_4.png](img_4.png)
+![img_4.png](images/img_4.png)
 </details>
 
 
@@ -228,7 +228,7 @@ User cookies hijacked by hacker.
 </html>
 ```
 
-![img_5.png](img_5.png)
+![img_5.png](images/img_5.png)
 
 
 Since Hacker was able to hit his own server with our user cookies information. So any unauthorized activities can be done by hacker.
@@ -239,8 +239,8 @@ Since Hacker was able to hit his own server with our user cookies information. S
  <summary style="font-size: large; font-weight: bold">Capturing Key strokes</summary>
 
 Just like session we can pass malicious code which can track our user keystrokes activities and send it to hacker server
-![img_6.png](img_6.png)
-![img_7.png](img_7.png)
+![img_6.png](images/img_6.png)
+![img_7.png](images/img_7.png)
 </details>
 
 
@@ -248,8 +248,8 @@ Just like session we can pass malicious code which can track our user keystrokes
  <summary style="font-size: large; font-weight: bold">Stealing critical information</summary>
 
 Same like above we can pass malicious code in params and it steals all user details by tacking whole HTML page
-![img_8.png](img_8.png)
-![img_9.png](img_9.png)
+![img_8.png](images/img_8.png)
+![img_9.png](images/img_9.png)
 </details>
 
 
@@ -258,10 +258,10 @@ Same like above we can pass malicious code in params and it steals all user deta
 
 Again like above malicious form was injected through params and now user was tricked thinking this real form and
 might share their username and password which be sent to hacker
-![img_10.png](img_10.png)
-![img_12.png](img_12.png)
-![img_13.png](img_13.png)
-![img_11.png](img_11.png)
+![img_10.png](images/img_10.png)
+![img_12.png](images/img_12.png)
+![img_13.png](images/img_13.png)
+![img_11.png](images/img_11.png)
 </details>
 
 
@@ -274,7 +274,7 @@ might share their username and password which be sent to hacker
 6. CSP Headers (Content Security Policy)
 7. Avoid using eval
 
-![img_14.png](img_14.png)
+![img_14.png](images/img_14.png)
 
 
 <details >
@@ -317,10 +317,10 @@ app.listen(PORT, () => {
 
 
 Without Any CSP policy, we are able to load linked image here
-![img_15.png](img_15.png)
+![img_15.png](images/img_15.png)
 
 With CSP policy, it was restricted
-![img_16.png](img_16.png)
+![img_16.png](images/img_16.png)
 </details>
 
 
@@ -365,9 +365,9 @@ app.use((req, res, next) => {
 ```
 
 Here with above CSP set are able to execute only `trusted code` which has `nonce` set
-![img_18.png](img_18.png)
-![img_20.png](img_20.png)
-![img_19.png](img_19.png)
+![img_18.png](images/img_18.png)
+![img_20.png](images/img_20.png)
+![img_19.png](images/img_19.png)
 </details>
 
 
@@ -387,27 +387,27 @@ Here with above CSP set are able to execute only `trusted code` which has `nonce
 <details >
  <summary style="font-size: large; font-weight: bold">Client-Storage Security</summary>
 
-![img_40.png](img_40.png)
+![img_40.png](images/img_40.png)
 
 1. Storing sensitive data on client
    1. Encrypt Data: 
-      1. ![img_41.png](img_41.png)
+      1. ![img_41.png](images/img_41.png)
       2. The secret key can be generated dynamically using the environment variables configured on the server. The example above is just for a demo purpose. 
       3. Encrypt your Local Storage data!: https://dev.to/codecraftjs/encrypt-your-local-storage-data-5ag8
-   2. Token expiry ![img_42.png](img_42.png)
+   2. Token expiry ![img_42.png](images/img_42.png)
 3. Data Integrity
-   1. CheckSum ![img_43.png](img_43.png)
+   1. CheckSum ![img_43.png](images/img_43.png)
 4. Storage Limit
-   ![img_44.png](img_44.png)
+   ![img_44.png](images/img_44.png)
 5. Session Management
-   ![img_45.png](img_45.png)
+   ![img_45.png](images/img_45.png)
 </details>
 
 
 <details >
  <summary style="font-size: large; font-weight: bold">Input Validation & Sanitization</summary>
 
-![img_34.png](img_34.png)
+![img_34.png](images/img_34.png)
 </details>
 
 
@@ -415,29 +415,29 @@ Here with above CSP set are able to execute only `trusted code` which has `nonce
 <details >
  <summary style="font-size: large; font-weight: bold">Server-Side Request Forgery (SSRF)</summary>
 
-![img_35.png](img_35.png)
+![img_35.png](images/img_35.png)
 This attack happens when we have internal servers which can be accessed by some servers and inforamtion 
 of such server is leaked.
 
 Now hacker can just sent request from web server to internal server in some input box, because of
 lack of validation on input box, it will be able to send request to internal server.
 
-![img_36.png](img_36.png)
+![img_36.png](images/img_36.png)
 
 Mitigation:
 
 1. Whitelisting: On server we can add servers which can access these internal servers
-![img_37.png](img_37.png)
-2. ![img_38.png](img_38.png)
-3. ![img_39.png](img_39.png)
+![img_37.png](images/img_37.png)
+2. ![img_38.png](images/img_38.png)
+3. ![img_39.png](images/img_39.png)
 </details>
 
 
 <details >
  <summary style="font-size: large; font-weight: bold">Cross-Site Request Forgery (CSRF)</summary>
 
-![img_28.png](img_28.png)
-![img_29.png](img_29.png)
+![img_28.png](images/img_28.png)
+![img_29.png](images/img_29.png)
 
 1. If you click on any such phishing link like above it will redirect you to your bank website, 
 then scammer can steal your money if you are logged in to your bank website.  
@@ -445,9 +445,9 @@ then scammer can steal your money if you are logged in to your bank website.
 Since you are already logged in to your bank website, session or JWT will be sent to server and since 
 these REST API call are Stateless, so it does not really matter how you call these API, it won't be able to identify any phishing call.
 
-![img_26.png](img_26.png)
+![img_26.png](images/img_26.png)
 
-![img_27.png](img_27.png)
+![img_27.png](images/img_27.png)
 
 1. `GET` request are quite simple to make, hence never design your APIs where modification are done by `GET` request
 2. `POST` request are more complex to make, but they can also be done by hiding `acc` and `amount` information in hidden input
@@ -460,15 +460,15 @@ like in the above example
     Frontend will store this csrf-token in script variable and send it to backend in each request.
     2. By this any other call to server which is not from bank webiste frontend will not be able to send csrf-token 
        and won't be able to make any successful request to backend.
-   3. ![img_30.png](img_30.png)
+   3. ![img_30.png](images/img_30.png)
 2. SameSite Cookies
    1. With this backend will not perform any action if call was not from bank frontend. Any other redirected link will be rejected 
-   2. ![img_31.png](img_31.png)
+   2. ![img_31.png](images/img_31.png)
 3. Referer-based Validate
    1. This same like sameSite cookies, any other website redirect referred server calls will be rejected. Though this can be bypassed by calling through POSTMAN
    2. Below highlighted URL shows from where this call was redirected
-   3. ![img_32.png](img_32.png)
-   4. ![img_33.png](img_33.png)
+   3. ![img_32.png](images/img_32.png)
+   4. ![img_33.png](images/img_33.png)
 4. Use Captcha
 5. CSP Header
 </details>

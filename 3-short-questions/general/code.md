@@ -1271,3 +1271,7 @@ getValues('parent');
 5. https://www.greatfrontend.com/questions/quiz/can-you-offer-a-use-case-for-the-new-arrow-function-syntax-how-does-this-new-syntax-differ-from-other-functions
 6. https://www.greatfrontend.com/questions/quiz/whats-the-difference-between-feature-detection-feature-inference-and-using-the-ua-string
 7. 
+
+
+![img_23.png](img_23.png)
+https://imgur.com/k3o10X1

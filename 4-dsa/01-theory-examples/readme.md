@@ -3813,7 +3813,9 @@ class Solution {
         for(let j = 0; j < V; j++){
             if(adj[i][j] === 1){
                 adjList[i].push(j);
-                adjList[j].push(i);
+                // We don't need this,using also will not 
+                // affect the result
+                // adjList[j].push(i);
             }
         }
     }
@@ -3851,20 +3853,23 @@ class Solution {
 
 class Solution {
    numProvinces(V,adj){
-     let visited = new Array(V).fill(false);
-     let res = 0;
-     let adjList = [];
- 
-     // Convert adjacency matrix to adjacency list
-     for (let p = 0; p < V; p++) {
-         let temp = [];
-         for (let c = 0; c < V; c++) {
-             if (p !== c && adj[p][c] === 1) {
-                 temp.push(c);
-             }
-         }
-         adjList.push(temp);
-     }
+       const adjList = {};
+       const visited = Array(V).fill(false);
+       let res = 0;
+
+       for(let i = 0; i < V; i++)
+           adjList[i] = [];
+
+       for(let i = 0; i < V; i++){
+           for(let j = 0; j < V; j++){
+               if(adj[i][j] === 1){
+                   adjList[i].push(j);
+                   // We don't need this here. 
+                   // If we use this then we will get TLE
+                   // adjList[j].push(i); 
+               }
+           }
+       }
  
      // Traverse each node
      for (let node = 0; node < V; node++) {
