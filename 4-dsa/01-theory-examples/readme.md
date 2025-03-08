@@ -17,6 +17,122 @@
 
 <details >
  <summary style="font-size: large; font-weight: bold">Concept</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Kadane's Algorithm</summary>
+
+
+### 1. Maximum Subarray
+
+Question: https://leetcode.com/problems/maximum-subarray/description/
+
+![img_108.png](img_108.png)
+
+T: O(n); S: O(1)
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxSubArray = function(nums) {
+    let size = nums.length;
+    let maxSoFar = Number.MIN_SAFE_INTEGER, maxEndingHere = 0;
+  
+    for (let i = 0; i < size; i++) {
+        maxEndingHere += nums[i];
+        if (maxSoFar < maxEndingHere) {
+            maxSoFar = maxEndingHere;
+        }
+        if (maxEndingHere < 0) {
+            maxEndingHere = 0;
+        }
+    }
+    return maxSoFar;
+};
+```
+
+
+### 2. Maximum Product Subarray
+
+Question: https://leetcode.com/problems/maximum-product-subarray/description/
+![img_109.png](img_109.png)
+
+1. Using Kadane's Algorithm
+T: O(n); S: O(1)
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxProduct = function(nums) {
+    let len = nums.length;
+    
+    let max = nums[0];
+    let min = nums[0];
+    let res = nums[0];
+    
+    for (let i = 1; i < len; i++) {
+        let temp = Math.max(nums[i], Math.max(max * nums[i], min * nums[i]));
+        min = Math.min(nums[i], Math.min(max * nums[i], min * nums[i]));
+        max = temp;
+        
+        res = Math.max(max, res);
+    }
+    
+    return res;
+};
+```
+2. Using Two Traversal
+T: O(n); S: O(1)
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxProduct = function(nums) {
+    let len = nums.length;
+
+    let maxLeft = nums[0];
+    let maxRight = nums[0];
+    let zeroPresent = false;
+    let prod = 1;
+
+    for (let i = 0; i < len; i++) {
+        prod *= nums[i];
+
+        if (nums[i] === 0) {
+            prod = 1;
+            zeroPresent = true;
+            continue;
+        }
+
+        maxLeft = Math.max(maxLeft, prod);
+    }
+
+    prod = 1;
+
+    for (let j = len - 1; j >= 0; j--) {
+        prod *= nums[j];
+
+        if (nums[j] === 0) {
+            prod = 1;
+            zeroPresent = true;
+            continue;
+        }
+
+        maxRight = Math.max(maxRight, prod);
+    }
+
+    return zeroPresent ? Math.max(Math.max(maxLeft, maxRight), 0) : Math.max(maxLeft, maxRight);
+};
+
+```
+
+</details>
+
 </details>
 
 
@@ -116,6 +232,630 @@ public class Solution {
 }
 ```
 </details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">2. 3Sum</summary>
+
+Question: https://leetcode.com/problems/3sum/description/
+![img_107.png](img_107.png)
+
+- Time - O(n^2)
+- Space - O(1)
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var threeSum = function(nums) {
+    let len = nums.length;
+    if (len < 3) return [];
+    
+    nums.sort((a, b) => a - b); // Sort the array
+    
+    let resSet = new Set();
+    let result = [];
+    
+    for (let i = 0; i < len - 2; i++) {
+        if (nums[i] > 0) continue;
+        
+        let j = i + 1, k = len - 1;
+        
+        while (j < k) {
+            let sum = nums[i] + nums[j] + nums[k];
+            
+            if (sum === 0) {
+                let temp = [nums[i], nums[j], nums[k]];
+                let key = temp.toString();
+                
+                if (!resSet.has(key)) {
+                    resSet.add(key);
+                    result.push(temp);
+                }
+                
+                j++;
+                k--;
+            } else if (sum > 0) {
+                k--;
+            } else {
+                j++;
+            }
+        }
+    }
+    
+    return result;
+};
+```
+</details>
+
+
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">3. Majority Element II</summary>
+
+Question: https://leetcode.com/problems/majority-element-ii/description/
+![img_110.png](img_110.png)
+
+- Time - O(n)
+- Space - O(1)
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var majorityElement = function(nums) {
+    let count1 = 0, count2 = 0;
+    let candidate1 = null, candidate2 = null;
+    
+    // 1st pass to find potential candidates
+    for (let n of nums) {
+        if (candidate1 !== null && candidate1 === n) {
+            count1++;
+        } else if (candidate2 !== null && candidate2 === n) {
+            count2++;
+        } else if (count1 === 0) {
+            candidate1 = n;
+            count1 = 1;
+        } else if (count2 === 0) {
+            candidate2 = n;
+            count2 = 1;
+        } else {
+            count1--;
+            count2--;
+        }
+    }
+    
+    // 2nd pass to verify candidates
+    count1 = 0;
+    count2 = 0;
+    for (let n of nums) {
+        if (candidate1 !== null && n === candidate1) count1++;
+        if (candidate2 !== null && n === candidate2) count2++;
+    }
+    
+    let result = [];
+    let n = nums.length;
+    if (count1 > Math.floor(n / 3)) result.push(candidate1);
+    if (count2 > Math.floor(n / 3)) result.push(candidate2);
+    
+    return result;
+};
+
+```
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">4. Count the number of subarrays having a given XOR</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. Largest subarray with 0 sum</summary>
+
+Question: https://www.geeksforgeeks.org/problems/largest-subarray-with-0-sum/1
+![img_111.png](img_111.png)
+
+1. Brute force
+- Time - O(n ^ 2)
+- Space - O(1)
+
+```js
+/**
+ * @param {Number[]} arr
+ * @returns {Number}
+ */
+class Solution {
+    maxLen(arr) {
+        const n = arr.length;
+        let maxLen = 0;
+        
+        // Pick a starting point
+        for (let i = 0; i < n; i++) {
+            // Initialize curr_sum for every starting point
+            let currSum = 0;
+            
+            // Try all subarrays starting with 'i'
+            for (let j = i; j < n; j++) {
+                currSum += arr[j];
+                
+                // If currSum becomes 0, then update maxLen
+                if (currSum === 0) {
+                    maxLen = Math.max(maxLen, j - i + 1);
+                }
+            }
+        }
+        
+        return maxLen;
+    }
+}
+```
+
+2. Hashmap solution
+- Time - O(n)
+- Space - O(n)
+
+![img_113.png](img_113.png)
+![img_112.png](img_112.png)
+```js
+/**
+ * @param {Number[]} arr
+ * @returns {Number}
+ */
+class Solution {
+    maxLen(arr) {
+        const len = arr.length;
+        
+        // Map to store running sum and its index
+        const sumIndexMap = new Map();
+
+      /** Without below line we will always skip
+       * first array value for calculating largest
+       * subarray.
+       * Ex : -1 1 -1 -1 **/
+        sumIndexMap.set(0, -1);
+        
+        let res = 0;
+        let totalTillI = 0;
+        
+        for (let i = 0; i < len; i++) {
+            totalTillI += arr[i];
+            
+            const sameTotal = totalTillI;
+            if (sumIndexMap.has(sameTotal)) {
+                const tempLen = i - sumIndexMap.get(sameTotal);
+                res = Math.max(res, tempLen);
+            } else {
+                // Only store the first occurrence of the sum
+                // so that we always get the furthest distant when sum repeats
+                sumIndexMap.set(totalTillI, i);
+            }
+        }
+        
+        return res;
+    }
+}
+```
+</details>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">2. Subarray Sum Equals K</summary>
+
+Question: https://leetcode.com/problems/subarray-sum-equals-k/description/
+
+![img_114.png](img_114.png)
+
+- HashMap solution
+- Time - O(n)
+- Space - O(n)
+
+```js
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var subarraySum = function(nums, k) {
+    let len = nums.length;
+    let sumCountMap = new Map();
+
+    /** Without below line we will always skip 
+    * first array value in our calculation**/
+    sumCountMap.set(0, 1);
+    
+    let res = 0;
+    let totalTillI = 0;
+    
+    for (let i = 0; i < len; i++) {
+        totalTillI += nums[i];
+        
+        let complement = totalTillI - k;
+        
+        if (sumCountMap.has(complement)) {
+            res += sumCountMap.get(complement);
+        }
+        
+        sumCountMap.set(totalTillI, (sumCountMap.get(totalTillI) || 0) + 1);
+    }
+    
+    return res;
+};
+
+```
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">3. Longest Subarray with Sum K</summary>
+
+Question: https://www.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1
+
+![img_115.png](img_115.png)
+
+1. Using Variable Sliding Window
+- Time - O(n)
+- Space - O(1)
+- **Note : Only work if numbers are non negative**
+
+```js
+/**
+ * @param {number[]} arr
+ * @param {number} k
+ * @returns {number}
+ */
+class Solution {
+    longestSubarray(arr, k) {
+        const n = arr.length;
+        let res = 0;
+        
+        let i = 0, j = 0;
+        let sum = 0;
+        
+        while (j < n) {
+            sum += arr[j];
+            
+            if (sum === k) {
+                res = Math.max(res, j - i + 1);
+            }
+            
+            // If sum exceeds or equals k, shrink the window from left
+            while (i <= j && sum >= k) {
+                sum -= arr[i];
+                
+                if (sum === k) {
+                    res = Math.max(res, j - i + 1);
+                }
+                
+                i++;
+            }
+            
+            j++;
+        }
+        
+        return res;
+    }
+}
+```
+
+2. Using HashMap()
+- Time - O(n)
+- Space - O(n)
+
+```js
+/**
+ * @param {number[]} arr
+ * @param {number} k
+ * @returns {number}
+ */
+class Solution {
+  longestSubarray(arr, k) {
+    const n = arr.length;
+    let res = 0;
+
+    // Map to store the first occurrence of each running sum
+    const sumFirstIndexMap = new Map();
+
+    /** Need to be very careful while setting base case,
+     * if pair(a[0], 0) and we try to get length by
+     * i - sumFirstIndexMap.get(complement) + 1 we will get wrong
+     * answer, to understand this please carefully see
+     * "Largest subarray with 0 sum" solution for logic behind this
+     **/
+    sumFirstIndexMap.set(0, -1);
+
+    let totalTilli = 0;
+
+    for (let i = 0; i < n; i++) {
+      totalTilli += arr[i];
+
+      // Find if there exists a prefix with sum (totalTilli - k)
+      const complement = totalTilli - k;
+
+      if (sumFirstIndexMap.has(complement)) {
+        res = Math.max(res, i - sumFirstIndexMap.get(complement));
+      }
+
+      // Only store the first occurrence of each sum
+      if (!sumFirstIndexMap.has(totalTilli)) {
+        sumFirstIndexMap.set(totalTilli, i);
+      }
+    }
+
+    return res;
+  }
+}
+```
+</details>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">4. Subarray with given XOR(Count the number of subarrays having a given XOR)</summary>
+
+Question: https://www.interviewbit.com/problems/subarray-with-given-xor/
+![img_116.png](img_116.png)
+
+- HashMap solution
+- Time - O(n)
+- Space - O(n)
+
+![img_117.png](img_117.png)
+
+```js
+module.exports = { 
+    //param A : array of integers
+    //param B : integer
+    //return an integer
+    solve : function(A, B){
+        const len = A.length;
+        const xorCountMap = new Map();
+
+      /** Without below line we will be skipping
+       first array value in our calculation **/
+        xorCountMap.set(0, 1);
+        
+        let xorTillI = 0;
+        let res = 0;
+        
+        for(let i = 0; i < len; i++){
+            // Calculate XOR till current index
+            xorTillI ^= A[i];
+            
+            // Find the complementary XOR that would give us B
+            // If xorTillI ^ complementXor = B, then complementXor = xorTillI ^ B
+            const complementXor = xorTillI ^ B;
+            
+            // Add the count of previous subarrays with complementXor
+            if(xorCountMap.has(complementXor)){
+                res += xorCountMap.get(complementXor);
+            }
+            
+            // Update the frequency of current running XOR
+            if(xorCountMap.has(xorTillI)){
+                xorCountMap.set(xorTillI, xorCountMap.get(xorTillI) + 1);
+            }
+            else{
+                xorCountMap.set(xorTillI, 1);
+            }
+        }
+        
+        return res;
+    }
+};
+```
+</details>
+
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">5. Missing And Repeating</summary>
+
+Question: https://www.geeksforgeeks.org/problems/find-missing-and-repeating2512/1
+![img_118.png](img_118.png)
+
+1. Negative Marking
+- Time - O(n)
+- Space - O(1) [If  existing array or list is allowed to modified], else O(n).
+
+
+```js
+/**
+ * @param {number[]} arr
+ * @returns {number[]}
+ */
+class Solution {
+  // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    findTwoElement(arr) {
+        const len = arr.length;
+        const temp = [...arr]; 
+        
+        let duplicate = -1;
+        
+        for (let i = 0; i < len; i++) {
+            const index = Math.abs(temp[i]);
+
+          /** Duplicate value trying to negative
+           mark twice same value **/
+            if (temp[index - 1] < 0) {
+                duplicate = index;
+            } else {
+                temp[index - 1] = temp[index - 1] * (-1);
+            }
+        }
+        
+        let missing = -1;
+        
+        for (let i = 1; i <= len; i++) {
+          /** Missing index(value) didn't able to
+           negative mark **/
+            if (temp[i - 1] > 0) {
+                missing = i;
+            } else {
+                // Restore the array (not necessary but matches original code)
+                temp[i - 1] = temp[i - 1] * (-1);
+            }
+        }
+        
+        return [duplicate, missing];
+    }
+}
+```
+
+2. XOR method
+- Time - O(n)
+- Space - O(1)
+- https://www.youtube.com/watch?v=5nMGY4VUoRY&list=PLgUwDviBIf0rPG3Ictpu74YWBQ1CaBkm2&index=5
+
+![img_119.png](img_119.png)
+
+```js
+/**
+ * @param {number[]} A
+ * @returns {number[]}
+ */
+class Solution {
+    findTwoElement(A) {
+        const n = A.length;
+        
+        let repeatMissXor = 0;
+        
+        for(let i = 0; i < n; i++)
+            repeatMissXor ^= A[i];
+            
+        /** After XORing repeatMissXor with no missing & duplicate
+        list we will get XOR of missing & duplicate number **/
+        for(let i = 1; i <= n; i++)
+            repeatMissXor ^= i;
+            
+        /* Get the rightmost set bit in setBitNo */    
+        const setBitNo = repeatMissXor & ~(repeatMissXor - 1);
+        
+        let x = 0;
+        let y = 0;
+        
+        /* Now divide elements into two sets by comparing
+        rightmost set bit of currListXor with the bit at the same
+        position in each element. Also, get XORs of two
+        sets. The two XORs are the output elements. The
+        following two for loops serve the purpose */
+        for(let i = 0; i < n; i++){
+            if((A[i] & setBitNo) == 0){
+                x ^= A[i];
+            }
+            else{
+                y ^= A[i];
+            }
+        }
+        
+        for(let i = 1; i <= n; i++){
+            if((i & setBitNo) == 0){
+                x ^= i;
+            }
+            else{
+                y ^= i;
+            }
+        }
+        
+        const res = new Array(2);
+        for(let i = 0; i < n; i++){
+            if(x == A[i]){
+                res[0] = x;
+                res[1] = y;
+                break;
+            }
+            
+            if(y == A[i]){
+                res[0] = y;
+                res[1] = x;
+                break;
+            }
+        }
+        
+        return res;
+    }
+}
+```
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">6. Count Inversions</summary>
+
+Question: https://www.geeksforgeeks.org/problems/inversion-of-array-1587115620/1
+
+![img_120.png](img_120.png)
+
+```js
+/**
+ * @param {number[]} arr
+ * @returns {number}
+ */
+class Solution {
+    constructor() {
+        this.count = 0;
+    }
+    
+    // Function to count inversions in the array.
+    inversionCount(arr) {
+        this.count = 0;
+        this.mergeSort(arr, 0, arr.length - 1);
+        return this.count;
+    }
+    
+    mergeSort(arr, p, r) {
+        if (p < r) {
+            let q = Math.floor((p + r) / 2);
+            this.mergeSort(arr, p, q);
+            this.mergeSort(arr, q + 1, r);
+            this.merge(arr, p, q, r);
+        }
+    }
+    
+    merge(arr, p, q, r) {
+        let len1 = q - p + 2;
+        let len2 = r - q + 1;
+        
+        let a1 = new Array(len1).fill(Number.MAX_VALUE);
+        let a2 = new Array(len2).fill(Number.MAX_VALUE);
+        
+        for (let k = p, j = 0; k <= q; k++, j++) {
+            a1[j] = arr[k];
+        }
+        
+        for (let k = q + 1, j = 0; k <= r; k++, j++) {
+            a2[j] = arr[k];
+        }
+        
+        let k = p;
+        let index1 = 0;
+        let index2 = 0;
+        
+        while (k <= r) {
+          /** Here equality is important since, equal
+           number should not counted in inversion count **/
+            if (a1[index1] <= a2[index2]) {
+                arr[k] = a1[index1];
+                index1++;
+            } else {
+                arr[k] = a2[index2];
+                index2++;
+
+              /**  At any step in merge(), if a1[index1] is greater than a2[index2],
+               then there are (len1 - 1 - index1) inversions. because left and right
+               subarrays are sorted, so all the remaining elements in left-subarray
+               will be greater than a2[index2] **/
+              this.count += len1 - index1 - 1;
+            }
+            k++;
+        }
+    }
+}
+```
+</details>
+
+
 </details>
 
 </details>
@@ -969,6 +1709,9 @@ function insert(arr, val) {
 
 #### Merge Sort
 
+
+- Time - O(n * log n)
+- Space - O(n)
 ````js
 /**
  * @param {number[]} nums
