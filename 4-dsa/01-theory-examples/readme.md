@@ -4877,7 +4877,92 @@ public class Trie {
  <summary style="font-size: large; font-weight: bold">Important Examples</summary>
 
 <details >
- <summary style="font-size: medium; font-weight: bold">1. </summary>
+ <summary style="font-size: medium; font-weight: bold">1. Maximum XOR of Two Numbers in an Array</summary>
+
+Question: https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/description/
+![img_102.png](img_102.png)
+
+### 1. TLE
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findMaximumXOR = function(nums) {
+     const len = nums.length;
+     let res = 0;
+        
+    for(let i = 0; i < len - 1; i++){
+        for(let j = i + 1; j < len; j++){
+            res = Math.max(res, nums[i] ^ nums[j]);
+        }
+    }
+    
+    return res;
+};
+```
+
+### 2. Optimal Solution
+```js
+class Node {
+    constructor() {
+        this.link = new Array(2).fill(null);
+    }
+    
+    containsKey(bit) {
+        return this.link[bit] !== null;
+    }
+    
+    set(bit, node) {
+        this.link[bit] = node;
+    }
+    
+    get(bit) {
+        return this.link[bit];
+    }
+}
+
+var findMaximumXOR = function(nums) {
+    let root = new Node();
+    
+    function insert(num) {
+        let node = root;
+        for (let i = 31; i >= 0; i--) {
+            let bit = (num >> i) & 1;
+            if (!node.containsKey(bit)) {
+                node.set(bit, new Node());
+            }
+            node = node.get(bit);
+        }
+    }
+    
+    function bestXorPossible(num) {
+        let node = root;
+        let res = 0;
+        for (let i = 31; i >= 0; i--) {
+            let bit = (num >> i) & 1;
+            if (node.containsKey(1 - bit)) {
+                res |= (1 << i);
+                node = node.get(1 - bit);
+            } else {
+                node = node.get(bit);
+            }
+        }
+        return res;
+    }
+    
+    for (let num of nums) {
+        insert(num);
+    }
+    
+    let res = 0;
+    for (let num of nums) {
+        res = Math.max(res, bestXorPossible(num));
+    }
+    
+    return res;
+};
+```
 </details>
 </details>
 </details>
