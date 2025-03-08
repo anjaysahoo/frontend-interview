@@ -4044,7 +4044,7 @@ var canFinish = function(numCourses, prerequisites) {
     for(let i = 0; i < numCourses; i++)
         adjList[i] = [];
 
-    for(let [source, target] of prerequisites){
+    for(let [target, source] of prerequisites){
         adjList[source].push(target);
         indegree[target]++;
     }
@@ -4239,10 +4239,7 @@ Explanation: https://www.youtube.com/watch?v=V6H1qAeB-l4
 **Important Notes:**
 1. Works on if it is
    - Directed or Undirected
-   - Acyclic
-   - Edges positive
 2. Does not work on
-   - Cyclic: Goes into infinite recursion
    - Negative Edge: See above example
 3. Can’t detect cycles
 
@@ -4292,6 +4289,82 @@ class Solution
     
 }
 ```
+
+❌ **Below DFS code will give TLE**
+```js
+// User function Template for javascript
+/**
+ * @param {number[][][]} adj
+ * @param {number} src
+ * @return {number[]}
+ */
+class Solution {
+    // Function to find the shortest distance of all the vertices
+    // from the source vertex src.
+    dijkstra(adj, src) {
+        const V = adj.length;
+        const res = Array(V).fill(Infinity);
+        const pathVisited = Array(V).fill(false);
+        
+        res[src] = 0;
+        
+        this.dfs(pathVisited, adj, src, 0, res);
+        
+        for(let i = 0; i < V; i++)
+            if(res[i] === Infinity)
+                res[i] = -1;
+        
+        return res;
+    }
+    
+    dfs(pathVisited, adj, src, len, res){
+        pathVisited[src] = true;
+        
+        for(let [child, dis] of adj[src]){
+            if(!pathVisited[child]){
+                res[child] = Math.min(res[child], len + dis);
+                this.dfs(pathVisited, adj, child, len + dis, res);
+            }
+        }
+        
+        pathVisited[src] = false;
+    }
+}
+```
+
+Let me analyze both implementations for time complexity and determine which one might lead to Time Limit Exceeded (TLE).
+
+### First Implementation (Dijkstra's Algorithm with Min Heap sorting)
+
+**Time Complexity Analysis:**
+- The main loop runs until the min heap is empty, potentially V times (where V is number of vertices)
+- Inside the loop, there's a `sort()` operation which takes O(n log n) time, where n is the size of the min heap (could be up to E, where E is number of edges)
+- For each vertex, we process all its adjacent edges
+- In the worst case, we process each edge once, giving us E operations
+- However, the sorting operation dominates, giving us O(E log E) per iteration
+- Overall complexity: O(V * E log E)
+
+### Second Implementation (DFS with backtracking)
+
+**Time Complexity Analysis:**
+- This is using DFS with backtracking to explore all possible paths
+- For an undirected or directed graph with cycles, this can lead to exponential time complexity
+- In the worst case, this could be O(V!) or O(V^V)
+- Even with the `pathVisited` array preventing immediate revisits, the algorithm still explores many redundant paths
+
+### Which will give TLE and why?
+
+**The second implementation (DFS) will most likely give TLE for the following reasons:**
+
+1. **Exponential complexity**: The DFS approach explores all possible paths from source to destination, which can be exponentially many in a graph with cycles.
+
+2. **Non-optimal approach**: DFS is not suitable for finding shortest paths in weighted graphs. It might work for unweighted graphs (BFS would be better), but for weighted graphs, Dijkstra's algorithm is the correct approach.
+
+3. **Redundant work**: Even though the implementation uses `pathVisited` to avoid cycles, it still explores many paths that are clearly not optimal. For example, if it finds a path of length 10 to a node, it will still explore other paths to that node, even if they're already longer than 10.
+
+The first implementation, while not optimal (due to sorting the array each time instead of using a proper priority queue), is still a correct implementation of Dijkstra's algorithm with O(V * E log E) complexity. A proper implementation with a binary heap would be O(E log V), which is more efficient.
+
+In graphs with many vertices and edges, the DFS approach will likely time out due to exploring an exponential number of paths, while Dijkstra's algorithm will complete in polynomial time.
 </details>
 
 
@@ -4466,6 +4539,84 @@ class Solution {
         }
         
         return sum;
+    }
+}
+```
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Important Examples</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. </summary>
+</details>
+</details>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">KMP Algorithm/ Longest Prefix Suffix</summary>
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Concept</summary>
+
+Question: https://www.geeksforgeeks.org/problems/longest-prefix-suffix2527/1
+
+![img_95.png](img_95.png)
+
+
+- Time Complexity: **O(n)**
+- Space Complexity: **O(n)**
+- KMP Algo Explaination : https://www.youtube.com/watch?v=V5-7GzOfADQ&t=622s
+- How to make LPS table: https://www.youtube.com/watch?v=GTJr8OvyEVQ
+
+![img_96.png](img_96.png)
+![img_97.png](img_97.png)
+![img_98.png](img_98.png)
+
+
+```js
+/**
+ * @param {string} s
+ * @returns {number}
+ */
+
+class Solution {
+    longestPrefixSuffix (s) {
+        let len = s.length;
+        let j = 0;
+        let lpsTable = new Array(len).fill(0);
+        
+        for (let i = 1; i < len; i++) {
+            if (s[i] === s[j]) {
+                lpsTable[i] = j + 1;
+                j++;
+            } else {
+                while (j - 1 >= 0) {
+                    j = lpsTable[j - 1];
+                    
+                    if (s[i] === s[j]) {
+                        lpsTable[i] = j + 1;
+                        j++;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        return lpsTable[len - 1];
     }
 }
 ```
