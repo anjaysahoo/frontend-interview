@@ -1165,8 +1165,160 @@ var getIntersectionNode = function(headA, headB) {
 
 
 <details >
- <summary style="font-size: medium; font-weight: bold">2. </summary>
+ <summary style="font-size: medium; font-weight: bold">5. LRU Cache </summary>
 
+Question: https://leetcode.com/problems/lru-cache/description/
+![img_122.png](img_122.png)
+
+1. Without Linked List( Easy Possible solution JS)
+
+```js
+/**
+ * @param {number} capacity
+ */
+var LRUCache = function(capacity) {
+    this.capacity = capacity;
+    /** Since map maintain insertion order, hence we
+    can solve it without Linked List */
+    this.map = new Map();
+};
+
+/** 
+ * @param {number} key
+ * @return {number}
+ */
+LRUCache.prototype.get = function(key) {
+    if(!this.map.has(key))
+        return -1;
+
+    const val = this.map.get(key);
+    this.map.delete(key);
+    this.map.set(key, val);
+
+    return val;
+};
+
+/** 
+ * @param {number} key 
+ * @param {number} value
+ * @return {void}
+ */
+LRUCache.prototype.put = function(key, value) {
+    if(this.map.has(key))
+        this.map.delete(key);
+
+    if(this.map.size === this.capacity){
+        /*Below takes O(n) time to form keys array, hence
+        it will give TLE */
+        // const keys = Array.from(this.map.keys());
+        // this.map.delete(keys[0]);
+
+
+        /*Below gets key in O(1) */
+        const key = this.map.keys().next().value;
+        this.map.delete(key);
+    }
+
+    this.map.set(key, value);
+};
+
+/** 
+ * Your LRUCache object will be instantiated and called as such:
+ * var obj = new LRUCache(capacity)
+ * var param_1 = obj.get(key)
+ * obj.put(key,value)
+ */
+```
+
+2. Using Linked List (Standard Optimized Solution in all Language)
+
+```js
+
+ function ListNode(key, val, next, prev) {
+    this.key = (key===undefined ? 0 : key)
+    this.val = (val===undefined ? 0 : val);
+    this.next = (next===undefined ? null : next);
+    this.prev = (next===undefined ? null : prev);
+}
+
+/**
+ * @param {number} capacity
+ */
+var LRUCache = function(capacity) {
+    this.capacity = capacity;
+    this.start = new ListNode(0, 0);
+    this.end = new ListNode(0, 0);
+
+    this.start.next = this.end;
+    this.end.prev = this.start;
+    this.map = new Map();
+};
+
+/** 
+ * @param {number} key
+ * @return {number}
+ */
+LRUCache.prototype.get = function(key) {
+    // console.log("GET this.map : ", Array.from(this.map));
+    if(!this.map.has(key))
+        return -1;
+
+    const node = this.map.get(key);
+
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+
+    node.prev = this.start;
+    node.next = this.start.next;
+    this.start.next.prev = node;
+    this.start.next = node;
+
+    return node.val;
+};
+
+/** 
+ * @param {number} key 
+ * @param {number} value
+ * @return {void}
+ */
+LRUCache.prototype.put = function(key, value) {
+    
+    if(!this.map.has(key) && this.map.size === this.capacity){
+        const tempNode = this.end.prev;
+        this.map.delete(tempNode.key);
+
+        this.end.prev.prev.next = this.end;
+        this.end.prev = this.end.prev.prev;
+    }
+
+    let node;
+    if(!this.map.has(key)){
+        node = new ListNode(key, value);
+    }
+    else{
+        node = this.map.get(key);
+        node.val = value;
+
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+
+    node.prev = this.start;
+    node.next = this.start.next;
+    this.start.next.prev = node;
+    this.start.next = node;
+
+    this.map.set(key, node);
+    // console.log("PUT this.map : ", Array.from(this.map));
+};
+
+/** 
+ * Your LRUCache object will be instantiated and called as such:
+ * var obj = new LRUCache(capacity)
+ * var param_1 = obj.get(key)
+ * obj.put(key,value)
+ */
+```
 
 </details>
 
@@ -1479,7 +1631,64 @@ class Solution {
 2. Condition given
 3. Minimize window size K
 
+```js
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {string}
+ */
+var minWindow = function(s, t) {
+        let res = "";
+        const charCountMap = new Map();
+        
+        // Populate charCountMap with the character frequencies in 't'
+        for (let z = 0; z < t.length; z++) {
+            const charAtz = t[z];
+            charCountMap.set(charAtz, (charCountMap.get(charAtz) || 0) + 1);
+        }
+        
+        let counter = charCountMap.size;
+        let i = 0, j = 0;
+        
+        while (j < s.length) {
+            const charAtj = s[j];
+            
+            if (charCountMap.has(charAtj)) {
+                const count = charCountMap.get(charAtj);
+                if (count === 1) {
+                    counter--;
+                }
+                charCountMap.set(charAtj, count - 1);
+            }
+            
+            if (counter > 0) {
+                j++;
+            } else if (counter === 0) {
+                const resLen = res.length;
 
+                // Check valid windows until counter becomes 1 again
+                while (counter !== 1) {
+                    if (resLen === 0 || resLen > j - i + 1) {
+                        res = s.substring(i, j + 1);
+                    }
+
+                    if (charCountMap.has(s[i])) {
+                        const count = charCountMap.get(s[i]);
+                        if (count === 0) {
+                            counter++;
+                        }
+                        charCountMap.set(s[i], count + 1);
+                    }
+                    i++;
+                }
+
+                j++;
+            }
+        }
+        
+        return res;
+};
+```
 
 </details>
 
@@ -3674,6 +3883,117 @@ class Solution {
 https://www.youtube.com/watch?v=X0oXMdtUDwo&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=57
 </details>
 
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Extra</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">1. Binary Tree Right Side View</summary>
+
+Question: https://leetcode.com/problems/binary-tree-right-side-view/description/
+
+![img_121.png](img_121.png)
+
+1. DFS solution
+
+#### Right View Code
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val);
+ *     this.left = (left===undefined ? null : left);
+ *     this.right = (right===undefined ? null : right);
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var rightSideView = function(root) {
+    let result = [];
+    rightView(root, result, 0);
+    return result;
+};
+
+function rightView(curr, result, currDepth) {
+    if (curr === null) {
+        return;
+    }
+    if (currDepth === result.length) {
+        result.push(curr.val);
+    }
+
+    /*Swap below two line for LEFT VIEW */
+    rightView(curr.right, result, currDepth + 1);
+    rightView(curr.left, result, currDepth + 1);
+}
+```
+
+The core idea of this algorithm:
+
+1. Each depth of the tree only select one node.
+2. View depth is current size of result list.
+3. The traverse of the tree is NOT standard pre-order traverse. It checks the RIGHT node first and then the LEFT
+4. The line to check currDepth == result.size() makes sure the first element of that level will be added to the result list
+5. If reverse the visit order, that is first LEFT and then RIGHT, it will return the left view of the tree.
+
+#### Left View Code
+Just in the above code do Preorder traversal for Left View
+
+2. Using Two Queue Solution
+
+#### Right View Code
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val);
+ *     this.left = (left===undefined ? null : left);
+ *     this.right = (right===undefined ? null : right);
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var rightSideView = function(root) {
+    let res = [];
+    if (root === null) return res;
+
+    let q1 = [root];
+    let q2 = [];
+
+    while (q1.length > 0 || q2.length > 0) {
+        if (q1.length > 0) res.push(q1[0].val);
+        
+        while (q1.length > 0) {
+            let temp = q1.shift();
+          /*Swap below lines for LEFT VIEW */
+            if (temp.right !== null) q2.push(temp.right);
+            if (temp.left !== null) q2.push(temp.left);
+        }
+
+        if (q2.length > 0) res.push(q2[0].val);
+        
+        while (q2.length > 0) {
+            let temp = q2.shift();
+          /*Swap below lines for LEFT VIEW */
+            if (temp.right !== null) q1.push(temp.right);
+            if (temp.left !== null) q1.push(temp.left);
+        }
+    }
+    
+    return res;
+};
+```
+
+#### Left View Code
+
+See comment in above code for Left View
+</details>
 </details>
 
 </details>

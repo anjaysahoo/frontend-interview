@@ -331,3 +331,36 @@ A positioned element is an element whose computed `position` property is either 
 - `fixed`: The element is removed from the flow of the page and positioned at a specified position relative to the viewport and doesn't move when scrolled.
 - `sticky`: Sticky positioning is a hybrid of relative and fixed positioning. The element is treated as `relative` positioned until it crosses a specified threshold, at which point it is treated as `fixed`-positioned.
 </details>
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">What's the difference between `block`, `inline`, and `inline-block`?</summary>
+
+https://youtu.be/x_i2gga-sYg?si=FUEZnOE8iaTnsqpB
+
+### `inline`
+1. `Height` and `Width` does not affect inline element. Hence you can see nothing is happening even if height is added here
+![img_5.png](img_5.png)
+2. But `font-size` is added 
+![img_6.png](img_6.png)
+3. While `Padding` does get added to element but it does not affect any other element
+![img_7.png](img_7.png)
+
+### `inline-block`
+To solve above overlap issue with `inline` element using padding we use `inline-block`
+![img_8.png](img_8.png)
+
+
+https://www.greatfrontend.com/questions/quiz/whats-the-difference-between-inline-and-inline-block?practice=practice&tab=quiz
+
+| Property | `block` | `inline-block` | `inline` |
+| --- | --- | --- | --- |
+| Size | Fills up the width of its parent container. | Depends on content. | Depends on content. |
+| Positioning | Start on a new line and tolerates no HTML elements next to it (except when you add `float`) | Flows along with other content and allows other elements beside it. | Flows along with other content and allows other elements beside it. |
+| Can specify `width` and `height` | Yes | Yes | No. Will ignore if being set. |
+| Can be aligned with `vertical-align` | No | Yes | Yes |
+| Margins and paddings | All sides respected. | All sides respected. | Only horizontal sides respected. Vertical sides, if specified, do not affect layout. Vertical space it takes up depends on `line-height`, even though the `border` and `padding` appear visually around the content. |
+| Float | - | - | Becomes like a `block` element where you can set vertical margins and paddings. |
+| Use Cases | Layout elements like `<div>`, `<p>`, `<section>`. | Used for buttons, images, and form fields that need custom sizes but stay in line with text. | Links `<a>`, text formatting `<span>`, text styling - bold `<b>`, italics `<i>`.|
+</details>

@@ -245,3 +245,16 @@ In situations where the user has navigated away from the page, aborting the requ
 - [Fetch: Abort | Javascript.info](https://javascript.info/fetch-abort)
 
 </details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">What is the difference between `==` and `===` in JavaScript?</summary>
+
+![img.png](img.png)
+https://justjavascript.com/learn/07-equality-of-values
+
+https://www.greatfrontend.com/questions/quiz/what-is-the-difference-between-double-equal-and-triple-equal?practice=practice&tab=quiz
+
+![img_1.png](img_1.png)
+https://dorey.github.io/JavaScript-Equality-Table/
+</details>

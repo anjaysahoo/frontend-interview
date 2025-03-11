@@ -889,6 +889,8 @@ the `input` element.
 <details >
  <summary style="font-size: large; font-weight: bold">Virtual DOM</summary>
 
+Virtual / Actual DOM, Diffing Algorithm, Reconciliation Cycle, React Fiber, UI / Data Layer
+
 1.
 - The crucial point about `State variables` is that whenever they update
   React triggers a `reconciliation cycle` and re-renders the component.
@@ -3413,6 +3415,150 @@ export default ItemList;
 <details >
  <summary style="font-size: large; font-weight: bold">Reducer</summary>
 
+
+**useReducer** is another React hook that provides a way to manage state in functional components. While it might seem similar to `useState`, it offers a more powerful and flexible approach for complex state management scenarios.
+
+- Reducers require you to write a bit more code, but they help with debugging and testing.
+- Reducers must be pure.
+- Each action describes a single user interaction.
+- Use Immer if you want to write reducers in a mutating style.
+
+### Purpose of useReducer
+
+* **Complex State Updates:** When state updates are derived from previous state or involve complex logic, `useReducer` can be more efficient and easier to reason about.
+* **State Sharing Across Components:** If multiple components need to share and update the same state, `useReducer` can be used to create a global state provider and consumer.
+* **Centralized State Management:** For larger applications with complex state management requirements, `useReducer` can help maintain a more organized and predictable state flow.
+
+### Key Differences Between useReducer and useState
+
+1. **Reducer Function:**
+    * `useReducer` takes a reducer function as an argument. This reducer function takes the current state and an action as input and returns the new state.
+    * `useState` doesn't require a reducer function. It directly updates the state based on the value passed to the setter function.
+
+2. **Action Object:**
+    * `useReducer` uses an action object to describe the state update. The action object typically contains a type property that identifies the action and potentially other data.
+    * `useState` doesn't require an action object. The new state value is directly passed to the setter function.
+
+3. **State Updates:**
+    * `useReducer` allows for more complex state updates by providing a reducer function that can perform calculations or logic based on the current state and action.
+    * `useState` is simpler to use for basic state updates.
+
+### Example:
+```jsx
+// Using useState
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+// Using useReducer
+function Counter() {
+  const [count, dispatch] = useReducer((state, action) => {
+    switch (action.type) {
+      case 'INCREMENT':
+        return state + 1;
+      default:
+        return state;
+    }
+  }, 0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => dispatch({ type: 'INCREMENT' })}>Increment</button>
+    </div>
+  );
+}
+```
+
+```jsx
+import { useReducer } from 'react';
+import AddTask from './AddTask.js';
+import TaskList from './TaskList.js';
+
+export default function TaskApp() {
+  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+
+  function handleAddTask(text) {
+    dispatch({
+      type: 'added',
+      id: nextId++,
+      text: text,
+    });
+  }
+
+  function handleChangeTask(task) {
+    dispatch({
+      type: 'changed',
+      task: task,
+    });
+  }
+
+  function handleDeleteTask(taskId) {
+    dispatch({
+      type: 'deleted',
+      id: taskId,
+    });
+  }
+
+  return (
+    <>
+      <h1>Prague itinerary</h1>
+      <AddTask onAddTask={handleAddTask} />
+      <TaskList
+        tasks={tasks}
+        onChangeTask={handleChangeTask}
+        onDeleteTask={handleDeleteTask}
+      />
+    </>
+  );
+}
+
+function tasksReducer(tasks, action) {
+  switch (action.type) {
+    case 'added': {
+      return [
+        ...tasks,
+        {
+          id: action.id,
+          text: action.text,
+          done: false,
+        },
+      ];
+    }
+    case 'changed': {
+      return tasks.map((t) => {
+        if (t.id === action.task.id) {
+          return action.task;
+        } else {
+          return t;
+        }
+      });
+    }
+    case 'deleted': {
+      return tasks.filter((t) => t.id !== action.id);
+    }
+    default: {
+      throw Error('Unknown action: ' + action.type);
+    }
+  }
+}
+
+let nextId = 3;
+const initialTasks = [
+  {id: 0, text: 'Visit Kafka Museum', done: true},
+  {id: 1, text: 'Watch a puppet show', done: false},
+  {id: 2, text: 'Lennon Wall pic', done: false},
+];
+
+```
+
 https://react.dev/learn/extracting-state-logic-into-a-reducer
 </details>
 
@@ -3447,8 +3593,22 @@ https://react.dev/learn/scaling-up-with-reducer-and-context
 <details >
  <summary style="font-size: x-large; font-weight: bold">React Optimization</summary>
 
+
+
+
+
+#### 1. **Code Splitting:**
+* **Dynamic Imports:** Use dynamic imports to load code on demand, reducing initial bundle size and improving perceived performance.
+* **Code Splitting Libraries:** Consider using libraries like Webpack's Code Splitting or React Router's `codeSplitting` to automate the process.
+
+#### 2. **Memoization:**
+* **`useMemo` Hook:** Use `useMemo` to memoize expensive calculations or derived values, preventing unnecessary re-renders.
+* **`useCallback` Hook:** Use `useCallback` to memoize functions passed as dependencies to other hooks, preventing unnecessary re-renders.
+
+#### 3. **Component Optimization:**
+* **List Rendering:** Optimize list rendering using techniques like keys and virtualized lists (e.g., `react-window`, `react-virtualized`) for large datasets.
 <details >
- <summary style="font-size: large; font-weight: bold">1. Virtualization or Windowing</summary>
+ <summary style="font-size: small; font-weight: bold">Virtualization or Windowing Details</summary>
 
 List virtualization, also known as windowing, is a technique used to efficiently render a large list of items in a UI without loading everything at once.
 
@@ -3561,13 +3721,40 @@ export default MyVirtualizedList;
 - **Large Data Sets**: When rendering hundreds or thousands of items, list virtualization is essential to prevent performance bottlenecks.
 - **Infinite Scrolling**: It works perfectly with infinite scroll patterns, where new items are loaded dynamically as the user scrolls.
 
-Would you like to dive deeper into any specific part of list virtualization or related concepts like infinite loading?
 </details>
 </details>
 
+* **Pure Components:** Use `PureComponent` for components that render the same output given the same props. This avoids unnecessary re-renders.
+* **Conditional Rendering:** Use conditional rendering techniques like `if` statements or the ternary operator to avoid rendering unnecessary components.
 
-2. Million Lint is a VSCode extension that speeds up your website! Your React app is slow. Million Lint surfaces problematic code and automatically suggests ways to improve it.https://million.dev/docs
+#### 4. **Profiling and Optimization:**
+* **Browser Developer Tools:** Use browser developer tools to profile your application and identify performance bottlenecks.
+* **Performance Libraries:** Consider using performance libraries like React DevTools Profiler or the Chrome Performance tab to gain insights into rendering times, component updates, and memory usage.
+
+#### 5. **Server-Side Rendering (SSR):**
+* **Improved Time to Interactive:** SSR can improve perceived performance by rendering the initial HTML on the server, reducing the amount of JavaScript that needs to be downloaded and executed on the client.
+
+#### 6. **Caching:**
+* **Component Caching:** Use libraries like `react-query` or `swr` to cache data fetched from APIs, reducing the need for repeated network requests.
+* **Browser Caching:** Leverage browser caching mechanisms to store static assets and reduce network traffic.
+* **API Caching:** Use libraries like `react-query` or `swr` to cache data fetched from APIs, reducing the need for repeated network requests.
+
+#### 7. **Lazy Loading:**
+* **Images and Media:** Use `lazy` attribute for images and other media to defer loading until they are visible in the viewport.
+
+
+#### 8. **Minification and Compression:**
+* **Reduce File Size:** Minify JavaScript and CSS files to reduce their size and improve load times.
+* **Compression:** Use compression techniques like Gzip to further reduce file size.
+* **Tree Shaking:** Use tree shaking techniques to remove unused code and reduce bundle size. Mostly taken care by bundler like Webpack, Parcel, and Vite.
+
+
+
+**Note:** Million Lint is a VSCode extension that speeds up your website! Your React app is slow. Million Lint surfaces problematic code and automatically suggests ways to improve it.https://million.dev/docs
 </details>
+
+
+
 
 
 
@@ -3579,12 +3766,127 @@ Would you like to dive deeper into any specific part of list virtualization or r
  <summary style="font-size: x-large; font-weight: bold">Questions</summary>
 
 
-### 1. How does the virtual DOM work in React, and why is it important?
 
-Keyword: Virtual / Actual DOM, Diffing Algorithm, Reconciliation Cycle, React Fiber, UI / Data Layer
 
-### 2. What are React Hooks, and how do they differ from class lifecycle methods?
+<details >
+ <summary style="font-size: medium; font-weight: bold">What is the difference between state and props in React?</summary>
 
+## TL;DR
+
+In React, `state` is a local data storage that is managed within a component and can change over time, while `props` are read-only attributes passed from a parent component to a child component. State is used for data that changes within a component, whereas props are used to pass data and event handlers to child components.
+
+### Key differences
+
+- State is managed within the component, while props are passed from a parent component
+- State can change over time, while props are immutable
+- State is used for data that changes within a component, while props are used to pass data and event handlers to child components
+
+---
+
+https://www.greatfrontend.com/questions/quiz/what-is-the-difference-between-state-and-props-in-react?practice=practice&tab=quiz
+### What is the difference between state and props in React?
+
+### State
+
+State is a built-in object in React components that holds data or information about the component. It is managed within the component and can change over time, usually in response to user actions or network responses. When the state changes, the component re-renders to reflect the new state.
+
+- State is local to the component and cannot be accessed or modified outside of it
+- State can be initialized in the constructor of a class component or using the `useState` hook in a functional component
+- State changes are asynchronous and should be done using the `setState` method in class components or the updater function returned by `useState` in functional components
+
+Example of state in a class component:
+
+```jsx
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0,
+    };
+  }
+
+  increment = () => {
+    this.setState({ count: this.state.count + 1 });
+  };
+
+  render() {
+    return (
+      <div>
+        <p>Count: {this.state.count}</p>
+        <button onClick={this.increment}>Increment</button>
+      </div>
+    );
+  }
+}
+```
+
+Example of state in a functional component:
+
+```jsx
+import React, { useState } from 'react';
+
+function MyComponent() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+
+### Props
+
+Props (short for properties) are read-only attributes passed from a parent component to a child component. They are used to pass data and event handlers down the component tree. Props are immutable, meaning they cannot be changed by the child component.
+
+- Props are passed to the child component as an argument to the component function or as a property on the `this` object in class components
+- Props allow components to be reusable by passing different data to them
+- Props can be used to pass functions as well, enabling child components to communicate with parent components
+
+Example of props in a class component:
+
+```jsx
+class ParentComponent extends React.Component {
+  render() {
+    return <ChildComponent message="Hello, World!" />;
+  }
+}
+
+class ChildComponent extends React.Component {
+  render() {
+    return <p>{this.props.message}</p>;
+  }
+}
+```
+
+Example of props in a functional component:
+
+```jsx
+function ParentComponent() {
+  return <ChildComponent message="Hello, World!" />;
+}
+
+function ChildComponent(props) {
+  return <p>{props.message}</p>;
+}
+```
+
+
+## Further reading
+
+- [React documentation on state and lifecycle](https://reactjs.org/docs/state-and-lifecycle.html)
+- [React documentation on components and props](https://reactjs.org/docs/components-and-props.html)
+- [React Hooks documentation](https://reactjs.org/docs/hooks-intro.html)
+</details>
+
+
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">What are React Hooks, and how do they differ from class lifecycle methods?</summary>
 
 **React Hooks** are functions that let you use state and other React features inside functional components. They were introduced in React 16.8 as a way to simplify component logic and make it easier to manage state and side effects.
 
@@ -3644,14 +3946,15 @@ function Counter() {
 ```
 
 As you can see, the functional component using hooks is often more concise and easier to read compared to the class component.
+</details>
 
-### 3. Explain the concept of Higher-Order Components (HOCs) and provide use cases.
 
-### 4. What is Context API, and how does it help in managing global state?
 
-### 5. How does React's reconciliation algorithm work?
 
-### 6. Describe the concept of "lifting state up" in React and provide an example.
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Describe the concept of "lifting state up" in React and provide an example?</summary>
+
 
 Sometimes, you want the state of two components to always change together. To do it, remove state from both of them, move it to their closest common parent, and then pass it down to them via props. This is known as lifting state up, and it’s one of the most common things you will do writing React code.
 ```jsx
@@ -3704,122 +4007,14 @@ function Panel({
 ![img_10.png](img_10.png)
 https://react.dev/learn/sharing-state-between-components#lifting-state-up-by-example
 
-### 7. What is the purpose of the useReducer hook, and how does it compare to useState?
-
-
-**useReducer** is another React hook that provides a way to manage state in functional components. While it might seem similar to `useState`, it offers a more powerful and flexible approach for complex state management scenarios.
-
-### Purpose of useReducer
-
-* **Complex State Updates:** When state updates are derived from previous state or involve complex logic, `useReducer` can be more efficient and easier to reason about.
-* **State Sharing Across Components:** If multiple components need to share and update the same state, `useReducer` can be used to create a global state provider and consumer.
-* **Centralized State Management:** For larger applications with complex state management requirements, `useReducer` can help maintain a more organized and predictable state flow.
-
-### Key Differences Between useReducer and useState
-
-1. **Reducer Function:**
-    * `useReducer` takes a reducer function as an argument. This reducer function takes the current state and an action as input and returns the new state.
-    * `useState` doesn't require a reducer function. It directly updates the state based on the value passed to the setter function.
-
-2. **Action Object:**
-    * `useReducer` uses an action object to describe the state update. The action object typically contains a type property that identifies the action and potentially other data.
-    * `useState` doesn't require an action object. The new state value is directly passed to the setter function.
-
-3. **State Updates:**
-    * `useReducer` allows for more complex state updates by providing a reducer function that can perform calculations or logic based on the current state and action.
-    * `useState` is simpler to use for basic state updates.
-
-### Example:
-```javascript
-// Using useState
-function Counter() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
-    </div>
-  );
-}
-
-// Using useReducer
-function Counter() {
-  const [count, dispatch] = useReducer((state, action) => {
-    switch (action.type) {
-      case 'INCREMENT':
-        return state + 1;
-      default:
-        return state;
-    }
-  }, 0);
-
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={() => dispatch({ type: 'INCREMENT' })}>Increment</button>
-    </div>
-  );
-}
-```
-
-In this example, the `useReducer` approach provides a more structured way to handle state updates, especially if more complex actions were involved. It also sets the stage for potentially sharing this state across multiple components using a global state provider.
-
-### 8. How can you optimize the performance of a React application?
+</details>
 
 
 
-#### 1. **Code Splitting:**
-* **Dynamic Imports:** Use dynamic imports to load code on demand, reducing initial bundle size and improving perceived performance.
-* **Code Splitting Libraries:** Consider using libraries like Webpack's Code Splitting or React Router's `codeSplitting` to automate the process.
-
-#### 2. **Memoization:**
-* **`useMemo` Hook:** Use `useMemo` to memoize expensive calculations or derived values, preventing unnecessary re-renders.
-* **`useCallback` Hook:** Use `useCallback` to memoize functions passed as dependencies to other hooks, preventing unnecessary re-renders.
-
-#### 3. **Component Optimization:**
-* **Pure Components:** Use `PureComponent` for components that render the same output given the same props. This avoids unnecessary re-renders.
-* **Conditional Rendering:** Use conditional rendering techniques like `if` statements or the ternary operator to avoid rendering unnecessary components.
-* **List Rendering:** Optimize list rendering using techniques like keys and virtualized lists (e.g., `react-window`, `react-virtualized`) for large datasets.
-
-#### 4. **Profiling and Optimization:**
-* **Browser Developer Tools:** Use browser developer tools to profile your application and identify performance bottlenecks.
-* **Performance Libraries:** Consider using performance libraries like React DevTools Profiler or the Chrome Performance tab to gain insights into rendering times, component updates, and memory usage.
-
-#### 5. **Server-Side Rendering (SSR):**
-* **Improved Time to Interactive:** SSR can improve perceived performance by rendering the initial HTML on the server, reducing the amount of JavaScript that needs to be downloaded and executed on the client.
-
-#### 6. **Caching:**
-* **Component Caching:** Use libraries like `react-query` or `swr` to cache data fetched from APIs, reducing the need for repeated network requests.
-* **Browser Caching:** Leverage browser caching mechanisms to store static assets and reduce network traffic.
-* **API Caching:** Use libraries like `react-query` or `swr` to cache data fetched from APIs, reducing the need for repeated network requests.
-
-#### 7. **Lazy Loading:**
-* **Images and Media:** Use `lazy` attribute for images and other media to defer loading until they are visible in the viewport.
 
 
-#### 8. **Minification and Compression:**
-* **Reduce File Size:** Minify JavaScript and CSS files to reduce their size and improve load times.
-* **Compression:** Use compression techniques like Gzip to further reduce file size.
-* **Tree Shaking:** Use tree shaking techniques to remove unused code and reduce bundle size. Mostly taken care by bundler like Webpack, Parcel, and Vite.
-
-By implementing these strategies, you can significantly improve the performance of your React application, resulting in a better user experience.
-
-
-### 9. Explain the role of keys in React lists and why they are important.
-
-### 10. What are React Portals, and when should they be used?
-
-### 11. Describe the benefits and limitations of server-side rendering (SSR) with Next.js.
-
-### 12. How do you implement code splitting in a React application?
-
-### 13. What are custom hooks, and how can they help in reusing logic across components?
-
-### 14. Explain the concept of controlled and uncontrolled components in form handling.
-
-### 15. How can you manage side effects in a React application?
-
+<details >
+ <summary style="font-size: medium; font-weight: bold">How can you manage side effects in a React application?</summary>
 
 **Side effects** in React refer to actions that have an external impact, such as:
 
@@ -3897,13 +4092,15 @@ function MyComponent() {
 
 #### 5. **Context API:**
 * **Shared State:** For complex state management and sharing data across components, consider using the Context API.
+</details>
 
 
-### 16. Discuss the trade-offs between using Redux and the Context API for state management.
 
-### 17. What are fragments in React, and when should they be used?
 
-### 18. How does React handle events differently from vanilla JavaScript?
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">How does React handle events differently from vanilla JavaScript?</summary>
+
 **React's Event Handling vs. Vanilla JavaScript**
 
 While both React and vanilla JavaScript handle events, there are some key differences in their approaches:
@@ -3948,18 +4145,14 @@ In the React example, the `handleClick` function is automatically bound to the c
 * Synthetic events provide a cross-browser compatible abstraction.
 * JSX simplifies event handling syntax.
 * Automatic binding eliminates the need for manual binding.
+</details>
 
 
-### 19. Describe the use case and implementation of suspense and lazy loading in React.
 
-### 20. How can you use React.memo to optimize component rendering?
 
-### 21. What are the common pitfalls of using useEffect, and how can they be avoided?
 
-### 22. How do you handle errors in React components, and what are error boundaries?
-
-### 23. Explain the difference between optimistic and pessimistic updates in React.
-
+<details >
+ <summary style="font-size: medium; font-weight: bold">Explain the difference between optimistic and pessimistic updates in React.</summary>
 
 When dealing with asynchronous operations like fetching data from an API or performing mutations, React applications can handle updates in two primary ways: optimistic and pessimistic.
 
@@ -4026,7 +4219,13 @@ In the optimistic approach, the `setIsLoading` state is updated immediately to s
 
 By carefully considering the trade-offs, you can choose the approach that best suits your application's requirements and provides the desired user experience.
 
-### 24. What is PropTypes, and how does it contribute to type checking in React?
+</details>
+
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">What is PropTypes, and how does it contribute to type checking in React?</summary>
 
 **PropTypes** is a utility library that provides type checking for React components. It helps ensure that components receive the correct types of props, preventing potential runtime errors and making your code more maintainable.
 
@@ -4067,9 +4266,13 @@ In this example, the `MyComponent` component defines `name` and `age` props as r
 
 **Note:** While PropTypes is a valuable tool, it's important to consider its limitations. It doesn't guarantee type safety at runtime, and it can add some overhead to your code. In some cases, TypeScript or Flow may provide more robust type checking capabilities.
 
-### 25. How can you implement dark mode in a React application?
+</details>
 
-### 26. Describe the role and benefits of using a CSS-in-JS library with React.
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Describe the role and benefits of using a CSS-in-JS library with React?</summary>
 
 **CSS-in-JS Libraries with React**
 
@@ -4106,14 +4309,20 @@ const Button = styled.button`
 In this example, a `Button` component is created using Styled Components. The styles for the button are defined directly within the JavaScript code, making it easier to manage and reuse.
 
 **By using a CSS-in-JS library, you can create more maintainable, scalable, and visually appealing React applications.**
+</details>
 
-### 27. What are the differences between useRef and createRef?
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">What are the differences between useRef and createRef?</summary>
+
 ![img_11.png](img_11.png)
-### 28. How can you handle data fetching in a React component?
+</details>
 
-### 29. What are the best practices for structuring a React project?
 
-### 30. How do you manage complex animations in React, and which libraries can be used?
+#### Explain the concept of Higher-Order Components (HOCs) and provide use cases.
+#### Explain the concept of controlled and uncontrolled components in form handling.
+#### What are the best practices for structuring a React project?
+#### How do you manage complex animations in React, and which libraries can be used?
 </details>
 
 
