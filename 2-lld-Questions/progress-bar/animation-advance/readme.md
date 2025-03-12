@@ -98,6 +98,8 @@ function ProgressBar({index, currentPos, updateCurrentPos}){
 2. https://learnweb3.io/degrees/ethereum-developer-degree/sophomore/intro-to-react-and-next-js/
 3. https://www.udemy.com/course/nextjs-react-the-complete-guide/learn/lecture/41161552#questions
 
+
+---
 </details>
 
 
@@ -194,4 +196,6 @@ one by one, unlike `onTransitionEnd()`where it is increased 3 times in one go.
 ![img_1.png](img_1.png)
 
 Referred Question: https://www.greatfrontend.com/questions/user-interface/progress-bars-iii
+
+---
 </details>

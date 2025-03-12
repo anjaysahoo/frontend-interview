@@ -265,6 +265,8 @@ const TemplateNode = ({ label,icon, id, config, inputHandles=[], outputHandles=[
 
 export default TemplateNode;
 ```
+
+---
 </details>
 
 
@@ -301,6 +303,8 @@ function App() {
   ) 
 }
 ```
+
+---
 </details>
 
 <details >
@@ -339,7 +343,11 @@ We can write conditional styling in below two ways
     style={{transform: startTransition ? "scaleX(1)" : "scaleX(0)"}}
 >
 ```
+
+---
 </details>
+
+---
 </details>
 
 
@@ -685,7 +693,11 @@ App.js:47 newOrder :  [0]
 App.js:47 newOrder :  []
 App.js:47 newOrder :  []
 ```
+
+---
 </details>
+
+---
 </details>
 
 <details >
@@ -790,6 +802,8 @@ UseEffect called
 - After your component is removed from the DOM, React will run your cleanup function.
 
 https://react.dev/reference/react/useEffect#useeffect
+
+---
 </details>
 
 <details >
@@ -857,9 +871,13 @@ the `input` element is already in focus i.e. you can start typing without clicki
 This is because we hold a reference to the `input` element, and have a `useEffect` 
 that runs on page load due to having an empty dependency array, that focuses on 
 the `input` element.
+
+---
 </details>
 
 
+
+---
 </details>
 
 
@@ -872,9 +890,13 @@ the `input` element.
 ### 2. Post call
 ![img_6.png](img_6.png)
 
+
+---
 </details>
 
 
+
+---
 </details>
 
 
@@ -920,9 +942,9 @@ Virtual / Actual DOM, Diffing Algorithm, Reconciliation Cycle, React Fiber, UI /
 <details >
  <summary style="font-size: small; font-weight: bold">React Fiber</summary>
 
----
-title: What is React Fiber and how is it an improvement over the previous approach?
----
+
+What is React Fiber and how is it an improvement over the previous approach?
+
 ## What is React Fiber and how is it an improvement over the previous approach?
 
 ### Introduction to React Fiber
@@ -976,6 +998,8 @@ class MyComponent extends React.Component {
 With the previous stack-based algorithm, rendering this component could cause the UI to freeze. With React Fiber, the rendering work is broken down into smaller units, allowing React to pause and resume work, keeping the UI responsive.
 
 Referred: https://www.greatfrontend.com/questions/quiz/what-is-react-fiber-and-how-is-it-an-improvement-over-the-previous-approach?format=quiz
+
+---
 </details>
 
 <details >
@@ -1026,7 +1050,11 @@ Let's again consider the same previous example but this time by using a unique i
 </ul>
 ```
 Now even if we add element to the beginning or the end, we won't face an issue since keys are different.
+
+---
 </details>
+
+---
 </details>
 
 
@@ -1038,6 +1066,8 @@ Now even if we add element to the beginning or the end, we won't face an issue s
 
 #### Server Side Routing
 ![img_1.png](img_1.png)
+
+---
 </details>
 
 
@@ -1256,6 +1286,8 @@ export default LazyComponent;
 This method ensures that the `LazyComponent` is only loaded when needed, reducing the initial bundle size.
 
 GFE Blog: https://www.greatfrontend.com/blog/code-splitting-and-lazy-loading-in-react
+
+---
 </details>
 
 
@@ -1571,9 +1603,13 @@ export default function TimerChallenge({ title, targetTime }) {
   </body>
 </html>
 ```
+
+---
 </details>
 
 
+
+---
 </details>
 
 <details >
@@ -1677,6 +1713,8 @@ export default Body;
 ```
 
 
+
+---
 </details>
 
 <details >
@@ -1691,6 +1729,8 @@ export default Body;
 - In practice, “controlled” and “uncontrolled” aren’t strict technical terms—each component usually has some mix of both local state and props. However, this is a useful way to talk about how components are designed and what capabilities they offer.
 
 - When writing a component, consider which information in it should be controlled (via props), and which information should be uncontrolled (via state). But you can always change your mind and refactor later.
+
+---
 </details>
 
 
@@ -1755,6 +1795,8 @@ Why we use `super(props)`?
 
 2. **Passing Props to the Parent**: By passing `props` to `super(props)`, you ensure that the parent class’s constructor receives the props. This is important for React components because the parent class (`React.Component`) uses these props to manage the component’s state and lifecycle methods.
 
+
+---
 </details>
 
 
@@ -1870,6 +1912,8 @@ We want to load whatever we have then update the values whatever we receive from
 in Render phase `constructor()` & `render()` are called which is just Virtual DOM manipulation, but
 in Commit phase `componentDidMount()` is called which is actual DOM manipulation and it is quite performance 
 intensive task. Therefore React try to optimize this by calling them one after another.
+
+---
 </details>
 
 
@@ -2003,9 +2047,13 @@ function App() {
 
 **Note: Under the hood in Functional components, we are NOT using same concept to achieve this. 
 Now it is just easier and cleaner to write** 
+
+---
 </details>
 
 
+
+---
 </details>
 
 
@@ -2067,6 +2115,8 @@ You don’t need to wrap every component into a separate error boundary. When yo
 
 - Referred Article: https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary
 - Referred Video(7 min): https://www.youtube.com/watch?v=_FuDMEgIy7I
+
+---
 </details>
 
 
@@ -2174,8 +2224,12 @@ const fetchJobs = async () => {
   );
 }
 ```
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -2242,6 +2296,8 @@ Functional components with hooks are generally easier to test compared to class 
 - [Using the State Hook](https://reactjs.org/docs/hooks-state.html)
 - [Using the Effect Hook](https://reactjs.org/docs/hooks-effect.html)
 - [Building Your Own Hooks](https://reactjs.org/docs/hooks-custom.html)
+
+---
 </details>
 
 <details >
@@ -2296,6 +2352,8 @@ So need not to confuse how `onlineStatus` value is updated dynamically when we t
 `online` and `offline` status through our browser dev tools
 ![img_4.png](img_4.png)
 
+
+---
 </details>
 
 
@@ -2398,6 +2456,8 @@ export default useThrottle;
 ```
 
 https://medium.com/@itsanuragjoshi/debouncing-and-throttling-in-react-enhancing-user-experience-with-custom-hooks-bcaa897162ef
+
+---
 </details>
 
 <details >
@@ -2553,7 +2613,11 @@ export default useDebounce;
 
 - **With useCallback:** Ensures that the debounced function (debouncedFetchResults) maintains a stable reference, leading to consistent behavior and avoiding unnecessary re-renders or resets.
 - **Without useCallback:** The debounced function may be re-created on every render, leading to potential bugs or inefficiencies, especially in cases where the parent component frequently re-renders.
+
+---
 </details>
+
+---
 </details>
 
 
@@ -2599,6 +2663,8 @@ const useCustomEffect = (effect, deps) => {
 export default useCustomEffect;
 
 ```
+
+---
 </details>
 
 
@@ -2660,6 +2726,8 @@ const [delay, setDelay] = useState(1000);
 Full Explanation: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 
 Used in https://www.greatfrontend.com/interviews/study/state-management/questions/user-interface/grid-lights/react
+
+---
 </details>
 
 
@@ -2887,7 +2955,11 @@ const useCustomMemo = (cb, deps) => {
 
 export default useCustomMemo;
 ```
+
+---
 </details>
+
+---
 </details>
 
 
@@ -3018,6 +3090,8 @@ function useOnClickOutside(
 ```
 
 This from Modal 3 example: https://www.greatfrontend.com/questions/user-interface/modal-dialog-iii/solution
+
+---
 </details>
 
 
@@ -3083,6 +3157,8 @@ This from Modal 3 example: https://www.greatfrontend.com/questions/user-interfac
 
 [//]: # (</details>)
 
+
+---
 </details>
 
 
@@ -3298,6 +3374,8 @@ https://www.greatfrontend.com/questions/quiz/what-are-some-pitfalls-about-using-
 - [Zustand](https://github.com/pmndrs/zustand)
 - [Recoil](https://recoiljs.org/)
 
+
+---
 </details>
 
 
@@ -3316,6 +3394,8 @@ function(`Reducer`) that updates the state of the `cart` slice store
 
 ![img_7.png](img_7.png)
 
+
+---
 </details>
 
 
@@ -3468,8 +3548,12 @@ const ItemList = ({}) => {
 
 export default ItemList;
 ```
+
+---
 </details>
 
+
+---
 </details>
 
 <details >
@@ -3620,14 +3704,20 @@ const initialTasks = [
 ```
 
 https://react.dev/learn/extracting-state-logic-into-a-reducer
+
+---
 </details>
 
 <details >
  <summary style="font-size: large; font-weight: bold">Context + Reducer</summary>
 
 https://react.dev/learn/scaling-up-with-reducer-and-context
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -3642,7 +3732,11 @@ https://react.dev/learn/scaling-up-with-reducer-and-context
  <summary style="font-size: large; font-weight: bold">Usage</summary>
 
 
+
+---
 </details>
+
+---
 </details>
 
 
@@ -3781,7 +3875,11 @@ export default MyVirtualizedList;
 - **Large Data Sets**: When rendering hundreds or thousands of items, list virtualization is essential to prevent performance bottlenecks.
 - **Infinite Scrolling**: It works perfectly with infinite scroll patterns, where new items are loaded dynamically as the user scrolls.
 
+
+---
 </details>
+
+---
 </details>
 
 * **Pure Components:** Use `PureComponent` for components that render the same output given the same props. This avoids unnecessary re-renders.
@@ -3811,6 +3909,8 @@ export default MyVirtualizedList;
 
 
 **Note:** Million Lint is a VSCode extension that speeds up your website! Your React app is slow. Million Lint surfaces problematic code and automatically suggests ways to improve it.https://million.dev/docs
+
+---
 </details>
 
 
@@ -3939,6 +4039,8 @@ function ChildComponent(props) {
 - [React documentation on state and lifecycle](https://reactjs.org/docs/state-and-lifecycle.html)
 - [React documentation on components and props](https://reactjs.org/docs/components-and-props.html)
 - [React Hooks documentation](https://reactjs.org/docs/hooks-intro.html)
+
+---
 </details>
 
 
@@ -4006,6 +4108,8 @@ function Counter() {
 ```
 
 As you can see, the functional component using hooks is often more concise and easier to read compared to the class component.
+
+---
 </details>
 
 
@@ -4067,6 +4171,8 @@ function Panel({
 ![img_10.png](img_10.png)
 https://react.dev/learn/sharing-state-between-components#lifting-state-up-by-example
 
+
+---
 </details>
 
 
@@ -4152,6 +4258,8 @@ function MyComponent() {
 
 #### 5. **Context API:**
 * **Shared State:** For complex state management and sharing data across components, consider using the Context API.
+
+---
 </details>
 
 
@@ -4205,6 +4313,8 @@ In the React example, the `handleClick` function is automatically bound to the c
 * Synthetic events provide a cross-browser compatible abstraction.
 * JSX simplifies event handling syntax.
 * Automatic binding eliminates the need for manual binding.
+
+---
 </details>
 
 
@@ -4279,6 +4389,8 @@ In the optimistic approach, the `setIsLoading` state is updated immediately to s
 
 By carefully considering the trade-offs, you can choose the approach that best suits your application's requirements and provides the desired user experience.
 
+
+---
 </details>
 
 
@@ -4326,6 +4438,8 @@ In this example, the `MyComponent` component defines `name` and `age` props as r
 
 **Note:** While PropTypes is a valuable tool, it's important to consider its limitations. It doesn't guarantee type safety at runtime, and it can add some overhead to your code. In some cases, TypeScript or Flow may provide more robust type checking capabilities.
 
+
+---
 </details>
 
 
@@ -4369,6 +4483,8 @@ const Button = styled.button`
 In this example, a `Button` component is created using Styled Components. The styles for the button are defined directly within the JavaScript code, making it easier to manage and reuse.
 
 **By using a CSS-in-JS library, you can create more maintainable, scalable, and visually appealing React applications.**
+
+---
 </details>
 
 
@@ -4376,6 +4492,8 @@ In this example, a `Button` component is created using Styled Components. The st
  <summary style="font-size: medium; font-weight: bold">What are the differences between useRef and createRef?</summary>
 
 ![img_11.png](img_11.png)
+
+---
 </details>
 
 
@@ -4383,6 +4501,8 @@ In this example, a `Button` component is created using Styled Components. The st
 #### Explain the concept of controlled and uncontrolled components in form handling.
 #### What are the best practices for structuring a React project?
 #### How do you manage complex animations in React, and which libraries can be used?
+
+---
 </details>
 
 
@@ -4399,6 +4519,8 @@ In this example, a `Button` component is created using Styled Components. The st
 Here `intializeCount` is called without parenthesis because we don't want it be called
 every time component re-render. If put parenthesis, it will still yield same result, 
 but it will be called every time component re-render.
+
+---
 </details>
 
 <details >
@@ -4713,8 +4835,12 @@ function TouchExample() {
 ```
 
 These event handlers enable React to respond to a wide range of user interactions, making it easier to build interactive UIs.
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -4735,4 +4861,6 @@ These event handlers enable React to respond to a wide range of user interaction
    3. https://github.com/piyush-eon/react-hook-form-tutorial/tree/master
 3. Zod: https://www.youtube.com/watch?v=U9PYyMhDc_k
 ![img_16.png](img_16.png)
+
+---
 </details>

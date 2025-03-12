@@ -42,6 +42,8 @@ https://codepen.io/stoumann/pen/MWeNmyb
 1. We can different strategies to upload file like by Encoding to Base64 or File Chunking
 2. Send data in multipart/form-data
 ![img_9.png](img_9.png)
+
+---
 </details>
 
 
@@ -77,6 +79,8 @@ When you have lot of filter or parameter like in e-commerce then it is preferred
 ### 3. Internationalization / Localization
 ![img_16.png](img_16.png)
 
+
+---
 </details>
 
 
@@ -102,6 +106,8 @@ GreatFrontend: https://www.greatfrontend.com/questions/system-design/news-feed-f
 ![img_22.png](img_22.png)
 ![img_21.png](img_21.png)
 ![img_23.png](img_23.png)
+
+---
 </details>
 
 
@@ -166,6 +172,8 @@ GreatFrontend: https://www.greatfrontend.com/questions/system-design/news-feed-f
 ### Step-5: Non-Functional Discussion
 
 ![img_25.png](img_25.png)
+
+---
 </details>
 
 
@@ -214,6 +222,8 @@ Things we need for setting notification on
 ![img_33.png](img_33.png)
 ![img_34.png](img_34.png)
 ![img_35.png](img_35.png)
+
+---
 </details>
 
 
@@ -232,6 +242,8 @@ Things we need for setting notification on
 ![img_43.png](img_43.png)
 ![img_44.png](img_44.png)
 ![img_45.png](img_45.png)
+
+---
 </details>
 
 
@@ -274,6 +286,8 @@ GTM tag used to map what kind of thing we want to track
 Refer code for different concept from here:
 <br>
 https://github.com/namastedev/namaste-frontend-system-design/tree/master/HLD/AnalyticsDashboard
+
+---
 </details>
 
 
@@ -315,6 +329,8 @@ Tool for defining video player control
 ![img_65.png](img_65.png)
 ![img_66.png](img_66.png)
 ![img_67.png](img_67.png)
+
+---
 </details>
 
 
@@ -361,4 +377,6 @@ IndexDB Syncing logic
 
 ![img_80.png](img_80.png)
 ![img_81.png](img_81.png)
+
+---
 </details>

@@ -8,6 +8,8 @@
 ![img.png](images/img.png)
 
 Understand this by knowing `Execution Context`
+
+---
 </details>
 
 
@@ -20,6 +22,8 @@ A function without any name are called `Anonymous Function`
 ![img_1.png](images/img_1.png)
 
 Anonymous function are used as value like above or we get syntax error
+
+---
 </details>
 
 
@@ -35,6 +39,8 @@ Anonymous function are used as value like above or we get syntax error
 Red : Argument 
 
 Green: parameter
+
+---
 </details>
 
 
@@ -45,6 +51,8 @@ Green: parameter
 
 The ability to use function as value and return it as a value is called `First Class Function`
 ![img_5.png](images/img_5.png)
+
+---
 </details>
 
 Referred Video: https://youtu.be/SHINoHxvTso?si=T8jxyj-IHrnRx2tx
@@ -89,6 +97,8 @@ Example
 
 Referred Video: https://youtu.be/lE_79wkP-1U?si=Yskr4mqmfg8Nd51r
 
+
+---
 </details>
 
 
@@ -99,6 +109,8 @@ Referred Video: https://youtu.be/lE_79wkP-1U?si=Yskr4mqmfg8Nd51r
  <summary style="font-size: medium; font-weight: bold">Pure / Impure Function</summary>
 
 ![img_6.png](images/img_6.png)
+
+---
 </details>
 
 
@@ -194,8 +206,12 @@ to `this` and returned
 ![img_4.png](img_4.png)
 
 Referred Video: https://youtu.be/_tNErId8xlc?si=t8fEbbGmefLTogd-&t=126
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -271,6 +287,8 @@ introduce in ES6
 ![img_28.png](images/img_28.png)
 
 Referred Video: https://youtu.be/fbuyliXlDGI?si=bg1whNVtEbIY2ci5
+
+---
 </details>
 
 
@@ -343,6 +361,8 @@ In constructor we can't use arrow function
 ![img_38.png](images/img_38.png)
 
 ---
+
+---
 </details>
 
 
@@ -352,6 +372,8 @@ In constructor we can't use arrow function
  <summary style="font-size: medium; font-weight: bold">Callback Function</summary>
 
 ![img_32.png](images/img_32.png)
+
+---
 </details>
 
 
@@ -362,6 +384,8 @@ In constructor we can't use arrow function
  <summary style="font-size: medium; font-weight: bold">Object Methods</summary>
 
 ![img_33.png](images/img_33.png)
+
+---
 </details>
 
 
@@ -377,6 +401,8 @@ In constructor we can't use arrow function
 
 ![img_42.png](images/img_42.png)
 
+
+---
 </details>
 
 
@@ -400,6 +426,8 @@ Ex: map(), reduce(), filter(), ...etc
 Referred Video: https://youtu.be/HkWxvB1RJq0?si=zjardBsnBI1OLe9q
 
 ![img.png](img.png)
+
+---
 </details>
 
 

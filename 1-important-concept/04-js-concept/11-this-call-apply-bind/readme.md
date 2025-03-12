@@ -101,6 +101,8 @@ Depends on where it is used
 
 Referred Video: https://www.youtube.com/watch?v=YOlr79NaAtQ
 
+
+---
 </details>
 
 
@@ -144,6 +146,8 @@ https://www.greatfrontend.com/questions/quiz/explain-function-prototype-bind?pra
 
 
 Referred Video: https://www.youtube.com/watch?v=rZc7_2YXbP8
+
+---
 
 ---
 </details>

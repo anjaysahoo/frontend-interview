@@ -92,6 +92,8 @@ Frontend
 
 Complete Code: https://github.com/namastedev/namaste-frontend-system-design/tree/master/CommunicationTechniques/shortPolling
 
+
+---
 </details>
 
 
@@ -197,6 +199,8 @@ Step to check this long polling feature
 4. Once someone updates the data, this request will be fulfilled.
 5. The Same thing keeps happening in the loop
 
+
+---
 </details>
 
 
@@ -296,6 +300,8 @@ Frontend
 ```
 
 Full Code: https://github.com/namastedev/namaste-frontend-system-design/tree/master/CommunicationTechniques/webSocket
+
+---
 </details>
 
 
@@ -388,6 +394,8 @@ useEffect(() => {
 
 For good extensive explanation: https://www.greatfrontend.com/questions/quiz/what-are-server-sent-events?format=quiz
 Referred from: https://dev.to/lagoni/how-to-implement-eventsource-and-sse-in-your-frontend-and-backend-18co
+
+---
 </details>
 
 
@@ -441,4 +449,6 @@ app.listen(port, () => {
 
 Here in Payload URL we can configure our server URL which
 need to be called with the right payload and secret key.
+
+---
 </details>

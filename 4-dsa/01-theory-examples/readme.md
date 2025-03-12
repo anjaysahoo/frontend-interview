@@ -2,6 +2,8 @@
  <summary style="font-size: x-large; font-weight: bold">General Important Concepts</summary>
 
 ![img_81.png](img_81.png)
+
+---
 </details>
 
 
@@ -131,8 +133,12 @@ var maxProduct = function(nums) {
 
 ```
 
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -231,6 +237,8 @@ public class Solution {
     }
 }
 ```
+
+---
 </details>
 
 
@@ -287,6 +295,8 @@ var threeSum = function(nums) {
     return result;
 };
 ```
+
+---
 </details>
 
 
@@ -346,6 +356,8 @@ var majorityElement = function(nums) {
 };
 
 ```
+
+---
 </details>
 
 
@@ -439,6 +451,8 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 <details >
@@ -485,6 +499,8 @@ var subarraySum = function(nums, k) {
 };
 
 ```
+
+---
 </details>
 
 
@@ -588,6 +604,8 @@ class Solution {
   }
 }
 ```
+
+---
 </details>
 
 <details >
@@ -644,8 +662,12 @@ module.exports = {
     }
 };
 ```
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -777,6 +799,8 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 
@@ -853,11 +877,17 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -875,6 +905,8 @@ class Solution {
 
 <details >
  <summary style="font-size: large; font-weight: bold">Concept</summary>
+
+---
 </details>
 
 
@@ -917,6 +949,8 @@ var middleNode = function(head) {
 };
 
 ```
+
+---
 </details>
 
 
@@ -959,6 +993,8 @@ var hasCycle = function(head) {
 
 ```
 
+
+---
 </details>
 
 
@@ -1060,6 +1096,8 @@ var removeNthFromEnd = function(head, n) {
 };
 
 ```
+
+---
 </details>
 
 
@@ -1160,6 +1198,8 @@ var getIntersectionNode = function(headA, headB) {
 };
 
 ```
+
+---
 </details>
 
 
@@ -1320,6 +1360,8 @@ LRUCache.prototype.put = function(key, value) {
  */
 ```
 
+
+---
 </details>
 
 
@@ -1328,9 +1370,15 @@ LRUCache.prototype.put = function(key, value) {
  <summary style="font-size: medium; font-weight: bold">2. </summary>
 
 
+
+---
 </details>
 
+
+---
 </details>
+
+---
 </details>
 
 
@@ -1358,6 +1406,8 @@ LRUCache.prototype.put = function(key, value) {
   2. It may also happen that sometime we may need to use binary search **without any target**, but depending on some different criteria like in "Median of Two Sorted Arrays" where cut should be made in smaller array etc.  For getting idea about different criteria think naively what we need to break this problem.
   3. Then think about the criteria upon which you will **eliminate left or right half**.
   4. **In indirect target start recalibrating your target using** 2nd point found criteria.
+
+---
 </details>
 
 
@@ -1433,6 +1483,8 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 
@@ -1440,6 +1492,8 @@ class Solution {
  <summary style="font-size: medium; font-weight: bold">2. Number of times a Sorted Array is Rotated</summary>
 
 ![img_3.png](img_3.png)
+
+---
 </details>
 
 
@@ -1447,6 +1501,8 @@ class Solution {
  <summary style="font-size: medium; font-weight: bold">3. Find element in Rotated Sorted Array</summary>
 
 ![img_4.png](img_4.png)
+
+---
 </details>
 
 
@@ -1454,6 +1510,8 @@ class Solution {
  <summary style="font-size: medium; font-weight: bold">4. Searching in a Nearly Sorted Array</summary>
 
 ![img_5.png](img_5.png)
+
+---
 </details>
 
 
@@ -1461,6 +1519,8 @@ class Solution {
  <summary style="font-size: medium; font-weight: bold">5. Find position of an element in a Infinite Sorted Array</summary>
 
 ![img_6.png](img_6.png)
+
+---
 </details>
 
 
@@ -1468,6 +1528,8 @@ class Solution {
  <summary style="font-size: medium; font-weight: bold">6. Index of First 1 in a Binary Sorted Infinite Array</summary>
 
 ![img_7.png](img_7.png)
+
+---
 </details>
 
 
@@ -1475,6 +1537,8 @@ class Solution {
  <summary style="font-size: medium; font-weight: bold">8. Peak Element</summary>
 
 ![img_8.png](img_8.png)
+
+---
 </details>
 
 
@@ -1482,6 +1546,8 @@ class Solution {
  <summary style="font-size: medium; font-weight: bold">9. Find Maximum element in Bitonic Array</summary>
 
 ![img_9.png](img_9.png)
+
+---
 </details>
 
 
@@ -1489,16 +1555,24 @@ class Solution {
  <summary style="font-size: medium; font-weight: bold">10. Search an element in Bitonic Array</summary>
 
 ![img_10.png](img_10.png)
+
+---
 </details>
 
 <details >
  <summary style="font-size: medium; font-weight: bold">11. Search in Row-wise & Column-wise Sorted Array</summary>
 
 ![img_11.png](img_11.png)
+
+---
 </details>
 
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -1519,6 +1593,8 @@ class Solution {
 ### Variable Size Window Template
 ![img_14.png](img_14.png)
 
+
+---
 </details>
 
 
@@ -1565,6 +1641,8 @@ class Solution {
 }
 
 ```
+
+---
 </details>
 
 
@@ -1615,6 +1693,8 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 
@@ -1690,10 +1770,16 @@ var minWindow = function(s, t) {
 };
 ```
 
+
+---
 </details>
 
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -1714,6 +1800,8 @@ var minWindow = function(s, t) {
 1. There is high probability that stack questions are on `ARRAY`.
 2. Reducing time complexity from `O(n ^ 2) to O(n)`
 3. Two FOR loop where `j is dependent on i`.
+
+---
 </details>
 
 
@@ -1751,6 +1839,8 @@ function(A){
     return res;
 }
 ```
+
+---
 </details>
 
 
@@ -1758,6 +1848,8 @@ function(A){
  <summary style="font-size: medium; font-weight: bold">3. Stock Span Problem</summary>
 
 ![Stack_4.jpg](images/Stack_4.jpg)
+
+---
 </details>
 
 
@@ -1765,6 +1857,8 @@ function(A){
  <summary style="font-size: medium; font-weight: bold">4. Maximum Area Histogram</summary>
 
 ![Stack_5.jpg](images/Stack_5.jpg)
+
+---
 </details>
 
 
@@ -1772,6 +1866,8 @@ function(A){
  <summary style="font-size: medium; font-weight: bold">5. Max Area Rectangle in Binary Matrix</summary>
 
 ![Stack_6.jpg](images/Stack_6.jpg)
+
+---
 </details>
 
 
@@ -1779,6 +1875,8 @@ function(A){
  <summary style="font-size: medium; font-weight: bold">6. Rain Water Trapping</summary>
 
 ![Stack_7.jpg](images/Stack_7.jpg)
+
+---
 </details>
 
 
@@ -1788,9 +1886,15 @@ function(A){
 ![Stack_8.jpg](images/Stack_8.jpg)
 ![Stack_9.jpg](images/Stack_9.jpg)
 ![Stack_10.jpg](images/Stack_10.jpg)
+
+---
 </details>
 
+
+---
 </details>
+
+---
 </details>
 
 
@@ -1814,6 +1918,8 @@ function(A){
 ![img_2.png](img_2.png)
 
 Referred Video: https://youtube.com/playlist?list=PL_z_8CaSLPWeT1ffjiImo0sYTcnLzo-wY&si=0Xck63pHJ1y7DBp4
+
+---
 </details>
 
 <details >
@@ -1871,6 +1977,8 @@ function solve(root) {
 
 Leetcode: https://leetcode.com/problems/maximum-depth-of-binary-tree/
 Referred Video: https://www.youtube.com/watch?v=aqLTbtWh40E&list=PL_z_8CaSLPWeT1ffjiImo0sYTcnLzo-wY&index=5
+
+---
 </details>
 
 <details >
@@ -1980,6 +2088,8 @@ function merge(p, q, r, nums) {
 Leetcode: https://leetcode.com/problems/sort-an-array/
 <br>
 Referred Video: https://www.youtube.com/watch?v=AZ4jEY_JAVc&list=PL_z_8CaSLPWeT1ffjiImo0sYTcnLzo-wY&index=6
+
+---
 </details>
 
 
@@ -1988,6 +2098,8 @@ Referred Video: https://www.youtube.com/watch?v=AZ4jEY_JAVc&list=PL_z_8CaSLPWeT1
 
 ![Recursion_5.jpg](images/Recursion_5.jpg)
 ![Recursion_6.jpg](images/Recursion_6.jpg)
+
+---
 </details>
 
 
@@ -2003,6 +2115,8 @@ Referred Video: https://www.youtube.com/watch?v=AZ4jEY_JAVc&list=PL_z_8CaSLPWeT1
 
 1. **Identification :** Deleting without extra space possible only through recursion.
 2. **Approach :** Able to reduce the input size to solve the problem, so **IBH**
+
+---
 </details>
 
 
@@ -2083,6 +2197,8 @@ class Solution
     }
 }
 ```
+
+---
 </details>
 
 
@@ -2163,6 +2279,8 @@ var kthGrammar = function(n, k) {
     }
 };
 ```
+
+---
 </details>
 
 
@@ -2239,6 +2357,8 @@ Move plate from 1 to 3
 ```
 
 Visual: https://www.mathsisfun.com/games/towerofhanoi.html
+
+---
 </details>
 
 
@@ -2309,6 +2429,8 @@ var subsets = function(nums) {
     return res;
 };
 ```
+
+---
 </details>
 
 
@@ -2391,6 +2513,8 @@ var subsetsWithDup = function(nums) {
     return res;
 };
 ```
+
+---
 </details>
 
 
@@ -2435,6 +2559,8 @@ class Solution {
   }
 }
 ```
+
+---
 </details>
 
 
@@ -2442,6 +2568,8 @@ class Solution {
  <summary style="font-size: medium; font-weight: bold">11. Permutation with Case Change</summary>
 
 ![Recursion_17.jpg](images/Recursion_17.jpg)
+
+---
 </details>
 
 
@@ -2490,6 +2618,8 @@ function solve(input, output, res){
     }
 }
 ```
+
+---
 </details>
 
 
@@ -2532,6 +2662,8 @@ function solve(open, close, output, res){
         solve(open, close - 1, `${output})`, res);
 }
 ```
+
+---
 </details>
 
 
@@ -2578,6 +2710,8 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 <details >
@@ -2618,9 +2752,15 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
+
+---
 </details>
+
+---
 </details>
 
 
@@ -2632,6 +2772,8 @@ class Solution {
 
 <details >
  <summary style="font-size: large; font-weight: bold">Concept</summary>
+
+---
 </details>
 
 
@@ -2705,6 +2847,8 @@ function populate(root, order, level, map){
     populate(root.right, order + 1, level + 1, map);
 }
 ```
+
+---
 </details>
 
 <details >
@@ -2752,6 +2896,8 @@ class Solution
     }
 }
 ```
+
+---
 </details>
 
 
@@ -2799,8 +2945,12 @@ class Solution
     }
 }
 ```
+
+---
 </details>
 
+
+---
 </details>
 
 <details >
@@ -2883,6 +3033,8 @@ var lowestCommonAncestor = function(root, p, q) {
     return root;
 };
 ```
+
+---
 </details>
 
 
@@ -2979,6 +3131,8 @@ class Solution {
   	}
 }
 ```
+
+---
 </details>
 
 
@@ -3036,6 +3190,8 @@ function solve(preStart, preorder, inStart, inEnd, inorder, inOrderMap){
 - Then we can find this PRE[0] in IN, say it's IN[5].
 - Now we know that IN[5] is root, so we know that IN[0] - IN[4] is on the left side, IN[6] to the end is on the right side.
 - Recursively doing this on subarrays, we can build a tree out of it :)
+
+---
 </details>
 
 <details >
@@ -3086,6 +3242,8 @@ function solve(preStart, preEnd, preorder, postStart, postEnd, postorder, postOr
     return root;
 } 
 ```
+
+---
 </details>
 
 
@@ -3135,6 +3293,8 @@ function solve(postEnd, postorder, inStart, inEnd, inorder, inorderMap) {
     return root;
 }
 ```
+
+---
 </details>
 
 
@@ -3229,6 +3389,8 @@ function solve(preStart, preEnd, preorder){
     return root;
 }
 ```
+
+---
 </details>
 
 
@@ -3271,7 +3433,11 @@ function solve(inStart, inEnd, inorder) {
     return root;
 }
 ```
+
+---
 </details>
+
+---
 </details>
 
 
@@ -3280,6 +3446,8 @@ function solve(inStart, inEnd, inorder) {
 <details >
  <summary style="font-size: medium; font-weight: bold">05. Convert Sorted Array to Binary Search Tree</summary>
 
+
+---
 </details>
 
 
@@ -3445,6 +3613,8 @@ var deleteNode = function(root, key) {
 - node has both left and right - find the minimum value in the right subtree, set that value to the currently found node, then recursively delete the minimum value in the right subtree
 
 https://leetcode.com/problems/delete-node-in-a-bst/solutions/93296/Recursive-Easy-to-Understand-Java-Solution/
+
+---
 </details>
 
 
@@ -3629,6 +3799,8 @@ var preorderTraversal = function(root) {
     return res;
 };
 ```
+
+---
 </details>
 
 
@@ -3690,6 +3862,8 @@ BSTIterator.prototype.hasNext = function() {
  * var param_2 = obj.hasNext()
  */
 ```
+
+---
 </details>
 
 
@@ -3817,6 +3991,8 @@ function hasPrev() {
     return stackPrev.length !== 0;
 }
 ```
+
+---
 </details>
 
 
@@ -3881,8 +4057,12 @@ class Solution {
 }
 ```
 https://www.youtube.com/watch?v=X0oXMdtUDwo&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=57
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -3993,9 +4173,15 @@ var rightSideView = function(root) {
 #### Left View Code
 
 See comment in above code for Left View
-</details>
+
+---
 </details>
 
+---
+</details>
+
+
+---
 </details>
 
 
@@ -4029,6 +4215,8 @@ we will get answer for `left` and `right` **subtree,** and we will use them in a
    3. Then we will compare with the `final result` and update it accordingly
 
 Referred Video: https://youtube.com/playlist?list=PL_z_8CaSLPWfxJPz2-YKqL9gXWdgrhvdn&si=qpaVRPrWeRK9IA2I
+
+---
 </details>
 
 <details >
@@ -4103,6 +4291,8 @@ Points to understand:
    3. Then we will compare with the `final result` and update it accordingly
 
 Leetcode: https://leetcode.com/problems/diameter-of-binary-tree/
+
+---
 </details>
 
 
@@ -4222,9 +4412,15 @@ function solve(root){
 child node can't skip sending its value to parent if it is negative**
 
 Referred Video: https://www.youtube.com/watch?v=ArNyupe-XH0&list=PL_z_8CaSLPWfxJPz2-YKqL9gXWdgrhvdn&index=5
-</details>
+
+---
 </details>
 
+---
+</details>
+
+
+---
 </details>
 
 
@@ -4252,6 +4448,8 @@ Referred Video: https://www.youtube.com/watch?v=ArNyupe-XH0&list=PL_z_8CaSLPWfxJ
 ![Knapsack_8.jpg](images/Knapsack_8.jpg)
 ![Knapsack_9.jpg](images/Knapsack_9.jpg)
 ![Knapsack_10.jpg](images/Knapsack_10.jpg)
+
+---
 </details>
 
 ### Dynamic Programming Introduction
@@ -4281,6 +4479,8 @@ Referred Video: https://www.youtube.com/watch?v=ArNyupe-XH0&list=PL_z_8CaSLPWfxJ
 
 ![Knapsack_16.jpg](images/Knapsack_16.jpg)
 
+
+---
 </details>
 
 
@@ -4466,6 +4666,8 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 
@@ -4527,6 +4729,8 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 
@@ -4669,6 +4873,8 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 
@@ -4676,6 +4882,8 @@ class Solution {
  <summary style="font-size: medium; font-weight: bold">4. Minimum Subset Sum Difference</summary>
 
 ![img_25.png](img_25.png)
+
+---
 </details>
 
 
@@ -4683,6 +4891,8 @@ class Solution {
  <summary style="font-size: medium; font-weight: bold">5. Target Sum</summary>
 
 ![img_26.png](img_26.png)
+
+---
 </details>
 
 
@@ -4799,6 +5009,8 @@ class Solution
     }
 }
 ```
+
+---
 </details>
 
 
@@ -4806,6 +5018,8 @@ class Solution
  <summary style="font-size: medium; font-weight: bold">2. Coin Change Maximum Number of Ways</summary>
 
 ![Knapsack_18.jpg](images/Knapsack_18.jpg)
+
+---
 </details>
 
 
@@ -4813,9 +5027,15 @@ class Solution
  <summary style="font-size: medium; font-weight: bold">3. Coin Change Minimum Number of Ways</summary>
 
 ![Knapsack_19.jpg](images/Knapsack_19.jpg)
+
+---
 </details>
 
+
+---
 </details>
+
+---
 </details>
 
 
@@ -4934,6 +5154,8 @@ var longestCommonSubsequence = function(s1, s2) {
     return dp[n][m];
 };
 ```
+
+---
 </details>
 
 
@@ -4986,6 +5208,8 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 <details >
@@ -5025,6 +5249,8 @@ var longestCommonSubsequence = function(s1, s2) {
     return dp[n][m].length;
 };
 ```
+
+---
 </details>
 
 <details >
@@ -5117,12 +5343,16 @@ function formShortestCommonSupersequence(s1, s2, lcs) {
     return res;
 }
 ```
+
+---
 </details>
 
 <details >
  <summary style="font-size: medium; font-weight: bold">4. Long Palindromic Subsequence</summary>
 
 ![img_28.png](img_28.png)
+
+---
 </details>
 
 
@@ -5131,6 +5361,8 @@ function formShortestCommonSupersequence(s1, s2, lcs) {
 
 ![LongestCommonSubsequence_7.jpg](images/LongestCommonSubsequence_7.jpg)
 ![img_29.png](img_29.png)
+
+---
 </details>
 
 
@@ -5138,6 +5370,8 @@ function formShortestCommonSupersequence(s1, s2, lcs) {
  <summary style="font-size: medium; font-weight: bold">7. Longest Repeating Subsequence</summary>
 
 ![LongestCommonSubsequence_9.jpg](images/LongestCommonSubsequence_9.jpg)
+
+---
 </details>
 
 
@@ -5145,16 +5379,24 @@ function formShortestCommonSupersequence(s1, s2, lcs) {
  <summary style="font-size: medium; font-weight: bold">8. Sequence Pattern Matching</summary>
 
 ![img_30.png](img_30.png)
+
+---
 </details>
 
 <details >
  <summary style="font-size: medium; font-weight: bold">9. Minimum Number of Insertion in a String to make it a Palindrome</summary>
 
 ![LongestCommonSubsequence_11.jpg](images/LongestCommonSubsequence_11.jpg)
+
+---
 </details>
 
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -5287,6 +5529,8 @@ class Solution {
    }
 }
 ```
+
+---
 </details>
 
 
@@ -5295,9 +5539,15 @@ class Solution {
 
 <details >
  <summary style="font-size: medium; font-weight: bold">1. </summary>
+
+---
 </details>
 
+
+---
 </details>
+
+---
 </details>
 
 
@@ -5403,6 +5653,8 @@ class Solution {
    }
 }
 ```
+
+---
 </details>
 
 
@@ -5462,9 +5714,15 @@ var canFinish = function(numCourses, prerequisites) {
     return res;
 };
 ```
+
+---
 </details>
 
+
+---
 </details>
+
+---
 </details>
 
 
@@ -5614,6 +5872,8 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 
@@ -5752,6 +6012,8 @@ Let me analyze both implementations for time complexity and determine which one 
 The first implementation, while not optimal (due to sorting the array each time instead of using a proper priority queue), is still a correct implementation of Dijkstra's algorithm with O(V * E log E) complexity. A proper implementation with a binary heap would be O(E log V), which is more efficient.
 
 In graphs with many vertices and edges, the DFS approach will likely time out due to exploring an exponential number of paths, while Dijkstra's algorithm will complete in polynomial time.
+
+---
 </details>
 
 
@@ -5819,6 +6081,8 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 
@@ -5841,8 +6105,12 @@ Explanation: https://youtu.be/YbY8cVwWAvw?si=O_zfpT9AJXigWVgO
    - Edges postive or negative
 
 - ![img_69.png](img_69.png)
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -5851,9 +6119,15 @@ Explanation: https://youtu.be/YbY8cVwWAvw?si=O_zfpT9AJXigWVgO
 
 <details >
  <summary style="font-size: medium; font-weight: bold">1. </summary>
-</details>
+
+---
 </details>
 
+---
+</details>
+
+
+---
 </details>
 
 
@@ -5929,6 +6203,8 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 
@@ -5937,8 +6213,14 @@ class Solution {
 
 <details >
  <summary style="font-size: medium; font-weight: bold">1. </summary>
+
+---
 </details>
+
+---
 </details>
+
+---
 </details>
 
 
@@ -6007,6 +6289,8 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 
@@ -6015,8 +6299,14 @@ class Solution {
 
 <details >
  <summary style="font-size: medium; font-weight: bold">1. </summary>
+
+---
 </details>
+
+---
 </details>
+
+---
 </details>
 
 
@@ -6257,6 +6547,8 @@ public class Trie {
 
 }
 ```
+
+---
 </details>
 
 
@@ -6350,7 +6642,13 @@ var findMaximumXOR = function(nums) {
     return res;
 };
 ```
+
+---
 </details>
+
+---
 </details>
+
+---
 </details>
 

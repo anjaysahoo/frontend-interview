@@ -29,6 +29,8 @@ Referred Videos:
 1. https://www.youtube.com/watch?v=fyTxwIa-1U0
 2. https://www.youtube.com/watch?v=UBUNrFtufWo
 
+
+---
 </details>
 
 
@@ -68,8 +70,12 @@ Referred Videos:
 - Regularly rotate keys used to sign the tokens and handle key expiration using `kid` in the header.
 
 TODO: Read this in spare time: https://hasura.io/blog/best-practices-of-using-jwt-with-graphql
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -169,6 +175,8 @@ which will help hacker to hijack the user session
 ![img_3.png](images/img_3.png)
 User cookies hijacked by hacker.
 ![img_4.png](images/img_4.png)
+
+---
 </details>
 
 
@@ -232,6 +240,8 @@ User cookies hijacked by hacker.
 
 
 Since Hacker was able to hit his own server with our user cookies information. So any unauthorized activities can be done by hacker.
+
+---
 </details>
 
 
@@ -241,6 +251,8 @@ Since Hacker was able to hit his own server with our user cookies information. S
 Just like session we can pass malicious code which can track our user keystrokes activities and send it to hacker server
 ![img_6.png](images/img_6.png)
 ![img_7.png](images/img_7.png)
+
+---
 </details>
 
 
@@ -250,6 +262,8 @@ Just like session we can pass malicious code which can track our user keystrokes
 Same like above we can pass malicious code in params and it steals all user details by tacking whole HTML page
 ![img_8.png](images/img_8.png)
 ![img_9.png](images/img_9.png)
+
+---
 </details>
 
 
@@ -262,6 +276,8 @@ might share their username and password which be sent to hacker
 ![img_12.png](images/img_12.png)
 ![img_13.png](images/img_13.png)
 ![img_11.png](images/img_11.png)
+
+---
 </details>
 
 
@@ -321,6 +337,8 @@ Without Any CSP policy, we are able to load linked image here
 
 With CSP policy, it was restricted
 ![img_16.png](images/img_16.png)
+
+---
 </details>
 
 
@@ -368,6 +386,8 @@ Here with above CSP set are able to execute only `trusted code` which has `nonce
 ![img_18.png](images/img_18.png)
 ![img_20.png](images/img_20.png)
 ![img_19.png](images/img_19.png)
+
+---
 </details>
 
 
@@ -376,10 +396,16 @@ Here with above CSP set are able to execute only `trusted code` which has `nonce
 
 - Works only on HTTPS
 - `report-to default; report-uri URL`
+
+---
 </details>
 
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -401,6 +427,8 @@ Here with above CSP set are able to execute only `trusted code` which has `nonce
    ![img_44.png](images/img_44.png)
 5. Session Management
    ![img_45.png](images/img_45.png)
+
+---
 </details>
 
 
@@ -408,6 +436,8 @@ Here with above CSP set are able to execute only `trusted code` which has `nonce
  <summary style="font-size: large; font-weight: bold">Input Validation & Sanitization</summary>
 
 ![img_34.png](images/img_34.png)
+
+---
 </details>
 
 
@@ -430,6 +460,8 @@ Mitigation:
 ![img_37.png](images/img_37.png)
 2. ![img_38.png](images/img_38.png)
 3. ![img_39.png](images/img_39.png)
+
+---
 </details>
 
 
@@ -471,5 +503,9 @@ like in the above example
    4. ![img_33.png](images/img_33.png)
 4. Use Captcha
 5. CSP Header
+
+---
 </details>
+
+---
 </details>

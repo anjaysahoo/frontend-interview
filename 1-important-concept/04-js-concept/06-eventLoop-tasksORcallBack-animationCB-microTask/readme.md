@@ -64,6 +64,8 @@ Running example: https://youtu.be/8aGhZQkoFbQ?si=wqVXk6cU2grRaD8_&t=1170
 
 ![img_10.png](images/img_10.png)
 
+
+---
 </details>
 
 
@@ -97,6 +99,8 @@ In below diagrams
 ![img_14.png](images/img_14.png)
 ![img_15.png](images/img_15.png)
 
+
+---
 </details>
 
 <br>
@@ -126,6 +130,8 @@ to Call Stack when it is completely empty.
 ![img_20.png](images/img_20.png)
 Now we can understand why there will no flash of `el` since a code must run to its completion
 before it can get back to render steps
+
+---
 </details>
 
 <details >
@@ -141,10 +147,14 @@ Here we keep queueing up tasks and will be able to push one by one to Call Stack
 Therefore `Event Loop` is able to push `Render step task` like cat gif animation to `Callback Queue`.
 Hence it is `Non blocking`.
 ![img_24.png](images/img_24.png)
+
+---
 </details>
 
 
 
+
+---
 </details>
 
 <br>
@@ -185,8 +195,12 @@ Task Queue is always prioritised than a Render step
 
 ![img_33.png](images/img_33.png)
 But if we use `requestAnimationFrame` then it will happen always at the start
+
+---
 </details>
 
+
+---
 </details>
 
 <br>
@@ -216,6 +230,8 @@ Using twice requestAnimationFrame help to animate properly
 ![img_40.png](images/img_40.png)
 Till 2018 Edge & Safari put requestAnimationFrame after Styling & Painting
 
+
+---
 </details>
 
 <br>
@@ -253,6 +269,8 @@ stacked for second iteration
 ![img_49.png](images/img_49.png)
 All item plus newly added item are also completed.
 
+
+---
 </details>
 
 <br>
@@ -274,6 +292,8 @@ After running task we go to Micro Task Queue
 ![img_55.png](images/img_55.png)
 Same thing done for Listener 2
 
+
+---
 </details>
 
 <details >
@@ -290,11 +310,17 @@ Here since script haven't completed yet therefore we move to listener 2
 ![img_61.png](images/img_61.png)
 
 Be careful while automating anything using script
+
+---
 </details>
 
 Use above tool to better visualize above example
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -316,6 +342,8 @@ Referred Video: https://youtu.be/8zKuNo4ay8E?si=HOCnXMoqEvLG-G8h
 ![img_67.png](images/img_67.png)
 Depending on the browser engine, the JS can use `Interpreter` or `Compiler`
 ![img_68.png](images/img_68.png)
+
+---
 </details>
 
 
@@ -357,4 +385,6 @@ document.body.appendChild(document.createTextNode('Hello!'));
 ```
 
 Full article: https://dev.to/gopal1996/understanding-reflow-and-repaint-in-the-browser-1jbg
+
+---
 </details>

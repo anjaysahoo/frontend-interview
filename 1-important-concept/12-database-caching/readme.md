@@ -151,6 +151,8 @@ There are also other client-side storage mechanisms like [IndexedDB](https://dev
 ## References
 
 - [What is the difference between localStorage, sessionStorage, session and cookies?](https://stackoverflow.com/questions/19867599/what-is-the-difference-between-localstorage-sessionstorage-session-and-cookies)
+
+---
 </details>
 
 ### Local Storage
@@ -212,6 +214,8 @@ To mitigate these security risks when using session storage, consider the follow
 <br>
 
 **Always do serialize the data using `JSON.stringify` while storing and deserialize using `JSON.parse` while fetching data**
+
+---
 </details>
 
 
@@ -308,6 +312,8 @@ Clear-Site-Data: "*"
 ```
 
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Clear-Site-Data
+
+---
 </details>
 
 
@@ -328,6 +334,8 @@ A Minimalistic Wrapper for IndexedDB: https://dexie.org/
 Example: https://github.com/namastedev/namaste-frontend-system-design/tree/master/Databases%26Caching/indexedDb
 
 For more detail refer: https://javascript.info/indexeddb
+
+---
 </details>
 
 
@@ -387,6 +395,8 @@ const state = {
     }
   }
 ```
+
+---
 </details>
 
 
@@ -549,6 +559,8 @@ How can we invalidate our cache? How can we fetch data from server and not from 
 We can update the URL with some random query parameter to bypass caching. Browser will treat this as a new URL, hence force us to get it from server
 
 ![img_13.png](images/img_13.png)
+
+---
 </details>
 
 
@@ -640,6 +652,8 @@ Full Code: https://github.com/namastedev/namaste-frontend-system-design/tree/mas
 ![img_15.png](images/img_15.png)
 ![img_16.png](images/img_16.png)
 ![img_17.png](images/img_17.png)
+
+---
 </details>
 
 
@@ -685,6 +699,8 @@ LensView Code
 ```
 
 https://commerce.nearform.com/open-source/urql/docs/basics/document-caching/#:~:text=cache%2Dand%2Dnetwork%20returns%20cached,return%20cached%20results%20or%20null%20.
+
+---
 </details>
 
 
@@ -711,4 +727,6 @@ VueX
 
 NgRX
 ![img_23.png](images/img_23.png)
+
+---
 </details>

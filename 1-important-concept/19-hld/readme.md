@@ -28,6 +28,8 @@ Referred Video: https://youtu.be/QemIfzcEeMM?si=q8f2_Qy3aLAB5mgv
 ![img_12.png](img_12.png)
 
 Referred Video: https://youtu.be/44mOnnt5pic?si=4Kujw-bc-teDK2dP
+
+---
 </details>
 
 Design Patterns: https://www.patterns.dev/vanilla
@@ -47,6 +49,8 @@ Design Patterns: https://www.patterns.dev/vanilla
 3. Site map help you list all the pages in your website, which can be used by search engines
 ![img_17.png](img_17.png)
 
+
+---
 </details>
 
 
@@ -79,6 +83,8 @@ Quick Explanation: https://www.youtube.com/watch?v=tv-_1er1mWI
 
 1. https://refactoring.guru/design-patterns/singleton
 2. https://javascriptpatterns.vercel.app/patterns
+
+---
 </details>
 
 <details >
@@ -88,6 +94,8 @@ Quick Explanation: https://www.youtube.com/watch?v=tv-_1er1mWI
 
 1. https://www.youtube.com/watch?v=x3cANGNPyx0
 2. https://www.youtube.com/watch?v=9iU_IE6vnJ8
+
+---
 </details>
 
 

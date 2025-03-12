@@ -66,6 +66,8 @@ Identifying memory leaks in a browser involves using various developer tools to 
 5. **Fix and Verify**: Make changes to your code to fix the identified memory leaks and repeat the process to verify the fix.
 
 By following these steps and utilizing the tools provided by modern browsers, you can effectively identify and fix memory leaks in your web applications.
+
+---
 </details>
 
 

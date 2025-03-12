@@ -14,6 +14,8 @@
 - Touchscreen Gestures
 - Screen Magnifier
 
+
+---
 </details>
 
 
@@ -33,6 +35,8 @@ https://webaim.org/standards/wcag/checklist
 - Robust
 - Understandable
 
+
+---
 </details>
 
 
@@ -108,6 +112,8 @@ https://youtu.be/CZGqnp06DnI?si=c0sQLuGzBrXDt9rT
 ![img_6.png](images/img_6.png)
 
 - Disable does not work as expected
+
+---
 </details>
 
 <details >
@@ -150,6 +156,8 @@ You can see from the code snippet that "Navigate to the homepage" is the wrapper
    ![img_1.png](images/img_1.png)
 
 
+
+---
 </details>
 
 
@@ -197,6 +205,8 @@ things accessible where we don't have built in support
 ![img_18.png](images/img_18.png)
 ![img_3.png](images/img_3.png)
 
+
+---
 </details>
 
 
@@ -224,6 +234,8 @@ Here we are able to reference another element with `aria-labelledby`
 
 It can also self-reference itself to give better accessibility
 
+
+---
 </details>
 
 
@@ -234,9 +246,13 @@ It can also self-reference itself to give better accessibility
 Google a11ycast Youtube: https://youtu.be/88tfx3jLV_M?si=r_JU2za9q_M3_SsQ
 
 MDN: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes
+
+---
 </details>
 
 
+
+---
 </details>
 
 
@@ -281,6 +297,8 @@ Here visually `I should` button is at last but in focus appears first
    `tabindex` > 0 will be on top of the tab order
    5. Always try to _**Higher in the tab order = earlier in the DOM**_
 
+
+---
 </details>
 
 
@@ -291,6 +309,8 @@ Here visually `I should` button is at last but in focus appears first
 - Like twitter has got many shortcut
   ![img_28.png](images/img_28.png)
 - 
+
+---
 </details>
 
 
@@ -304,6 +324,8 @@ Long Verbose: https://css-tricks.com/how-to-create-a-skip-to-content-link/
 The most common skip link is the first interactive element on a page. 
 It takes the user to the main content, past the global elements like the logo, 
 search and navigation. It is almost always hidden until it receives focus.
+
+---
 </details>
 
 
@@ -326,6 +348,8 @@ const currentItem = document.activeElement;
 
 currentItem.focus();
 ```
+
+---
 </details>
 
 <details >
@@ -368,6 +392,8 @@ Using this focus remains withing modal itself
 
 
 For more details: https://youtu.be/JS68faEUduk?si=w_7xmWPDPU-o9Oe4
+
+---
 </details>
 
 
@@ -378,8 +404,12 @@ For more details: https://youtu.be/JS68faEUduk?si=w_7xmWPDPU-o9Oe4
 - aria-live
 - contentElement.focus()
 
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -398,6 +428,8 @@ https://youtu.be/LBmLspdAtxM?si=7PuaKfX9GwfU9mUn
 
 - `em` instead of `px` for font size
 - `prefers-color-scheme` & `prefers-contrast`
+
+---
 </details>
 
 <details >
@@ -405,6 +437,8 @@ https://youtu.be/LBmLspdAtxM?si=7PuaKfX9GwfU9mUn
 
 ![img_32.png](images/img_32.png)
 
+
+---
 </details>
 
 ![img.png](images/img_33.png)
@@ -463,4 +497,6 @@ Instead of aria-role="dialog".
    (which are represented by <li> elements).
 ```
 
+
+---
 </details>

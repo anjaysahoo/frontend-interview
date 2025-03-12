@@ -18,6 +18,8 @@ Example Airtel, Jio, etc.
 ![img_14.png](images/img_14.png)
 ![img_13.png](images/img_13.png)
 https://www.submarinecablemap.com/
+
+---
 </details>
 
 <details >
@@ -63,6 +65,8 @@ There are 3 basic levels of DNS servers:
       complete (according to YSlow).
    
 Referred Video: https://www.youtube.com/watch?v=27r4Bzuj5NQ
+
+---
 </details>
 
 <details >
@@ -113,6 +117,8 @@ Referred Video: https://www.youtube.com/watch?v=AlkDbnbv7dk&t=236s
 
 Try to keep first call page size small so that their something to show, to make it performant
 ![img_16.png](images/img_16.png)
+
+---
 </details>
 
 
@@ -164,9 +170,13 @@ Looking code-wise the critical rendering path is as follows:
 
 7. Lastly, in Composting phase, we put things together, and things like modal should be at top, 
 and we need to hide other things below it, happen in Composting phase
+
+---
 </details>
 
 
+
+---
 </details>
 
 
@@ -221,8 +231,12 @@ network.
    the control channel and data channel.
 
 Referred Video: https://www.youtube.com/watch?v=P6SZLcGE4us
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -272,6 +286,8 @@ https://blog.postman.com/api-protocols-in-2023/
 3. **[Versioning](https://www.postman.com/api-platform/api-versioning/) challenges:** Creating new versions of a REST API can be cumbersome, especially when there are changes to the data structure or service functionality. This often leads to backward compatibility issues.
 4. **Stateless overhead:** While statelessness supports scalability, it also means that all the necessary context must be provided with every request. This requirement can introduce overhead, especially when clients must send large amounts of repetitive data.
 5. **Lack of real-time functionality:** REST is not optimized for real-time apps like chat or live feeds. WebSockets and Server-Sent Events often better suit such use cases.
+
+---
 </details>
 
 
@@ -300,6 +316,8 @@ https://blog.postman.com/api-protocols-in-2023/
   and a namespace-specific string.
 
 If you would like to learn more detail on the subject, I would recommend W3C’s clarification.
+
+---
 </details>
 
 
@@ -312,6 +330,8 @@ If you would like to learn more detail on the subject, I would recommend W3C’s
 1. HEAD: Just want to check if any header got modified or not on the server
 2. OPTIONS: Use for security purposes
 
+
+---
 </details>
 
 
@@ -403,6 +423,8 @@ app.listen(PORT, () => {
 ```
 
 2. Complete TS Setup: https://github.com/anjaysahoo/basic-ts-express-app
+
+---
 </details>
 
 
@@ -461,6 +483,8 @@ GET /search?keyword=javascript&page=2
 - URL query parameters
 - Query variables
 
+
+---
 </details>
 
 
@@ -515,6 +539,8 @@ server's responses correctly, you need to understand these headers.
 | Etag              |                                                                                               |                               |
 | Expires           |                                                                                               |                               |
 
+
+---
 </details>
 
 
@@ -530,6 +556,8 @@ Usecase for frontend developer
 
 ![img_5.png](images/img_5.png)
 Refer Video for more details here: https://www.youtube.com/watch?v=qmpUfWN7hh4
+
+---
 </details>
 
 <details >
@@ -537,8 +565,12 @@ Refer Video for more details here: https://www.youtube.com/watch?v=qmpUfWN7hh4
 
 ![img_7.png](images/img_7.png)
 
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -720,8 +752,12 @@ Full Code: https://github.com/namastedev/namaste-frontend-system-design/tree/mas
 4. Step-4: Run server
 ![img_7.png](images/img_47.png)
 ![img_8.png](images/img_48.png)
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -760,8 +796,12 @@ Setup Code: https://github.com/namastedev/namaste-frontend-system-design/tree/ma
 ![img_16.png](images/img_56.png)
 ![img_17.png](images/img_57.png)
 
+
+---
 </details>
 
+
+---
 </details>
 
 

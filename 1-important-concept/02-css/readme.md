@@ -16,6 +16,8 @@ A very good example is `product-chat` app here: https://github.com/anjaysahoo/mi
 
 - For different image size to be shown consistently of uniform size use things like `min-width`
 - Read this for optimize image loading: https://www.builder.io/blog/fast-images
+
+---
 </details>
 
 
@@ -40,6 +42,8 @@ https://www.greatfrontend.com/questions/quiz/what-does-box-sizing-border-box-do-
 }
 ```
 
+
+---
 </details>
 
 
@@ -95,6 +99,8 @@ https://fireship.io/lessons/three-responsive-css-grid-layouts/
  }
 ```
 
+
+---
 </details>
 
 
@@ -154,6 +160,8 @@ Look up the `box-sizing` property, which affects how the total heights and width
 
 - [The box model | MDN](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model#the_standard_css_box_model)
 
+
+---
 </details>
 
 
@@ -168,6 +176,8 @@ Look up the `box-sizing` property, which affects how the total heights and width
 - Pseudo-classes. CSS supports pseudo-classes that let developers define a particular state of an HTML element. For example, developers can use the pseudo-class to highlight the links on a web page that a user has already clicked on or style an HTML element when the user's mouse hovers over it.
 ![img_1.png](img_1.png)
 - https://www.simplilearn.com/difference-between-css-and-css3-article#:~:text=CSS3%20features%20the%20Selector%20concept,be%20applied%20to%20CSS%20styles.
+
+---
 </details>
 
 
@@ -332,6 +342,8 @@ nav {
 4. **Compilation**:
     - SASS/SCSS is compiled using the Ruby-based `sass` or the Dart-based `dart-sass`.
     - LESS is typically compiled using JavaScript-based tools.
+
+---
 </details>
 
 
@@ -358,6 +370,8 @@ https://www.greatfrontend.com/questions/quiz/explain-how-a-browser-determines-wh
 
 https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors
 https://youtu.be/1h5StQJ8hww?si=Sxyq0sqt-IVHQR7c
+
+---
 </details>
 
 
@@ -383,6 +397,8 @@ Each stacking context is self-contained - after the element's contents are stack
 _**Note**: What exactly qualifies an element to create a stacking context is listed in this long set of [rules](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context#The_stacking_context)._
 
 For Video explanation: https://www.youtube.com/watch?v=uS8l4YRXbaw
+
+---
 </details>
 
 
@@ -405,6 +421,8 @@ A positioned element is an element whose computed `position` property is either 
 - `absolute`: The element is removed from the flow of the page and positioned at a specified position relative to its closest positioned ancestor if any, or otherwise relative to the initial containing block. Absolutely-positioned boxes can have margins, and they do not collapse with any other margins. These elements do not affect the position of other elements.
 - `fixed`: The element is removed from the flow of the page and positioned at a specified position relative to the viewport and doesn't move when scrolled.
 - `sticky`: Sticky positioning is a hybrid of relative and fixed positioning. The element is treated as `relative` positioned until it crosses a specified threshold, at which point it is treated as `fixed`-positioned.
+
+---
 </details>
 
 
@@ -456,5 +474,9 @@ https://www.greatfrontend.com/questions/quiz/whats-the-difference-between-inline
 | Margins and paddings | All sides respected. | All sides respected. | Only horizontal sides respected. Vertical sides, if specified, do not affect layout. Vertical space it takes up depends on `line-height`, even though the `border` and `padding` appear visually around the content. |
 | Float | - | - | Becomes like a `block` element where you can set vertical margins and paddings. |
 | Use Cases | Layout elements like `<div>`, `<p>`, `<section>`. | Used for buttons, images, and form fields that need custom sizes but stay in line with text. | Links `<a>`, text formatting `<span>`, text styling - bold `<b>`, italics `<i>`.|
+
+---
 </details>
+
+---
 </details>

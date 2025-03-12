@@ -205,6 +205,8 @@ newSpan.textContent = 'This is some text';
 // Append the span to the div
 myDiv.appendChild(newSpan);
 ```
+
+---
 </details>
 
 <details >
@@ -311,4 +313,6 @@ import './styles.css';
 ```
 
 Referred from: https://www.greatfrontend.com/questions/user-interface/todo-list/vanilla
+
+---
 </details>

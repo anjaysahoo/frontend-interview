@@ -24,6 +24,8 @@ LCP reports the render time of the largest image or text block visible in the vi
 ![img_9.png](images/img_9.png)
 
 In the first example, the Instagram logo is loaded relatively early and it remains the largest element even as other content is progressively shown. In the Google Search results page example, the largest element is a paragraph of text that is displayed before any of the images or logo finish loading. Since all the individual images are smaller than this paragraph, it remains the largest element throughout the load process.
+
+---
 </details>
 
 
@@ -34,6 +36,8 @@ CLS is a measure of the largest burst of layout shift scores for every unexpecte
 
 ![img_6.png](images/img_6.png)
 
+
+---
 </details>
 
 
@@ -48,6 +52,8 @@ INP is a metric that assesses a page's overall responsiveness to user interactio
 ![img_5.png](images/img_5.png)
 
 INP is the successor metric to First Input Delay (FID). While both are responsiveness metrics, FID only measured the input delay of the first interaction on a page. INP improves on FID by observing all interactions on a page, beginning from the input delay, to the time it takes to run event handlers, and finally up until the browser has painted the next frame.
+
+---
 </details>
 
 Do this in browser using LightHouse
@@ -56,6 +62,8 @@ Do this in browser using LightHouse
 ![img_10.png](images/img_10.png)
 ![img_11.png](images/img_11.png)
 ![img_12.png](images/img_12.png)
+
+---
 </details>
 
 
@@ -91,6 +99,8 @@ Do this in browser using LightHouse
 
 ![img.png](img.png)
 
+
+---
 </details>
 
 
@@ -124,6 +134,8 @@ HTML, CSS & JS are bundle together whose size is below 14KB. This will allow our
 to show something to user very quickly then we can start putting other required files
 in parallel.
 - This might be straight forward in Vanilla JS project but framework also we have tools and plugin to achieve this
+
+---
 </details>
 
 
@@ -164,6 +176,8 @@ Here you can see how there are more network calls and because of this there quit
 Here we have only one network call and it is very fast. There is very little gap between FCP & LCP
 
 We only need to add the required CSS, which is needed when the user first navigated to the page, and we have very fast LCP
+
+---
 </details>
 
 
@@ -216,6 +230,8 @@ Script tag with `async` attribute
 Script tag with `defer` attribute
 
 ![img_22.png](images/img_22.png)
+
+---
 </details>
 
 
@@ -225,6 +241,8 @@ Script tag with `defer` attribute
 - Avoid redirection from http to https
 - Use website https://hstspreload.org/ to register your domain. So that whenever we call our domain with http then this website takes care of redirection and our server never gets the https request
 
+
+---
 </details>
 
 
@@ -263,6 +281,8 @@ The crossorigin attribute is used to indicate whether a resource must be fetched
 **Note:** If you omit the `crossorigin` attribute, the browser opens a new connection when it downloads the font files, and doesn't reuse the connection opened with the `preconnect` hints.
 
 https://web.dev/learn/performance/resource-hints?continue=https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%23article-https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%2Fresource-hints#preconnect
+
+---
 </details>
 
 
@@ -281,6 +301,8 @@ Per its name, dns-prefetch doesn't establish a connection to a cross-origin serv
 DNS lookups are fairly inexpensive, and because of their relatively small cost, they may be a more appropriate tool in some cases than a preconnect. In particular, it may be a desirable resource hint to use in cases of links that navigate to other websites that you think the user is likely to follow. dnstradamus is one such tool that does this automatically using JavaScript, and uses the Intersection Observer API to inject dns-prefetch hints into the current page's HTML when links to other websites are scrolled into the user's viewport.
 
 https://web.dev/learn/performance/resource-hints?continue=https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%23article-https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%2Fresource-hints#dns-prefetch
+
+---
 </details>
 
 
@@ -310,6 +332,8 @@ https://learn-performance-resource-hints.glitch.me/3
 ![img_31.png](images/img_31.png)
 
 https://web.dev/learn/performance/resource-hints?continue=https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%23article-https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%2Fresource-hints#preload
+
+---
 </details>
 
 
@@ -328,6 +352,8 @@ There are times when `prefetch` can be beneficial—for example, if you've ident
 Note: Given the speculative nature of prefetch, its use comes with the potential downside that data used to fetch the resource may go unused if the user does not navigate to the page that ends up needing the prefetched resource. Rely on your analytics or other data sources for your website's usage patterns to decide for yourself if using prefetch is a good idea. Alternatively, you can use the Save-Data hint to opt out of prefetches for users who have specified a preference for reduced data usage
 
 https://web.dev/learn/performance/resource-hints?continue=https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%23article-https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%2Fresource-hints#prefetch
+
+---
 </details>
 
 
@@ -346,8 +372,12 @@ By default, images are fetched with a lower priority. After layout, if the image
 Modern browsers load resources in two phases. The first phase is reserved for critical resources and ends once all blocking scripts have been downloaded and executed. During this phase, **Low** priority resources may be delayed from downloading. By using `fetchpriority="high"` you can increase the priority of a resource, enabling the browser to download it during the first phase.
 
 https://web.dev/learn/performance/resource-hints?continue=https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%23article-https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%2Fresource-hints#fetch_priority_api
+
+---
 </details>
 
+
+---
 </details>
 
 <details >
@@ -366,6 +396,8 @@ In some cases, the performance improvement to the Largest Contentful Paint can g
 ![img_35.png](images/img_35.png)
 
 https://developer.chrome.com/docs/web-platform/early-hints#:~:text=The%20browser%20can%20use%20those,thereby%20speeding%20up%20page%20loads.
+
+---
 </details>
 
 
@@ -482,6 +514,8 @@ server.listen(PORT, () => {
 
 Complete code: https://github.com/namastedev/namaste-frontend-system-design/tree/master/Performance/Network%20Optimization/example4
 
+
+---
 </details>
 
 
@@ -505,6 +539,8 @@ Browsers that support Brotli will include br in Accept-Encoding headers:
 ![img_44.png](images/img_44.png)
 
 To know how to set things up: https://web.dev/articles/codelab-text-compression-brotli
+
+---
 </details>
 
 
@@ -514,8 +550,12 @@ To know how to set things up: https://web.dev/articles/codelab-text-compression-
 - Use Cache Policy(cache-control, expire, etag, last-modified)
 - Service Worker
 To know more refer Database module
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -572,6 +612,8 @@ We get the dynamic part by hitting API during a render period. This can be done 
 
 ![img_48.png](images/img_48.png)
 ![img_46.png](images/img_46.png)
+
+---
 </details>
 
 
@@ -707,6 +749,8 @@ export async function getServerSideProps() {
   return { props: { videos } }
 }
 ```
+
+---
 </details>
 
 
@@ -771,6 +815,8 @@ export async function getStaticProps() {
   return { props: { videos } }
 }
 ```
+
+---
 </details>
 
 
@@ -781,6 +827,8 @@ Read full details about RSC here: https://vercel.com/blog/understanding-react-se
 
 ![img_50.png](images/img_50.png)
 ![img_51.png](images/img_51.png)
+
+---
 </details>
 
 
@@ -809,8 +857,12 @@ The added complication is that WHAT is a closure that closes over APP_STATE and 
 Hydration is recovering event handlers by downloading and re-executing all components in the SSR/SSG-rendered HTML. The site is sent to the client twice, once as HTML, and again as JavaScript. Additionally, the framework must eagerly execute the JavaScript to recover `WHAT`, `WHERE`, `APP_STATE`, and `FRAMEWORK_STATE`. All this work just to retrieve something the server already had but discarded!
 
 ![img_53.png](images/img_53.png)
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -902,6 +954,8 @@ Referred Video: https://youtu.be/9JDlZxR8gVw?si=qHDyy-zadGpeBGCs&t=336
    1.  For instance, if you have a very small image you want to tile with `background-repeat` , there isn’t an easy way to accomplish repeating (that I know of) with img tags.
    2.  But for any image that is larger than, say, 50px, I would highly suggest avoiding setting it in CSS and instead using an img tag for virtually everything.
 
+
+---
 </details>
 
 
@@ -915,6 +969,8 @@ Referred Video: https://youtu.be/9JDlZxR8gVw?si=qHDyy-zadGpeBGCs&t=336
 2. `loading='eager'` will fetch the images on high priority
 3.  Ideally, do not lazy load images “above the fold” (that is, images that will be in the browser’s viewport immediately on first load). That will help ensure your most critical images load as soon as possible, and all others will load only as needed.
 
+
+---
 </details>
 
 
@@ -945,6 +1001,8 @@ Referred Video: https://youtu.be/9JDlZxR8gVw?si=qHDyy-zadGpeBGCs&t=336
 1. One important thing to note is that this is a more powerful version than you get with `image-set` in CSS, because you can use the `w unit` in an `img` `srcset`.
 2. What is useful about it is that it takes both size and resolution into account. So, if the image is currently displaying `200px` wide, on a `2x pixel density` device, with the above `srcset` the browser will know to grab the `400w` image (that is, the image that is `400px` wide, so it displays perfectly at `2x pixel density`). Similarly, the same image on a `1x pixel density` image will grab the `200w` image.
 
+
+---
 </details>
 
 
@@ -970,6 +1028,8 @@ Referred Video: https://youtu.be/9JDlZxR8gVw?si=qHDyy-zadGpeBGCs&t=336
   <img ...>
 </picture>
 ```
+
+---
 </details>
 
 
@@ -1002,6 +1062,8 @@ Referred Video: https://youtu.be/9JDlZxR8gVw?si=qHDyy-zadGpeBGCs&t=336
     object-fit: cover;
 }
 ```
+
+---
 </details>
 
 
@@ -1014,6 +1076,8 @@ Additionally, you can specify decoding="async" to images to allow the browser to
 ```html
 <img decoding="async" ... >
 ```
+
+---
 </details>
 
 
@@ -1031,6 +1095,8 @@ Additionally, you can specify decoding="async" to images to allow the browser to
   <img class="slide-3" fetchpriority="low">
 </div>
 ````
+
+---
 </details>
 
 
@@ -1050,6 +1116,8 @@ Additionally, you can specify decoding="async" to images to allow the browser to
 ```html
 <img role="presentation" ... >
 ```
+
+---
 </details>
 
 
@@ -1087,6 +1155,8 @@ This is where the sizes attribute comes in handy:
 
 8. So since 50vw * 900px = 450px the browser will aim for a 450px wide image for a 1x pixel density display, a 900px wide image for 2x pixel density, etc. It will then look for the closest match in the srcset and use that as the image to prefetch.
 
+
+---
 </details>
 
 
@@ -1096,6 +1166,8 @@ This is where the sizes attribute comes in handy:
 ![img.png](img_110.png)
 ![img_1.png](img_111.png)
 ![img_2.png](img_112.png)
+
+---
 </details>
 
 
@@ -1109,6 +1181,8 @@ This is where the sizes attribute comes in handy:
 ![img_14.png](img_14.png)
 ![img_16.png](img_16.png)
 
+
+---
 </details>
 
 
@@ -1120,6 +1194,8 @@ This is where the sizes attribute comes in handy:
 While loading we can get extremely low quality images and blur to smooth out the image,
 which give good user experience.
 
+
+---
 </details>
 
 
@@ -1129,6 +1205,8 @@ which give good user experience.
 
 ![img_19.png](img_19.png)
 
+
+---
 </details>
 
 
@@ -1140,9 +1218,13 @@ which give good user experience.
 ![img_21.png](img_21.png)
 Here instead of getting each logo separately we can club all logo together 
 and based on our need we just show targeted logo through CSS trick
+
+---
 </details>
 
 
+
+---
 </details>
 
 
@@ -1176,6 +1258,8 @@ Check Netflix system design video: https://youtu.be/-Sn48geZruk?si=CU3mKk4MZPaEZ
 
 7.
 ![img_30.png](img_30.png)
+
+---
 </details>
 
 
@@ -1232,6 +1316,8 @@ have default `sans-serif` font then per our need to use class `fonts-loaded` whi
 For more font performance check: 
 1. https://learn-performance-fonts.glitch.me/1
 2. https://web.dev/learn/performance/optimize-web-fonts?continue=https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%23article-https%3A%2F%2Fweb.dev%2Flearn%2Fperformance%2Foptimize-web-fonts#block
+
+---
 </details>
 
 
@@ -1256,6 +1342,8 @@ only that css file is screen user is using
 ![img_45.png](img_45.png)
 
 ![img_46.png](img_46.png)
+
+---
 </details>
 
 
@@ -1275,8 +1363,12 @@ whiteboard, document editor etc.
 We communicate with Web Worker using `postMessage`
 
 ![img_48.png](img_48.png)
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -1364,5 +1456,9 @@ If a tool needs regular updates, a local project installation (npm install) avoi
 
 * **Long-Running Processes**
 npx is meant for short tasks. For ongoing processes, install the package either globally or locally.
+
+---
 </details>
+
+---
 </details>

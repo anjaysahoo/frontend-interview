@@ -100,6 +100,8 @@ _**`Property` is what a parent have and `Method` are what they do**_
 
 Referred Video: https://youtu.be/1UTqFAjYx1k?si=FHSI15TwIILvqMIs
 
+
+---
 </details>
 
 
@@ -163,6 +165,8 @@ We are creating instances of `me` constructor function of Object
 
 Referred Video: https://youtu.be/1UTqFAjYx1k?si=_rYdylQi8aK3zaO6
 
+
+---
 </details>
 
 

@@ -61,6 +61,8 @@ const result = add([1, 2, 3]);
 expect(result).toBe(6);
 });
 ```
+
+---
 </details>
 
 
@@ -156,6 +158,8 @@ it('should yield NaN for non-transformable values', () => {
 
 We could write multiple expectations in scenarios like above where
 expectations are similar, but mostly writing separately is better.
+
+---
 </details>
 
 
@@ -197,6 +201,8 @@ it('should throw an error if provided with multiple arguments instead of an arra
 
 **Note:** adding regular expression `/is not iterable/` help us to check for exact we are expecting 
 rather than any other type of error.
+
+---
 </details>
 
 
@@ -296,6 +302,8 @@ describe('validateNumber()', () => {
 1. Use name of the function in `describe`
 2. We nest more `describe` inside `describe` for better organising, 
 but one level is enough
+
+---
 </details>
 
 
@@ -376,7 +384,11 @@ form.addEventListener('submit', formSubmitHandler);
 
 We should refactor such a function into small functions, so that we 
 can easily write tests for them.
+
+---
 </details>
+
+---
 </details>
 
 
@@ -476,6 +488,8 @@ describe('cleanNumbers()', () => {
 
 Referred code: https://github.com/academind/js-testing-practical-guide-code/tree/05-integration-tests/code/03-finished
 
+
+---
 </details>
 
 
@@ -506,6 +520,8 @@ reference type object it fails to compare.
 So we can use `toEqual()` for that.
 <br>
 `expect(cleanedNumbers).toEqual([1, 2]);`
+
+---
 </details>
 
 
@@ -591,6 +607,8 @@ generated and the callback is invoked.
   - **No Detailed Error Reporting:**
     Without catching and passing the error to done(err), the test framework might not provide a clear 
     indication of what went wrong, leading to less informative error messages.
+
+---
 </details>
 
 
@@ -658,9 +676,13 @@ it('should generate a token value', async () => {
 
 Or we can use `async/await` in our tests as well.
 
+
+---
 </details>
 
 
+
+---
 </details>
 
 
@@ -741,6 +763,8 @@ it('should still have an email property after clearing the email', () => {
 will get wrong results. All of these hooks execute as there name suggests
 2. We can use them in `describe`(Test Suites) block as well, which isolates them from each other.
 `beforeAll()` & `afterAll()` found very useful in such a scenarios.
+
+---
 </details>
 
 
@@ -777,8 +801,12 @@ Vitest and Jest - ensuring that your tests run in a short amount of time.
 5. Concurrent execution can reduce the amount of time your tests need to execute. 
 **A downside of concurrent execution is, that tests that perform clashing (global) 
 state manipulations may interfere with each other.**
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -850,6 +878,8 @@ if (logFn) {
 ```
 
 since our test spy will see this function call missing. 
+
+---
 </details>
 
 
@@ -931,6 +961,8 @@ it('should execute the writeFile method', () => {
 
 Refer this video for better understanding: https://www.udemy.com/course/javascript-unit-testing-the-practical-guide/learn/lecture/31878020#notes
 
+
+---
 </details>
 
 
@@ -992,6 +1024,8 @@ it('should return a promise that resolves to no value if called correctly', () =
 ```
 
 Refer this video for better understanding: https://www.udemy.com/course/javascript-unit-testing-the-practical-guide/learn/lecture/31878022#notes
+
+---
 </details>
 
 
@@ -1017,11 +1051,17 @@ describe('generateReportData()', () => {
 ```
 
 `logger.mockImplementationOnce(() => {});` will override the first call to `logger`
+
+---
 </details>
 
+
+---
 </details>
 
 
+
+---
 </details>
 
 
@@ -1107,6 +1147,8 @@ in order to mock `fetch`
 
 https://www.udemy.com/course/javascript-unit-testing-the-practical-guide/learn/lecture/31878062#notes
 
+
+---
 </details>
 
 
@@ -1149,6 +1191,8 @@ it('should convert the provided data to JSON before sending the request', async 
   expect(errorMessage).not.toBe('Not a string.');
 });
 ```
+
+---
 </details>
 
 
@@ -1181,6 +1225,8 @@ it('should throw an HttpError in case of non-ok responses', () => {
   return expect(sendDataRequest(testData)).rejects.toBeInstanceOf(HttpError);
 });
 ```
+
+---
 </details>
 
 
@@ -1241,8 +1287,12 @@ describe('extractPostData()', () => {
   });
 });
 ```
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -1378,6 +1428,8 @@ it('should output the provided message in the error paragraph', () => {
   expect(errorParagraph.textContent).toBe(testErrorMessage);
 });
 ```
+
+---
 </details>
 
 
@@ -1450,6 +1502,8 @@ module.exports = {
 "test:watch": "jest --watch", 
 "test:coverage": "jest --coverage", 
 ```
+
+---
 </details>
 
 
@@ -1652,7 +1706,9 @@ it('should add two numbers', () => {
    ....
    })
    ```
-   </details>
+   
+---
+</details>
 
    <details>
     <summary style="font-size: small; font-weight: bold">Mocks</summary>
@@ -1707,7 +1763,9 @@ it('should add two numbers', () => {
    export default LicenseServiceMock;
 
    ```
-   </details>
+   
+---
+</details>
 
 Referred Articles:
 1. https://onthecode.co.uk/blog/angular-unit-testing-best-practices
@@ -1721,4 +1779,6 @@ Referred Articles:
 8. https://timdeschryver.dev/blog/getting-the-most-value-out-of-your-angular-component-tests
 9. https://www.youtube.com/watch?v=bv9z_UfSqgM
 10. https://blog.stackademic.com/testing-http-based-services-within-angular-16-with-jest-c9e867e22632
+
+---
 </details>

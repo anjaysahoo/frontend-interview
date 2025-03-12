@@ -64,6 +64,8 @@ function model(state, input){
     })
 }
 ```
+
+---
 </details>
 
 
@@ -170,6 +172,8 @@ function fetchWithAutoRetry(fetcher, maximumRetryCount) {
   })
 }
 ```
+
+---
 </details>
 
 
@@ -356,6 +360,8 @@ First Step
 ![img_5.png](img_5.png)
 Final Step
 ![img_6.png](img_6.png)
+
+---
 </details>
 
 
@@ -507,6 +513,8 @@ stuff in Scope
 
 7. After this we start picking things one by one from `Global` scope `queue` array
 ![img_18.png](img_18.png)
+
+---
 </details>
 
 
@@ -755,8 +763,12 @@ Here anything inside constructor will be executed on creation of instance of `cr
 ![img_20.png](img_20.png)
 ![img_21.png](img_21.png)
 ![img_22.png](img_22.png)
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -788,6 +800,8 @@ function printPrimeNumbers(n) {
   
 printPrimeNumbers(100);
 ```
+
+---
 </details>
 
 
@@ -872,6 +886,8 @@ Option 3:
   }
 }
 ```
+
+---
 </details>
 
 
@@ -953,8 +969,12 @@ hierarchy.printHierarchy();
 
 Output:
 ![img_9.png](img_9.png)
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -1025,6 +1045,8 @@ const output =
 
 
 ```
+
+---
 </details>
 
 <details >
@@ -1049,7 +1071,11 @@ function transform(input){
 transform(input);
 
 ```
+
+---
 </details>
+
+---
 </details>
 
 
@@ -1103,6 +1129,8 @@ export default function mapAsync<T, U>(
   return Promise.all(iterable.map(callbackFn));
 }
 ```
+
+---
 </details>
 
 
@@ -1218,6 +1246,8 @@ export default function mapAsyncLimit<T, U>(
 ```
 
 For other solution using `then` instead of `await` check GreatFrontend solutions
+
+---
 </details>
 
 
@@ -1261,6 +1291,8 @@ function getValues(id) {
 
 getValues('parent');
 ```
+
+---
 </details>
 
 

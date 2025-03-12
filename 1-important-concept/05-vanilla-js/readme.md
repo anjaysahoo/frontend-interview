@@ -84,6 +84,8 @@ changeColor(grandparent)
 
 Referred Video: https://www.youtube.com/watch?v=v7rSSy8CaYE&t=334s
 
+
+---
 </details>
 
 
@@ -302,6 +304,8 @@ newSpan.textContent = 'This is some text';
 // Append the span to the div
 myDiv.appendChild(newSpan);
 ```
+
+---
 </details>
 
 
@@ -410,6 +414,8 @@ import './styles.css';
 ```
 
 Referred from: https://www.greatfrontend.com/questions/user-interface/todo-list/vanilla
+
+---
 </details>
 
 
@@ -572,8 +578,12 @@ async function submitForm(
 ```
 
 Referred from: https://www.greatfrontend.com/questions/user-interface/signup-form/solution
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -629,6 +639,8 @@ export default function getElementsByTagName(element, tagNameParam) {
 }
 
 ```
+
+---
 </details>
 
 
@@ -751,6 +763,8 @@ function identicalDOMTrees(treeA, treeB) {
   return treeA.isEqualNode(treeB);
 }
 ```
+
+---
 </details>
 
 
@@ -817,6 +831,8 @@ export default function $(selector) {
    // }
 }
 ```
+
+---
 </details>
 
 
@@ -877,10 +893,14 @@ export default function getElementsByStyle(element, property, value) {
 
 ```
 
+
+---
 </details>
 
 1. AJAX: 
    1. https://www.greatfrontend.com/questions/quiz/what-are-the-advantages-and-disadvantages-of-using-ajax?format=quiz
    2. https://www.greatfrontend.com/questions/quiz/explain-ajax-in-as-much-detail-as-possible
 2. ES6: https://www.interviewbit.com/es6-interview-questions/#compare-es5-and-es6-codes-for-object-initialization-and-parsing-returned-objects
+
+---
 </details>

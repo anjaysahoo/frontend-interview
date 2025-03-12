@@ -178,6 +178,8 @@ self.addEventListener("activate", (e) => {
 We can however also use a combination of both Strategies. For example, you might use a cache-first strategy for static assets (like images and CSS) and a network-first strategy for dynamic API calls.
 
 **How to create a service worker in a react application**: https://engagespot.co/blog/how-to-create-a-service-worker-in-a-react-application
+
+---
 </details>
 
 
@@ -187,5 +189,7 @@ We can however also use a combination of both Strategies. For example, you might
  <summary style="font-size: x-large; font-weight: bold">Progressive Web App</summary>
 
 
+
+---
 </details>
 

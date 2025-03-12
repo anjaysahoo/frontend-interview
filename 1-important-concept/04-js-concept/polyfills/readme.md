@@ -52,6 +52,8 @@ test('reducer uses array argument when provided', () => {
 
 2. Invoking the filter callback with the correct `this` if `thisArg` is specified.
 3. Sparse arrays, e.g. `[1, 2, , 4]`. The empty values should be ignored while traversing the array.
+
+---
 </details>
 
 
@@ -122,6 +124,8 @@ Edges Cases:
 - Passing the `index` and `array` to the map callback.
 - Calling the map callback with the correct this if `thisArg` is specified.
 - Sparse arrays (e.g. `[1, 2, , 4]`). The empty values should be ignored while traversing the array.
+
+---
 </details>
 
 
@@ -200,6 +204,8 @@ const getMax = (a, b) => Math.max(a, b);
 ```
 ![img_2.png](img_2.png)
     
+
+---
 </details>
 
 <details >
@@ -274,6 +280,8 @@ Function.prototype.myCall = function (context ={}, ...arg) {
 return this.apply(context, [...arg]);
 };
 ```
+
+---
 </details>
 
 <details >
@@ -335,6 +343,8 @@ Function.prototype.myApply = function (context = {}, argArray = []) {
   return this.call(context, ...argArray);
 };
 ```
+
+---
 </details>
 
 <details >
@@ -379,6 +389,8 @@ break point to understand this better
 
 **Other Solutions:**
 Look in greatfrontend solutions
+
+---
 </details>
 
 <details >
@@ -461,6 +473,8 @@ go into the if condition. We can also confirm the func value from below screensh
 
 8. finally everything clear up from Call stack and memory
 ![img_7.png](images/img_7.png)
+
+---
 </details>
 
 <details >
@@ -535,7 +549,11 @@ return ran;
 **Output:**
 
 The code will print "hello 1 2" only once, even though `hello` is called twice. This demonstrates how the closure ensures that `func` is executed at most once.
+
+---
 </details>
+
+---
 </details>
 
 <details >
@@ -570,6 +588,8 @@ const memoizedClumzyProduct = myMemioze(clumsyProduct);
 console.log(memoizedClumzyProduct(2, 3));
 console.log(memoizedClumzyProduct(2, 3));
 ```
+
+---
 </details>
 
 <details >
@@ -631,6 +651,8 @@ no `onResolve` function is defined when we try to execute the `.then()`
 
 - Asynchronous execution
 ![img_10.png](images/img_10.png)
+
+---
 </details>
 
 <details >
@@ -693,6 +715,8 @@ examplePromise.then((res) => {
     console.log("error : ", error)
 });
 ```
+
+---
 </details>
 
 
@@ -774,11 +798,15 @@ examplePromise.then((res) => {
 });
 
 ```
+
+---
 </details>
 
 Referred Video: https://youtu.be/Th3rZjfKKhI?si=q4-ACTNygFJqkEb7&t=1576
 <br>
 Referred Article: https://dev.to/vijayprwyd/polyfill-for-promises-1f0e
+
+---
 </details>
 
 
@@ -843,6 +871,8 @@ Our executor function would work as below :
 - If all promises are resolved ( fulfilledPromises.length === promises.length ) we invoke resolve .
 - If any promise is rejected we invoke the reject
 
+
+---
 </details>
 
 
@@ -990,6 +1020,8 @@ export default function promiseAll(iterable) {
   })
 }
 ```
+
+---
 </details>
 
 https://jsvault.com/iife-example

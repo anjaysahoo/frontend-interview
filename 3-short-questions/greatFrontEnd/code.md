@@ -103,6 +103,8 @@ export default function flatten(value) {
 ```
 
 
+
+---
 </details>
 
 
@@ -176,11 +178,17 @@ export default function flatten(value) {
   return res;
 }
 ```
+
+---
 </details>
 
+
+---
 </details>
 
 
+
+---
 </details>
 
 
@@ -203,6 +211,8 @@ deepEqual({ id: 1 }, { id: 1 }); // true
 deepEqual([1, 2, 3], [1, 2, 3]); // true
 deepEqual([{ id: '1' }], [{ id: '2' }]); // false
 ```
+
+---
 </details>
 
 <details >
@@ -223,6 +233,8 @@ Array.isArray([])
 
 Referred Article: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#bigint_type
 
+
+---
 </details>
 
 My Solution:
@@ -309,7 +321,11 @@ export default function deepEqual(valueA, valueB) {
 
 For more solution and explaination on edge case refer:
 https://www.greatfrontend.com/questions/javascript/deep-equal?list=one-week
+
+---
 </details>
+
+---
 </details>
 
 
@@ -361,6 +377,8 @@ listFormat(['Bob', 'Ben', 'Tim', 'Jane', 'John'], {
 listFormat(['Bob', 'Ben', '', '', 'John']); // 'Bob, Ben and John'
 
 ```
+
+---
 </details>
 
 <details >
@@ -433,7 +451,11 @@ export default function listFormat(items, options) {
   }
 }
 ```
+
+---
 </details>
+
+---
 </details>
 
 
@@ -446,6 +468,8 @@ export default function listFormat(items, options) {
 ###### 04
 
 [1-important-concept -> 04-js-concept -> polyfills -> promise.all](../../1-important-concept/04-js-concept/polyfills/readme.md)
+
+---
 </details>
 
 
@@ -542,6 +566,8 @@ export default function classNames(...args) {
 ```
 
 Here we can use an array to store our result and return by using `return res.join(' ');`
+
+---
 </details>
 
 
@@ -583,6 +609,8 @@ export default function getElementsByTagName(el, tagNameParam) {
   return elements;
 }
 ```
+
+---
 </details>
 
 
@@ -696,6 +724,8 @@ const element = document.querySelector(selector);
 
 Only when things are defined we are getting inside and doing operation
 of returning property value or setting value of property
+
+---
 </details>
 
 
@@ -822,6 +852,8 @@ function identicalDOMTrees(treeA, treeB) {
   return treeA.isEqualNode(treeB);
 }
 ```
+
+---
 </details>
 
 
@@ -904,6 +936,8 @@ export default function squashObject(obj) {
   return out;
 }
 ```
+
+---
 </details>
 
 
@@ -1005,6 +1039,8 @@ export default function camelCaseKeys(object) {
 }
 
 ```
+
+---
 </details>
 
 
@@ -1103,6 +1139,8 @@ const clonedObj = structuredClone(obj);
 ```
 all major browsers have native support for performing deep clone via the `structuredClone` API.
 https://web.dev/articles/structured-clone
+
+---
 </details>
 
 
@@ -1230,4 +1268,6 @@ export default function textSearch(text, queries) {
 }
 
 ```
+
+---
 </details>

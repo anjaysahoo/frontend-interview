@@ -22,6 +22,8 @@ Like in first create order -> Proceed To payment -> show order summary
 Here execution of `proceedToPayment` is dependent on `createOrder` function,
 hence we have lost the control over it. There code multiple issues
 with `createOrder` function which will affect `proceedToPayment` function.
+
+---
 </details>
 
 <details >
@@ -144,6 +146,8 @@ getUser(1)
 - **Error Handling**: Promises provide a built-in way to handle errors using `.catch()`, whereas error handling in callbacks can become cumbersome.
 
 
+
+---
 </details>
 
 <details >
@@ -155,6 +159,8 @@ getUser(1)
 Go through these below video for more details:
 https://www.udemy.com/course/javascript-the-complete-guide-2020-beginner-advanced/learn/lecture/16329906#overview
 
+
+---
 </details>
 
 **MUST do `Promise.all` polyfill question:**
@@ -181,6 +187,8 @@ promise will be executed.
 
 ![img_20.png](images/img_20.png)
 
+
+---
 </details>
 
 <details >
@@ -189,6 +197,8 @@ promise will be executed.
 ![img_15.png](images/img_15.png)
 
 ![img_21.png](images/img_21.png)
+
+---
 </details>
 
 <details >
@@ -202,6 +212,8 @@ Value of **first settled promise** will be returned irresptive of error or failu
 
 ![img_22.png](images/img_22.png)
 
+
+---
 </details>
 
 <details >
@@ -215,11 +227,17 @@ Value of **first success settled promise** will be returned
 If all error case then **aggregateError** is thrown
 
 ![img_23.png](images/img_23.png)
+
+---
 </details>
 
 Referred Video: https://youtu.be/DlTVt1rZjIo?si=UlMdAtzKcaydIACp
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -236,4 +254,6 @@ If we returning Promise in async function then it will same like above and it
 return Promise of promise
 
 **For async/await go through the Maximilian Schwarzmüller video**
+
+---
 </details>

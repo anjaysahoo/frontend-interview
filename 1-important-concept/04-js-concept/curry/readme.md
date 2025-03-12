@@ -70,6 +70,8 @@ function sum(operation) {
     }
 }
 ```
+
+---
 </details>
 
 
@@ -152,6 +154,8 @@ export default function curry(func) {
   }
 }
 ```
+
+---
 </details>
 
 
@@ -194,6 +198,8 @@ export default function curry(func) {
 }
 ```
 
+
+---
 </details>
 
 
@@ -221,8 +227,12 @@ Since the innermost function is essentially meant for preserving the this scope
 and passing arguments along, it can be achieved with `Function.prototype.bind`. 
 This solution is also more flexible because it accepts multiple arguments
 
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -252,4 +262,6 @@ Referred Article: https://roadsidecoder.hashnode.dev/javascript-interview-questi
 <br>
 Referred Video: https://www.youtube.com/watch?v=k5TC9i5HonI
 
+
+---
 </details>

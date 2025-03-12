@@ -87,6 +87,8 @@ export const value = 42;
 import { value } from './my-module.js';
 console.log(value); // 42
 ```
+
+---
 </details>
 
 
@@ -244,6 +246,8 @@ In situations where the user has navigated away from the page, aborting the requ
 - [AbortController | MDN](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)
 - [Fetch: Abort | Javascript.info](https://javascript.info/fetch-abort)
 
+
+---
 </details>
 
 
@@ -257,4 +261,6 @@ https://www.greatfrontend.com/questions/quiz/what-is-the-difference-between-doub
 
 ![img_1.png](img_1.png)
 https://dorey.github.io/JavaScript-Equality-Table/
+
+---
 </details>

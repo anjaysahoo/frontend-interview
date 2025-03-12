@@ -26,6 +26,8 @@
 ![img_5.png](img_5.png)
 
 https://www.greatfrontend.com/questions/quiz/html5-as-an-open-web-platform-building-blocks?format=quiz
+
+---
 </details>
 
 
@@ -93,8 +95,12 @@ Keep in mind that putting scripts just before the closing `</body>` tag will cre
 ### `<head>` and `<body>` tags are now optional
 
 As per the HTML5 specification, certain HTML tags like `<head>` and `<body>` are optional. Google's style guide even recommends removing them to save bytes. However, this practice is still not widely adopted and the performance gain is likely to be minimal and for most sites it's not likely going to matter.
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -130,6 +136,8 @@ An inline element only takes up as much width as necessary.
 ```
 
 **Note:** An `inline element` **cannot** contain a `block-level` element!
+
+---
 </details>
 
 

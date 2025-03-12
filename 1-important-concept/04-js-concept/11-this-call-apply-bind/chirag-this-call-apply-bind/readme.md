@@ -97,6 +97,8 @@ is no one with `normal gf function`, hence it will call `Next Nearest parent -> 
 ### Case-4
 **Same as above, just storing `arrow gf function` definition and calling `Nearest parent -> global scope`  irrespective of with or without `bf object`**
 ![img_3.png](images/img_30.png)
+
+---
 </details>
 
 ### Change BF Techniques using `call()`/`apply()`
@@ -140,6 +142,8 @@ Output:
 
 ### Case-4
 ![img_7.png](images/img_34.png)
+
+---
 </details>
 
 ### Marry BF using `bind()`
@@ -168,6 +172,8 @@ Output:
 
 ### Case-2
 ![img_9.png](images/img_36.png)
+
+---
 </details>
 
 
@@ -305,6 +311,8 @@ and `inner` function definition
 
 ![img_13.png](images/img_40.png)
 Now since `inner` function is an arrow function, we can see in its execution context we have `this` pointing to `Nearest parent -> bfSyncObject`
+
+---
 </details>
 
 
@@ -461,6 +469,8 @@ same if we have arrow function
 ![img_24.png](images/img_24.png)
 ![img_25.png](images/img_25.png)
 ![img_26.png](images/img_26.png)
+
+---
 </details>
 
 

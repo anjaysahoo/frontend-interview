@@ -31,6 +31,8 @@ export class EditRuleService {
   }
 }
 ```
+
+---
 </details>
 
 <details >
@@ -38,6 +40,8 @@ export class EditRuleService {
 
 ![img.png](img.png)
 
+
+---
 </details>
 
 <details >
@@ -79,6 +83,8 @@ Sample parent component
 (myEvent)="someFunction()"></app-my-component>
 ```
 onRemoved in child component is calling someFunction in parent component
+
+---
 </details>
 
 
@@ -102,4 +108,6 @@ this.numberComponent.decreaseByOne();  //method from child component
 ```ts
 @ViewChild(BiosVersionsComponent) biosVersionsComponent: BiosVersionsComponent;
 ```
+
+---
 </details>

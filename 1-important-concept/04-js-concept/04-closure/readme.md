@@ -64,6 +64,8 @@ How to solve this with `var` only?
 Here using `Closure` we can solve this
 
 Referred Video:https://youtu.be/eBTBG4nda2A?si=d1TUmSR3h1IO4CFM
+
+---
 </details>
 
 <details >
@@ -105,6 +107,8 @@ Leveraged by modern JavaScript engines, objects are divided into different gener
 
 Different JavaScript engines (differs according to browsers) implement different garbage collection algorithms and there's no standard way of doing garbage collection.
 More Details on garbage collection: https://www.greatfrontend.com/questions/quiz/how-does-javascript-garbage-collection-work?format=quiz
+
+---
 </details>
 
 <details >
@@ -147,4 +151,6 @@ Referred Video: https://www.youtube.com/watch?v=3a0I8ICR1Vg
 
 
 ### Referred Video: https://www.youtube.com/watch?v=vKJpN5FAeF4
+
+---
 </details>

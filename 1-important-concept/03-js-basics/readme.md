@@ -80,6 +80,8 @@ In this case, you're creating an array with 4 elements using Array(4). Then you 
 
 #### ✅ Right way to update 2-D array
 ![img_14.png](images/img_14.png)
+
+---
 </details>
 
 
@@ -107,7 +109,11 @@ Sorting done here based on `name` key value
 ![img_13.png](img_13.png)
 
 Other helpful methods: https://dev.to/sanchithasr/how-to-add-modify-and-delete-javascript-object-literal-properties-49cd
+
+---
 </details>
+
+---
 </details>
 
 
@@ -204,6 +210,8 @@ const found = array1.find((element) => element > 10);
 console.log(found);
 // Expected output: 12
 ```
+
+---
 </details>
 
 
@@ -234,6 +242,8 @@ const array3 = array1.concat(array2);
 console.log(array3);
 // Expected output: Array ["a", "b", "c", "d", "e", "f"]
 ```
+
+---
 </details>
 
 
@@ -291,6 +301,8 @@ console.log('reversed:', reversed);
 console.log('array1:', array1);
 // Expected output: "array1:" Array ["three", "two", "one"]
 ```
+
+---
 </details>
 
 
@@ -342,8 +354,12 @@ Note: Spreading a Set has issues when compiled with TypeScript (See issue #8856)
 `const array = [...mySet];`
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
+
+---
 </details>
 
+
+---
 </details>
 
 
@@ -443,6 +459,8 @@ const sentence = 'The quick brown fox jumps over the lazy dog.';
 console.log(sentence.toLowerCase());
 // Expected output: "the quick brown fox jumps over the lazy dog."
 ```
+
+---
 </details>
 
 
@@ -493,6 +511,8 @@ map1.set('g', 'gamma');
 console.log(map1.size);
 // Expected output: 3
 ```
+
+---
 </details>
 
 
@@ -589,6 +609,8 @@ for (const entry of iterator1) {
 }
 ```
 ![img_12.png](img_12.png)
+
+---
 </details>
 
 <details >
@@ -633,6 +655,8 @@ console.log(set1.has(1));
 console.log(set1.has(6));
 // Expected output: false
 ```
+
+---
 </details>
 
 
@@ -683,6 +707,8 @@ set1.forEach((point) => {
 console.log(set1.size);
 // Expected output: 1
 ```
+
+---
 </details>
 
 <details >
@@ -719,6 +745,8 @@ for (const item of set1) {
   // Expected output: 13
 }
 ```
+
+---
 </details>
 
 <details >
@@ -727,6 +755,8 @@ for (const item of set1) {
 ![img_7.png](img_7.png)
 
 ![img_8.png](img_8.png)
+
+---
 </details>
 
 
@@ -738,6 +768,8 @@ Sorting done here based on `name` key value
 ![img_13.png](img_13.png)
 
 Other helpful methods: https://dev.to/sanchithasr/how-to-add-modify-and-delete-javascript-object-literal-properties-49cd
+
+---
 </details>
 
 Map: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
@@ -745,6 +777,8 @@ Map: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Ob
 Set: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/add
 
 ![img_19.png](img_19.png)
+
+---
 </details>
 
 
@@ -888,6 +922,8 @@ console.log(isPromise("hello")); // false
 ```
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
+
+---
 </details>
 
 
@@ -947,6 +983,8 @@ const getMax = (a, b) => Math.max(a, b);
 [].reduce(getMax); // TypeError
 ```
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+
+---
 </details>
 
 
@@ -1005,6 +1043,8 @@ Here are some scenarios where you might choose one over the other:
 - If you need to ensure that the start index is less than or equal to the end index, and you don't need to handle negative indices, `substring()` could be more convenient because it automatically swaps the indices if necessary.
 
 In general, both methods are quite similar, and the choice between them often comes down to personal preference or specific requirements of the task at hand.
+
+---
 </details>
 
 
@@ -1105,6 +1145,8 @@ example.prop = undefined;
 Object.hasOwn(example, "prop"); // true - own property exists with value of undefined
 ```
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
+
+---
 </details>
 
 
@@ -1140,6 +1182,8 @@ var i = queue.shift(); // queue is now [5]
 alert(i);              // displays 2
 ```
 https://www.codecademy.com/article/creating-queues-using-javascript
+
+---
 </details>
 
 
@@ -1223,6 +1267,8 @@ console.log("Sum:", sum(10, 20)); // Sum: 30
 
 The `...numbers` syntax collects all passed arguments into an array named 
 `numbers`, enabling flexible function definitions.
+
+---
 </details>
 
 
@@ -1351,6 +1397,8 @@ console.log(calcHypotenuse(5, 12));
 console.log(calcHypotenuse(0, 0));
 // Expected output: 0
 ```
+
+---
 </details>
 
 
@@ -1533,7 +1581,11 @@ export default function App() {
   );
 }
 ```
+
+---
 </details>
+
+---
 </details>
 
 
@@ -1614,6 +1666,8 @@ Symbol("foo") === Symbol("foo"); // false
 ```
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol
 https://www.greatfrontend.com/questions/quiz/what-are-symbols-used-for
+
+---
 </details>
 
 
@@ -1645,6 +1699,8 @@ We can add additional `Flags` as per our need
 ![img_30.png](img_30.png)
 
 Reference: https://fireship.io/lessons/regex-cheat-sheet-js/
+
+---
 </details>
 
 
@@ -1658,4 +1714,6 @@ Reference: https://fireship.io/lessons/regex-cheat-sheet-js/
 2. Read question properly before solving 
 3. While any questions always first think about what you need to return like a `function`, `Promise`, `object` etc. Once you know then just write that first then think about anything else
 3. Go thorough given testcase to get hint. Don't keep spending time by reading question again and again
+
+---
 </details>

@@ -63,6 +63,8 @@ console.log(solution(["ab","cd","yz"]));
 console.log(solution(["abcd","cccc","abyd","abab"]));
 ```
 https://leetcode.ca/2020-03-02-1554-Strings-Differ-by-One-Character/
+
+---
 </details>
 
 
@@ -100,6 +102,8 @@ var subtractProductAndSum = function(n) {
     return product - sum;
 };
 ```
+
+---
 </details>
 
 
@@ -148,6 +152,8 @@ var canConstruct = function(s, k) {
     return true;
 };
 ```
+
+---
 </details>
 
 
@@ -283,6 +289,8 @@ class Solution {
     }
 }
 ```
+
+---
 </details>
 
 
@@ -339,6 +347,8 @@ console.log(strobogrammatic_num(2));
 
 // Output: 88 11 96 69
 ```
+
+---
 </details>
 
 
@@ -376,4 +386,6 @@ console.log("24 Hour time : ", convert12to24Hour('12:00 PM'));
 console.log("24 Hour time : ", convert12to24Hour('12:05 PM'));
 console.log("24 Hour time : ", convert12to24Hour('01:53 PM'));
 ```
+
+---
 </details>

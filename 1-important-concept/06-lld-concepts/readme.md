@@ -24,6 +24,8 @@ Referred Video: https://www.youtube.com/watch?v=m9OSBJaQTlM
 
 Go through the [Todo List](../../2-lld-Questions/todo-list) question to appreciate this well.
 https://www.greatfrontend.com/questions/user-interface/todo-list/react/solution/improved
+
+---
 </details>
 
 
@@ -92,6 +94,8 @@ Misc popular library questions :
 10. Implement cutsom "classnames" library
 11. Implement cutsom "Immer" library
 
+
+---
 </details>
 
 
@@ -158,6 +162,8 @@ const Body = () => {
 };
 export default Body;
 ```
+
+---
 </details>
 
 
@@ -240,6 +246,8 @@ lastCardObserver.observe(document.querySelector(".card:last-child"));
 
 Referred Video: https://www.youtube.com/watch?v=2IbRtjez6ag
 
+
+---
 </details>
 
 
@@ -257,6 +265,8 @@ Referred Video: https://www.youtube.com/watch?v=2IbRtjez6ag
 };
 </script>
 ```
+
+---
 </details>
 
 <details >
@@ -300,6 +310,8 @@ So above request will give `81-100 entries`
   - It's like iterating through `Linked List` and getting the data
 
 
+
+---
 </details>
 
 
@@ -357,8 +369,14 @@ request: {
 ```
 
 This allows the server to implement different underlying pagination solutions while providing a consistent interface to the API consumers.
+
+---
 </details>
 
+
+---
 </details>
 
+
+---
 </details>
