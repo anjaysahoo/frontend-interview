@@ -394,6 +394,7 @@ const regex = /Dog/gi;
 console.log(paragraph.replaceAll(regex, 'ferret'));
 // Expected output: "I think Ruth's ferret is cuter than your ferret!"
 ```
+#### Global flag `//g` in regex is required while using `replaceAll`
 
 3. `String.prototype.trim()`, `String.prototype.trimEnd()`, `String.prototype.trimStart()`
 ```js
@@ -1148,6 +1149,8 @@ https://www.codecademy.com/article/creating-queues-using-javascript
 
 <details >
  <summary style="font-size: x-large; font-weight: bold">Spread & Rest Operator</summary>
+
+![img_32.png](img_32.png)
 
 ### Spread Operator
 

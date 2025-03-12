@@ -1,11 +1,14 @@
+<details >
+ <summary style="font-size: large; font-weight: bold">Point to remember while writing CSS</summary>
+
 ### `height` & `width`
 
-- **Thumb rule** - Always set height/width of parent container first only when required, 
-first always try to solve using whatever default html is providing.
+- **Thumb rule** - Always set height/width of parent container first only when required,
+  first always try to solve using whatever default html is providing.
 
-- **Overflow** - After first rule check where you need to set `height` / `width`, use 
-things like % instead of unit then use `overflow: auto`. In case of long word don't use 
-`overflow` instead use things like `word-break`
+- **Overflow** - After first rule check where you need to set `height` / `width`, use
+  things like % instead of unit then use `overflow: auto`. In case of long word don't use
+  `overflow` instead use things like `word-break`
 
 A very good example is `product-chat` app here: https://github.com/anjaysahoo/mini-apps/tree/master/product-chat
 
@@ -13,7 +16,36 @@ A very good example is `product-chat` app here: https://github.com/anjaysahoo/mi
 
 - For different image size to be shown consistently of uniform size use things like `min-width`
 - Read this for optimize image loading: https://www.builder.io/blog/fast-images
+</details>
 
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Useful CSS Snippets</summary>
+
+1. Always apply below css in root css file of project, putting it any where will not work
+
+https://www.greatfrontend.com/questions/quiz/what-does-box-sizing-border-box-do-what-are-its-advantages?format=quiz
+```css
+*{
+  box-sizing: border-box;/*So that padding & border are considered in height*/
+}
+```
+
+2. Remove default style of button disabled. Put below CSS in class which is applied to the respective button
+```css
+.overriding-class-of-button {
+   color: inherit;
+}
+```
+
+</details>
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Flex & Grid</summary>
 
 ### Flex
 
@@ -54,6 +86,78 @@ Short Video Explanation: https://youtu.be/1zKX71GYisE?si=OyuV4mzevtMUsCuN&t=375
 ### Grid
 
 https://fireship.io/lessons/three-responsive-css-grid-layouts/
+
+```css
+.basic-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+ }
+```
+
+</details>
+
+
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Explain your understanding of the box model and how you would tell the browser in CSS to render your layout in different box models.</summary>
+
+### Always apply below css in root css file of project, putting it any where will not work
+
+```css
+*{
+  box-sizing: border-box;/*So that padding & border are considered in height*/
+}
+```
+
+| Property  | `box-sizing: content-box` (default) | `box-sizing: border-box` |
+| --------- | ----------------------------------- | ------------------------ |
+| content   | Yes                                 | Yes                      |
+| `padding` | No                                  | Yes                      |
+| `border`  | No                                  | Yes                      |
+| `margin`  | No                                  | No                       |
+
+- https://www.greatfrontend.com/questions/quiz/what-does-box-sizing-border-box-do-what-are-its-advantages?format=quiz
+- https://www.greatfrontend.com/questions/quiz/what-does-box-sizing-border-box-do-what-are-its-advantages?practice=practice&tab=quiz
+
+The CSS box model describes the rectangular boxes that are generated for elements in the document tree and laid out according to the visual formatting model. Each box has a content area (e.g. text, an image, etc.) and optional surrounding `padding`, `border`, and `margin` areas.
+
+The CSS box model is responsible for calculating:
+
+- How much space a block element takes up.
+- Whether or not borders and/or margins overlap, or collapse.
+- A box's dimensions.
+
+## Box Model Rules
+
+- The dimensions of a block element are calculated by `width`, `height`, `padding`s, and `border`s.
+- If no `height` is specified, a block element will be as high as the content it contains, plus `padding` (unless there are floats, for which, see [describe floats and how they work](/questions/quiz/describe-floats-and-how-they-work)).
+- If no `width` is specified, a non-`float`-ed block element will expand to fit the width of its parent minus the `padding`, unless it has a `max-width` property set, in which case it will be no wider than the specified maximum width.
+   - Some block-level elements (e.g. `table`, `figure`, and `input`) have inherent or default width values, and may not expand to fill the full width of their parent container.
+   - Note: `span` is an inline-level element and does not have a default width, so it will not expand to fit.
+- The `height` of an element is calculated by the content's `height`.
+- The `width` of an element is calculated by the content's `width`.
+- By default (`box-sizing: content-box`), `padding`s and `border`s are not part of the `width` and `height` of an element.
+
+Note that `margin`s are not counted towards the actual size of the box. It affects the total space that the box will take up on the page, but only the space outside the box. The box's area stops at the `border` — it does not extend into the `margin`.
+
+## Extra
+
+Look up the `box-sizing` property, which affects how the total heights and widths of elements are calculated.
+
+- `box-sizing: content-box`: This is the default value of `box-sizing` and adheres to the rules above.
+- `box-sizing: border-box`: The `width` and `height` will include the content, padding and border, but not including the margin. This is a much more intuitive way to think about boxes and hence many CSS frameworks (e.g. Bootstrap, Tailwind, Bulma) set `* { box-sizing: border-box; }` globally, so that all elements use such a box model by default. See the [question on `box-sizing: border-box`](/questions/quiz/what-does-box-sizing-border-box-do-what-are-its-advantages) for more information.
+
+## References
+
+- [The box model | MDN](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model#the_standard_css_box_model)
+
+</details>
+
+
+
 
 <details >
  <summary style="font-size: large; font-weight: bold">CSS3</summary>
@@ -257,36 +361,7 @@ https://youtu.be/1h5StQJ8hww?si=Sxyq0sqt-IVHQR7c
 </details>
 
 
-<details >
- <summary style="font-size: large; font-weight: bold">Useful CSS Snippets</summary>
 
-1. Always apply below css in root css file of project, putting it any where will not work
-   
-https://www.greatfrontend.com/questions/quiz/what-does-box-sizing-border-box-do-what-are-its-advantages?format=quiz
-```css
-*{
-  box-sizing: border-box;/*So that padding & border are considered in height*/
-}
-```
-
-2. Remove default style of button disabled. Put below CSS in class which is applied to the respective button
-```css
-.overriding-class-of-button {
-   color: inherit;
-}
-```
-
-3. Grid Layout
-   
-https://fireship.io/lessons/three-responsive-css-grid-layouts/
-```css
-.basic-grid {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
- }
-```
-</details>
 
 
 
@@ -334,8 +409,26 @@ A positioned element is an element whose computed `position` property is either 
 
 
 
+
 <details >
- <summary style="font-size: large; font-weight: bold">What's the difference between `block`, `inline`, and `inline-block`?</summary>
+ <summary style="font-size: large; font-weight: bold">Display:  `none`, `block`, `inline`, `inline-block`, `flex`, `grid`, `table`, `table-row`, `table-cell`, `list-item`</summary>
+
+| `display` Value | Description |
+| :-- | :-- |
+| `none` | Does not display an element (the element no longer affects the layout of the document). All child element are also no longer displayed. The document is rendered as if the element did not exist in the document tree. |
+| `block` | The element consumes the whole line in the block direction (which is usually horizontal). |
+| `inline` | Elements can be laid out beside each other. |
+| `inline-block` | Similar to `inline`, but allows some `block` properties like setting `width` and `height`. |
+| `flex` | Behaves as a block-level `flex` container, which can be manipulated using flexbox model. |
+| `grid` | Behaves as a block-level `grid` container using grid layout. |
+| `table` | Behaves like the `<table>` element. |
+| `table-row` | Behaves like the `<tr>` element. |
+| `table-cell` | Behaves like the `<td>` element. |
+| `list-item` | Behaves like a `<li>` element which allows it to define `list-style-type` and `list-style-position`. |
+
+https://www.greatfrontend.com/questions/quiz/what-is-the-css-display-property-and-can-you-give-a-few-examples-of-its-use?practice=practice&tab=quiz
+<details >
+ <summary style="font-size: medium; font-weight: bold">What's the difference between `block`, `inline`, and `inline-block`?</summary>
 
 https://youtu.be/x_i2gga-sYg?si=FUEZnOE8iaTnsqpB
 
@@ -363,4 +456,5 @@ https://www.greatfrontend.com/questions/quiz/whats-the-difference-between-inline
 | Margins and paddings | All sides respected. | All sides respected. | Only horizontal sides respected. Vertical sides, if specified, do not affect layout. Vertical space it takes up depends on `line-height`, even though the `border` and `padding` appear visually around the content. |
 | Float | - | - | Becomes like a `block` element where you can set vertical margins and paddings. |
 | Use Cases | Layout elements like `<div>`, `<p>`, `<section>`. | Used for buttons, images, and form fields that need custom sizes but stay in line with text. | Links `<a>`, text formatting `<span>`, text styling - bold `<b>`, italics `<i>`.|
+</details>
 </details>

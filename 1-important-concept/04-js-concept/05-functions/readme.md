@@ -280,6 +280,40 @@ Referred Video: https://youtu.be/fbuyliXlDGI?si=bg1whNVtEbIY2ci5
 <details >
  <summary style="font-size: medium; font-weight: bold">Arrow Function</summary>
 
+The main advantage of using an arrow function as a method inside a constructor is that the value of `this` gets set at the time of the function creation and can't change after that. When the constructor is used to create a new object, `this` will always refer to that object.
+
+### Limitations
+
+Arrow functions cannot be used as constructors and will throw an error when used with the `new` keyword.
+
+```js live
+const Foo = () => {};
+const foo = new Foo(); // TypeError: Foo is not a constructor
+```
+
+They also do not have `arguments` keyword; the arguments have to be obtained from using the rest operator (`...`) in the arguments.
+
+```js
+const arrowFunction = (...args) => {
+  console.log(arguments); // Throws a TypeError
+  console.log(args); // [1, 2, 3]
+};
+
+arrowFunction(1, 2, 3);
+```
+
+Since arrow functions do not have their own `this`, they are not suitable for defining methods in an object. Traditional function expressions or function declarations should be used instead.
+
+```js live
+const obj = {
+  value: 42,
+  getValue: () => this.value, // `this` does not refer to `obj`
+};
+
+console.log(obj.getValue()); // undefined
+```
+
+
 1. 
 ![img_29.png](images/img_29.png)
 In normal function we have `arguments` array present
@@ -307,6 +341,8 @@ In constructor we can't use arrow function
 
 5. 
 ![img_38.png](images/img_38.png)
+
+---
 </details>
 
 

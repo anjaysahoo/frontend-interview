@@ -239,7 +239,7 @@ In [React](https://react.dev/), event handlers are attached to the React root's 
 
 When an event occurs, React's event listener captures it and determines which React component rendered the target element based on its internal bookkeeping. React then dispatches the event to the appropriate component's event handler by calling the handler function with a synthetic event object. This synthetic event object wraps the native browser event, providing a consistent interface across different browsers and capturing information about the event.
 
-By using event delegation, React avoids attaching individual event handlers to each component instance, which would create significant overhead, especially for large component trees. Instead, React leverages the browser's native event bubbling mechanism to capture events at the root and distribute them to the appropriate components.
+#### By using event delegation, React avoids attaching individual event handlers to each component instance, which would create significant overhead, especially for large component trees. Instead, React leverages the browser's native event bubbling mechanism to capture events at the root and distribute them to the appropriate components.
 
 More Details: https://www.greatfrontend.com/questions/quiz/explain-event-delegation?format=quiz
 </details>

@@ -763,70 +763,60 @@ function identicalDOMTrees(treeA, treeB) {
 ![img_4.png](img_4.png)
 https://www.greatfrontend.com/questions/javascript/jquery-css?list=three-months
 
-**My Solution:**
 ```js
+/**
+ * @param {string} selector
+ * @return {{css: Function}}
+ */
 export default function $(selector) {
+   const el = document.querySelector(selector);
 
-const element = document.querySelector(selector);
+   return {
+      /**
+       * @param {string} prop
+       * @param {boolean|string|number} value
+       * @return {Object|void|string}
+       */
+      css: function (prop, value) {
+         // Getter case.
+         if (value === undefined) {
+            // No matching els.
+            if (el == null) {
+               return undefined;
+            }
 
-  return {
-    css: function (property, value) {
+            const value = el.style[prop];
+            return value === '' ? undefined : value;
+         }
 
-    if(!value){
-       if(!element)
-          return undefined;
+         // Setter case.
+         if (el != null) {
+            el.style[prop] = value;
+         }
 
-      if(property === undefined)
-        return undefined;
+         return this;
+      },
+   };
 
-      const val = element.style[property];
-      return val === '' ? undefined : val;
-    }
-
-    if(element && property)
-      element.style[property] = value;
-    
-      return this;
-    }
-  } 
+   /*Below code fails if 'el' is undefined, because
+   we are trying to chain on undefined. While getting
+   value will not cause error because we are not chaining
+   while getting but while setting we need to return `this`  */
+   // return {
+   //   css(prop, value) {
+   //     if(el != null) {
+   //       if(!value){
+   //         return el.style[prop] ? el.style[prop] : undefined;
+   //       }
+   //       else{
+   //         el.style[prop] = value;
+   //         return this;
+   //       }
+   //     }
+   //   }
+   // }
 }
 ```
-
-GFE Solution:
-```js
-class jQuery {
-  constructor(selector) {
-    this.element = document.querySelector(selector);
-  }
-
-  css(prop, value) {
-    // Getter case.
-    if (value === undefined) {
-      // No matching elements.
-      if (this.element == null) {
-        return undefined;
-      }
-
-      const value = this.element.style[prop];
-      return value === '' ? undefined : value;
-    }
-
-    // Setter case.
-    if (this.element != null) {
-      this.element.style[prop] = value;
-    }
-
-    return this;
-  }
-}
-
-export default function $(element) {
-  return new jQuery(element);
-}
-
-```
-An alternative solution here is to use classes to retain a reference to the selected element. The implementation of the css() method is largely similar.
-
 </details>
 
 
@@ -848,24 +838,43 @@ https://www.greatfrontend.com/questions/javascript/get-elements-by-style
  * @return {Array<Element>}
  */
 export default function getElementsByStyle(element, property, value) {
-  const res = [];
+   const res = [];
 
-  function traverse(el) {
-    if(el === null)
-      return;
+   function helper(el) {
+      // if(el.style[property] === value)
+      //   res.push(el);
 
-    if(getComputedStyle(el).getPropertyValue(property) === value)
-      res.push(el);
+      /*We need to use below rather than above because 
+      getComputedStyle() returns an object that represents the final resolved
+      styles of an element after all styles have been applied, including styles
+      from CSS files, inline styles, and browser defaults. The style property
+      on elements allows you to access and modify inline styles directly on
+      the element. If an element is not styled using inline styles, the 
+      values of all the keys on the style property is empty.
 
-    for(let child of el.children)
-      traverse(child);
-  }
+      // Assuming a typical <body> element with no inline styles specified.
+      console.log(document.body.style.fontSize); // '' (empty string)
+      console.log(getComputedStyle(document.body).getPropertyValue('font-size')); // 16px;
+      */
 
-  for(let child of element.children)
-      traverse(child);
+      if (getComputedStyle(el).getPropertyValue(property) === value)
+         res.push(el);
 
-  return res;
+      for(let child of el.children){
+         helper(child);
+      }
+   }
+
+   for(let child of element.children){
+      helper(child);
+   }
+
+
+   return res;
 }
+
+
+
 ```
 
 </details>
