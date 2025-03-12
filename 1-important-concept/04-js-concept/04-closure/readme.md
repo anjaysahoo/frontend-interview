@@ -47,6 +47,53 @@ Here both `counter1` & `counter2` has access to its own copy of `count`
 
 Referred Video: https://youtu.be/qikxEIxsXco?si=DNd_PMIGTem9dGZM
 
+## Closures in React
+
+Closures are everywhere. Below code shows a simple example of increasing a counter on a button click. In this code, `handleClick` forms a closure. It has access to it's outer scope variable `count` and `setCount`
+
+```jsx
+import React, { useState } from 'react';
+
+function Counter() {
+  // Define a state variable using the useState hook
+  const [count, setCount] = useState(0);
+
+  // This handleClick function is a closure
+  function handleClick() {
+    // It can access the 'count' state variable
+    setCount(count + 1);
+  }
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={handleClick}>Increment</button>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      <h1>Counter App</h1>
+      <Counter />
+    </div>
+  );
+}
+
+export default App;
+```
+
+## Why use closures?
+
+Using closures provide the following benefits:
+
+1. **Data encapsulation**: Closures provide a way to create private variables and functions that can't be accessed from outside the closure. This is useful for hiding implementation details and maintaining state in an encapsulated way.
+1. **Functional programming**: Closures are fundamental in functional programming paradigms, where they are used to create functions that can be passed around and invoked later, retaining access to the scope in which they were created, e.g. [partial applications or currying](https://medium.com/javascript-scene/curry-or-partial-application-8150044c78b8#.l4b6l1i3x).
+1. **Event handlers and callbacks**: In JavaScript, closures are often used in event handlers and callbacks to maintain state or access variables that were in scope when the handler or callback was defined.
+1. **Module patterns**: Closures enable the [module pattern](https://www.patterns.dev/vanilla/module-pattern) in JavaScript, allowing the creation of modules with private and public parts.
+
+https://www.greatfrontend.com/questions/quiz/what-is-a-closure-and-how-why-would-you-use-one?practice=practice&tab=quiz
 
 <details >
  <summary style="font-size: x-large; font-weight: bold">`setTimeout` Closure</summary>

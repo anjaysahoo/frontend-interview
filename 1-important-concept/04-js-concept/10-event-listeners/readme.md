@@ -4,7 +4,10 @@ Understand whole concept in just 18 min through this video: https://www.youtube.
 
 Article for same: https://blog.webdevsimplified.com/2022-01/event-listeners/
 
-### Event Bubbling & Capture
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Event Bubbling & Capture</summary>
+
+
 ```html
 <div class="parent">
   <div class="child"></div>
@@ -164,7 +167,28 @@ button.addEventListener(
 )
 ```
 
-### Event Delegation
+## Benefits
+
+- **Cleaner code:** Reduced number of event listeners improves code readability and maintainability.
+- **Efficient event handling:** Minimizes performance overhead by attaching fewer listeners.
+- **Flexibility:** Allows handling events happening on child elements without directly attaching listeners to them.
+
+## Pitfalls
+
+- **Accidental event handling:** Be mindful that parent elements might unintentionally capture events meant for children. Use `event.target` to identify the specific element that triggered the event.
+- **Event order:** Events bubble up in a specific order. If multiple parents have event listeners, their order of execution depends on the DOM hierarchy.
+- **Over-delegation:** While delegating events to a common ancestor is efficient, attaching a listener too high in the DOM tree might capture unintended events.
+
+
+1. Event Bubbling: https://www.greatfrontend.com/questions/quiz/describe-event-bubbling?practice=practice&tab=quiz
+2. Event Capturing: https://www.greatfrontend.com/questions/quiz/describe-event-capturing?practice=practice&tab=quiz
+---
+</details>
+
+
+
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Event Delegation</summary>
 
 ```javascript
 const buttons = document.querySelectorAll("button")
@@ -178,8 +202,8 @@ const newButton = document.createElement("button")
 document.body.append(newButton)
 ```
 
-This new button does NOT have any click event listener 
-attached to it since it was added to the page after 
+This new button does NOT have any click event listener
+attached to it since it was added to the page after
 our event listeners were added.
 
 ```javascript
@@ -216,9 +240,6 @@ addGlobalEventListener(
 
 For Interview Questions: https://youtu.be/rS_4YfbEo2U?si=zw-vPyr8lzchUFR9
 
-
-<details >
- <summary style="font-size: x-large; font-weight: bold">Event Delegation</summary>
 
 Event delegation is a technique in JavaScript where a single event listener is attached to a parent element instead of attaching event listeners to multiple child elements. When an event occurs on a child element, the event bubbles up the DOM tree, and the parent element's event listener handles the event based on the target element.
 

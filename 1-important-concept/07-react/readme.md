@@ -890,6 +890,84 @@ the `input` element.
 ### 2. Post call
 ![img_6.png](img_6.png)
 
+### Handling errors
+
+It's important to handle errors that may occur during data fetching. You can use a `try-catch` block within the `useEffect` to catch and handle errors.
+
+```javascript
+useEffect(() => {
+  async function fetchData() {
+    try {
+      const response = await fetch('https://api.example.com/data');
+      const result = await response.json();
+      setData(result);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  fetchData();
+}, []);
+```
+
+### Using custom hooks
+
+For better code reusability, you can create custom hooks to handle data fetching. This allows you to encapsulate the data fetching logic and reuse it across multiple components.
+
+```javascript
+import { useState, useEffect } from 'react';
+
+function useFetch(url) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(url);
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error };
+}
+
+export default useFetch;
+```
+
+You can then use this custom hook in your components:
+
+```javascript
+import React from 'react';
+import useFetch from './useFetch';
+
+function DataFetchingComponent() {
+  const { data, loading, error } = useFetch('https://api.example.com/data');
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  return <div>{JSON.stringify(data)}</div>;
+}
+```
+
+https://www.greatfrontend.com/questions/quiz/how-do-you-handle-asynchronous-data-loading-in-react-applications?practice=practice&tab=quiz
 
 ---
 </details>
@@ -3308,9 +3386,9 @@ export default Navbar;
 ```
 
 
----
-title: What are some pitfalls about using context in React?
----
+<details >
+ <summary style="font-size: medium; font-weight: bold">What are some pitfalls about using context in React?</summary>
+
 
 ## TL;DR
 
@@ -3374,6 +3452,96 @@ https://www.greatfrontend.com/questions/quiz/what-are-some-pitfalls-about-using-
 - [Zustand](https://github.com/pmndrs/zustand)
 - [Recoil](https://recoiljs.org/)
 
+---
+</details>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">How would one optimize the performance of React contexts to reduce rerenders?</summary>
+
+https://www.greatfrontend.com/questions/quiz/how-would-one-optimize-the-performance-of-react-contexts-to-reduce-rerenders?practice=practice&tab=quiz
+## TL;DR
+
+To optimize the performance of React contexts and reduce rerenders, you can use techniques such as memoizing context values, splitting contexts, and using selectors. Memoizing context values with `useMemo` ensures that the context value only changes when its dependencies change. Splitting contexts allows you to isolate state changes to specific parts of your application. Using selectors with libraries like `use-context-selector` can help you only rerender components that actually need the updated context value.
+
+```javascript
+const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
+```
+
+---
+
+## How to optimize the performance of React contexts to reduce rerenders
+
+### Memoizing context values
+
+One of the most effective ways to reduce unnecessary rerenders is to memoize the context value. By using `useMemo`, you can ensure that the context value only changes when its dependencies change.
+
+```javascript
+import React, { createContext, useMemo, useState } from 'react';
+
+const MyContext = createContext();
+
+const MyProvider = ({ children }) => {
+  const [state, setState] = useState(initialState);
+
+  const value = useMemo(() => ({ state, setState }), [state]);
+
+  return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
+};
+```
+
+### Splitting contexts
+
+Another technique is to split your context into multiple smaller contexts. This way, you can isolate state changes to specific parts of your application, reducing the number of components that need to rerender.
+
+```javascript
+const UserContext = createContext();
+const ThemeContext = createContext();
+
+const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState('light');
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+```
+
+### Using selectors
+
+Using selectors can help you only rerender components that actually need the updated context value. Libraries like `use-context-selector` can be very useful for this purpose.
+
+```javascript
+import { createContext, useContextSelector } from 'use-context-selector';
+
+const MyContext = createContext();
+
+const MyComponent = () => {
+  const state = useContextSelector(MyContext, (v) => v.state);
+
+  return <div>{state}</div>;
+};
+```
+
+## Further reading
+
+- [React Context API documentation](https://reactjs.org/docs/context.html)
+- [useMemo Hook documentation](https://reactjs.org/docs/hooks-reference.html#usememo)
+- [use-context-selector library](https://github.com/dai-shi/use-context-selector)
+
+---
+</details>
 
 ---
 </details>

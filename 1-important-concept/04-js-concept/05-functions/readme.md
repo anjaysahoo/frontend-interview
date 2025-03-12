@@ -1,13 +1,137 @@
 ## Functions
 
 <details >
- <summary style="font-size: medium; font-weight: bold">Function Statement vs Function Expression</summary>
+ <summary style="font-size: medium; font-weight: bold">Function Statement or Function Declaration vs Function Expression</summary>
 
 `Function Statement` are also called `Function Declaration`
 
 ![img.png](images/img.png)
 
 Understand this by knowing `Execution Context`
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">Explain the differences on the usage of `foo` between `function foo() {}` and `var foo = function() {}` in JavaScript</summary>
+
+https://www.greatfrontend.com/questions/quiz/explain-the-differences-on-the-usage-of-foo-between-function-foo-and-var-foo-function?practice=practice&tab=quiz
+## TL;DR
+
+`function foo() {}` a function declaration while the `var foo = function() {}` is a function expression. The key difference is that function declarations have its body hoisted but the bodies of function expressions are not (they have the same hoisting behavior as `var`-declared variables).
+
+If you try to invoke a function expression before it is declared, you will get an `Uncaught TypeError: XXX is not a function` error.
+
+Function declarations can be called in the enclosing scope even before they are declared.
+
+```js live
+foo(); // 'FOOOOO'
+function foo() {
+  console.log('FOOOOO');
+}
+```
+
+Function expressions if called before they are declared will result in an error.
+
+```js live
+foo(); // Uncaught TypeError: foo is not a function
+var foo = function () {
+  console.log('FOOOOO');
+};
+```
+
+Another key difference is in the scope of the function name. Function expressions can be named by defining it after the `function` and before the parenthesis. However when using named function expressions, the function name is only accessible within the function itself. Trying to access it outside will result in an error or `undefined`.
+
+```js live
+const myFunc = function namedFunc() {
+  console.log(namedFunc); // Works
+};
+
+myFunc(); // Runs the function and logs the function reference
+console.log(namedFunc); // ReferenceError: namedFunc is not defined
+```
+
+**Note**: The examples uses `var` due to legacy reasons. Function expressions can be defined using `let` and `const` and the key difference is in the hoisting behavior of those keywords.
+
+---
+
+## Function declarations
+
+A function declaration is a statement that defines a function with a name. It is typically used to declare a function that can be called multiple times throughout the enclosing scope.
+
+```js live
+function foo() {
+  console.log('FOOOOO');
+}
+foo(); // 'FOOOOO'
+```
+
+## Function expressions
+
+A function expression is an expression that defines a function and assigns it to a variable. It is often used when a function is needed only once or in a specific context.
+
+```js live
+var foo = function () {
+  console.log('FOOOOO');
+};
+foo(); // 'FOOOOO'
+```
+
+**Note**: The examples uses `var` due to legacy reasons. Function expressions can be defined using `let` and `const` and the key difference is in the hoisting behavior of those keywords.
+
+## Key differences
+
+### Hoisting
+
+The key difference is that function declarations have its body hoisted but the bodies of function expressions are not (they have the same hoisting behavior as `var`-declared variables). For more explanation on hoisting, refer to the quiz question on [hoisting](/questions/quiz/explain-hoisting). If you try to invoke a function expression before it is defined, you will get an `Uncaught TypeError: XXX is not a function` error.
+
+Function declarations:
+
+```js live
+foo(); // 'FOOOOO'
+function foo() {
+  console.log('FOOOOO');
+}
+```
+
+Function expressions:
+
+```js live
+foo(); // Uncaught TypeError: foo is not a function
+var foo = function () {
+  console.log('FOOOOO');
+};
+```
+
+### Name scope
+
+Function expressions can be named by defining it after the `function` and before the parenthesis. However when using named function expressions, the function name is only accessible within the function itself. Trying to access it outside will result in `undefined` and calling it will result in an error.
+
+```js live
+const myFunc = function namedFunc() {
+  console.log(namedFunc); // Works
+};
+
+myFunc(); // Runs the function and logs the function reference
+console.log(namedFunc); // ReferenceError: namedFunc is not defined
+```
+
+## When to use each
+
+- Function declarations:
+   - When you want to create a function on the global scope and make it available throughout the enclosing scope.
+   - If a function is reusable and needs to be called multiple times.
+- Function expressions:
+   - If a function is only needed once or in a specific context.
+   - Use to limit the function availability to subsequent code and keep the enclosing scope clean.
+
+In general, it's preferable to use function declarations to avoid the mental overhead of determining if a function can be called. The practical usages of function expressions is quite rare.
+
+## Further reading
+
+- [Function declaration | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)
+- [Function expression | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function)
+
+---
+</details>
 
 ---
 </details>
@@ -22,6 +146,105 @@ A function without any name are called `Anonymous Function`
 ![img_1.png](images/img_1.png)
 
 Anonymous function are used as value like above or we get syntax error
+
+
+<details >
+ <summary style="font-size: small; font-weight: bold">What's a typical use case for anonymous functions in JavaScript?</summary>
+
+https://www.greatfrontend.com/questions/quiz/whats-a-typical-use-case-for-anonymous-functions?practice=practice&tab=quiz
+
+## TL;DR
+
+**They are typically used as arguments to other functions or assigned to variables.**
+
+```js
+// The filter method is passed an anonymous function.
+arr.filter((x) => x > 1);
+```
+
+They are often used as arguments to other functions, known as **higher-order functions**, which can take functions as input and return a function as output. Anonymous functions can access variables from the outer scope, a concept known as closures, allowing them to "close over" and remember the environment in which they were created.
+
+```js
+// Encapsulating Code
+(function () {
+  // Some code here.
+})();
+
+// Callbacks
+setTimeout(function () {
+  console.log('Hello world!');
+}, 1000);
+
+// Functional programming constructs
+const arr = [1, 2, 3];
+const double = arr.map(function (el) {
+  return el * 2;
+});
+console.log(double); // [2, 4, 6]
+```
+
+---
+
+## Anonymous functions
+
+Anonymous functions provide a more concise way to define functions, especially for simple operations or callbacks. Besides that, they can also be used in the following scenarios
+
+### Immediate execution
+
+Anonymous functions are commonly used in Immediately Invoked Function Expressions (IIFEs) to encapsulate code within a local scope. This prevents variables declared within the function from leaking to the global scope and polluting the global namespace.
+
+```js
+// This is an IIFE
+(function () {
+  var x = 10;
+  console.log(x); // 10
+})();
+
+// x is not accessible here
+console.log(typeof x); // undefined
+```
+
+In the above example, the IIFE creates a local scope for the variable `x`. As a result, `x` is not accessible outside the IIFE, thus preventing it from leaking into the global scope.
+
+### Callbacks
+
+Anonymous functions can be used as callbacks that are used once and do not need to be used anywhere else. The code will seem more self-contained and readable when handlers are defined right inside the code calling them, rather than having to search elsewhere to find the function body.
+
+```js
+setTimeout(() => {
+  console.log('Hello world!');
+}, 1000);
+```
+
+### Higher-order functions
+
+It is used as arguments to functional programming constructs like Higher-order functions or Lodash (similar to callbacks). Higher-order functions take other functions as arguments or return them as results. Anonymous functions are often used with higher-order functions like `map()`, `filter()`, and `reduce()`.
+
+```js
+const arr = [1, 2, 3];
+const double = arr.map((el) => {
+  return el * 2;
+});
+console.log(double); // [2, 4, 6]
+```
+
+### Event Handling
+
+In React, anonymous functions are widely used for defining callback functions inline for handling events and passing callbacks as props.
+
+```jsx
+function App() {
+  return <button onClick={() => console.log('Clicked!')}>Click Me</button>;
+}
+```
+
+## Follow-Up Questions
+
+- How do anonymous functions differ from named functions?
+- Can you explain the difference between arrow functions and anonymous functions?
+
+---
+</details>
 
 ---
 </details>
@@ -360,7 +583,6 @@ In constructor we can't use arrow function
 5. 
 ![img_38.png](images/img_38.png)
 
----
 
 ---
 </details>
@@ -426,6 +648,57 @@ Ex: map(), reduce(), filter(), ...etc
 Referred Video: https://youtu.be/HkWxvB1RJq0?si=zjardBsnBI1OLe9q
 
 ![img.png](img.png)
+
+### Practical examples
+
+1. **Logging decorator**: A higher-order function that adds logging functionality to another function:
+
+```js live
+function withLogging(fn) {
+  return function (...args) {
+    console.log(`Calling ${fn.name} with arguments`, args);
+    return fn.apply(this, args);
+  };
+}
+
+function add(a, b) {
+  return a + b;
+}
+
+const loggedAdd = withLogging(add);
+console.log(loggedAdd(2, 3)); // Output: Calling add with arguments [2, 3] 5
+```
+
+The `withLogging` function is a higher-order function that takes a function fn as an argument and returns a new function that logs the function call before executing the original function
+
+2. **Memoization**: A higher-order function that caches the results of a function to avoid redundant computations:
+
+```js live
+function memoize(fn) {
+  const cache = new Map();
+  return function (...args) {
+    const key = JSON.stringify(args);
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+    const result = fn.apply(this, args);
+    cache.set(key, result);
+    return result;
+  };
+}
+
+function fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+const memoizedFibonacci = memoize(fibonacci);
+console.log(memoizedFibonacci(10)); // Output: 55
+```
+
+The `memoize` function is a higher-order function that takes a function `fn` as an argument and returns a new function that caches the results of the original function based on its arguments.
+
+https://www.greatfrontend.com/questions/quiz/what-is-the-definition-of-a-higher-order-function?practice=practice&tab=quiz
 
 ---
 </details>
