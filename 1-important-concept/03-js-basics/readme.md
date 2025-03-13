@@ -1713,6 +1713,7 @@ Reference: https://fireship.io/lessons/regex-cheat-sheet-js/
    2. Good Example 2: [3-short-questions/general/01](../../3-short-questions/general/code.md#01)
 2. Read question properly before solving 
 3. While any questions always first think about what you need to return like a `function`, `Promise`, `object` etc. Once you know then just write that first then think about anything else
+4. Put console.log start debugging don't spend time looking at code again and again
 3. Go thorough given testcase to get hint. Don't keep spending time by reading question again and again
 
 ---
