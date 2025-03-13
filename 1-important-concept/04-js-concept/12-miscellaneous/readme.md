@@ -264,3 +264,115 @@ https://dorey.github.io/JavaScript-Equality-Table/
 
 ---
 </details>
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">JavaScript Versions</summary>
+
+
+- JavaScript was invented by Brendan Eich in 1995, and became an ECMA standard in 1997.
+
+- ECMAScript is the official name of the language.
+
+- ECMAScript versions have been abbreviated to ES1, ES2, ES3, ES5, and ES6.
+
+- Since 2016, versions are named by year (ECMAScript 2016, 2017, 2018, 2019, 2020).
+<table class="ws-table-all">
+<tbody><tr>
+<th>Ver</th>
+<th>Official Name</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>ES1</td>
+<td>ECMAScript 1 (1997)</td><td>First edition</td>
+</tr>
+<tr>
+<td>ES2</td>
+<td>ECMAScript 2 (1998)</td><td>Editorial changes</td>
+</tr>
+<tr>
+<td>ES3</td>
+<td>ECMAScript 3 (1999)</td><td>Added regular expressions<br>
+Added try/catch<br>
+Added switch<br>
+Added do-while</td>
+</tr>
+<tr>
+<td>ES4</td>
+<td>ECMAScript 4</td><td>Never released</td>
+</tr>
+<tr>
+<td>ES5</td>
+<td>ECMAScript 5 (2009)<br><br>
+</td>
+<td>
+Added "strict mode"<br>
+Added JSON support<br>
+Added String.trim()<br>
+Added Array.isArray()<br>
+Added Array iteration methods<br>
+Allows trailing commas for object literals<br>
+</td>
+</tr>
+<tr>
+<td>ES6</td>
+<td>ECMAScript 2015<br><br>
+<td>Added let and const<br>
+Added default parameter values<br>
+Added Array.find()<br>
+Added Array.findIndex()<br>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>ECMAScript 2016<br><br>
+<td>Added exponential operator (**)<br>
+Added Array.includes()
+</td>
+</tr>
+<tr>
+<td></td>
+<td>ECMAScript 2017<br><br>
+</td><td>Added string padding<br>
+Added Object.entries()<br>
+Added Object.values()<br>
+Added async functions<br>
+Added shared memory<br>
+Allows trailing commas for function parameters<br>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>ECMAScript 2018<br><br>
+</td><td>
+Added rest / spread properties<br>
+Added asynchronous iteration<br>
+Added Promise.finally()<br>
+Additions to RegExp
+</td>
+</tr>
+<tr>
+<td></td>
+<td>ECMAScript 2019<br><br>
+</td><td>
+String.trimStart()<br>
+String.trimEnd()<br>
+Array.flat()<br>
+Object.fromEntries<br>
+Optional catch binding
+</td>
+</tr>
+<tr>
+<td></td>
+<td>ECMAScript 2020<br><br>
+</td><td>
+The Nullish Coalescing Operator (??)<br>
+</td>
+</tr>
+
+</tbody></table>
+
+---
+</details>
