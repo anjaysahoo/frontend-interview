@@ -594,7 +594,7 @@ Referred from: https://www.greatfrontend.com/questions/user-interface/signup-for
 
 
 <details >
- <summary style="font-size: x-large; font-weight: bold">Important Questions</summary>
+ <summary style="font-size: x-large; font-weight: bold">Important Coding Questions</summary>
 
 
 <details >

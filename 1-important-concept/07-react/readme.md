@@ -803,6 +803,137 @@ UseEffect called
 
 https://react.dev/reference/react/useEffect#useeffect
 
+
+### Common pitfalls
+
+1. **Stale closures**:
+
+    - If you use state or props inside the effect without including them in the dependency array, you might end up with stale values.
+    - Always include all state and props that the effect depends on in the dependency array.
+
+   ```javascript
+   const [count, setCount] = useState(0);
+
+   useEffect(() => {
+     const handle = setInterval(() => {
+       console.log(count); // This might log stale values if `count` is not in the dependency array
+     }, 1000);
+
+     return () => clearInterval(handle);
+   }, [count]); // Ensure `count` is included in the dependency array
+   ```
+
+2. **Functions as dependencies**:
+
+    - Functions are recreated on every render, so including them in the dependency array can cause the effect to run more often than necessary.
+    - Use `useCallback` to memoize functions if they need to be included in the dependency array.
+
+   ```javascript
+   const handleClick = useCallback(() => {
+     // Handle click
+   }, []);
+
+   useEffect(() => {
+     // This effect will not re-run unnecessarily because `handleClick` is memoized
+   }, [handleClick]);
+   ```
+https://www.greatfrontend.com/questions/quiz/what-does-the-dependency-array-of-useeffect-affect?practice=practice&tab=quiz
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Good Traffic Light Example for `setTimeout()` & `setInterval()`</summary>
+
+https://www.greatfrontend.com/questions/user-interface/traffic-light/
+![img_19.png](img_19.png)
+```jsx
+import { useState, useEffect, useRef } from 'react';
+
+
+export default function TrafficLight() {
+  const [activeColor, setActiveColor] = useState('green');
+  const [duration, setDuration] = useState(3000);
+
+/**Without useInterval hook */
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+    // This might log stale values if `activeColor` is not in the dependency array
+    if(activeColor === 'green'){ 
+      setActiveColor('yellow');
+      setDuration(1000);
+    }
+
+    if(activeColor === 'yellow'){
+      setActiveColor('red');
+      setDuration(4000);
+    }
+
+    if(activeColor === 'red'){
+      setActiveColor('green');
+      setDuration(9000);
+    }
+    }, duration)
+
+    return () => {
+      clearInterval(intervalId); //always clear Interval
+    }
+
+  }, [activeColor]) // Ensure `activeColor` is included in the dependency array
+
+
+  /*Using useInterval hook
+  useInterval(() => {
+    if(activeColor === 'green'){
+      setActiveColor('yellow');
+      setDuration(1000);
+    }
+
+    if(activeColor === 'yellow'){
+      setActiveColor('red');
+      setDuration(4000);
+    }
+
+    if(activeColor === 'red'){
+      setActiveColor('green');
+      setDuration(9000);
+    }
+    }, duration)
+  */
+
+  return (
+    <div className="traffic">
+      <div className="light" style={{background: activeColor === 'red' ? 'red' : 'grey'}}></div>
+      <div className="light" style={{background: activeColor === 'yellow' ? 'yellow' : 'grey'}}></div>
+      <div className="light" style={{background: activeColor === 'green' ? 'green' : 'grey'}}></div>
+    </div>
+  )
+}
+
+
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+
+    if(delay !== null){
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+```
+
+---
+</details>
+
 ---
 </details>
 
@@ -5106,6 +5237,377 @@ In this example, a `Button` component is created using Styled Components. The st
 ---
 </details>
 
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">What is the difference between React Node, React Element, and a React Component?</summary>
+
+https://www.greatfrontend.com/questions/quiz/what-is-the-difference-between-react-node-react-element-and-a-react-component?practice=practice&tab=quiz
+## TL;DR
+
+A React Node is any renderable unit in React, such as an element, string, number, or `null`. A React Element is an immutable object describing what to render, created using JSX or `React.createElement`. A React Component is a function or class that returns React Elements, enabling the creation of reusable UI pieces.
+
+---
+
+## React node
+
+A **React Node** is the most basic unit in the React rendering system. It can be a React element, a string, a number, a boolean, or `null`. Essentially, anything that can be rendered in React is a React Node.
+
+```jsx
+const stringNode = 'Hello, world!';
+const numberNode = 123;
+const booleanNode = true;
+const nullNode = null;
+const elementNode = <div>Hello, world!</div>;
+```
+
+## React element
+
+A **React Element** is an immutable, plain object representing what you want to see on the screen. It includes the type (such as a string for HTML tags or a React component), props, and children. React elements are created using JSX syntax or `React.createElement`.
+
+```jsx
+const element = <div className="greeting">Hello, world!</div>;
+
+// Using React.createElement
+const element = React.createElement(
+  'div',
+  { className: 'greeting' },
+  'Hello, world!',
+);
+```
+
+## React component
+
+A **React Component** is a reusable piece of the UI that can accept inputs (props) and returns React elements describing the UI. There are two types of components: function components and class components.
+
+- **Function components**: These are simpler and are just functions that take props as an argument and return a React element.
+
+  ```jsx
+  function Welcome(props) {
+    return <h1>Hello, {props.name}</h1>;
+  }
+  ```
+
+- **Class components**: These are ES6 classes that extend `React.Component` and must have a `render` method returning a React element.
+  ```jsx
+  class Welcome extends React.Component {
+    render() {
+      return <h1>Hello, {this.props.name}</h1>;
+    }
+  }
+  ```
+
+## Further reading
+
+- [React documentation: Rendering elements](https://reactjs.org/docs/rendering-elements.html)
+- [React documentation: Components and props](https://reactjs.org/docs/components-and-props.html)
+- [React documentation: JSX in depth](https://reactjs.org/docs/jsx-in-depth.html)
+- [React documentation: State and lifecycle](https://reactjs.org/docs/state-and-lifecycle.html)
+
+---
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">What is JSX and how does it work?</summary>
+
+https://www.greatfrontend.com/questions/quiz/what-is-jsx-and-how-does-it-work?practice=practice&tab=quiz
+## TL;DR
+
+JSX stands for JavaScript XML. It is a syntax extension for JavaScript that allows you to write HTML-like code within JavaScript. JSX makes it easier to create React components by allowing you to write what looks like HTML directly in your JavaScript code. Under the hood, JSX is transformed into JavaScript function calls, typically using a tool like Babel. For example, `<div>Hello, world!</div>` in JSX is transformed into `React.createElement('div', null, 'Hello, world!')`.
+
+---
+
+## What is JSX and how does it work?
+
+### What is JSX?
+
+JSX stands for JavaScript XML. It is a syntax extension for JavaScript that allows you to write HTML-like code within JavaScript. JSX is primarily used with React to describe what the UI should look like.
+
+### How does JSX work?
+
+JSX is not valid JavaScript by itself. It needs to be transformed into regular JavaScript before it can be executed by the browser. This transformation is usually done by a tool like Babel.
+
+### JSX syntax
+
+JSX allows you to write HTML-like tags directly in your JavaScript code. For example:
+
+```jsx
+const element = <h1>Hello, world!</h1>;
+```
+
+### Transformation process
+
+When you write JSX, it is transformed into JavaScript function calls. For example, the JSX code:
+
+```jsx
+const element = <h1>Hello, world!</h1>;
+```
+
+is transformed into:
+
+```javascript
+const element = React.createElement('h1', null, 'Hello, world!');
+```
+
+### Embedding expressions
+
+You can embed JavaScript expressions inside JSX using curly braces `{}`. For example:
+
+```jsx
+const name = 'John';
+const element = <h1>Hello, {name}!</h1>;
+```
+
+### Attributes in JSX
+
+You can use quotes to specify string literals as attributes and curly braces to embed JavaScript expressions. For example:
+
+```jsx
+const element = <img src={user.avatarUrl} alt="User Avatar" />;
+```
+
+### JSX is an expression
+
+After compilation, JSX expressions become regular JavaScript function calls and evaluate to JavaScript objects. This means you can use JSX inside if statements, for loops, and assign it to variables.
+
+### JSX prevents injection attacks
+
+By default, React DOM escapes any values embedded in JSX before rendering them. This ensures that you can never inject anything that's not explicitly written in your application.
+
+## Further reading
+
+- [React JSX documentation](https://reactjs.org/docs/introducing-jsx.html)
+- [Babel](https://babeljs.io/)
+- [MDN Web Docs on JSX](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/JSX)
+
+---
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">What are React Fragments used for?</summary>
+
+https://www.greatfrontend.com/questions/quiz/what-are-react-fragments-used-for?practice=practice&tab=quiz
+
+## TL;DR
+
+### Adding keys to fragments
+
+If you need to add keys to the elements within a fragment, you must use the full `React.Fragment` syntax. This is useful when rendering a list of elements.
+
+```jsx
+return (
+  <React.Fragment>
+    {items.map((item) => (
+      <ChildComponent key={item.id} />
+    ))}
+  </React.Fragment>
+);
+```
+
+React Fragments are used to group multiple elements without adding extra nodes to the DOM. This is useful when you want to return multiple elements from a component's render method without wrapping them in an additional HTML element. You can use the shorthand syntax `<>...</>` or the `React.Fragment` syntax.
+
+```jsx
+return (
+  <>
+    <ChildComponent1 />
+    <ChildComponent2 />
+  </>
+);
+```
+
+---
+
+## What are React Fragments used for?
+
+### Grouping multiple elements
+
+React Fragments allow you to group multiple elements without adding extra nodes to the DOM. This is particularly useful when you want to return multiple elements from a component's render method but don't want to introduce unnecessary wrapper elements.
+
+### Avoiding unnecessary DOM nodes
+
+Using React Fragments helps in avoiding unnecessary DOM nodes, which can be beneficial for performance and maintaining a cleaner DOM structure. This is especially important in complex applications where additional nodes can lead to increased memory usage and slower rendering times.
+
+### Syntax
+
+There are two ways to use React Fragments:
+
+1. **Shorthand syntax**: This is the most concise way to use fragments. It uses empty tags `<>...</>`.
+
+   ```jsx
+   return (
+     <>
+       <ChildComponent1 />
+       <ChildComponent2 />
+     </>
+   );
+   ```
+
+2. **Full syntax**: This uses `React.Fragment` and can be useful if you need to add keys to the fragment.
+
+   ```jsx
+   return (
+     <React.Fragment>
+       <ChildComponent1 />
+       <ChildComponent2 />
+     </React.Fragment>
+   );
+   ```
+
+
+
+### Use cases
+
+- **Returning multiple elements from a component**: When a component needs to return multiple sibling elements, using a fragment can help avoid unnecessary wrapper elements.
+- **Rendering lists**: When rendering a list of elements, fragments can be used to group the list items without adding extra nodes to the DOM.
+- **Conditional rendering**: When conditionally rendering multiple elements, fragments can help keep the DOM structure clean.
+
+## Further reading
+
+- [React Fragments - Official Documentation](https://reactjs.org/docs/fragments.html)
+- [React Fragments - A Complete Guide](https://www.freecodecamp.org/news/react-fragments-complete-guide/)
+- [When to use React Fragments](https://blog.logrocket.com/when-to-use-react-fragments/)
+
+---
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">How do you reset a component's state in React?</summary>
+
+https://www.greatfrontend.com/questions/quiz/how-do-you-reset-a-components-state-in-react?practice=practice&tab=quiz
+
+## TL;DR
+
+To reset a component's state in React, you can set the state back to its initial value. This can be done by defining an initial state and then using the `setState` function to reset it. For example, if you have a state object like this:
+
+```javascript
+const [state, setState] = useState(initialState);
+```
+
+You can reset it by calling:
+
+```javascript
+setState(initialState);
+```
+
+---
+
+## How do you reset a component's state in React?
+
+### Using functional components with hooks
+
+In functional components, you can use the `useState` hook to manage state. To reset the state, you can simply call the `setState` function with the initial state value.
+
+#### Example
+
+```javascript
+import React, { useState } from 'react';
+
+const MyComponent = () => {
+  const initialState = { count: 0, text: '' };
+  const [state, setState] = useState(initialState);
+
+  const resetState = () => {
+    setState(initialState);
+  };
+
+  return (
+    <div>
+      <p>Count: {state.count}</p>
+      <p>Text: {state.text}</p>
+      <button onClick={resetState}>Reset</button>
+    </div>
+  );
+};
+
+export default MyComponent;
+```
+
+### Using class components
+
+In class components, you can reset the state by calling `this.setState` with the initial state value.
+
+#### Example
+
+```javascript
+import React, { Component } from 'react';
+
+class MyComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.initialState = { count: 0, text: '' };
+    this.state = this.initialState;
+  }
+
+  resetState = () => {
+    this.setState(this.initialState);
+  };
+
+  render() {
+    return (
+      <div>
+        <p>Count: {this.state.count}</p>
+        <p>Text: {this.state.text}</p>
+        <button onClick={this.resetState}>Reset</button>
+      </div>
+    );
+  }
+}
+
+export default MyComponent;
+```
+
+### Using a function to generate initial state
+
+Sometimes, the initial state might be derived from props or other dynamic sources. In such cases, you can use a function to generate the initial state.
+
+#### Example
+
+```javascript
+import React, { useState } from 'react';
+
+const MyComponent = (props) => {
+  const getInitialState = () => ({ count: props.initialCount, text: '' });
+  const [state, setState] = useState(getInitialState);
+
+  const resetState = () => {
+    setState(getInitialState());
+  };
+
+  return (
+    <div>
+      <p>Count: {state.count}</p>
+      <p>Text: {state.text}</p>
+      <button onClick={resetState}>Reset</button>
+    </div>
+  );
+};
+
+export default MyComponent;
+```
+
+## Further reading
+
+- [React useState Hook](https://reactjs.org/docs/hooks-state.html)
+- [React Component State](https://reactjs.org/docs/state-and-lifecycle.html)
+- [React Functional Components](https://reactjs.org/docs/components-and-props.html#function-and-class-components)
+
+---
+</details>
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">XYZ</summary>
+
+
+
+---
+</details>
 
 #### Explain the concept of Higher-Order Components (HOCs) and provide use cases.
 #### Explain the concept of controlled and uncontrolled components in form handling.

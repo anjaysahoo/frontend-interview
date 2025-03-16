@@ -184,7 +184,28 @@ Look up the `box-sizing` property, which affects how the total heights and width
 <details >
  <summary style="font-size: large; font-weight: bold">SASS vs LESS vs SCSS</summary>
 
+<details >
+ <summary style="font-size: medium; font-weight: bold">What are the advantages/disadvantages of using CSS preprocessors?</summary>
+
 https://www.greatfrontend.com/questions/quiz/what-are-the-advantages-disadvantages-of-using-css-preprocessors
+
+## Advantages
+
+- CSS is made more maintainable.
+- Easier to write nested selectors.
+- Variables for consistent theming. Can share theme files across different projects. This is not necessarily useful with CSS custom properties (frequently called CSS variables).
+- Mixins to generate repeated CSS.
+- Sass and Less have features like loops, lists, and maps can make configuration easier and less verbose.
+- Splitting your code into multiple files during development. CSS files can be split up too but doing so will require an HTTP request to download each CSS file.
+
+## Disadvantages
+
+- Requires tools for preprocessing. Re-compilation time can be slow.
+- Not writing currently and potentially usable CSS. For example, by using something like [postcss-loader](https://github.com/postcss/postcss-loader) with [webpack](https://webpack.js.org/), you can write potentially future-compatible CSS, allowing you to use things like CSS variables instead of Sass variables. Thus, you're learning new syntax that could pay off if/when they become standardized.
+
+---
+</details>
+
 
 LESS stands for Leaner Style Sheets. It is a backward-compatible language extension for CSS. It allows us to use features like variables, nesting, mixins, etc, all in a CSS-compatible syntax. LESS is influenced by SASS and has influenced the newer “SCSS” syntax of SASS. LESS was used in Bootstrap 3 but was replaced by SASS in Bootstrap 4.
 
@@ -489,8 +510,6 @@ https://www.greatfrontend.com/questions/quiz/whats-the-difference-between-inline
 
 <details >
  <summary style="font-size: medium; font-weight: bold">`Pseudo-elements ::`</summary>
-
-## `Pseudo-elements ::`
 
 ![img_13.png](img_13.png)
 ![img_15.png](img_15.png)
