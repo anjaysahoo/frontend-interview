@@ -4089,6 +4089,448 @@ export default MyVirtualizedList;
 
 
 
+<details >
+ <summary style="font-size: x-large; font-weight: bold">Forms</summary>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Native</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Example: Contact Form</summary>
+
+```jsx
+import submitForm from './submitForm';
+
+export default function App() {
+  return (
+    <form
+      // Ignore the onSubmit prop, it's used by GFE to
+      // intercept the form submit event to check your solution.
+      onSubmit={submitForm}
+      action="https://www.greatfrontend.com/api/questions/contact-form"
+      method="post">
+      <div>
+        <label htmlFor="name-input">Name</label>
+        <input id="name-input" name="name" type="text" />
+      </div>
+      <div>
+        <label htmlFor="email-input">Email</label>
+        <input id="email-input" name="email" type="email" />
+      </div>
+      <div>
+        <label htmlFor="message-input">Message</label>
+        <textarea
+          id="message-input"
+          name="message"></textarea>
+      </div>
+      <div>
+        <button>Send</button>
+      </div>
+    </form>
+  );
+}
+```
+
+//./submitForm
+```jsx
+const SUBMIT_URL =
+    'https://www.greatfrontend.com/api/questions/contact-form';
+
+export default async function submitForm(event) {
+    event.preventDefault();
+    const form = event.target;
+
+    try {
+        if (form.action !== SUBMIT_URL) {
+            alert('Incorrect form action value');
+            return;
+        }
+
+        if (form.method.toLowerCase() !== 'post') {
+            alert('Incorrect form method value');
+            return;
+        }
+
+        const formData = new FormData(form);
+        const response = await fetch(SUBMIT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: formData.get('name'),
+                email: formData.get('email'),
+                message: formData.get('message'),
+            }),
+        });
+
+        const text = await response.text();
+        alert(text);
+    } catch (_) {
+        alert('Error submitting form!');
+    }
+}
+
+
+```
+
+https://www.greatfrontend.com/questions/user-interface/contact-form/solution?practice=practice&tab=coding
+
+---
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Example: User Database</summary>
+
+![img_17.png](img_17.png)
+
+```jsx
+import { useState } from 'react';
+
+const generateId = (() => {
+  let id = 0;
+  return () => `${id++}`;
+})();
+
+export default function App() {
+  const [selected, setSelected] = useState(null);
+  const [search, setSearch] = useState('');
+  const [first, setFirst] = useState('');
+  const [last, setLast] = useState('');
+  const [users, setUsers] = useState([
+    { first: 'Hans', last: 'Emil', id: generateId() },
+    { first: 'Max', last: 'Mustermann', id: generateId() },
+    { first: 'Roman', last: 'Tisch', id: generateId() },
+  ]);
+
+  const filteredUsers = users.filter(
+    (user) =>
+      user.first
+        .toLowerCase()
+        .includes(search.toLowerCase()) ||
+      user.last
+        .toLowerCase()
+        .includes(search.toLowerCase()),
+  );
+
+  const hasSelectedUser = selected != null;
+
+  const canCreateUser =
+    !hasSelectedUser && first !== '' && last !== '';
+
+  const canUpdateUser =
+    hasSelectedUser && first !== '' && last !== '';
+
+  function create() {
+    setUsers(
+      users.concat({
+        first,
+        last,
+        id: generateId(),
+      }),
+    );
+    setFirst('');
+    setLast('');
+  }
+
+  function update() {
+    const newUsers = [...users];
+    const foundUser = newUsers.find(
+      ({ id }) => selected === id,
+    );
+    foundUser.first = first;
+    foundUser.last = last;
+    setUsers(newUsers);
+  }
+
+  function del() {
+    setUsers(users.filter((user) => user.id !== selected));
+    cancel();
+  }
+
+  function cancel() {
+    setSelected(null);
+    setFirst('');
+    setLast('');
+  }
+
+  function onSubmit(event) {
+    // To prevent a page reload.
+    event.preventDefault();
+    const formData = new FormData(
+      event.target,
+      event.nativeEvent.submitter,
+    );
+    const intent = formData.get('intent');
+
+    switch (intent) {
+      case 'create':
+        create();
+        break;
+
+      case 'update':
+        update();
+        break;
+
+      case 'delete':
+        del();
+        break;
+
+      case 'cancel':
+        cancel();
+        break;
+
+      default:
+        throw new Error(`Invalid intent: ${intent}`);
+    }
+  }
+
+  return (
+    <form className="app" onSubmit={onSubmit}>
+      <div>
+        <input
+          aria-label="Search users"
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search"
+        />
+      </div>
+
+      <div className="middle-row">
+        <select
+          size={5}
+          className="users-list"
+          value={selected}
+          onChange={(e) => {
+            const newSelected = e.target.value;
+            setSelected(newSelected);
+
+            const foundUser = users.find(
+              ({ id }) => id === newSelected,
+            );
+            setFirst(foundUser.first);
+            setLast(foundUser.last);
+          }}>
+          {filteredUsers.map((user) => (
+            <option key={user.id} value={user.id}>
+              {user.first} {user.last}
+            </option>
+          ))}
+        </select>
+        <div className="inputs">
+          <label>
+            First Name:
+            <input
+              type="text"
+              required
+              value={first}
+              onChange={(e) => setFirst(e.target.value)}
+            />
+          </label>
+          <label>
+            Last Name:
+            <input
+              type="text"
+              required
+              value={last}
+              onChange={(e) => setLast(e.target.value)}
+            />
+          </label>
+        </div>
+      </div>
+
+      <div className="buttons">
+        <button
+          name="intent"
+          value="create"
+          disabled={!canCreateUser}>
+          Create
+        </button>
+        <button
+          name="intent"
+          value="update"
+          disabled={!canUpdateUser}>
+          Update
+        </button>
+        <button
+          name="intent"
+          value="delete"
+          disabled={!hasSelectedUser}>
+          Delete
+        </button>
+        <button
+          name="intent"
+          value="cancel"
+          disabled={!hasSelectedUser}>
+          Cancel
+        </button>
+      </div>
+    </form>
+  );
+}
+
+```
+https://www.greatfrontend.com/questions/user-interface/users-database/solution?practice=practice&tab=coding
+
+---
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">Example: Dice Roller</summary>
+
+![img_18.png](img_18.png)
+
+```jsx
+
+import { useState } from 'react';
+
+const NUMBER_OF_FACES = 6;
+const MIN_NUMBER_OF_DICE = 1;
+const MAX_NUMBER_OF_DICE = 12;
+
+const DICE_FACE_DOT_POSITIONS = {
+  1: ['dot--center'],
+  2: ['dot--top-right', 'dot--bottom-left'],
+  3: ['dot--top-right', 'dot--center', 'dot--bottom-left'],
+  4: [
+    'dot--top-left',
+    'dot--top-right',
+    'dot--bottom-left',
+    'dot--bottom-right',
+  ],
+  5: [
+    'dot--top-left',
+    'dot--top-right',
+    'dot--center',
+    'dot--bottom-left',
+    'dot--bottom-right',
+  ],
+  6: [
+    'dot--top-left',
+    'dot--top-right',
+    'dot--center-left',
+    'dot--center-right',
+    'dot--bottom-left',
+    'dot--bottom-right',
+  ],
+};
+
+function rollDice(numberOfDice) {
+  return Array.from({ length: numberOfDice }, () =>
+    Math.max(Math.ceil(Math.random() * NUMBER_OF_FACES), 1),
+  );
+}
+
+export default function App() {
+  const [rolledDice, setRolledDice] = useState([]);
+
+  return (
+    <div className="wrapper">
+      <form
+        className="dice-form"
+        onSubmit={(event) => {
+          // To prevent a page reload.
+          event.preventDefault();
+
+          const data = new FormData(event.target);
+          // Convert the input value to a number.
+          const numberOfDice = +data.get('dice-count');
+          setRolledDice(rollDice(numberOfDice));
+        }}>
+        <div>
+          <label htmlFor="dice-input">Number of dice</label>
+          <input
+            id="dice-input"
+            name="dice-count"
+            required
+            type="number"
+            min={MIN_NUMBER_OF_DICE}
+            max={MAX_NUMBER_OF_DICE}
+          />
+        </div>
+        <button type="submit">Roll</button>
+      </form>
+      {rolledDice.length > 0 && (
+        <div
+          className="dice-list"
+          role="status"
+          aria-live="polite">
+          {rolledDice.map((value, index) => (
+            // Using index as key is acceptable here
+            // as the Dice component is stateless.
+            <Dice key={index} value={value} />
+          ))}
+          {/* Announced by screen readers. */}
+          <div className="sr-only">
+            Roll results: {rolledDice.join(', ')}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Dice({ value }) {
+  return (
+    <div className="dice">
+      <div className="dots">
+        {DICE_FACE_DOT_POSITIONS[value].map(
+          (dotPosition) => (
+            <div
+              key={dotPosition}
+              className={['dot', dotPosition].join(' ')}
+            />
+          ),
+        )}
+      </div>
+    </div>
+  );
+}
+```
+https://www.greatfrontend.com/questions/user-interface/dice-roller/solution?framework=react
+
+---
+</details>
+
+---
+</details>
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">Library</summary>
+
+1. Multistep Form Custom Hook With React And TypeScript:
+    1. https://www.youtube.com/watch?v=uDCBSnWkuH0
+    2. https://github.com/WebDevSimplified/react-multistep-form/tree/main
+2. React Hook Form (with Zod):
+    1. https://www.youtube.com/watch?v=cc_xmawJ8Kg
+    2. https://www.youtube.com/watch?v=qyzznUNe1ho
+    3. https://github.com/piyush-eon/react-hook-form-tutorial/tree/master
+3. Zod: https://www.youtube.com/watch?v=U9PYyMhDc_k
+   ![img_16.png](img_16.png)
+
+---
+</details>
+
+
+
+---
+</details>
+
+
+
+
+
+
+
+
+
+
+
 
 <details >
  <summary style="font-size: x-large; font-weight: bold">Questions</summary>
@@ -5017,18 +5459,3 @@ These event handlers enable React to respond to a wide range of user interaction
 
 
 
-<details >
- <summary style="font-size: x-large; font-weight: bold">Forms</summary>
-
-1. Multistep Form Custom Hook With React And TypeScript: 
-   1. https://www.youtube.com/watch?v=uDCBSnWkuH0
-   2. https://github.com/WebDevSimplified/react-multistep-form/tree/main
-2. React Hook Form (with Zod): 
-   1. https://www.youtube.com/watch?v=cc_xmawJ8Kg
-   2. https://www.youtube.com/watch?v=qyzznUNe1ho
-   3. https://github.com/piyush-eon/react-hook-form-tutorial/tree/master
-3. Zod: https://www.youtube.com/watch?v=U9PYyMhDc_k
-![img_16.png](img_16.png)
-
----
-</details>

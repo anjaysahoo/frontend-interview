@@ -1715,6 +1715,7 @@ Reference: https://fireship.io/lessons/regex-cheat-sheet-js/
 3. While any questions always first think about what you need to return like a `function`, `Promise`, `object` etc. Once you know then just write that first then think about anything else
 4. Put console.log start debugging don't spend time looking at code again and again
 3. Go thorough given testcase to get hint. Don't keep spending time by reading question again and again
+4. Be calm and try to give answer slowly but correctly. It will save lot of time as interviewer will understood your answer easily and no cross question because of not able to understand. Also, it looks good to get answer correct in one go. Don't panic if wrong then again think and answer slowly
 
 ---
 </details>

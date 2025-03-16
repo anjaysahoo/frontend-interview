@@ -480,3 +480,77 @@ https://www.greatfrontend.com/questions/quiz/whats-the-difference-between-inline
 
 ---
 </details>
+
+
+
+
+<details >
+ <summary style="font-size: large; font-weight: bold">`Pseudo-elements ::` & `Pseudo-classes:`</summary>
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">`Pseudo-elements ::`</summary>
+
+## `Pseudo-elements ::`
+
+![img_13.png](img_13.png)
+![img_15.png](img_15.png)
+
+
+1.
+![img_9.png](img_9.png)
+
+- To apply pseudo-element we need to add `content` in it
+- Also it is inside given element
+![img_10.png](img_10.png)
+
+2. It won't work on an element that doesn't have `content` like `<input/>` element are **self-closing** hence don't have any `content`. Therefore, a pseudo-element won't work on it
+![img_11.png](img_11.png)
+
+3. We can have only one pseudo-element to a element
+
+4. Usage
+    1. Tootip shown on hover
+      ![img_12.png](img_12.png)
+
+    2. Clean Semantic HTML
+       ![img_16.png](img_16.png)
+       ![img_17.png](img_17.png)
+   3. Clean Semantic HTML
+      ![img_18.png](img_18.png)
+      ![img_19.png](img_19.png)
+   4. **`::selection`**
+      ![img_20.png](img_20.png)
+
+- https://www.youtube.com/watch?v=e1KpKBHJOrA
+- https://www.youtube.com/watch?v=OtBpgtqrjyo
+
+---
+</details>
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">`Pseudo-classes:`</summary>
+
+![img_14.png](img_14.png)
+
+![img_21.png](img_21.png)
+
+1. Child Pseudo Element
+![img_22.png](img_22.png)
+![img_23.png](img_23.png)
+![img_24.png](img_24.png)
+![img_25.png](img_25.png)
+
+2. Hover Pseudo Element
+![img_26.png](img_26.png)
+
+3. `lang` attribute
+![img_27.png](img_27.png)
+
+https://www.youtube.com/watch?v=kpXKwDGtjGE
+
+---
+</details>
+
+---
+</details>
