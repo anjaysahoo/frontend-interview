@@ -1667,6 +1667,25 @@ Symbol("foo") === Symbol("foo"); // false
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol
 https://www.greatfrontend.com/questions/quiz/what-are-symbols-used-for
 
+
+7. **Deep Clone**
+
+i. 
+```js
+export default function deepClone(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+```
+- Recursive data structures: `JSON.stringify()` will throw when you give it a recursive data structure. This can happen quite easily when working with linked lists or trees.
+- Built-in types: `JSON.stringify()` will throw if the value contains other JS built-ins like `Map`, `Set`, `Date`, `RegExp` or `ArrayBuffer`.
+- Functions: `JSON.stringify()` will quietly discard functions.
+
+ii.
+```js
+const myDeepCopy = structuredClone(myOriginal);
+```
+https://www.greatfrontend.com/questions/javascript/deep-clone
+
 ---
 </details>
 
