@@ -71,6 +71,28 @@ function sum(operation) {
 }
 ```
 
+
+Q. Program to implement sum(2)(3)(4)() should return 9 ?
+
+
+```javascript
+function sum(a) {
+  if (a === undefined) return 0; // If called without arguments, return 0
+  return function (b) {
+    if (b === undefined) return a; // If called with no further arguments, return accumulated sum
+    return sum(a + b); // Keep accumulating
+  };
+}
+
+console.log(sum(2)(3)(4)()); // Output: 9
+```
+
+### Explanation:
+1. The function `sum` returns another function that keeps accumulating the sum.
+2. When an empty call `()` is made, it stops the execution and returns the final sum.
+
+Let me know if you need any modifications! 🚀
+
 ---
 </details>
 

@@ -415,3 +415,21 @@ This is a browser-reported string that allows the network protocol peers to iden
 
 ---
 </details>
+
+
+
+
+
+
+<details >
+ <summary style="font-size: medium; font-weight: bold">`package.json` & `package-lock.json`</summary>
+
+
+- `package-lock.json` stores an exact, versioned dependency tree rather than using starred versioning like `package.json` itself (e.g. 1.0.*). This means you can guarantee the dependencies for other developers or prod releases, etc. It also has a mechanism to lock (hence the name package-lock) the tree but generally will regenerate if `package.json` changes.
+- To answer question about just using the package.json with exact version numbers?
+  - Bear in mind that your `package.json` contains only your `direct dependencies`, not the dependencies of your dependencies (sometimes called nested or transitive dependencies). This means with the standard `package.json` you can't control the versions of those `nested dependencies`, referencing them directly or as peer dependencies won't help as you also don't control the version tolerance that your direct dependencies define for these nested dependencies.
+
+https://stackoverflow.com/questions/44297803/what-is-the-role-of-the-package-lock-json
+
+---
+</details>
